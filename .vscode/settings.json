@@ -1,11 +1,6 @@
 {
-  "Lua": {
-    "diagnostics": {
-      "globals": ["vim"],
-    },
-    // explicitly set these as a test to see if they are loaded
-    "hint": {
-      "enable": true,
-    },
-  }
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.diagnostics.globals": ["vim"],
+  // explicitly set so we can use this file as a test for the plugin
+  "Lua.addonManager.enable": false,
 }
