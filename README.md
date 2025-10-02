@@ -80,9 +80,9 @@ return codesettings.with_vscode_settings('rust-analyzer', {
   - if `lsp_name` is specified, filters down to only the relevant properties according to the LSP's schema
   - You can use this if you need fine-grained control beyond `with_vscode_settings`.
   - `Settings` object provides methods:
-    - `Settings:get(key)` - returns the value at the specified key, supportes dot-separated keys like `Settings:get('lua_ls.Lua')` to get the sub-table
+    - `Settings:get(key)` - returns the value at the specified key, supports dot-separated key paths like `Settings:get('some.sub.property')` to get deeply nested properties
     - `Settings:clear()` - remove all values
-    - `Settings:set(key, value)` - again supports dot-separated keys like `lua_ls.Lua`
+    - `Settings:set(key, value)` - again supports dot-separated key paths like `some.sub.property`
 
 Example using `load()` directly:
 
