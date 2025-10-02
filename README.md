@@ -75,8 +75,9 @@ return codesettings.with_vscode_settings('rust-analyzer', {
 
   - Loads .vscode/settings.json from the project root, extracts the relevant settings based on the LSP's specific schema, and deep-merges it into `config.settings`. Returns the merged config.
 
-- `require('codesettings').load(): Settings`
+- `require('codesettings').load(lsp_name: string|nil): Settings`
   - Loads and parses .vscode/settings.json for the current project. Returns a `Settings` object.
+  - if `lsp_name` is specified, filters down to only the relevant properties according to the LSP's schema
   - You can use this if you need fine-grained control beyond `with_vscode_settings`.
   - `Settings` object provides methods:
     - `Settings:get(key)` - returns the value at the specified key, supportes dot-separated keys like `Settings:get('lua_ls.Lua')` to get the sub-table

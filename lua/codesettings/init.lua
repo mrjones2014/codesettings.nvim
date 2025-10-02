@@ -4,8 +4,9 @@ local Settings = require('codesettings.settings')
 local M = {}
 
 ---Load settings from .vscode/settings.json
+---@param lsp_name string|nil the name of the LSP, like 'rust-analyzer' or 'tsserver', or nil to get all settings
 ---@return Settings config VS Code settings object, if a .vscode/settings.json exists, empty otherwise
-function M.load()
+function M.load(lsp_name)
   local root = Util.get_root()
   if not root then
     return Settings.new()
@@ -14,6 +15,10 @@ function M.load()
   local settings = Settings.get(('%s/.vscode/settings.json'):format(root))
   if not settings then
     return Settings.new()
+  end
+
+  if lsp_name then
+    return settings:get_for_lsp_schema(lsp_name)
   end
 
   return settings
