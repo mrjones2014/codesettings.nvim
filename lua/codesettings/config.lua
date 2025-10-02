@@ -6,6 +6,7 @@
 local options = {
   ---Look for these config files
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
+  jsonls_integration = true, -- Integrate with jsonls to provide schemas
 }
 
 -- Public config object (contains only the options + setup)
