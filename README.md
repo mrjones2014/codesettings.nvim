@@ -3,7 +3,7 @@
 Read your project's .vscode/settings.json and merge it into your Neovim 0.11+ native LSP configuration.
 
 This plugin makes it easy to reuse editor settings that your team already committed for VS Code (including
-JSON with comments) by transparently merging the relevant namespace into the LSP `settings` table you pass to lspconfig.
+JSON with comments) by transparently merging the relevant namespace into the LSP `settings` table you pass to `vimlsp.config()` (or any way you configure LSP).
 
 - Works with JSONC (JSON with comments, trailing commas)
 - Deep-merges into your existing LSP config.settings
@@ -12,8 +12,6 @@ JSON with comments) by transparently merging the relevant namespace into the LSP
 
 ## Requirements
 
-- Neovim 0.11 or later
-- nvim-lspconfig (or any way you configure LSP servers)
 - A .vscode/settings.json in your project root (optional; if missing, your config is returned unchanged)
 
 ## Installation
