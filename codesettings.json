@@ -1,0 +1,4 @@
+{
+  "Lua.addonManager.enable": false,
+  "Lua.addonManager.repositoryPath": "test",
+}

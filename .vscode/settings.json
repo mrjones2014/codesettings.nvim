@@ -1,6 +1,4 @@
 {
-  "Lua.workspace.checkThirdParty": false,
-  "Lua.diagnostics.globals": ["vim"],
-  // explicitly set so we can use this file as a test for the plugin
-  "Lua.addonManager.enable": false,
+  // set something so we can use this file as a test
+  "Lua.window.statusBar": false,
 }

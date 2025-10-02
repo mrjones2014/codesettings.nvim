@@ -1,3 +1,5 @@
+local Config = require('codesettings.config')
+
 local M = {}
 
 function M.read_file(file)
@@ -28,7 +30,29 @@ end
 ---@param fname string?
 ---@return string?
 function M.get_root(fname)
-  return vim.fs.root(fname or vim.env.PWD, { '.vscode', '.git' })
+  local file_paths = Config.config_file_paths
+  local root_patterns = {}
+  for _, pattern in ipairs(file_paths) do
+    local base = vim.fn.fnamemodify(pattern, ':h')
+    table.insert(root_patterns, base)
+  end
+  table.insert(root_patterns, '.git')
+  return vim.fs.root(fname or vim.env.PWD, root_patterns)
+end
+
+---@param fn fun(filename: string) function to call on each local config file found, receives fully qualified filename
+function M.for_each_local_config(fn)
+  local root = M.get_root()
+  if not root then
+    return
+  end
+
+  for _, path in ipairs(Config.config_file_paths) do
+    local fqn = M.fqn(root .. '/' .. path)
+    if M.exists(fqn) then
+      fn(fqn)
+    end
+  end
 end
 
 function M.merge(...)
