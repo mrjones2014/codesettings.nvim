@@ -22,7 +22,7 @@ Use your favorite plugin manager. Replace `user/repo` with the actual repository
 - lazy.nvim
 
 ```lua
-{
+return {
   'mrjones2014/codesettings.nvim',
   -- opts = {}, -- no setup needed
 }
@@ -90,14 +90,13 @@ Example using `load()` directly:
 local codesettings = require('codesettings')
 local lspconfig = require('lspconfig')
 
-local s = codesettings.load()
-local yaml_settings = s:get('yaml') or {}
+local yamlls_settings = codesettings.load('yamlls')
 
 lspconfig.yamlls.setup({
   settings = {
     yaml = vim.tbl_deep_extend('force', {
       validate = true,
-    }, yaml_settings),
+    }, yamlls_settings),
   },
 })
 ```
@@ -109,6 +108,8 @@ lspconfig.yamlls.setup({
 - JSONC is supported, so comments and trailing commas are fine
 
 ## How merging works
+
+Follows the semantics of `vim.tbl_deep_extend('force', your_config, vscode_settings)`, essentially:
 
 - The plugin deep-merges plain tables (non-list tables)
 - Lists/arrays are replaced, not concatenated
