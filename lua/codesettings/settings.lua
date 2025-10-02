@@ -79,6 +79,23 @@ function Settings:get(key)
   return node
 end
 
+---Get a new Settings object with only the keys that are relevant for the given LSP.
+function Settings:get_for_lsp_schema(lsp_name)
+  local schema = require('codesettings.schema').get_properties_list(lsp_name)
+  local ret = M.new()
+  for _, key in ipairs(schema) do
+    local value = self:get(key)
+    if value ~= nil then
+      ret:set(key, value)
+    end
+  end
+  return ret
+end
+
+function Settings:to_tbl()
+  return self._settings
+end
+
 function Settings:load(file)
   self:clear()
   if Util.exists(file) then

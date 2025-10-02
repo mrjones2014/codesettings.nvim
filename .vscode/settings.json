@@ -1,11 +1,11 @@
 {
-  "lua_ls": {
-    "Lua": {
-      "diagnostics": {
-        "globals": ["vim"],
-        // test value so we can check it merges in properly
-        "testProperty": true
-      }
-    }
+  "Lua": {
+    "diagnostics": {
+      "globals": ["vim"],
+    },
+    // explicitly set these as a test to see if they are loaded
+    "hint": {
+      "enable": true,
+    },
   }
 }

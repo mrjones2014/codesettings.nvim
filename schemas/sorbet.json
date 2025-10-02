@@ -1,0 +1,215 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Ruby IDE features, powered by Sorbet.",
+  "properties": {
+    "sorbet.configFilePatterns": {
+      "default": [
+        "**/sorbet/config",
+        "**/Gemfile.lock"
+      ],
+      "description": "List of workspace file patterns that contribute to Sorbet's configuration.  Changes to any of those files should trigger a restart of any actively running Sorbet language server.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "sorbet.enabled": {
+      "description": "Enable Sorbet Ruby IDE features",
+      "type": "boolean"
+    },
+    "sorbet.highlightUntyped": {
+      "default": "nowhere",
+      "description": "Shows warning for untyped values.",
+      "enum": [
+        "nowhere",
+        "everywhere-but-tests",
+        "everywhere"
+      ]
+    },
+    "sorbet.highlightUntypedDiagnosticSeverity": {
+      "default": 3,
+      "description": "Which severity to use to highlight untyped usages with (controls the squiggle colors)",
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "enumItemLabels": [
+        "Error",
+        "Warning",
+        "Information",
+        "Hint"
+      ],
+      "markdownEnumDescriptions": [
+        "Error",
+        "Warning",
+        "Information",
+        "Hint"
+      ]
+    },
+    "sorbet.lspConfigs": {
+      "default": [
+        {
+          "command": [
+            "bundle",
+            "exec",
+            "srb",
+            "typecheck",
+            "--lsp"
+          ],
+          "description": "Stable Sorbet Ruby IDE features",
+          "id": "stable",
+          "name": "Sorbet"
+        },
+        {
+          "command": [
+            "bundle",
+            "exec",
+            "srb",
+            "typecheck",
+            "--lsp",
+            "--enable-all-beta-lsp-features"
+          ],
+          "description": "Beta Sorbet Ruby IDE features",
+          "id": "beta",
+          "name": "Sorbet (Beta)"
+        },
+        {
+          "command": [
+            "bundle",
+            "exec",
+            "srb",
+            "typecheck",
+            "--lsp",
+            "--enable-all-experimental-lsp-features"
+          ],
+          "description": "Experimental Sorbet Ruby IDE features (warning: crashy, for developers only)",
+          "id": "experimental",
+          "name": "Sorbet (Experimental)"
+        }
+      ],
+      "items": {
+        "properties": {
+          "command": {
+            "description": "Full command line to invoke sorbet",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "cwd": {
+            "default": "${workspaceFolder}",
+            "deprecated": true,
+            "description": "Current working directory when launching Sorbet. *DEPRECATED*: Property has never been used",
+            "format": "uri-reference",
+            "type": "string"
+          },
+          "description": {
+            "description": "Long-form human-readable description of configuration",
+            "type": "string"
+          },
+          "id": {
+            "description": "See `sorbet.selectedLspConfigId`",
+            "type": "string"
+          },
+          "name": {
+            "description": "Short-form human-readable label for configuration",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "command"
+        ],
+        "type": "object"
+      },
+      "markdownDescription": "Standard Ruby LSP configurations.  If you commit your VSCode settings to source control, you probably want to commit *this* setting, not `sorbet.userLspConfigs`.",
+      "type": "array"
+    },
+    "sorbet.revealOutputOnError": {
+      "default": false,
+      "description": "Show the extension output window on errors.",
+      "type": "boolean"
+    },
+    "sorbet.selectedLspConfigId": {
+      "markdownDescription": "The default configuration to use from `sorbet.userLspConfigs` or `sorbet.lspConfigs`.  If unset, defaults to the first item in `sorbet.userLspConfigs` or `sorbet.lspConfigs`.",
+      "type": "string"
+    },
+    "sorbet.typedFalseCompletionNudges": {
+      "default": true,
+      "description": "Displays an auto-complete nudge in `typed: false` files.",
+      "type": "boolean"
+    },
+    "sorbet.userLspConfigs": {
+      "default": [],
+      "items": {
+        "default": {
+          "command": [
+            "bundle",
+            "exec",
+            "srb",
+            "typecheck",
+            "--your",
+            "--flags",
+            "--here"
+          ],
+          "description": "A longer description of this Sorbet Configuration for use in hover text",
+          "env": {
+            "MY_ENV_VAR": "my-value"
+          },
+          "id": "my-custom-configuration",
+          "name": "My Custom Sorbet Configuration"
+        },
+        "properties": {
+          "command": {
+            "description": "Full command line to invoke sorbet",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "cwd": {
+            "default": "${workspaceFolder}",
+            "deprecated": true,
+            "description": "Current working directory when launching Sorbet. *DEPRECATED*: Property has never been used",
+            "format": "uri-reference",
+            "type": "string"
+          },
+          "description": {
+            "description": "Long-form human-readable description of configuration",
+            "type": "string"
+          },
+          "env": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "default": {},
+            "description": "Environment variables to set when launching sorbet",
+            "minItems": 1,
+            "type": "object"
+          },
+          "id": {
+            "description": "See `sorbet.selectedLspConfigId`",
+            "type": "string"
+          },
+          "name": {
+            "description": "Short-form human-readable label for configuration",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "command"
+        ],
+        "type": "object"
+      },
+      "markdownDescription": "Custom user LSP configurations that supplement `sorbet.lspConfigs` (and override configurations with the same id).  If you commit your VSCode settings to source control, you probably want to commit `sorbet.lspConfigs`, not this value.",
+      "type": "array"
+    }
+  }
+}

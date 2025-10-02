@@ -20,16 +20,13 @@ function M.load()
 end
 
 ---Load settings from VS Code settings.json file
----@param namespace string the namespace VS Code's settings.json uses, usually LSP name but not always (yamlls uses 'yaml')
+---@param lsp_name string the name of the LSP, like 'rust-analyzer' or 'tsserver'
 ---@param config table the LSP config to merge the vscode settings into
-function M.with_vscode_settings(namespace, config)
+function M.with_vscode_settings(lsp_name, config)
   local settings = M.load()
-  local namespaced_settings = settings:get(namespace)
-  if not namespaced_settings then
-    return config
-  end
+  local lsp_settings = settings:get_for_lsp_schema(lsp_name):to_tbl()
 
-  local result = Util.merge(config, { settings = namespaced_settings })
+  local result = Util.merge(config, { settings = lsp_settings })
   return result
 end
 

@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A language server for Bash",
+  "properties": {
+    "bashIde.backgroundAnalysisMaxFiles": {
+      "default": 500,
+      "description": "Maximum number of files to analyze in the background. Set to 0 to disable background analysis.",
+      "minimum": 0,
+      "type": "number"
+    },
+    "bashIde.enableSourceErrorDiagnostics": {
+      "default": false,
+      "description": "Enable diagnostics for source errors. Ignored if includeAllWorkspaceSymbols is true.",
+      "type": "boolean"
+    },
+    "bashIde.explainshellEndpoint": {
+      "default": "",
+      "description": "Configure explainshell server endpoint in order to get hover documentation on flags and options.",
+      "type": "string"
+    },
+    "bashIde.globPattern": {
+      "default": "**/*@(.sh|.inc|.bash|.command)",
+      "description": "Glob pattern for finding and parsing shell script files in the workspace. Used by the background analysis features across files.",
+      "type": "string"
+    },
+    "bashIde.includeAllWorkspaceSymbols": {
+      "default": false,
+      "description": "Controls how symbols (e.g. variables and functions) are included and used for completion, documentation, and renaming. If false (default and recommended), then we only include symbols from sourced files (i.e. using non dynamic statements like 'source file.sh' or '. file.sh' or following ShellCheck directives). If true, then all symbols from the workspace are included.",
+      "type": "boolean"
+    },
+    "bashIde.logLevel": {
+      "default": "info",
+      "description": "Controls the log level of the language server.",
+      "enum": [
+        "debug",
+        "info",
+        "warning",
+        "error"
+      ],
+      "type": "string"
+    },
+    "bashIde.shellcheckArguments": {
+      "default": "",
+      "description": "Additional ShellCheck arguments. Note that we already add the following arguments: --shell, --format, --external-sources.",
+      "type": "string"
+    },
+    "bashIde.shellcheckPath": {
+      "default": "shellcheck",
+      "description": "Controls the executable used for ShellCheck linting information. An empty string will disable linting.",
+      "type": "string"
+    },
+    "bashIde.shfmt.binaryNextLine": {
+      "default": false,
+      "description": "Allow boolean operators (like && and ||) to start a line.",
+      "type": "boolean"
+    },
+    "bashIde.shfmt.caseIndent": {
+      "default": false,
+      "description": "Indent patterns in case statements.",
+      "type": "boolean"
+    },
+    "bashIde.shfmt.funcNextLine": {
+      "default": false,
+      "description": "Place function opening braces on a separate line.",
+      "type": "boolean"
+    },
+    "bashIde.shfmt.ignoreEditorconfig": {
+      "default": false,
+      "description": "Ignore shfmt config options in .editorconfig (always use language server config)",
+      "type": "boolean"
+    },
+    "bashIde.shfmt.keepPadding": {
+      "default": false,
+      "description": "(Deprecated) Keep column alignment padding.",
+      "markdownDescription": "**([Deprecated](https://github.com/mvdan/sh/issues/658))** Keep column alignment padding.",
+      "type": "boolean"
+    },
+    "bashIde.shfmt.languageDialect": {
+      "default": "auto",
+      "description": "Language dialect to use when parsing (bash/posix/mksh/bats).",
+      "enum": [
+        "auto",
+        "bash",
+        "posix",
+        "mksh",
+        "bats"
+      ],
+      "type": "string"
+    },
+    "bashIde.shfmt.path": {
+      "default": "shfmt",
+      "description": "Controls the executable used for Shfmt formatting. An empty string will disable formatting.",
+      "type": "string"
+    },
+    "bashIde.shfmt.simplifyCode": {
+      "default": false,
+      "description": "Simplify code before formatting.",
+      "type": "boolean"
+    },
+    "bashIde.shfmt.spaceRedirects": {
+      "default": false,
+      "description": "Follow redirection operators with a space.",
+      "type": "boolean"
+    }
+  }
+}

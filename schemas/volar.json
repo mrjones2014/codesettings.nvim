@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Language Support for Vue",
+  "properties": {
+    "vue.autoInsert.bracketSpacing": {
+      "default": true,
+      "markdownDescription": "%configuration.autoInsert.bracketSpacing%",
+      "type": "boolean"
+    },
+    "vue.autoInsert.dotValue": {
+      "default": false,
+      "markdownDescription": "%configuration.autoInsert.dotValue%",
+      "type": "boolean"
+    },
+    "vue.codeActions.askNewComponentName": {
+      "default": true,
+      "markdownDescription": "%configuration.codeActions.askNewComponentName%",
+      "type": "boolean"
+    },
+    "vue.editor.focusMode": {
+      "default": false,
+      "markdownDescription": "%configuration.editor.focusMode%",
+      "type": "boolean"
+    },
+    "vue.editor.reactivityVisualization": {
+      "default": true,
+      "markdownDescription": "%configuration.editor.reactivityVisualization%",
+      "type": "boolean"
+    },
+    "vue.editor.templateInterpolationDecorators": {
+      "default": true,
+      "markdownDescription": "%configuration.editor.templateInterpolationDecorators%",
+      "type": "boolean"
+    },
+    "vue.format.script.initialIndent": {
+      "default": false,
+      "markdownDescription": "%configuration.format.script.initialIndent%",
+      "type": "boolean"
+    },
+    "vue.format.style.initialIndent": {
+      "default": false,
+      "markdownDescription": "%configuration.format.style.initialIndent%",
+      "type": "boolean"
+    },
+    "vue.format.template.initialIndent": {
+      "default": true,
+      "markdownDescription": "%configuration.format.template.initialIndent%",
+      "type": "boolean"
+    },
+    "vue.format.wrapAttributes": {
+      "default": "auto",
+      "enum": [
+        "auto",
+        "force",
+        "force-aligned",
+        "force-expand-multiline",
+        "aligned-multiple",
+        "preserve",
+        "preserve-aligned"
+      ],
+      "markdownDescription": "%configuration.format.wrapAttributes%",
+      "type": "string"
+    },
+    "vue.inlayHints.destructuredProps": {
+      "default": false,
+      "markdownDescription": "%configuration.inlayHints.destructuredProps%",
+      "type": "boolean"
+    },
+    "vue.inlayHints.inlineHandlerLeading": {
+      "default": false,
+      "markdownDescription": "%configuration.inlayHints.inlineHandlerLeading%",
+      "type": "boolean"
+    },
+    "vue.inlayHints.missingProps": {
+      "default": false,
+      "markdownDescription": "%configuration.inlayHints.missingProps%",
+      "type": "boolean"
+    },
+    "vue.inlayHints.optionsWrapper": {
+      "default": false,
+      "markdownDescription": "%configuration.inlayHints.optionsWrapper%",
+      "type": "boolean"
+    },
+    "vue.inlayHints.vBindShorthand": {
+      "default": false,
+      "markdownDescription": "%configuration.inlayHints.vBindShorthand%",
+      "type": "boolean"
+    },
+    "vue.server.includeLanguages": {
+      "default": [
+        "vue"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "markdownDescription": "%configuration.server.includeLanguages%",
+      "type": "array"
+    },
+    "vue.server.path": {
+      "markdownDescription": "%configuration.server.path%",
+      "type": "string"
+    },
+    "vue.suggest.componentNameCasing": {
+      "default": "preferPascalCase",
+      "enum": [
+        "preferKebabCase",
+        "preferPascalCase",
+        "alwaysKebabCase",
+        "alwaysPascalCase"
+      ],
+      "enumDescriptions": [
+        "Prefer kebab-case (lowercase with hyphens, e.g. my-component)",
+        "Prefer PascalCase (UpperCamelCase, e.g. MyComponent)",
+        "Always kebab-case (enforce kebab-case, e.g. my-component)",
+        "Always PascalCase (enforce PascalCase, e.g. MyComponent)"
+      ],
+      "markdownDescription": "%configuration.suggest.componentNameCasing%",
+      "type": "string"
+    },
+    "vue.suggest.defineAssignment": {
+      "default": true,
+      "markdownDescription": "%configuration.suggest.defineAssignment%",
+      "type": "boolean"
+    },
+    "vue.suggest.propNameCasing": {
+      "default": "preferKebabCase",
+      "enum": [
+        "preferKebabCase",
+        "preferCamelCase",
+        "alwaysKebabCase",
+        "alwaysCamelCase"
+      ],
+      "enumDescriptions": [
+        "Prefer kebab-case (lowercase with hyphens, e.g. my-prop)",
+        "Prefer camelCase (lowerCamelCase, e.g. myProp)",
+        "Always kebab-case (enforce kebab-case, e.g. my-prop)",
+        "Always camelCase (enforce camelCase, e.g. myProp)"
+      ],
+      "markdownDescription": "%configuration.suggest.propNameCasing%",
+      "type": "string"
+    },
+    "vue.trace.server": {
+      "default": "off",
+      "enum": [
+        "off",
+        "messages",
+        "verbose"
+      ],
+      "markdownDescription": "%configuration.trace.server%",
+      "scope": "window",
+      "type": "string"
+    }
+  }
+}
