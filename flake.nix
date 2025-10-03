@@ -16,6 +16,8 @@
           buildInputs = with pkgs; [
             jq
             just
+            stylua
+            selene
           ];
         };
       }

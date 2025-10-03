@@ -24,6 +24,7 @@ to `vim.lsp.config()` (or any way you configure LSP).
 - Minimal API: one function you call per server setup, or with a global hook (see example below)
 - Optional `jsonls` integration (enabled by default) for schema-based completion of LSP settings
 - Supports custom config file names/locations
+- See [./schemas/](https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas) for the list of supported LSPs
 
 ## Requirements
 
@@ -139,5 +140,3 @@ In short, VS Code-style settings take effect while preserving your base config, 
 
 - Some parts of this plugin are heavily based on [folke's neoconf.nvim plugin](https://github.com/folke/neoconf.nvim)
 - This plugin bundles [json.lua](https://github.com/actboy168/json.lua), a pure-Lua JSON library for parsing `jsonc` files
-
-

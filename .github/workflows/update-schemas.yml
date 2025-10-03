@@ -1,0 +1,22 @@
+name: Update Schemas
+on:
+  workflow_call:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *" # every day at 1AM
+jobs:
+  schemas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: folke/github/neovim@main
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v3
+      - name: Build
+        run: just build
+      - name: Submit PR with changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(build): auto-generate schemas"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
