@@ -41,10 +41,16 @@ function M.get_root(fname)
   return vim.fs.root(fname or vim.env.PWD, root_patterns)
 end
 
+---@class GetlocalConfigsOpts
+---@field only_exists boolean? if true, only return files that exist; true by default
+
 ---Get all the local config files found in the current project based on configured paths;
 ---returns fully qualified filepaths of files that exist.
+---@param opts GetlocalConfigsOpts? options for getting local configs
 ---@return string[] configs list of fully qualified filenames
-function M.get_local_configs()
+function M.get_local_configs(opts)
+  opts = opts or {}
+
   local root = M.get_root()
   if not root then
     return {}
@@ -56,6 +62,9 @@ function M.get_local_configs()
       return M.fqn(root .. '/' .. path)
     end)
     :filter(function(path)
+      if opts.only_exists == false then
+        return true
+      end
       return M.exists(path)
     end)
     :totable()

@@ -91,6 +91,12 @@ return codesettings.with_local_settings('rust-analyzer', {
 })
 ```
 
+## Commands
+
+- `:Codesettings files` - show the config files found in your project
+- `:Codesettings edit` - edit or create a local config file based on your configured config file paths
+- `:Codesettings health` - check plugin health (alias for `:checkhealth codesettings`)
+
 ## API
 
 - `require('codesettings').setup(opts?: CodesettingsConfig)`
