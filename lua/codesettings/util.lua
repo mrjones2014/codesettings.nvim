@@ -31,11 +31,12 @@ end
 ---@return string?
 function M.get_root(fname)
   local file_paths = Config.config_file_paths
-  local root_patterns = {}
-  for _, pattern in ipairs(file_paths) do
-    local base = vim.fn.fnamemodify(pattern, ':h')
-    table.insert(root_patterns, base)
-  end
+  local root_patterns = vim
+    .iter(file_paths)
+    :map(function(path)
+      return vim.fn.fnamemodify(path, ':t')
+    end)
+    :totable()
   table.insert(root_patterns, '.git')
   return vim.fs.root(fname or vim.env.PWD, root_patterns)
 end
