@@ -112,6 +112,25 @@ function Settings:load(file)
   return self
 end
 
+---@param settings Settings settings to merge into this one
+---@param key string|nil if given, merge only the subtable at this key
+---@return Settings
+function Settings:merge(settings, key)
+  if not settings then
+    return M.new()
+  end
+  if settings.__index ~= Settings then
+    settings = M.new(settings)
+  end
+  if key then
+    local value = Util.merge({}, self:get(key) or {}, settings._settings)
+    self:set(key, value)
+  else
+    self._settings = Util.merge(self._settings, settings._settings)
+  end
+  return self
+end
+
 M._cache = {}
 
 function M.clear(fname)

@@ -1,3 +1,5 @@
+local Config = require('codesettings.config')
+
 local M = {}
 
 function M.read_file(file)
@@ -28,7 +30,35 @@ end
 ---@param fname string?
 ---@return string?
 function M.get_root(fname)
-  return vim.fs.root(fname or vim.env.PWD, { '.vscode', '.git' })
+  local file_paths = Config.config_file_paths
+  local root_patterns = vim
+    .iter(file_paths)
+    :map(function(path)
+      return vim.fn.fnamemodify(path, ':t')
+    end)
+    :totable()
+  table.insert(root_patterns, '.git')
+  return vim.fs.root(fname or vim.env.PWD, root_patterns)
+end
+
+---Get all the local config files found in the current project based on configured paths;
+---returns fully qualified filepaths of files that exist.
+---@return string[] configs list of fully qualified filenames
+function M.get_local_configs()
+  local root = M.get_root()
+  if not root then
+    return {}
+  end
+
+  return vim
+    .iter(Config.config_file_paths)
+    :map(function(path)
+      return M.fqn(root .. '/' .. path)
+    end)
+    :filter(function(path)
+      return M.exists(path)
+    end)
+    :totable()
 end
 
 function M.merge(...)
@@ -51,9 +81,11 @@ function M.merge(...)
   return ret
 end
 
+---@return boolean
 function M.exists(fname)
   local stat = vim.uv.fs_stat(fname)
-  return (stat and stat.type) or false
+  -- not not to coerce to boolean, or false if nil
+  return (not not (stat and stat.type)) or false
 end
 
 function M.json_decode(json)
