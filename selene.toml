@@ -1,2 +1,2 @@
-std = "vim+lua52"
+std = "vim"
 exclude = [".install/lua-5*", ".lua", ".direnv/*"]
