@@ -40,19 +40,24 @@ function M.get_root(fname)
   return vim.fs.root(fname or vim.env.PWD, root_patterns)
 end
 
----@param fn fun(filename: string) function to call on each local config file found, receives fully qualified filename
-function M.for_each_local_config(fn)
+---Get all the local config files found in the current project based on configured paths;
+---returns fully qualified filepaths of files that exist.
+---@return string[] configs list of fully qualified filenames
+function M.get_local_configs()
   local root = M.get_root()
   if not root then
-    return
+    return {}
   end
 
-  for _, path in ipairs(Config.config_file_paths) do
-    local fqn = M.fqn(root .. '/' .. path)
-    if M.exists(fqn) then
-      fn(fqn)
-    end
-  end
+  return vim
+    .iter(Config.config_file_paths)
+    :map(function(path)
+      return M.fqn(root .. '/' .. path)
+    end)
+    :filter(function(path)
+      return M.exists(path)
+    end)
+    :totable()
 end
 
 function M.merge(...)
@@ -75,9 +80,11 @@ function M.merge(...)
   return ret
 end
 
+---@return boolean
 function M.exists(fname)
   local stat = vim.uv.fs_stat(fname)
-  return (stat and stat.type) or false
+  -- not not to coerce to boolean, or false if nil
+  return (not not (stat and stat.type)) or false
 end
 
 function M.json_decode(json)

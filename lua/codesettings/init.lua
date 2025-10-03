@@ -14,7 +14,7 @@ function M.load(lsp_name)
   end
 
   local settings = Settings.new()
-  Util.for_each_local_config(function(fname)
+  vim.iter(Util.get_local_configs()):each(function(fname)
     settings = settings:merge(Settings.get(fname))
   end)
 
@@ -28,12 +28,16 @@ end
 ---Load settings from VS Code settings.json file
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer' or 'tsserver'
 ---@param config table the LSP config to merge the vscode settings into
-function M.with_vscode_settings(lsp_name, config)
+function M.with_local_settings(lsp_name, config)
   local settings = M.load()
   local lsp_settings = settings:get_for_lsp_schema(lsp_name):to_tbl()
 
   local result = Util.merge(config, { settings = lsp_settings })
   return result
+end
+
+function M.setup(opts)
+  require('codesettings.config').setup(opts)
 end
 
 return M
