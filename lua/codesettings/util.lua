@@ -38,7 +38,7 @@ function M.get_root(fname)
     end)
     :totable()
   table.insert(root_patterns, '.git')
-  return vim.fs.root(fname or vim.env.PWD, root_patterns)
+  return vim.fs.root(fname or vim.env.PWD or vim.uv.cwd(), root_patterns)
 end
 
 ---@class GetlocalConfigsOpts
