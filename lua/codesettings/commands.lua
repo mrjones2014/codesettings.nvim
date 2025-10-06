@@ -2,6 +2,17 @@ local Util = require('codesettings.util')
 local View = require('codesettings.view')
 
 local subcommands = {
+  ---Show the resolved configuration found in local config files
+  show = function()
+    local config = require('codesettings').load():totable()
+    View.show(([[
+# Resolved configuration from local config files
+
+```lua
+%s
+```
+]]):format(vim.inspect(config)))
+  end,
   ---Show the files found in your project
   files = function()
     local configs = vim
@@ -12,6 +23,7 @@ local subcommands = {
       :totable()
     View.show(vim.list_extend({ '# Local configuration files found:', '' }, configs))
   end,
+  ---Edit or create a local configuration file
   edit = function()
     local configs = Util.get_local_configs({ only_exists = false })
     if #configs == 0 then
@@ -41,6 +53,7 @@ local subcommands = {
       end)
     end
   end,
+  ---Alias for `:checkhealth codesettings`
   health = function()
     require('codesettings.health').check()
   end,
