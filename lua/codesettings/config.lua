@@ -29,15 +29,14 @@ function Config.setup(opts)
   end
 
   if options.jsonc_filetype then
-    vim.api.nvim_create_autocmd('FileType', {
-      pattern = 'json',
-      callback = function(args)
-        -- NB: inline require to avoid circular dependency between config and util modules
-        local configs = require('codesettings.util').get_local_configs()
-        if vim.tbl_contains(configs, args.file) then
-          vim.bo[args.buf].filetype = 'jsonc'
-        end
-      end,
+    -- NB: inline require to avoid circular dependency between config and util modules
+    local configs = require('codesettings.util').get_local_configs()
+    local filetypes = {}
+    vim.iter(configs):each(function(f)
+      filetypes[f] = 'jsonc'
+    end)
+    vim.filetype.add({
+      filename = filetypes,
     })
   end
 end

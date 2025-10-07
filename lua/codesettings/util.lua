@@ -43,6 +43,9 @@ end
 
 ---@class GetlocalConfigsOpts
 ---@field only_exists boolean? if true, only return files that exist; true by default
+---@field reload boolean? if true, invalidate the cached file list
+
+local _config_files = {}
 
 ---Get all the local config files found in the current project based on configured paths;
 ---returns fully qualified filepaths of files that exist.
@@ -51,12 +54,20 @@ end
 function M.get_local_configs(opts)
   opts = opts or {}
 
+  if opts.reload then
+    _config_files = {}
+  end
+
+  if not vim.tbl_isempty(_config_files) then
+    return _config_files
+  end
+
   local root = M.get_root()
   if not root then
     return {}
   end
 
-  return vim
+  _config_files = vim
     .iter(Config.config_file_paths)
     :map(function(path)
       return M.fqn(root .. '/' .. path)
@@ -68,6 +79,7 @@ function M.get_local_configs(opts)
       return M.exists(path)
     end)
     :totable()
+  return _config_files
 end
 
 function M.merge(...)

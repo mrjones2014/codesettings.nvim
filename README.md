@@ -54,6 +54,7 @@ return {
     ---make sure you have the jsonc tree-sitter parser installed for highlighting
     jsonc_filetype = true,
   },
+  -- make sure to load the plugin for `jsonls_integration` and `jsonc_filetype` to work
   event = 'VeryLazy',
 }
 ```
@@ -93,6 +94,7 @@ return codesettings.with_local_settings('rust-analyzer', {
 
 ## Commands
 
+- `:Codesettings show` - show the resolved config found in local config files in your project
 - `:Codesettings files` - show the config files found in your project
 - `:Codesettings edit` - edit or create a local config file based on your configured config file paths
 - `:Codesettings health` - check plugin health (alias for `:checkhealth codesettings`)
@@ -106,25 +108,34 @@ return codesettings.with_local_settings('rust-analyzer', {
 - `require('codesettings').with_local_settings(lsp_name: string, config: table): table`
   - Loads settings from the configured files, extracts relevant settings for the given LSP based on its schema, and deep-merges into `config.settings`. Returns the merged config.
 
-- `require('codesettings').load(lsp_name: string|nil): Settings`
+- `require('codesettings').local_settings(lsp_name: string|nil): Settings`
   - Loads and parses the settings file(s) for the current project. Returns a `Settings` object.
   - If `lsp_name` is specified, filters down to only the relevant properties according to the LSP's schema.
-  - `Settings` object provides methods:
+  - `Settings` object provides some methods like:
+    - `Settings:schema(lsp_name)` - Filter the settings down to only the keys that match the relevant schema e.g. `settings:schema('eslint')`
+    - `Settings:merge(settings)` - merge another `Settings` object into this one
     - `Settings:get(key)` - returns the value at the specified key; supports dot-separated key paths like `Settings:get('some.sub.property')`
+    - `Settings:get_subtable(key)` - like `Settings:get(key)`, but returns a `Settings` object if the path is a table, otherwise an empty `Settings` object
     - `Settings:clear()` - remove all values
     - `Settings:set(key, value)` - supports dot-separated key paths like `some.sub.property`
 
-Example using `load()` directly:
+Example using `local_settings()` directly:
 
 ```lua
 local codesettings = require('codesettings')
-local yamlls_settings = codesettings.load('yamlls')
-
-vim.lsp.config('yamlls', {
-  settings = vim.tbl_deep_extend('force', {
-    yaml = { validate = true },
-  }, yamlls_settings),
-})
+local eslint_settings = c.local_settings()
+  :schema('eslint')
+  :merge({
+    eslint = {
+      codeAction = {
+        disableRuleComment = {
+          enable = true,
+          location = 'sameLine',
+        },
+      },
+    },
+  })
+  :get('eslint.codeAction') -- get the codeAction subtable
 ```
 
 ## How it finds your settings

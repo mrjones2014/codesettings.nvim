@@ -16,6 +16,14 @@ function M.new(settings)
   return ret
 end
 
+function M.load_all()
+  local settings = M.new()
+  vim.iter(Util.get_local_configs()):each(function(fname)
+    settings:merge(M.new():load(fname))
+  end)
+  return settings
+end
+
 function M.expand(tbl)
   if type(tbl) ~= 'table' then
     return tbl
@@ -64,8 +72,9 @@ function Settings:set(key, value)
   node[parts[#parts]] = value
 end
 
+---@param key string|nil the key to get, like 'rust-analyzer.cargo.loadOutDirsFromCheck'; if `key` is nil, acts like `:totable()`
+---@return table|string|boolean|number|nil setting the subtable value at that key; if the value is a table, it returns a table, not a Settings object
 function Settings:get(key)
-  ---@type table|nil
   local node = self._settings
 
   for _, part in ipairs(M.path(key)) do
@@ -79,20 +88,38 @@ function Settings:get(key)
   return node
 end
 
----Get a new Settings object with only the keys that are relevant for the given LSP.
-function Settings:get_for_lsp_schema(lsp_name)
-  local schema = require('codesettings.schema').get_properties_list(lsp_name)
-  local ret = M.new()
-  for _, key in ipairs(schema) do
-    local value = self:get(key)
-    if value ~= nil then
-      ret:set(key, value)
-    end
+---Like Settings:get(), but returns an empty `Settings` object if the value is not a table,
+---and it returns a `Settings` object wrapping that table if it is, instead
+---of a raw table.
+---@param key string the key to get, like 'rust-analyzer.cargo'
+---@return Settings settings the subtable wrapped in a Settings object, or nil if the
+function Settings:get_subtable(key)
+  local value = self:get(key)
+  if type(value) ~= 'table' then
+    return M.new()
   end
-  return ret
+  return M.new(value)
 end
 
-function Settings:to_tbl()
+---Return a new Settings object containing only the keys defined in the given schema.
+---Does *not* modify this Settings object, returns a new instance.
+---@param lsp_name string the name of lsp for which to load the schema (e.g. 'rust-analyzer' or 'tsserver')
+---@return Settings settings a new Settings object containing only the keys defined in the schema
+function Settings:schema(lsp_name)
+  -- NB: inline require to avoid circular dependency
+  local Schema = require('codesettings.schema')
+  local schema = Schema.load(lsp_name)
+  local settings = M.new()
+  for _, property in ipairs(schema:properties()) do
+    local subtable = self:get(property)
+    if subtable ~= nil then
+      settings:set(property, subtable)
+    end
+  end
+  return settings
+end
+
+function Settings:totable()
   return self._settings
 end
 
@@ -117,7 +144,7 @@ end
 ---@return Settings
 function Settings:merge(settings, key)
   if not settings then
-    return M.new()
+    return self
   end
   if settings.__index ~= Settings then
     settings = M.new(settings)

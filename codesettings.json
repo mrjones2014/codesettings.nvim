@@ -1,4 +1,9 @@
 {
   "Lua.addonManager.enable": false,
   "Lua.addonManager.repositoryPath": "test",
+  // Some extra properties to test with
+  "eslint.codeAction.disableRuleComment": {
+    "enable": true,
+    "location": "separateLine"
+  },
 }
