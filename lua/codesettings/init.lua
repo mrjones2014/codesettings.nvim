@@ -1,39 +1,36 @@
-local Util = require('codesettings.util')
 local Settings = require('codesettings.settings')
+local SpecialCases = require('codesettings.schema.special-cases')
 
 local M = {}
 
----Load settings from project-local config files. By default looks for
----.vscode/settings.json, codesettings.json, and lspsettings.json, but this is configurable.
----@param lsp_name string|nil the name of the LSP, like 'rust-analyzer' or 'tsserver', or nil to get all settings
+---For more granular control, load settings manually through this
+---function and use the Settings API. For example:
+---```lua
+---local c = require('codesettings')
+---local eslint_settings = c.local_settings():schema('eslint'):merge({
+---  eslint = {
+---    codeAction = {
+---     disableRuleComment = {
+---       enable = true,
+---       location = 'sameLine'
+---      }
+---    }
+---  }
+---}):get('eslint') -- return only the `eslint` subtable
+---```
 ---@return Settings config settings object, if any local config files were found, empty Settings object otherwise
-function M.load(lsp_name)
-  local root = Util.get_root()
-  if not root then
-    return Settings.new()
-  end
-
-  local settings = Settings.new()
-  vim.iter(Util.get_local_configs()):each(function(fname)
-    settings = settings:merge(Settings.get(fname))
-  end)
-
-  if lsp_name then
-    return settings:get_for_lsp_schema(lsp_name)
-  end
-
-  return settings
+function M.local_settings()
+  return Settings.load_all()
 end
 
 ---Load settings from VS Code settings.json file
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer' or 'tsserver'
 ---@param config table the LSP config to merge the vscode settings into
+---@return table config the merged config
 function M.with_local_settings(lsp_name, config)
-  local settings = M.load()
-  local lsp_settings = settings:get_for_lsp_schema(lsp_name):to_tbl()
-
-  local result = Util.merge(config, { settings = lsp_settings })
-  return result
+  return Settings.new(config)
+    :merge(M.local_settings():schema(lsp_name):get(SpecialCases[lsp_name]), 'settings')
+    :totable()
 end
 
 function M.setup(opts)

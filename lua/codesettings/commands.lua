@@ -4,7 +4,7 @@ local View = require('codesettings.view')
 local subcommands = {
   ---Show the resolved configuration found in local config files
   show = function()
-    local config = require('codesettings').load():totable()
+    local config = require('codesettings').local_settings():totable()
     View.show(([[
 # Resolved configuration from local config files
 
