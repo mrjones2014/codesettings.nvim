@@ -103,8 +103,7 @@ return codesettings.with_local_settings('rust-analyzer', {
 ## API
 
 - `require('codesettings').setup(opts?: CodesettingsConfig)`
-  - Initialize the plugin and apply configuration. Must be called for custom configs to take effect.
-  - Options match the "Configuration" section above.
+  - Initialize the plugin. You only need to call this for `jsonls_integration` and `jsonc_filetype` to work, or to customize the local filepaths to look for. It is _not_ required for your local configs to take effect (unless you customize the local config file paths).
 
 - `require('codesettings').with_local_settings(lsp_name: string, config: table): table`
   - Loads settings from the configured files, extracts relevant settings for the given LSP based on its schema, and deep-merges into `config.settings`. Returns the merged config.
