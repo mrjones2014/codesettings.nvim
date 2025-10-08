@@ -94,7 +94,8 @@ return codesettings.with_local_settings('rust-analyzer', {
 
 ## Commands
 
-- `:Codesettings show` - show the resolved config found in local config files in your project
+- `:Codesettings show` - show the resolved LSP config for each active LSP client; note that this only shows _active_ clients
+- `:Codesettings local` - show the resolved local config found in local config files in your project
 - `:Codesettings files` - show the config files found in your project
 - `:Codesettings edit` - edit or create a local config file based on your configured config file paths
 - `:Codesettings health` - check plugin health (alias for `:checkhealth codesettings`)

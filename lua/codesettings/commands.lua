@@ -2,8 +2,19 @@ local Util = require('codesettings.util')
 local View = require('codesettings.view')
 
 local subcommands = {
-  ---Show the resolved configuration found in local config files
+  ---Show the resolved LSP configuration for each active LSP client
   show = function()
+    local text = ''
+    vim.iter(vim.lsp.get_clients()):each(function(client)
+      text = ('%s# %s\n\n```lua\n%s\n```\n\n'):format(text, client.name, vim.inspect(client.settings))
+    end)
+    if text == '' then
+      text = '# No active LSP clients found'
+    end
+    View.show(text)
+  end,
+  ---Show the resolved local configuration found in local config files
+  ['local'] = function()
     local config = require('codesettings').local_settings():totable()
     View.show(([[
 # Resolved configuration from local config files
@@ -73,7 +84,7 @@ function M.setup()
     nargs = '?',
     desc = 'Manage project local settings with Codesettings',
     complete = function(_, line, _)
-      if line:match('^%s*Neoconf %w+ ') then
+      if line:match('^%s*Codesettings %w+ ') then
         return {}
       end
       local prefix = line:match('^%s*Codesettings (%w*)')
