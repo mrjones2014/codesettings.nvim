@@ -98,13 +98,8 @@ function M.merge(a, b, opts)
     if type(v) ~= 'table' then
       return false
     end
-    if vim.tbl_isempty(v) then
-      return true
-    end
     if vim.islist(v) then
-      if opts.list_behavior == 'replace' then
-        return false
-      end
+      return false
     end
     return true
   end
@@ -115,15 +110,21 @@ function M.merge(a, b, opts)
     local value = values[i]
     if can_merge(ret) and can_merge(value) then
       for k, v in pairs(value) do
-        ret[k] = M.merge(ret[k], v)
+        ret[k] = M.merge(ret[k], v, opts)
       end
     else
-      if vim.islist(ret) and vim.islist(value) then
+      if (ret == nil or vim.islist(ret)) and (value == nil or vim.islist(value)) then
         if opts.list_behavior == 'append' then
-          ret = vim.list_extend(ret, value)
+          local out = {}
+          vim.list_extend(out, ret or {})
+          vim.list_extend(out, value or {})
+          ret = out
         elseif opts.list_behavior == 'prepend' then
-          ret = vim.list_extend(value, ret)
-        else
+          local out = {}
+          vim.list_extend(out, value or {})
+          vim.list_extend(out, ret or {})
+          ret = out
+        else -- replace
           ret = value
         end
       else

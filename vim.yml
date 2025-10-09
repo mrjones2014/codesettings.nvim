@@ -3,3 +3,15 @@ name: vim
 globals:
   vim:
     any: true
+  assert:
+    any: true
+  describe:
+    any: true
+  it:
+    any: true
+  before_each:
+    any: true
+  setup:
+    any: true
+  teardown:
+    any: true

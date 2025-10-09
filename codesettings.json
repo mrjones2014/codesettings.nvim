@@ -1,6 +1,11 @@
 {
-  "Lua.addonManager.enable": false,
-  "Lua.addonManager.repositoryPath": "test",
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.workspace.library": [
+    "${3rd}/luassert/library",
+    "${addons}/busted/library"
+  ],
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.addonManager.enable": true,
   // Some extra properties to test with
   "eslint.codeAction.disableRuleComment": {
     "enable": true,

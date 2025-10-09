@@ -18,6 +18,7 @@
             just
             stylua
             selene
+            luajitPackages.busted
           ];
         };
       }
