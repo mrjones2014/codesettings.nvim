@@ -1,6 +1,7 @@
 ---@class CodesettingsConfig
 ---@field config_file_paths string[]
 ---@field jsonls_integration boolean
+---@field default_merge_opts MergeOpts
 ---@field setup fun(opts: table|nil)
 
 -- Internal defaults table (not exposed directly)
@@ -12,6 +13,11 @@ local options = {
   ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
   ---make sure you have the jsonc tree-sitter parser installed for highlighting
   jsonc_filetype = true,
+  ---Choose the default merge behavior
+  default_merge_opts = {
+    --- How to merge lists; 'append' (default), 'prepend', or 'replace'
+    list_behavior = 'append',
+  },
 }
 
 -- Public config object (contains only the options + setup)

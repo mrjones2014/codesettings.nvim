@@ -26,10 +26,11 @@ end
 ---Load settings from VS Code settings.json file
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer' or 'tsserver'
 ---@param config table the LSP config to merge the vscode settings into
+---@param merge_opts MergeOpts? options for merging; if nil, uses the default from config
 ---@return table config the merged config
-function M.with_local_settings(lsp_name, config)
+function M.with_local_settings(lsp_name, config, merge_opts)
   return Settings.new(config)
-    :merge(M.local_settings():schema(lsp_name):get(SpecialCases[lsp_name]), 'settings')
+    :merge(M.local_settings():schema(lsp_name):get(SpecialCases[lsp_name]), 'settings', merge_opts)
     :totable()
 end
 

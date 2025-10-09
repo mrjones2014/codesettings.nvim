@@ -32,7 +32,8 @@ function M.expand(tbl)
   for key, value in pairs(tbl) do
     ret:set(key, value)
   end
-  return ret:get()
+  -- :get() always returns a table when called without a key
+  return ret:get() --[[@as table]]
 end
 
 function M.path(key)
@@ -75,6 +76,7 @@ end
 ---@param key string|nil the key to get, like 'rust-analyzer.cargo.loadOutDirsFromCheck'; if `key` is nil, acts like `:totable()`
 ---@return table|string|boolean|number|nil setting the subtable value at that key; if the value is a table, it returns a table, not a Settings object
 function Settings:get(key)
+  ---@type table|string|boolean|number|nil
   local node = self._settings
 
   for _, part in ipairs(M.path(key)) do
@@ -141,8 +143,9 @@ end
 
 ---@param settings Settings settings to merge into this one
 ---@param key string|nil if given, merge only the subtable at this key
+---@param opts MergeOpts? options for merging tables
 ---@return Settings
-function Settings:merge(settings, key)
+function Settings:merge(settings, key, opts)
   if not settings then
     return self
   end
@@ -150,10 +153,10 @@ function Settings:merge(settings, key)
     settings = M.new(settings)
   end
   if key then
-    local value = Util.merge({}, self:get(key) or {}, settings._settings)
+    local value = Util.merge(Util.merge({}, self:get(key) or {}, opts), settings._settings, opts)
     self:set(key, value)
   else
-    self._settings = Util.merge(self._settings, settings._settings)
+    self._settings = Util.merge(self._settings, settings._settings, opts)
   end
   return self
 end

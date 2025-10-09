@@ -82,12 +82,34 @@ function M.get_local_configs(opts)
   return _config_files
 end
 
-function M.merge(...)
+---@class MergeOpts
+---@field list_behavior? 'replace'|'append'|'prepend' how to merge lists; defaults to 'append'
+
+--- Deep merge two values, with `b` taking precedence over `a`.
+--- Tables are merged recursively; lists are merged based on `opts.list_behavior`.
+---@generic T
+---@param a T first value
+---@param b T second value
+---@param opts MergeOpts? options for merging
+---@return T merged value
+function M.merge(a, b, opts)
+  opts = vim.tbl_deep_extend('force', Config.default_merge_opts, opts or {})
   local function can_merge(v)
-    return type(v) == 'table' and (vim.tbl_isempty(v) or not vim.islist(v))
+    if type(v) ~= 'table' then
+      return false
+    end
+    if vim.tbl_isempty(v) then
+      return true
+    end
+    if vim.islist(v) then
+      if opts.list_behavior == 'replace' then
+        return false
+      end
+    end
+    return true
   end
 
-  local values = { ... }
+  local values = { a, b }
   local ret = values[1]
   for i = 2, #values, 1 do
     local value = values[i]
@@ -96,7 +118,17 @@ function M.merge(...)
         ret[k] = M.merge(ret[k], v)
       end
     else
-      ret = value
+      if vim.islist(ret) and vim.islist(value) then
+        if opts.list_behavior == 'append' then
+          ret = vim.list_extend(ret, value)
+        elseif opts.list_behavior == 'prepend' then
+          ret = vim.list_extend(value, ret)
+        else
+          ret = value
+        end
+      else
+        ret = value
+      end
     end
   end
   return ret

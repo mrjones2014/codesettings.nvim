@@ -53,8 +53,14 @@ return {
     ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
     ---make sure you have the jsonc tree-sitter parser installed for highlighting
     jsonc_filetype = true,
+    ---Choose the default merge behavior
+    default_merge_opts = {
+      --- How to merge lists; 'replace' (default), 'append', or 'prepend'
+      list_behavior = 'append',
+    },
   },
-  -- make sure to load the plugin for `jsonls_integration` and `jsonc_filetype` to work
+  -- make sure to load the plugin for `jsonls_integration` and `jsonc_filetype` to work,
+  -- or if you are using non-default configs
   event = 'VeryLazy',
 }
 ```
@@ -103,7 +109,7 @@ return codesettings.with_local_settings('rust-analyzer', {
 ## API
 
 - `require('codesettings').setup(opts?: CodesettingsConfig)`
-  - Initialize the plugin. You only need to call this for `jsonls_integration` and `jsonc_filetype` to work, or to customize the local filepaths to look for. It is _not_ required for your local configs to take effect (unless you customize the local config file paths).
+  - Initialize the plugin. You only need to call this for `jsonls_integration` and `jsonc_filetype` to work, or to customize the local filepaths to look for. It is _not_ required for your local configs to take effect, unless you wish to use non-default plugin configuration.
 
 - `require('codesettings').with_local_settings(lsp_name: string, config: table): table`
   - Loads settings from the configured files, extracts relevant settings for the given LSP based on its schema, and deep-merges into `config.settings`. Returns the merged config.
@@ -113,7 +119,7 @@ return codesettings.with_local_settings('rust-analyzer', {
   - If `lsp_name` is specified, filters down to only the relevant properties according to the LSP's schema.
   - `Settings` object provides some methods like:
     - `Settings:schema(lsp_name)` - Filter the settings down to only the keys that match the relevant schema e.g. `settings:schema('eslint')`
-    - `Settings:merge(settings)` - merge another `Settings` object into this one
+    - `Settings:merge(settings, key, merge_opts)` - merge another `Settings` object into this one, optionally specify a sub-key to merge, and control merge behavior with the 2nd and 3rd parameter, respectively
     - `Settings:get(key)` - returns the value at the specified key; supports dot-separated key paths like `Settings:get('some.sub.property')`
     - `Settings:get_subtable(key)` - like `Settings:get(key)`, but returns a `Settings` object if the path is a table, otherwise an empty `Settings` object
     - `Settings:clear()` - remove all values
@@ -148,10 +154,8 @@ local eslint_settings = c.local_settings()
 Follows the semantics of `vim.tbl_deep_extend('force', your_config, local_config)`, essentially:
 
 - The plugin deep-merges plain tables (non-list tables)
-- Lists/arrays are replaced, not concatenated
+- List/array values are appended by default; you can change this behavior in configuration or through the API
 - Your provided `config` is the base; values from the settings file override or extend it within `config.settings`
-
-In short, VS Code-style settings take effect while preserving your base config, unless you explicitly override them.
 
 ## Acknowledgements
 
