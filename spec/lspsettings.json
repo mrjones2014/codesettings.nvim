@@ -1,0 +1,6 @@
+{
+  "eslint.codeAction.disableRuleComment": {
+    "enable": true,
+    "location": "separateLine"
+  },
+}

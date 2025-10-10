@@ -5,10 +5,4 @@
     "${addons}/busted/library"
   ],
   "Lua.workspace.checkThirdParty": false,
-  "Lua.addonManager.enable": true,
-  // Some extra properties to test with
-  "eslint.codeAction.disableRuleComment": {
-    "enable": true,
-    "location": "separateLine"
-  },
 }
