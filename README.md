@@ -1,4 +1,4 @@
-# ⚙️codesettings.nvim
+# ⚙️ codesettings.nvim
 
 Easily read your project's local settings files and merge them into your Neovim 0.11+ native LSP configuration.
 
