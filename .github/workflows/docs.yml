@@ -11,7 +11,7 @@ jobs:
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
-          vimdoc: codesettings-nvim
+          vimdoc: ${{ github.event.repository.name }}
           version: "Neovim >= 0.11.0"
           demojify: true
           treesitter: true
