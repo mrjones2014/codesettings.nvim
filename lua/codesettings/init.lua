@@ -30,7 +30,7 @@ end
 ---@return table config the merged config
 function M.with_local_settings(lsp_name, config, merge_opts)
   return Settings.new(config)
-    :merge(M.local_settings():schema(lsp_name):get(SpecialCases[lsp_name]), 'settings', merge_opts)
+    :merge(M.local_settings():schema(lsp_name):get_subtable(SpecialCases[lsp_name]), 'settings', merge_opts)
     :totable()
 end
 
