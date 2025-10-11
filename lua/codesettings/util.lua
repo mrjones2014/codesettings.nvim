@@ -1,5 +1,6 @@
 local Config = require('codesettings.config')
 
+---@class CodesettingsUtil
 local M = {}
 
 function M.read_file(file)
@@ -82,7 +83,7 @@ function M.get_local_configs(opts)
   return _config_files
 end
 
----@class MergeOpts
+---@class CodesettingsMergeOpts
 ---@field list_behavior? 'replace'|'append'|'prepend' how to merge lists; defaults to 'append'
 
 --- Deep merge two values, with `b` taking precedence over `a`.
@@ -90,7 +91,7 @@ end
 ---@generic T
 ---@param a T first value
 ---@param b T second value
----@param opts MergeOpts? options for merging
+---@param opts CodesettingsMergeOpts? options for merging
 ---@return T merged value
 function M.merge(a, b, opts)
   opts = vim.tbl_deep_extend('force', Config.default_merge_opts, opts or {})

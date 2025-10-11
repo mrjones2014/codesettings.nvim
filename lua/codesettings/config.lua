@@ -1,7 +1,7 @@
 ---@class CodesettingsConfig
 ---@field config_file_paths string[]
 ---@field jsonls_integration boolean
----@field default_merge_opts MergeOpts
+---@field default_merge_opts CodesettingsMergeOpts
 ---@field setup fun(opts: table|nil)
 
 -- Internal defaults table (not exposed directly)

@@ -1,5 +1,10 @@
-local Util = require('codesettings.util')
-local View = require('codesettings.view')
+-- these are lazy loaded in the command handler below
+-- to help reduce init time
+
+---@type CodesettingsUtil
+local Util
+---@type CodesettingsView
+local View
 
 local subcommands = {
   ---Show the resolved LSP configuration for each active LSP client
@@ -74,6 +79,9 @@ local M = {}
 
 function M.setup()
   vim.api.nvim_create_user_command('Codesettings', function(args)
+    Util = require('codesettings.util')
+    View = require('codesettings.view')
+
     local cmd = vim.trim(args.args or '')
     if subcommands[cmd] then
       subcommands[cmd]()

@@ -72,13 +72,13 @@ M.index = {
   zls = 'https://raw.githubusercontent.com/zigtools/zls-vscode/master/package.json',
 }
 
----@class LspSchema
+---@class CodesettingsLspSchema
 ---@field package_url string url of the package.json of the LSP server
 ---@field settings_file string file of the settings json schema of the LSP server
 
----@return table<string, LspSchema>
+---@return table<string, CodesettingsLspSchema>
 function M.get_schemas()
-  ---@type table<string, LspSchema>
+  ---@type table<string, CodesettingsLspSchema>
   local ret = {}
 
   for server, package_json in pairs(M.index) do
@@ -91,7 +91,7 @@ function M.get_schemas()
   return ret
 end
 
----@param schema LspSchema
+---@param schema CodesettingsLspSchema
 function M.fetch_schema(schema)
   local json = vim.json.decode(Util.fetch(schema.package_url)) or {}
   local config = json.contributes and json.contributes.configuration or json.properties and json

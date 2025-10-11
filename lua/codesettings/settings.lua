@@ -2,7 +2,7 @@ local Util = require('codesettings.util')
 
 local M = {}
 
----@class Settings
+---@class CodesettingsSettings
 ---@field _settings table
 ---@field file string
 local Settings = {}
@@ -134,7 +134,7 @@ end
 ---and it returns a `Settings` object wrapping that table if it is, instead
 ---of a raw table.
 ---@param key string the key to get, like 'rust-analyzer.cargo'
----@return Settings settings the subtable wrapped in a Settings object, or nil if the
+---@return CodesettingsSettings settings the subtable wrapped in a Settings object, or nil if the
 function Settings:get_subtable(key)
   local value = self:get(key)
   if type(value) ~= 'table' then
@@ -146,7 +146,7 @@ end
 ---Return a new Settings object containing only the keys defined in the given schema.
 ---Does *not* modify this Settings object, returns a new instance.
 ---@param lsp_name string the name of lsp for which to load the schema (e.g. 'rust-analyzer' or 'tsserver')
----@return Settings settings a new Settings object containing only the keys defined in the schema
+---@return CodesettingsSettings settings a new Settings object containing only the keys defined in the schema
 function Settings:schema(lsp_name)
   -- NB: inline require to avoid circular dependency
   local Schema = require('codesettings.schema')
@@ -181,10 +181,10 @@ function Settings:load(file)
   return self
 end
 
----@param settings Settings settings to merge into this one
+---@param settings CodesettingsSettings settings to merge into this one
 ---@param key string|nil if given, merge only the subtable at this key
----@param opts MergeOpts? options for merging tables
----@return Settings
+---@param opts CodesettingsMergeOpts? options for merging tables
+---@return CodesettingsSettings
 function Settings:merge(settings, key, opts)
   if not settings then
     return self

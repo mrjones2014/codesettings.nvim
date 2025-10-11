@@ -3,28 +3,28 @@ local Settings = require('codesettings.settings')
 local M = {}
 
 ---map lsp_name to schema file metadata
----@type table<string, LspSchema>
+---@type table<string, CodesettingsLspSchema>
 local _schema_metadata
 
 ---map of lsp_name to parsed schema
----@type table<string, Schema>
+---@type table<string, CodesettingsSchema>
 local _cache = {}
 
----@class Schema
----@field _schema Settings
+---@class CodesettingsSchema
+---@field _schema CodesettingsSettings
 local Schema = {}
 Schema.__index = Schema
 
 ---Create a new Schema object from a Settings object
----@param schema Settings|nil
----@return Schema
+---@param schema CodesettingsSettings|nil
+---@return CodesettingsSchema
 function M.new(schema)
   return setmetatable({ _schema = schema or Settings.new() }, Schema)
 end
 
 ---Load the schema for the given LSP name, or return an empty schema if none is found
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer'
----@return Schema schema the loaded schema, or an empty schema if none is found
+---@return CodesettingsSchema schema the loaded schema, or an empty schema if none is found
 function M.load(lsp_name)
   if _schema_metadata == nil then
     _schema_metadata = require('codesettings.build.schemas').get_schemas()
