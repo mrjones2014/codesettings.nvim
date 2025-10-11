@@ -15,6 +15,28 @@ to `vim.lsp.config()` (or any way you configure LSP).
   - `codesettings.json`
   - `lspsettings.json`
 
+## Features
+
+- Minimal API: one function you call per server setup, or with a global hook (see example below)
+- `jsonls` integration for schema-based completion of LSP settings
+- `jsonc` filetype for local config files
+- Supports custom config file names/locations
+- See [./schemas/](https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas) for the list of supported LSPs
+- Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
+
+```jsonc
+{
+  "Lua": {
+    "runtime.version": "LuaJIT",
+    "workspace": {
+      "library": ["${3rd}/luassert/library", "${addons}/busted/library"],
+      "checkThirdParty": false,
+    },
+    "diagnostics.globals": ["vim", "setup", "teardown"],
+  },
+}
+```
+
 ## Installation
 
 For some features (namely, `jsonls` integration and `jsonc` filetype handling), you must call `setup()`.
@@ -81,7 +103,8 @@ vim.lsp.config(
   })
 )
 
--- or from a config file under `/lsp/rust-analyzer.lua` in your config directory
+-- or from a config file under `/lsp/rust-analyzer.lua` in your config directory.
+-- if you use rustaceanvim to configure rust-analyzer, see the `rustaceanvim` section below
 return codesettings.with_local_settings('rust-analyzer', {
   settings = {
     -- ...
@@ -89,25 +112,39 @@ return codesettings.with_local_settings('rust-analyzer', {
 })
 ```
 
-## Features
+### Rustaceanvim
 
-- Minimal API: one function you call per server setup, or with a global hook (see example below)
-- `jsonls` integration for schema-based completion of LSP settings
-- `jsonc` filetype for local config files
-- Supports custom config file names/locations
-- See [./schemas/](https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas) for the list of supported LSPs
-- Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
+The `before_init` global hook does not work if you use [rustaceanvim](https://github.com/mrcjkb/rustaceanvim)
+to configure `rust-analyzer`, however you can still use `codesettings.nvim` to merge local settings.
 
-```jsonc
-{
-  "Lua": {
-    "runtime.version": "LuaJIT",
-    "workspace": {
-      "library": ["${3rd}/luassert/library", "${addons}/busted/library"],
-      "checkThirdParty": false,
-    },
-    "diagnostics.globals": ["vim", "setup", "teardown"],
-  },
+`rustaceanvim` loads VS Code settings by default, but your global settings override the local ones; `codesettings.nvim`
+does the opposite. Here's how I configure `rustaceanvim` in my own setup:
+
+```lua
+return {
+  'mrcjkb/rustaceanvim',
+  ft = 'rust',
+  version = '^6',
+  dependencies = { 'mrjones2014/codesettings.nvim' },
+  init = function()
+    vim.g.rustaceanvim = {
+      -- the rest of your settings go here...
+
+      -- I want VS Code settings to override my settings,
+      -- not the other way around, so use codesettings.nvim
+      -- instead of rustaceanvim's built-in vscode settings loader
+      load_vscode_settings = false,
+      -- the global hook doesn't work when configuring rust-analyzer with rustaceanvim
+      settings = function(params, config)
+        return params, require('codesettings').with_local_settings('rust-analyzer', config)
+      end,
+      default_settings = {
+        ['rust-analyzer'] = {
+          -- your global LSP settings go here
+        },
+      },
+    }
+  end,
 }
 ```
 
