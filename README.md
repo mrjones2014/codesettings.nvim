@@ -47,17 +47,25 @@ return {
 
 ## Quick start
 
-```lua
-local codesettings = require('codesettings')
+**Recommended setup:** If you don't use `before_init` for anything else, you can use it as a global hook
+to look for local config files for all LSPs:
 
--- global hook
+```lua
 vim.lsp.config('*', {
   before_init = function(_, config)
+    local codesettings = require('codesettings')
     config = codesettings.with_local_settings(config.name, config)
   end,
 })
+```
 
--- or per-server
+**Alternatively,** you can configure it on a per-server basis.
+
+```lua
+-- you can also still use `before_init` here
+-- if you want codesettings to be `require`d
+-- lazily
+local codesettings = require('codesettings')
 vim.lsp.config(
   'yamlls',
   codesettings.with_local_settings('yamlls', {
