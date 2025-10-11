@@ -3,21 +3,17 @@
 ==============================================================================
 Table of Contents                        *codesettings.nvim-table-of-contents*
 
-2. codesettings.nvim                     |codesettings.nvim-codesettings.nvim|
-  - Requirements            |codesettings.nvim-codesettings.nvim-requirements|
-  - Features                    |codesettings.nvim-codesettings.nvim-features|
-  - Installation            |codesettings.nvim-codesettings.nvim-installation|
-  - Quick start              |codesettings.nvim-codesettings.nvim-quick-start|
-  - Commands                    |codesettings.nvim-codesettings.nvim-commands|
-  - API                              |codesettings.nvim-codesettings.nvim-api|
-  - How it finds your settings|codesettings.nvim-codesettings.nvim-how-it-finds-your-settings|
-  - How merging works  |codesettings.nvim-codesettings.nvim-how-merging-works|
-  - Why                              |codesettings.nvim-codesettings.nvim-why|
-  - Acknowledgements    |codesettings.nvim-codesettings.nvim-acknowledgements|
-
-==============================================================================
-2. codesettings.nvim                     *codesettings.nvim-codesettings.nvim*
-
+1. Requirements                               |codesettings.nvim-requirements|
+2. Features                                       |codesettings.nvim-features|
+3. Installation                               |codesettings.nvim-installation|
+4. Quick start                                 |codesettings.nvim-quick-start|
+  - Rustaceanvim                  |codesettings.nvim-quick-start-rustaceanvim|
+5. Commands                                       |codesettings.nvim-commands|
+6. API                                                 |codesettings.nvim-api|
+7. How it finds your settings   |codesettings.nvim-how-it-finds-your-settings|
+8. How merging works                     |codesettings.nvim-how-merging-works|
+9. Why                                                 |codesettings.nvim-why|
+10. Acknowledgements                      |codesettings.nvim-acknowledgements|
 Easily read your project’s local settings files and merge them into your
 Neovim 0.11+ native LSP configuration.
 
@@ -27,7 +23,8 @@ from VS Code’s settings schema into the LSP `settings` table you pass to
 `vim.lsp.config()` (or any way you configure LSP).
 
 
-REQUIREMENTS                *codesettings.nvim-codesettings.nvim-requirements*
+==============================================================================
+1. Requirements                               *codesettings.nvim-requirements*
 
 - Neovim 0.11+ (uses the new `vim.lsp.config()` API)
 - A JSON(C) file in your project root with LSP settings (optional; if missing, your config is returned unchanged).
@@ -37,7 +34,8 @@ REQUIREMENTS                *codesettings.nvim-codesettings.nvim-requirements*
     - `lspsettings.json`
 
 
-FEATURES                        *codesettings.nvim-codesettings.nvim-features*
+==============================================================================
+2. Features                                       *codesettings.nvim-features*
 
 - Minimal API: one function you call per server setup, or with a global hook (see example below)
 - `jsonls` integration for schema-based completion of LSP settings
@@ -60,7 +58,8 @@ FEATURES                        *codesettings.nvim-codesettings.nvim-features*
 <
 
 
-INSTALLATION                *codesettings.nvim-codesettings.nvim-installation*
+==============================================================================
+3. Installation                               *codesettings.nvim-installation*
 
 For some features (namely, `jsonls` integration and `jsonc` filetype handling),
 you must call `setup()`.
@@ -92,7 +91,8 @@ you must call `setup()`.
 <
 
 
-QUICK START                  *codesettings.nvim-codesettings.nvim-quick-start*
+==============================================================================
+4. Quick start                                 *codesettings.nvim-quick-start*
 
 **Recommended setup:** If you don’t use `before_init` for anything else, you
 can use it as a global hook to look for local config files for all LSPs:
@@ -138,7 +138,7 @@ can use it as a global hook to look for local config files for all LSPs:
 <
 
 
-RUSTACEANVIM ~
+RUSTACEANVIM                      *codesettings.nvim-quick-start-rustaceanvim*
 
 The `before_init` global hook does not work if you use rustaceanvim
 <https://github.com/mrcjkb/rustaceanvim> to configure `rust-analyzer`, however
@@ -177,7 +177,8 @@ configure `rustaceanvim` in my own setup:
 <
 
 
-COMMANDS                        *codesettings.nvim-codesettings.nvim-commands*
+==============================================================================
+5. Commands                                       *codesettings.nvim-commands*
 
 - `:Codesettings show` - show the resolved LSP config for each active LSP client; note that this only shows _active_ clients
 - `:Codesettings local` - show the resolved local config found in local config files in your project
@@ -186,7 +187,8 @@ COMMANDS                        *codesettings.nvim-codesettings.nvim-commands*
 - `:Codesettings health` - check plugin health (alias for `:checkhealth codesettings`)
 
 
-API                                  *codesettings.nvim-codesettings.nvim-api*
+==============================================================================
+6. API                                                 *codesettings.nvim-api*
 
 - `require('codesettings').setup(opts?: CodesettingsConfig)`
     - Initialize the plugin. You only need to call this for `jsonls_integration` and `jsonc_filetype` to work, or to customize the local filepaths to look for. It is _not_ required for your local configs to take effect, unless you wish to use non-default plugin configuration.
@@ -223,13 +225,15 @@ Example using `local_settings()` directly:
 <
 
 
-HOW IT FINDS YOUR SETTINGS*codesettings.nvim-codesettings.nvim-how-it-finds-your-settings*
+==============================================================================
+7. How it finds your settings   *codesettings.nvim-how-it-finds-your-settings*
 
 - Root discovery uses `vim.fs.root` to search upwards with markers based on your configured config file paths, as well as `.git`
 - The plugin checks each path in `config_file_paths` under your project root and uses any that exist
 
 
-HOW MERGING WORKS      *codesettings.nvim-codesettings.nvim-how-merging-works*
+==============================================================================
+8. How merging works                     *codesettings.nvim-how-merging-works*
 
 Follows the semantics of `vim.tbl_deep_extend('force', your_config,
 local_config)`, essentially:
@@ -239,7 +243,8 @@ local_config)`, essentially:
 - Your provided `config` is the base; values from the settings file override or extend it within `config.settings`
 
 
-WHY                                  *codesettings.nvim-codesettings.nvim-why*
+==============================================================================
+9. Why                                                 *codesettings.nvim-why*
 
 folke/neoconf.nvim <https://github.com/folke/neoconf.nvim> exists, but it has a
 hard dependency on neovim/nvim-lspconfig
@@ -257,7 +262,8 @@ This plugin is like `neoconf.nvim`, but simpler, and without a dependency on
 `nvim-lspconfig`.
 
 
-ACKNOWLEDGEMENTS        *codesettings.nvim-codesettings.nvim-acknowledgements*
+==============================================================================
+10. Acknowledgements                      *codesettings.nvim-acknowledgements*
 
 - Some parts of this plugin are heavily based on folke’s neoconf.nvim plugin <https://github.com/folke/neoconf.nvim>
 - This plugin bundles json.lua <https://github.com/actboy168/json.lua>, a pure-Lua JSON library for parsing `jsonc` files
