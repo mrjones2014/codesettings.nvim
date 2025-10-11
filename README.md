@@ -215,7 +215,7 @@ Follows the semantics of `vim.tbl_deep_extend('force', your_config, local_config
 | Depends on `nvim-lspconfig`                | No (but will still work with it if you choose to use it) | Yes                                      |
 | Supports mixed nested and dotted key paths | Yes                                                      | No                                       |
 | Customizable list value merging behavior   | Yes                                                      | No                                       |
-| `jsonls` integration                       | Yes                                                      | Yes                                      |
+| `jsonls` integration                       | Yes, including mixed nested and dotted key paths         | Yes                                      |
 | `jsonc` filetype support                   | Yes                                                      | Yes                                      |
 | `setup()` required                         | Only for some editor integration features                | Yes                                      |
 | Loading settings                           | API call                                                 | Automatic through `nvim-lspconfig` hooks |
