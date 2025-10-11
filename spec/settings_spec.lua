@@ -148,3 +148,125 @@ describe('Settings:load()', function()
     assert.same({}, S:get())
   end)
 end)
+
+describe('Settings:schema()', function()
+  it('filters keys according to schema for dashed lsp name', function()
+    local S = Settings.new()
+    S:set('rust-analyzer.cargo.allTargets', true)
+    S:set('rust-analyzer.cargo.features', { 'a' })
+    S:set('rust-analyzer.notARealProperty', 1)
+
+    local filtered = S:schema('rust-analyzer'):get()
+    assert.same({
+      ['rust-analyzer'] = {
+        cargo = {
+          allTargets = true,
+          features = { 'a' },
+        },
+      },
+    }, filtered)
+  end)
+
+  it('filters keys according to schema with different root name (lua_ls -> Lua)', function()
+    local S = Settings.new()
+    S:set('Lua.runtime.version', 'LuaJIT')
+    S:set('Lua.__codesettings_test_key__', true)
+
+    local filtered = S:schema('lua_ls'):get()
+    assert.same({
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+        },
+      },
+    }, filtered)
+  end)
+
+  it('returns empty settings for unknown lsp', function()
+    local S = Settings.new()
+    S:set('some.key', 1)
+    local filtered = S:schema('definitely_nonexistent_language_server_xyz'):get()
+    assert.same({}, filtered)
+  end)
+
+  it('does not modify the original Settings', function()
+    local S = Settings.new()
+    S:set('Lua.runtime.version', 'LuaJIT')
+    local before = vim.deepcopy(S:get() --[[@as table]])
+    S:schema('lua_ls')
+    assert.same(before, S:get())
+  end)
+end)
+
+describe('Settings.expand()', function()
+  it('passes non-table through', function()
+    assert.equal(5, Settings.expand(5))
+  end)
+
+  it('expands dotted keys into nested tables', function()
+    local expanded = Settings.expand({
+      ['a.b'] = 1,
+      c = 2,
+      d = { e = 3 },
+    })
+    assert.same({
+      a = { b = 1 },
+      c = 2,
+      d = { e = 3 },
+    }, expanded)
+  end)
+
+  it('supports multi-level dotted keys and array values', function()
+    local expanded = Settings.expand({
+      ['x.y.z'] = true,
+      ['arr.items'] = { 1, 2, 3 },
+    })
+    assert.same({
+      x = { y = { z = true } },
+      arr = { items = { 1, 2, 3 } },
+    }, expanded)
+  end)
+
+  it('does not mutate the input table', function()
+    local input = {
+      ['u.v'] = 10,
+      w = { t = 20 },
+    }
+    local before = vim.deepcopy(input)
+    local _ = Settings.expand(input)
+    assert.same(before, input)
+  end)
+
+  it('expands empty table to empty table', function()
+    assert.same({}, Settings.expand({}))
+  end)
+
+  it('expands mixed nested and dotted keys', function()
+    local expanded = Settings.expand({
+      test = {
+        inner = 1,
+        inner2 = 2,
+        ['deep.nested.path'] = {
+          something = 'value',
+          ['other.nested'] = true,
+        },
+      },
+      ['test.merge'] = 4,
+    })
+    assert.same({
+      test = {
+        inner = 1,
+        inner2 = 2,
+        deep = {
+          nested = {
+            path = {
+              something = 'value',
+              other = { nested = true },
+            },
+          },
+        },
+        merge = 4,
+      },
+    }, expanded)
+  end)
+end)

@@ -24,16 +24,56 @@ function M.load_all()
   return settings
 end
 
+local function is_map(t)
+  return type(t) == 'table' and not vim.islist(t)
+end
+
+local function merge_set(parent, key, value)
+  local existing = parent[key]
+  if is_map(existing) and is_map(value) then
+    parent[key] = Util.merge(existing, value)
+  else
+    parent[key] = value
+  end
+end
+
+local function set_by_path(t, parts, value)
+  local node = t
+  for i = 1, #parts - 1 do
+    local p = parts[i]
+    if type(node[p]) ~= 'table' or vim.islist(node[p]) then
+      node[p] = {}
+    end
+    node = node[p]
+  end
+  merge_set(node, parts[#parts], value)
+end
+
 function M.expand(tbl)
   if type(tbl) ~= 'table' then
     return tbl
   end
-  local ret = M.new()
+
+  local out = {}
   for key, value in pairs(tbl) do
-    ret:set(key, value)
+    local v = value
+    -- Recurse into map-like tables, but never into JSON Schema "properties" tables.
+    if is_map(v) and key ~= 'properties' then
+      v = M.expand(v)
+    end
+
+    if type(key) == 'string' and key:find('%.') then
+      local parts = {}
+      for part in key:gmatch('[^.]+') do
+        parts[#parts + 1] = part
+      end
+      set_by_path(out, parts, v)
+    else
+      merge_set(out, key, v)
+    end
   end
-  -- :get() always returns a table when called without a key
-  return ret:get() --[[@as table]]
+
+  return out
 end
 
 function M.path(key)

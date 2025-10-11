@@ -2,23 +2,15 @@
 
 Easily read your project's local settings files and merge them into your Neovim 0.11+ native LSP configuration.
 
-## Features
-
 This plugin makes it easy to reuse settings your team already committed to version control for VS Code by
-transparently merging the relevant settings from VS Code's settings schema into the LSP `settings` table you pass
+providing an API to merge the relevant settings from VS Code's settings schema into the LSP `settings` table you pass
 to `vim.lsp.config()` (or any way you configure LSP).
-
-- Minimal API: one function you call per server setup, or with a global hook (see example below)
-- `jsonls` integration for schema-based completion of LSP settings
-- `jsonc` filetype for local config files
-- Supports custom config file names/locations
-- See [./schemas/](https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas) for the list of supported LSPs
 
 ## Requirements
 
 - Neovim 0.11+ (uses the new `vim.lsp.config()` API)
-- A supported settings file in your project root (optional; if missing, your config is returned unchanged).
-  By default, the plugin looks for any of:
+- A JSON(C) file in your project root with LSP settings (optional; if missing, your config is returned unchanged).
+  Paths are configurable, but by default, the plugin looks for any of:
   - `.vscode/settings.json`
   - `codesettings.json`
   - `lspsettings.json`
@@ -87,6 +79,28 @@ return codesettings.with_local_settings('rust-analyzer', {
     -- ...
   },
 })
+```
+
+## Features
+
+- Minimal API: one function you call per server setup, or with a global hook (see example below)
+- `jsonls` integration for schema-based completion of LSP settings
+- `jsonc` filetype for local config files
+- Supports custom config file names/locations
+- See [./schemas/](https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas) for the list of supported LSPs
+- Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
+
+```jsonc
+{
+  "Lua": {
+    "runtime.version": "LuaJIT",
+    "workspace": {
+      "library": ["${3rd}/luassert/library", "${addons}/busted/library"],
+      "checkThirdParty": false,
+    },
+    "diagnostics.globals": ["vim", "setup", "teardown"],
+  },
+}
 ```
 
 ## Commands

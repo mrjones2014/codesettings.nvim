@@ -66,6 +66,7 @@ describe('integration tests', function()
           enable = true,
           location = 'separateLine',
         },
+        showDocumentation = { enable = true },
       },
     })
   end)
