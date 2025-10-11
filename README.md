@@ -18,7 +18,7 @@ to `vim.lsp.config()` (or any way you configure LSP).
 ## Features
 
 - Minimal API: one function you call per server setup, or with a global hook (see example below)
-- `jsonls` integration for schema-based completion of LSP settings
+- `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
 - `jsonc` filetype for local config files
 - Supports custom config file names/locations
 - See [./schemas/](https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas) for the list of supported LSPs
@@ -207,20 +207,25 @@ Follows the semantics of `vim.tbl_deep_extend('force', your_config, local_config
 - List/array values are appended by default; you can change this behavior in configuration or through the API
 - Your provided `config` is the base; values from the settings file override or extend it within `config.settings`
 
-## Why
+## Comparison with neoconf.nvim
 
-[folke/neoconf.nvim](https://github.com/folke/neoconf.nvim) exists, but it has a hard dependency on
-[neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig). With Neovim 0.11+, LSP can be easily configured
-with just `vim.lsp.config()` APIs and I did not want to depend on `nvim-lspconfig` in my configuration anymore.
+|                                            | `codesettings.nvim`                                      | `neoconf.nvim`                           |
+| ------------------------------------------ | -------------------------------------------------------- | ---------------------------------------- |
+| Minimum Neovim version                     | Neovim >= 0.11.0                                         | Neovim >= 0.7.2                          |
+| Depends on `nvim-lspconfig`                | No (but will still work with it if you choose to use it) | Yes                                      |
+| Supports mixed nested and dotted key paths | Yes                                                      | No                                       |
+| Customizable list value merging behavior   | Yes                                                      | No                                       |
+| `jsonls` integration                       | Yes                                                      | Yes                                      |
+| `jsonc` filetype support                   | Yes                                                      | Yes                                      |
+| `setup()` required                         | Only for some editor integration features                | Yes                                      |
+| Loading settings                           | API call                                                 | Automatic through `nvim-lspconfig` hooks |
 
-I also wanted the ability to control whether list/array values get replaced or concatenated.
-
-**However**, if you _do_ use `nvim-lspconfig`, this plugin will still work,
-since `nvim-lspconfig` now uses `vim.lsp.config()` internally!
-
-This plugin is like `neoconf.nvim`, but simpler, and without a dependency on `nvim-lspconfig`.
+The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more automatic, but if you want to get rid of `nvim-lspconfig`
+and just use `vim.lsp.config()` APIs, then `codesettings.nvim` provides an API to load local project settings for you.
 
 ## Acknowledgements
 
-- Some parts of this plugin are heavily based on [folke's neoconf.nvim plugin](https://github.com/folke/neoconf.nvim)
+This project would not exist without the hard work of some other open source projects!
+
+- Some parts of this plugin are based on [folke's neoconf.nvim plugin](https://github.com/folke/neoconf.nvim)
 - This plugin bundles [json.lua](https://github.com/actboy168/json.lua), a pure-Lua JSON library for parsing `jsonc` files
