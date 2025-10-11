@@ -175,7 +175,7 @@ function Settings:load(file)
         self:set(k, v)
       end
     else
-      vim.notify(('failed to load json settings from %s'):format(file), vim.log.levels.ERROR)
+      Util.error('failed to load json settings from %s', file)
     end
   end
   return self

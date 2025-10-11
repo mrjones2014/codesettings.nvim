@@ -195,4 +195,14 @@ function M.json_format(obj)
   return ret
 end
 
+local msg_prefix = '[codesettings] '
+
+function M.warn(msg, ...)
+  vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.WARN)
+end
+
+function M.error(msg, ...)
+  vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.ERROR)
+end
+
 return M

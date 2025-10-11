@@ -1,4 +1,3 @@
----@class CodesettingsView
 local M = {}
 
 ---Show given string in a centered floating window, with q and esc bound to close
