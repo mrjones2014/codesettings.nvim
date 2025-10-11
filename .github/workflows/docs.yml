@@ -20,6 +20,13 @@ jobs:
           # exclude the toplevel `# codesettings.nvim` heading
           # because it makes the section tags have duped project name
           shiftheadinglevelby: -1
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: stable
+      - name: Generate helptags
+        run: nvim --headless -c 'helptags doc' -c 'qa'
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v6
         with:
