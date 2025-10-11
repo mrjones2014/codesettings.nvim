@@ -1,8 +1,20 @@
 {
-  "Lua.runtime.version": "LuaJIT",
-  "Lua.workspace.library": [
-    "${3rd}/luassert/library",
-    "${addons}/busted/library"
-  ],
-  "Lua.workspace.checkThirdParty": false,
+  "Lua": {
+    "runtime": {
+      "version": "LuaJIT"
+    },
+    "workspace": {
+      "library": [
+        "${3rd}/luassert/library",
+        "${addons}/busted/library"
+      ],
+      "checkThirdParty": false
+    },
+    "diagnostics": {
+      "globals": [
+        "vim",
+        "setup"
+      ]
+    }
+  }
 }

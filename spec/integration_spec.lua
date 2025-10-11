@@ -1,3 +1,5 @@
+---@module 'luassert'
+
 describe('integration tests', function()
   setup(function()
     -- configure the plugin to look in the spec/ directory

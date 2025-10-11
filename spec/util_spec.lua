@@ -1,3 +1,5 @@
+---@module 'luassert'
+
 local Util = require('codesettings.util')
 
 describe('util.merge - scalar merge', function()
