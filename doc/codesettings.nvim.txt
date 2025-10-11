@@ -262,7 +262,8 @@ local_config)`, essentially:
   value merging                                      
   behavior                                           
 
-  jsonls integration    Yes                          Yes
+  jsonls integration    Yes, including mixed nested  Yes
+                        and dotted key paths         
 
   jsonc filetype        Yes                          Yes
   support                                            
