@@ -62,9 +62,9 @@ you must call `setup()`.
           list_behavior = 'append',
         },
       },
-      -- make sure to load the plugin for `jsonls_integration` and `jsonc_filetype` to work,
-      -- or if you are using non-default configs
-      event = 'VeryLazy',
+      -- I recommend loading on these filetype so that the
+      -- jsonls integration and jsonc filetype setup works
+      ft = { 'json', 'jsonc' },
     }
 <
 
