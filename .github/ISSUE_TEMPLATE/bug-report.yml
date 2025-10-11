@@ -1,0 +1,80 @@
+name: 🐛 Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug"]
+assignees:
+  - mrjones2014
+body:
+  - type: checkboxes
+    id: similar-issues
+    attributes:
+      label: Similar Issues
+      options:
+        - label: Before filing, I have searched for similar issues.
+          required: true
+    validations:
+      required: true
+  - type: textarea
+    id: nvim-version
+    attributes:
+      label: Neovim Version
+      description: "`nvim --version` output, please use a code block"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    validations:
+      required: true
+    attributes:
+      label: Steps to Reproduce
+      value: |
+        1. Create a .vscode/settings.json file
+        2. Create a codesettings.json file
+        3. ...
+        4. Profit?
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+    validations:
+      required: true
+  - type: textarea
+    id: min-config
+    attributes:
+      label: Minimal Configuration to Reproduce
+      description: "MINIMAL configuration to reproduce. Please do not dump your whole configuration. Please start with this minimal configuration."
+      value: |
+        ```lua
+        vim.env.LAZY_STDPATH = ".repro"
+        load(vim.fn.system("curl -s https://raw.githubusercontent.com/folke/lazy.nvim/main/bootstrap.lua"))()
+
+        require("lazy.minit").repro({
+          spec = {
+            "mrjones2014/codesettings.nvim",
+          },
+        })
+
+        -- do anything else you need to do to reproduce the issue
+        ```
+
+        Configuration files:
+
+        `.vscode/settings.json`
+
+        ```jsonc
+        {
+          // add any configuration that causes the issue
+        }
+        ```
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional Details, Snippets, or Screenshots
