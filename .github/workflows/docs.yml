@@ -1,7 +1,9 @@
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+    paths:
+      - README.md
+      - .github/workflows/docs.yml
 name: docs
 jobs:
   docs:
@@ -15,6 +17,9 @@ jobs:
           version: "Neovim >= 0.11.0"
           demojify: true
           treesitter: true
+          # exclude the toplevel `# codesettings.nvim` heading
+          # because it makes the section tags have duped project name
+          shiftheadinglevelby: -1
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v6
         with:
