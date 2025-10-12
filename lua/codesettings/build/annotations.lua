@@ -113,10 +113,10 @@ function M.process_object(name, prop)
       M.add_desc(lines, child)
 
       if child.type == 'object' and child.properties then
-        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_class(field) .. '|nil')
+        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_class(field) .. '?') -- ? since all fields are optional
         M.process_object(field, child)
       else
-        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_type(child) .. '|nil')
+        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_type(child) .. '?') -- ? since all fields are optional
       end
     end
   end
