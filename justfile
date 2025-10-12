@@ -1,11 +1,11 @@
 # Fetch updated VS Code schemas
 build:
-  nvim --cmd "set rtp^=." -l "lua/codesettings/build/init.lua"
+  @nvim --cmd "set rtp^=." -l "lua/codesettings/build/init.lua"
 
 # Delete all VS Code schemas
 clean:
   @echo "Cleaning build artifacts..."
-  nvim --cmd "set rtp^=." --cmd "lua require('codesettings.build.schemas').clean()" --cmd "qa!"
+  @nvim --cmd "set rtp^=." --cmd "lua require('codesettings.build.schemas').clean()" --cmd "qa!"
 
 # Run all checks (linting, formatting, tests)
 check: && test

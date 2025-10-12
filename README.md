@@ -15,28 +15,6 @@ to `vim.lsp.config()` (or any way you configure LSP).
   - `codesettings.json`
   - `lspsettings.json`
 
-## Features
-
-- Minimal API: one function you call per server setup, or with a global hook (see example below)
-- `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
-- `jsonc` filetype for local config files
-- Supports custom config file names/locations
-- See [./schemas/](https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas) for the list of supported LSPs
-- Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
-
-```jsonc
-{
-  "Lua": {
-    "runtime.version": "LuaJIT",
-    "workspace": {
-      "library": ["${3rd}/luassert/library", "${addons}/busted/library"],
-      "checkThirdParty": false,
-    },
-    "diagnostics.globals": ["vim", "setup", "teardown"],
-  },
-}
-```
-
 ## Installation
 
 For some features (namely, `jsonls` integration and `jsonc` filetype handling), you must call `setup()`.
@@ -145,6 +123,30 @@ return {
       },
     }
   end,
+}
+```
+
+## Features
+
+- Minimal API: one function you call per server setup, or with a global hook (see example below)
+- `jsonc` filetype for local config files
+- `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
+  ![jsonls integration](https://github.com/user-attachments/assets/0f1cd386-d05c-4352-984f-6bac77d4434e)
+- Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua
+  ![lua type annotations](https://github.com/user-attachments/assets/647e25cf-9059-433a-bbbf-2069b61df47f)
+- Supports custom config file names/locations
+- Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
+
+```jsonc
+{
+  "Lua": {
+    "runtime.version": "LuaJIT",
+    "workspace": {
+      "library": ["${3rd}/luassert/library", "${addons}/busted/library"],
+      "checkThirdParty": false,
+    },
+    "diagnostics.globals": ["vim", "setup", "teardown"],
+  },
 }
 ```
 
