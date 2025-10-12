@@ -31,7 +31,7 @@ function M.add_desc(lines, prop, prefix)
     if type(prop.default) == 'table' and vim.tbl_isempty(prop.default) then
       prop.default = {}
     end
-    ret = (ret and (ret .. '\n\n') or '') .. '```lua\ndefault = &#x27; .. vim.inspect(prop.default) .. &#x27;\n```'
+    ret = (ret and (ret .. '\n\n') or '') .. '```lua\ndefault = ' .. vim.inspect(prop.default) .. '\n```'
   end
   if ret then
     table.insert(lines, M.comment(ret, prefix))
