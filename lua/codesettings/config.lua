@@ -1,27 +1,21 @@
 ---@class CodesettingsConfig
----@field config_file_paths string[]
----@field jsonls_integration boolean
----@field default_merge_opts CodesettingsMergeOpts
----@field setup fun(opts: table|nil)
+---@field config_file_paths string[] List of config file paths to look for
+---@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
+---@field jsonc_filetype boolean Set filetype to jsonc for config files
+---@field default_merge_opts CodesettingsMergeOpts Default options for merging settings
+---@field setup fun(opts: table|nil) Sets up the configuration with user options
 
--- Internal defaults table (not exposed directly)
 local options = {
-  ---Look for these config files
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
-  ---Integrate with jsonls to provide LSP completion for LSP settings based on schemas
   jsonls_integration = true,
-  ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
-  ---make sure you have the jsonc tree-sitter parser installed for highlighting
   jsonc_filetype = true,
-  ---Choose the default merge behavior
   default_merge_opts = {
-    --- How to merge lists; 'append' (default), 'prepend', or 'replace'
     list_behavior = 'append',
   },
 }
 
--- Public config object (contains only the options + setup)
-local Config = {}
+---@type CodesettingsConfig
+local Config = {} ---@diagnostic disable-line: missing-fields
 
 ---Merge user-supplied options into the defaults.
 ---@param opts table|nil
@@ -44,25 +38,26 @@ function Config.setup(opts)
     vim.filetype.add({
       filename = filetypes,
     })
+    -- lazy loading; go through currently open buffers and explicitly set filetype
+    -- if they are already open
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      local name = vim.api.nvim_buf_get_name(buf)
+      if filetypes[name] then
+        vim.bo[buf].filetype = 'jsonc'
+      end
+    end
   end
 end
 
 setmetatable(Config, {
-  -- Expose option fields transparently
   __index = function(_, k)
     return options[k]
   end,
-  -- Allow direct assignment (config.some_option = value)
   __newindex = function(_, k, v)
     options[k] = v
   end,
-  -- Make pairs(config) iterate over current options
   __pairs = function()
     return next, options, nil
-  end,
-  -- Optional: length operator (#config) returns number of option keys
-  __len = function()
-    return vim.tbl_count(options)
   end,
 })
 

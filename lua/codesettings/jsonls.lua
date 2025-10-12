@@ -75,7 +75,20 @@ local function expand_schema(schema)
   return recurse(schema)
 end
 
-function M.setup()
+---Retrieve JSON schemas as tables.
+---You can use this is the automatic configuration doesn't work.
+---```lua
+---vim.lsp.config('jsonls', {
+---  settings = {
+---    json = {
+---      schemas = require('codesettings.jsonls').get_json_schemas(),
+---      validate = { enable = true },
+---    },
+---  },
+---})
+---```
+---@return table[] list of JSON schema objects suitable for jsonls config
+function M.get_json_schemas()
   local schemas = require('codesettings.build.schemas').get_schemas()
   local json_schemas = {}
   for _, schema in pairs(schemas) do
@@ -94,15 +107,28 @@ function M.setup()
       end
     end
   end
+  return json_schemas
+end
 
+function M.setup()
   vim.lsp.config('jsonls', {
     settings = {
       json = {
-        schemas = json_schemas,
+        schemas = M.get_json_schemas(),
         validate = { enable = true },
       },
     },
   })
+
+  -- lazy loading; if jsonls is already active, restart it
+  vim.defer_fn(function()
+    if #vim.lsp.get_clients({ name = 'jsonls' }) > 0 then
+      vim.lsp.enable('jsonls', false)
+      vim.defer_fn(function()
+        vim.lsp.enable('jsonls')
+      end, 500)
+    end
+  end, 500)
 end
 
 return M
