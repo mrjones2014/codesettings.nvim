@@ -14,8 +14,7 @@ local options = {
   },
 }
 
----@type CodesettingsConfig
-local Config = {} ---@diagnostic disable-line: missing-fields
+local Config = {}
 
 ---Merge user-supplied options into the defaults.
 ---@param opts table|nil
@@ -25,27 +24,11 @@ function Config.setup(opts)
   options = vim.tbl_deep_extend('force', {}, options, opts)
 
   if options.jsonls_integration then
-    require('codesettings.jsonls').setup()
+    require('codesettings.integrations.jsonls').setup()
   end
 
   if options.jsonc_filetype then
-    -- NB: inline require to avoid circular dependency between config and util modules
-    local configs = require('codesettings.util').get_local_configs()
-    local filetypes = {}
-    vim.iter(configs):each(function(f)
-      filetypes[f] = 'jsonc'
-    end)
-    vim.filetype.add({
-      filename = filetypes,
-    })
-    -- lazy loading; go through currently open buffers and explicitly set filetype
-    -- if they are already open
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      local name = vim.api.nvim_buf_get_name(buf)
-      if filetypes[name] then
-        vim.bo[buf].filetype = 'jsonc'
-      end
-    end
+    require('codesettings.integrations.jsonc-filetype').setup()
   end
 end
 
@@ -61,4 +44,8 @@ setmetatable(Config, {
   end,
 })
 
+-- it implements the type through the metatable above,
+-- set the type information so that consuming modules get
+-- the right info through the LSP
+---@cast Config CodesettingsConfig
 return Config

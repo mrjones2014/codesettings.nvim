@@ -48,7 +48,7 @@ describe('integration tests', function()
 
   it('should load and merge eslint settings properly by default', function()
     local Codesettings = require('codesettings')
-    -- test eslint specifically since its a special case (see special-cases.lua)
+    -- test eslint specifically since its a special case (see codesettings/init.lua)
     vim.lsp.config(
       'eslint',
       Codesettings.with_local_settings('eslint', {

@@ -139,6 +139,7 @@ function M.build_annotations(name)
 end
 
 function M.build()
+  print('Generating Lua type annotations based on all schemas...')
   M.lines = { '-- stylua: ignore', '---@meta\n' }
 
   local index = vim.tbl_keys(require('codesettings.build.schemas').get_schemas())
@@ -155,7 +156,7 @@ function M.build()
     return v ~= nil
   end, M.lines)
 
-  Util.write_file('lua/codesettings/annotations.lua', table.concat(lines, '\n'))
+  Util.write_file('lua/codesettings/generated/annotations.lua', table.concat(lines, '\n'))
 end
 
 return M
