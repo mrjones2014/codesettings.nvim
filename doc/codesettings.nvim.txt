@@ -1,19 +1,20 @@
-*codesettings.nvim.txt*    For Neovim >= 0.11.0   Last change: 2025 October 11
+*codesettings.nvim.txt*    For Neovim >= 0.11.0   Last change: 2025 October 12
 
 ==============================================================================
 Table of Contents                        *codesettings.nvim-table-of-contents*
 
 1. Requirements                               |codesettings.nvim-requirements|
-2. Features                                       |codesettings.nvim-features|
-3. Installation                               |codesettings.nvim-installation|
-4. Quick start                                 |codesettings.nvim-quick-start|
+2. Installation                               |codesettings.nvim-installation|
+3. Quick start                                 |codesettings.nvim-quick-start|
   - Rustaceanvim                  |codesettings.nvim-quick-start-rustaceanvim|
+4. Features                                       |codesettings.nvim-features|
 5. Commands                                       |codesettings.nvim-commands|
 6. API                                                 |codesettings.nvim-api|
 7. How it finds your settings   |codesettings.nvim-how-it-finds-your-settings|
 8. How merging works                     |codesettings.nvim-how-merging-works|
 9. Comparison with neoconf.nvim|codesettings.nvim-comparison-with-neoconf.nvim|
 10. Acknowledgements                      |codesettings.nvim-acknowledgements|
+11. Links                                            |codesettings.nvim-links|
 Easily read your project’s local settings files and merge them into your
 Neovim 0.11+ native LSP configuration.
 
@@ -35,31 +36,7 @@ from VS Code’s settings schema into the LSP `settings` table you pass to
 
 
 ==============================================================================
-2. Features                                       *codesettings.nvim-features*
-
-- Minimal API: one function you call per server setup, or with a global hook (see example below)
-- `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
-- `jsonc` filetype for local config files
-- Supports custom config file names/locations
-- See ./schemas/ <https://github.com/mrjones2014/codesettings.nvim/tree/master/schemas> for the list of supported LSPs
-- Supports mixed nested and dotted key paths, for example, this project’s `codesettings.json` looks like:
-
->jsonc
-    {
-      "Lua": {
-        "runtime.version": "LuaJIT",
-        "workspace": {
-          "library": ["${3rd}/luassert/library", "${addons}/busted/library"],
-          "checkThirdParty": false,
-        },
-        "diagnostics.globals": ["vim", "setup", "teardown"],
-      },
-    }
-<
-
-
-==============================================================================
-3. Installation                               *codesettings.nvim-installation*
+2. Installation                               *codesettings.nvim-installation*
 
 For some features (namely, `jsonls` integration and `jsonc` filetype handling),
 you must call `setup()`.
@@ -92,7 +69,7 @@ you must call `setup()`.
 
 
 ==============================================================================
-4. Quick start                                 *codesettings.nvim-quick-start*
+3. Quick start                                 *codesettings.nvim-quick-start*
 
 **Recommended setup:** If you don’t use `before_init` for anything else, you
 can use it as a global hook to look for local config files for all LSPs:
@@ -173,6 +150,30 @@ configure `rustaceanvim` in my own setup:
           },
         }
       end,
+    }
+<
+
+
+==============================================================================
+4. Features                                       *codesettings.nvim-features*
+
+- Minimal API: one function you call per server setup, or with a global hook (see example below)
+- `jsonc` filetype for local config files
+- `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
+- Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua
+- Supports custom config file names/locations
+- Supports mixed nested and dotted key paths, for example, this project’s `codesettings.json` looks like:
+
+>jsonc
+    {
+      "Lua": {
+        "runtime.version": "LuaJIT",
+        "workspace": {
+          "library": ["${3rd}/luassert/library", "${addons}/busted/library"],
+          "checkThirdParty": false,
+        },
+        "diagnostics.globals": ["vim", "setup", "teardown"],
+      },
     }
 <
 
@@ -288,6 +289,12 @@ projects!
 
 - Some parts of this plugin are based on folke’s neoconf.nvim plugin <https://github.com/folke/neoconf.nvim>
 - This plugin bundles json.lua <https://github.com/actboy168/json.lua>, a pure-Lua JSON library for parsing `jsonc` files
+
+==============================================================================
+11. Links                                            *codesettings.nvim-links*
+
+1. *jsonls integration*: https://github.com/user-attachments/assets/0f1cd386-d05c-4352-984f-6bac77d4434e
+2. *lua type annotations*: https://github.com/user-attachments/assets/647e25cf-9059-433a-bbbf-2069b61df47f
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
