@@ -21,7 +21,7 @@ function M.build()
     end
     table.insert(lines, ('- [x] [%s](%s)'):format(name, url))
   end
-  local generated_doc = '<!-- GENERATED -->\n' .. table.concat(lines, '\n') .. '\n'
+  local generated_doc = '<!-- GENERATED -->\n\n' .. table.concat(lines, '\n') .. '\n'
   local readme = Util.read_file('README.md')
   readme = readme:gsub('<!%-%- GENERATED %-%->.*', generated_doc) .. '\n'
   Util.write_file('README.md', readme)
