@@ -178,6 +178,20 @@ configure `rustaceanvim` in my own setup:
     }
 <
 
+To get autocomplete in Lua files:
+
+>lua
+    -- for example, for lua_ls
+    vim.lsp.config('lua_ls', {
+      -- this '@module' annotation makes lua_ls import the library from codesettings,
+      -- where the annotations come from
+      ---@module 'codesettings'
+      -- then you will have access to the generated type annotations
+      ---@type lsp.lua_ls
+      settings = {},
+    })
+<
+
 
 ==============================================================================
 5. Commands                                       *codesettings.nvim-commands*
@@ -277,9 +291,11 @@ local_config)`, essentially:
                                                      nvim-lspconfig hooks
   -----------------------------------------------------------------------
 The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more
-automatic, but if you want to get rid of `nvim-lspconfig` and just use
-`vim.lsp.config()` APIs, then `codesettings.nvim` provides an API to load local
-project settings for you.
+automatic but provides fewer features, and seems to be unmaintained. If you
+want to get rid of `nvim-lspconfig` and just use `vim.lsp.config()` APIs, then
+`codesettings.nvim` provides an API to load local project settings for you, as
+well as better autocomplete in configuration files, and autocomplete in Lua
+files not using `nvim-lspconfig` based on Lua type annotations.
 
 
 ==============================================================================
