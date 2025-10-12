@@ -31,7 +31,7 @@ function M.add_desc(lines, prop, prefix)
     if type(prop.default) == 'table' and vim.tbl_isempty(prop.default) then
       prop.default = {}
     end
-    ret = (ret and (ret .. '\n\n') or '') .. '```lua\ndefault = &#x27; .. vim.inspect(prop.default) .. &#x27;\n```'
+    ret = (ret and (ret .. '\n\n') or '') .. '```lua\ndefault = ' .. vim.inspect(prop.default) .. '\n```'
   end
   if ret then
     table.insert(lines, M.comment(ret, prefix))
@@ -113,10 +113,10 @@ function M.process_object(name, prop)
       M.add_desc(lines, child)
 
       if child.type == 'object' and child.properties then
-        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_class(field) .. '|nil')
+        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_class(field) .. '?') -- ? since all fields are optional
         M.process_object(field, child)
       else
-        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_type(child) .. '|nil')
+        table.insert(lines, '---@field ' .. field .. ' ' .. M.get_type(child) .. '?') -- ? since all fields are optional
       end
     end
   end
