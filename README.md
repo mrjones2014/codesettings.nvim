@@ -150,6 +150,20 @@ return {
 }
 ```
 
+To get autocomplete in Lua files:
+
+```lua
+-- for example, for lua_ls
+vim.lsp.config('lua_ls', {
+  -- this '@module' annotation makes lua_ls import the library from codesettings,
+  -- where the annotations come from
+  ---@module 'codesettings'
+  -- then you will have access to the generated type annotations
+  ---@type lsp.lua_ls
+  settings = {},
+})
+```
+
 ## Commands
 
 - `:Codesettings show` - show the resolved LSP config for each active LSP client; note that this only shows _active_ clients
@@ -222,8 +236,9 @@ Follows the semantics of `vim.tbl_deep_extend('force', your_config, local_config
 | `setup()` required                         | Only for some editor integration features                | Yes                                      |
 | Loading settings                           | API call                                                 | Automatic through `nvim-lspconfig` hooks |
 
-The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more automatic, but if you want to get rid of `nvim-lspconfig`
-and just use `vim.lsp.config()` APIs, then `codesettings.nvim` provides an API to load local project settings for you.
+The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more automatic but provides fewer features, and seems to be unmaintained.
+If you want to get rid of `nvim-lspconfig` and just use `vim.lsp.config()` APIs, then `codesettings.nvim` provides an API to load local project settings for you,
+as well as better autocomplete in configuration files, and autocomplete in Lua files not using `nvim-lspconfig` based on Lua type annotations.
 
 ## Acknowledgements
 
@@ -235,6 +250,7 @@ This project would not exist without the hard work of some other open source pro
 ## Supported LSP Servers
 
 <!-- GENERATED -->
+
 - [x] [als](https://github.com/AdaCore/ada_language_server/tree/master/integration/vscode/ada/package.json)
 - [x] [astro](https://github.com/withastro/language-tools/tree/main/packages/vscode/package.json)
 - [x] [awkls](https://github.com/Beaglefoot/awk-language-server/tree/master/client/package.json)
@@ -300,4 +316,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
