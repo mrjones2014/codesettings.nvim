@@ -131,7 +131,7 @@ return {
 - Minimal API: one function you call per server setup, or with a global hook (see example below)
 - `jsonc` filetype for local config files
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
-  ![jsonls integration](https://github.com/user-attachments/assets/0f1cd386-d05c-4352-984f-6bac77d4434e)
+  ![jsonls integration](https://github.com/user-attachments/assets/5d37f0bb-0e07-4c22-bc6b-16cf3e65e201)
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua
   ![lua type annotations](https://github.com/user-attachments/assets/f57d938f-3f9b-4c9c-9acd-1fb5996fb8d1)
 - Supports custom config file names/locations
