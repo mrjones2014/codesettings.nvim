@@ -1,0 +1,19855 @@
+-- stylua: ignore
+---@meta
+
+
+---@class lsp.als.OnTypeFormatting
+-- If the VS Code `editor.formatOnType` setting is enabled, the Ada Language Server will format Ada code while it is being typed in the editor, in particular when a new line is typed.
+-- 
+-- This setting controls whether formatting should only perform the indentation of the new line (true) or also format the previous line (false).
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field indentOnly true | false|nil
+
+---@class lsp.als.Trace
+-- Traces the communication between VS Code and the Ada language server in the 'Ada Language Server' Output view.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.als.Ada
+-- Controls whether or not the Ada Language Server should emit diagnostics related to the edition of Ada files into the VS Code Problems view.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field adaFileDiagnostics true | false|nil
+-- Controls whether or not the Ada Language Server should emit diagnostics related to alire into the VS Code Problems view.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field alireDiagnostics true | false|nil
+-- The character set that the Ada Language Server should use when reading files from disk.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
+---@field defaultCharset string|nil
+-- Controls the policy for displaying overriding and overridden subprograms on navigation requests such as 'Go To Definition' or 'Go To Implementations'.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `"usage_and_abstract_only"`.
+---@field displayMethodAncestryOnNavigation "never" | "usage_and_abstract_only" | "definition_only" | "always"|nil
+-- Controls the primary documentation style of entities.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `"gnat"`.
+---@field documentationStyle "gnat" | "leading"|nil
+-- Enable experimental features still in development.
+---@field enableExperimentalFeatures boolean|nil
+-- Controls whether the Ada Language Server should index the source files immediately after loading a project.
+-- 
+-- If set to false, indexing will be deferred to the time when an action requiring the index is first performed, e.g. hovering over a referenced entity to get its documentation.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field enableIndexing true | false|nil
+-- Controls whether comments should be folded like code blocks.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field foldComments true | false|nil
+-- Controls the Ada Language Server normalizes the file paths received from the client.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field followSymlinks true | false|nil
+-- GPR configuration file (*.cgpr) for this workspace.
+-- 
+-- It is recommended to set this to a relative path starting at the root of the workspace.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
+---@field gprConfigurationFile string|nil
+-- Controls whether or not the Ada Language Server should emit diagnostics related to the edition of GPR files into the VS Code Problems view.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field gprFileDiagnostics true | false|nil
+-- Enable insertion of missing with-clauses when accepting completion for invisible symbols.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field insertWithClauses true | false|nil
+-- Controls the maximum number of trace files preserved in the ALS log directory (which defaults to `~/.als`). When this threshold is reached, old trace files get deleted automatically. The default number of preserved trace files is `10`.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `10`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logThreshold integer|nil
+-- Defines the number of parameters/components beyond which named notation is used for completion snippets.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `3`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field namedNotationThreshold integer|nil
+---@field onTypeFormatting lsp.als.OnTypeFormatting|nil
+-- Controls whether or not the Ada Language Server should emit diagnostics related to project loading into the VS Code Problems view.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field projectDiagnostics true | false|nil
+-- GPR project file (*.gpr) for this workspace.
+-- 
+-- It is recommended to set this to a relative path starting at the root of the workspace.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
+---@field projectFile string|nil
+-- Enable fallback indenter in case the file is not syntactically correct.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field rangeFormattingFallback true | false|nil
+-- The path to a directory used for out-of-tree builds. This feature is related to the [--relocate-build-tree GPRbuild command line switch](https://docs.adacore.com/gprbuild-docs/html/gprbuild_ug/building_with_gprbuild.html#switches).
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
+---@field relocateBuildTree string|nil
+-- Enable editing Ada comments to update references to an entity when it is being renamed.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `false`.
+---@field renameInComments true | false|nil
+-- This setting must be used in conjunction with the `relocateBuildTree` setting.
+-- 
+-- It specifies the root directory for artifact relocation. It corresponds to the [--root-dir GPRbuild command line switch](https://docs.adacore.com/gprbuild-docs/html/gprbuild_ug/building_with_gprbuild.html#switches).
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
+---@field rootDir string|nil
+-- Scenario variables to apply to the GPR project file.
+-- 
+-- This value should be provided as an object where the property names are GPR scenario variables and the values are strings.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
+---@field scenarioVariables table|nil
+-- Whether to show error notifications in VS Code for failing LSP requests.
+---@field showNotificationsOnErrors boolean|nil
+-- Controls whether or not the Ada Language Server should emit source information diagnostics (e.g: for opened files that do not belong to the loaded project tree).
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field sourceInfoDiagnostics true | false|nil
+---@field trace lsp.als.Trace|nil
+-- Enable snippets in completion results (e.g. subprogram calls).
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field useCompletionSnippets true | false|nil
+-- Enable GNATformat as the formatting provider for Ada source files.
+-- 
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field useGnatformat true | false|nil
+
+---@class lsp.als.E3-testsuite
+-- Command line arguments to pass to testsuite.py when running tests
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args any[]|nil
+-- Path to python interpreter, useful when you want to use a specific venv
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field python string|nil
+-- Path to testsuite.py
+---@field testsuitePath string|nil
+
+---@class lsp.als.Trace
+-- Traces the communication between VS Code and the GPR language server in the 'GPR Language Server' Output view.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.als.Gpr
+---@field trace lsp.als.Trace|nil
+
+---@class lsp.als
+---@field ada lsp.als.Ada|nil
+---@field e3-testsuite lsp.als.E3-testsuite|nil
+---@field gpr lsp.als.Gpr|nil
+
+---@class lsp.astro.Language-server
+-- Path to the language server executable. You won't need this in most cases, set this only when needing a specific version of the language server
+---@field ls-path string|nil
+-- Path to the node executable used to execute the language server. You won't need this in most cases
+---@field runtime string|nil
+
+---@class lsp.astro.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.astro.UpdateImportsOnFileMove
+-- Controls whether the extension updates imports when a file is moved to a new location. In most cases, you'll want to keep this disabled as TypeScript and the Astro TypeScript plugin already handles this for you. Having multiple tools updating imports at the same time can lead to corrupted files.
+---@field enabled boolean|nil
+
+---@class lsp.astro.Astro
+-- Enable experimental support for content collection intellisense inside Markdown, MDX and Markdoc. Note that this require also enabling the feature in your Astro config (experimental.contentCollectionIntellisense) (Astro 4.14+)
+---@field content-intellisense boolean|nil
+---@field language-server lsp.astro.Language-server|nil
+---@field trace lsp.astro.Trace|nil
+---@field updateImportsOnFileMove lsp.astro.UpdateImportsOnFileMove|nil
+
+---@class lsp.astro
+---@field astro lsp.astro.Astro|nil
+
+---@class lsp.awkls.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.awkls.Awk-ide-vscode
+-- Turns on/off source files indexing. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field indexing boolean|nil
+---@field trace lsp.awkls.Trace|nil
+
+---@class lsp.awkls
+---@field awk-ide-vscode lsp.awkls.Awk-ide-vscode|nil
+
+-- Allows a user to override the severity levels for individual diagnostics. Use the rule name as a key and one of "error", "warning", "information", "none", `true` (alias for "error") or `false` (alias for "none") as value. The default value shown for each diagnostic is the default when "basedpyright.analysis.typeCheckingMode" is set to "standard". See [here](https://docs.basedpyright.com/latest/configuration/config-files/#diagnostic-settings-defaults) for defaults for each type checking mode ("off", "basic", "standard", "strict", and "all").
+---@class lsp.basedpyright.DiagnosticSeverityOverrides
+-- Diagnostics for an attempt to instantiate an abstract or protocol class or use an abstract method.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAbstractUsage "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for expressions with the `Any` type
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAny "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a type incompatibility for an argument to a call.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportArgumentType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'assert' statement that will provably always assert. This can be indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAssertAlwaysTrue "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a type incompatibility detected by a typing.assert_type call.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAssertTypeFailure "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for type incompatibilities for assignments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAssignmentType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for issues involving attribute accesses.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAttributeAccessIssue "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for function calls within a default value initialization expression. Such calls can mask expensive operations that are performed at module initialization time.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportCallInDefaultInitializer "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for issues involving call expressions and arguments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportCallIssue "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for attempts to redefine variables whose names are all-caps with underscores and numerals.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportConstantRedefinition "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for use of deprecated classes or functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportDeprecated "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an imported symbol or module that is imported more than once.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportDuplicateImport "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for type annotations that use the `Any` type
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportExplicitAny "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for member accesses on functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportFunctionMemberAccess "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for general type inconsistencies, unsupported operations, argument/parameter mismatches, etc. Covers all of the basic type-checking rules not covered by other rules. Does not include syntax errors.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportGeneralTypeIssues "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for `# type: ignore` and `# pyright: ignore` comments without specifying a rule
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIgnoreCommentWithoutRule "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for abstract classes that do not explicitly extend `ABC`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImplicitAbstractClass "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for overridden methods that do not include an `@override` decorator.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImplicitOverride "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for non-relative imports that do not specify the full path to the module
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImplicitRelativeImport "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for two or more string literals that follow each other, indicating an implicit concatenation. This is considered a bad practice and often masks bugs such as missing commas.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImplicitStringConcatenation "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for cyclical import chains. These are not errors in Python, but they do slow down type analysis and often hint at architectural layering issues. Generally, they should be avoided.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImportCycles "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for methods that override a method of the same name in a base class in an incompatible manner (wrong number of parameters, incompatible parameter types, or incompatible return type).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIncompatibleMethodOverride "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for overrides in subclasses that redefine a variable without a type annotation in an incompatible way
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIncompatibleUnannotatedOverride "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for overrides in subclasses that redefine a variable in an incompatible way.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIncompatibleVariableOverride "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of a module-level “__getattr__” function, indicating that the stub is incomplete.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIncompleteStub "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for __init__ and __new__ methods whose signatures are inconsistent.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInconsistentConstructor "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for inconsistencies between function overload signatures and implementation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInconsistentOverload "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics related to index operations and expressions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIndexIssue "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for usages of `@abstractmethod` on a non-abstract class
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidAbstractMethod "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for `cast`s to non-overlapping types
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidCast "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for invalid escape sequences used within string literals. The Python specification indicates that such sequences will generate a syntax error in future versions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidStringEscapeSequence "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for type stub statements that do not conform to PEP 484.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidStubStatement "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for invalid type argument usage.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidTypeArguments "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for type expression that uses an invalid form.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidTypeForm "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for improper use of type variables in a function signature.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidTypeVarUse "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'match' statements that do not exhaustively match all possible values.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMatchNotExhaustive "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for imports that have no corresponding imported python file or type stub file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingImports "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for imports that have no corresponding source file. This happens when a type stub is found, but the module source file was not found, indicating that the code may fail at runtime when using this execution environment. Type checking will be done using the type stub.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingModuleSource "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for parameters that are missing a type annotation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingParameterType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for missing call to parent class for inherited `__init__` methods.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingSuperCall "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for generic class reference with missing type arguments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingTypeArgument "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for imports that have no corresponding type stub file (either a typeshed file or a custom type stub). The type checker requires type stubs to do its best job at analysis.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingTypeStubs "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an overloaded function or method with a missing implementation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportNoOverloadImplementation "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for related to unary or binary operators.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOperatorIssue "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to call a variable with an Optional type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalCall "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to use an Optional type as a context manager (as a parameter to a with statement).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalContextManager "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to use an Optional type as an iterable value (e.g. within a for statement).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalIterable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to access a member of a variable with an Optional type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalMemberAccess "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to use an Optional type as an operand to a binary or unary operator (like '+', '<<', '~').
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalOperand "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to subscript (index) a variable with an Optional type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalSubscript "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for function overloads that overlap in signature and obscure each other or have incompatible return types.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOverlappingOverload "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of variables that may be unbound on some code paths.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPossiblyUnboundVariable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for incorrect usage of symbol imported from a "py.typed" module that is not re-exported from that module.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPrivateImportUsage "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for incorrect usage of symbol imported from a non-"py.typed" module that is not re-exported from that module. Should be used along with `reportNonPrivateImportUsage`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPrivateLocalImportUsage "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for incorrect usage of private or protected variables or functions. Protected class members begin with a single underscore _ and can be accessed only by subclasses. Private class members begin with a double underscore but do not end in a double underscore and can be accessed only within the declaring class. Variables and functions declared outside of a class are considered private if their names start with either a single or double underscore, and they cannot be accessed outside of the declaring module.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPrivateUsage "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for property whose setter and getter have mismatched types.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPropertyTypeMismatch "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to declare the type of a symbol multiple times.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportRedeclaration "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics related to function return type compatibility.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportReturnType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a missing or misnamed “self” parameter in instance methods and “cls” parameter in class methods. Instance methods in metaclasses (classes that derive from “type”) are allowed to use “cls” for instance methods.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportSelfClsParameterName "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for usage of deprecated type comments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportTypeCommentUsage "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to access a non-required key within a TypedDict without a check for its presence.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportTypedDictNotRequiredAccess "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for class variable declarations that do not have a type annotation, which is required due to performance reasons for strict validation of subclasses
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnannotatedClassAttribute "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of unbound variables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnboundVariable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for undefined variables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUndefinedVariable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of an unhashable object in a container that requires hashability.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnhashable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for instance variables that are not declared or initialized within class body or `__init__` method.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUninitializedInstanceVariable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for call arguments for functions or methods that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownArgumentType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for input or return parameters for lambdas that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownLambdaType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for class or instance variables that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownMemberType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for input or return parameters for functions or methods that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownParameterType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for variables that have an unknown type..
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownVariableType "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'cast' calls that are statically determined to be unnecessary. Such calls are sometimes indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryCast "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for '==' and '!=' comparisons that are statically determined to be unnecessary. Such calls are sometimes indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryComparison "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'in' operation that is statically determined to be unnecessary. Such operations are sometimes indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryContains "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'isinstance' or 'issubclass' calls where the result is statically determined to be always (or never) true. Such calls are often indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryIsInstance "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for '# type: ignore' comments that have no effect.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryTypeIgnoreComment "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for code that is determined by type analysis to be unreachable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnreachable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for multiple inheritance where a base class's constructor may not get called
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnsafeMultipleInheritance "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for unsupported operations performed on __all__.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnsupportedDunderAll "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for base classes whose type cannot be determined statically. These obscure the class type, defeating many type analysis features.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedBaseClass "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for class decorators that have no type annotations. These obscure the class type, defeating many type analysis features.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedClassDecorator "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for function decorators that have no type annotations. These obscure the function type, defeating many type analysis features.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedFunctionDecorator "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics when “namedtuple” is used rather than “NamedTuple”. The former contains no type information, whereas the latter does.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedNamedTuple "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for call expressions whose results are not consumed and are not None.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedCallResult "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a class with a private name (starting with an underscore) that is not accessed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedClass "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for call expressions that return a Coroutine and whose results are not consumed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedCoroutine "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for unreachable except clause.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedExcept "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for simple expressions whose value is not used in any way.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedExpression "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a function or method with a private name (starting with an underscore) that is not accessed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedFunction "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an imported symbol that is not referenced within that file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedImport "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for unused function parameters
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedParameter "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a variable that is not accessed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedVariable "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an wildcard import from an external library.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportWildcardImportFromLibrary "none" | "hint" | "information" | "warning" | "error" | true | false|nil
+
+---@class lsp.basedpyright.InlayHints
+-- Whether to show inlay hints on function arguments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field callArgumentNames boolean|nil
+-- Whether to show inlay hints on function arguments when the input expression is a variable with the same name as the parameter.
+---@field callArgumentNamesMatching boolean|nil
+-- Whether to show inlay hints on function return types.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field functionReturnTypes boolean|nil
+-- Whether to show inlay hints on inferred generic types.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field genericTypes boolean|nil
+-- Whether to show inlay hints on assignments to variables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field variableTypes boolean|nil
+
+---@class lsp.basedpyright.Analysis
+-- Whether to automatically insert an `f` in front of a string when typing a `{` inside it.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoFormatStrings boolean|nil
+-- Offer auto-import completions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImportCompletions boolean|nil
+-- Automatically add common search paths like 'src'?
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoSearchPaths boolean|nil
+-- Path to the baseline file. Defaults to `./.basedpyright/baseline.json`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field baselineFile string|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticMode "openFilesOnly" | "workspace"|nil
+-- Allows a user to override the severity levels for individual diagnostics. Use the rule name as a key and one of "error", "warning", "information", "none", `true` (alias for "error") or `false` (alias for "none") as value. The default value shown for each diagnostic is the default when "basedpyright.analysis.typeCheckingMode" is set to "standard". See [here](https://docs.basedpyright.com/latest/configuration/config-files/#diagnostic-settings-defaults) for defaults for each type checking mode ("off", "basic", "standard", "strict", and "all").
+---@field diagnosticSeverityOverrides lsp.basedpyright.DiagnosticSeverityOverrides|nil
+-- Paths of directories or files that should not be included. These override the include directories, allowing specific subdirectories to be excluded. Note that files in the exclude paths may still be included in the analysis if they are referenced (imported) by source files that are not excluded. Paths may contain wildcard characters ** (a directory or multiple levels of directories), * (a sequence of zero or more characters), or ? (a single character). If no exclude paths are specified, pyright automatically excludes the following: `**/node_modules`, `**/__pycache__`, `.git` and any virtual environment directories.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Additional import search resolution paths
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraPaths string[]|nil
+-- Timeout (in seconds) for file enumeration operations. Default is 10 seconds.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fileEnumerationTimeout integer|nil
+-- Paths of directories or files whose diagnostic output (errors and warnings) should be suppressed even if they are an included file or within the transitive closure of an included file. Paths may contain wildcard characters ** (a directory or multiple levels of directories), * (a sequence of zero or more characters), or ? (a single character). If no value is provided, the value of python.linting.ignorePatterns (if set) will be used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignore string[]|nil
+-- Paths of directories or files that should be included. If no paths are specified, pyright defaults to the workspace root directory. Paths may contain wildcard characters ** (a directory or multiple levels of directories), * (a sequence of zero or more characters), or ? (a single character).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field include string[]|nil
+---@field inlayHints lsp.basedpyright.InlayHints|nil
+-- Specifies the level of logging for the Output panel
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "Error" | "Warning" | "Information" | "Trace"|nil
+-- Path to directory containing custom type stub files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field stubPath string|nil
+-- Defines the default rule set for type checking.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeCheckingMode "off" | "basic" | "standard" | "strict" | "recommended" | "all"|nil
+-- Paths to look for typeshed modules.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeshedPaths string[]|nil
+-- Use library implementations to extract type information when type stub is not present.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useLibraryCodeForTypes boolean|nil
+-- Whether to rely on imports from the `typing_extensions` module when targeting older versions of python that do not include certain typing features such as the `@override` decorator.
+---@field useTypingExtensions boolean|nil
+
+---@class lsp.basedpyright.Basedpyright
+---@field analysis lsp.basedpyright.Analysis|nil
+-- Disables type completion, definitions, and references.
+---@field disableLanguageServices boolean|nil
+-- Disables the “Organize Imports” command.
+---@field disableOrganizeImports boolean|nil
+-- Disables the use of pull diagnostics from VS Code.
+---@field disablePullDiagnostics boolean|nil
+-- Disable hint diagnostics with special hints for grayed-out or strike-through text.
+---@field disableTaggedHints boolean|nil
+-- Whether to use the version of pyright installed in the project (recommended) or the one bundled with the extension (not recommended).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importStrategy "fromEnvironment" | "useBundled"|nil
+
+---@class lsp.basedpyright.Python
+-- Path to Python, you can use a custom version of Python.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pythonPath string|nil
+-- Path to folder with a list of Virtual Environments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field venvPath string|nil
+
+---@class lsp.basedpyright
+---@field basedpyright lsp.basedpyright.Basedpyright|nil
+---@field python lsp.basedpyright.Python|nil
+
+---@class lsp.bashls.Shfmt
+-- Allow boolean operators (like && and ||) to start a line.
+---@field binaryNextLine boolean|nil
+-- Indent patterns in case statements.
+---@field caseIndent boolean|nil
+-- Place function opening braces on a separate line.
+---@field funcNextLine boolean|nil
+-- Ignore shfmt config options in .editorconfig (always use language server config)
+---@field ignoreEditorconfig boolean|nil
+-- **([Deprecated](https://github.com/mvdan/sh/issues/658))** Keep column alignment padding.
+---@field keepPadding boolean|nil
+-- Language dialect to use when parsing (bash/posix/mksh/bats).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageDialect "auto" | "bash" | "posix" | "mksh" | "bats"|nil
+-- Controls the executable used for Shfmt formatting. An empty string will disable formatting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+-- Simplify code before formatting.
+---@field simplifyCode boolean|nil
+-- Follow redirection operators with a space.
+---@field spaceRedirects boolean|nil
+
+---@class lsp.bashls.BashIde
+-- Maximum number of files to analyze in the background. Set to 0 to disable background analysis.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field backgroundAnalysisMaxFiles number|nil
+-- Enable diagnostics for source errors. Ignored if includeAllWorkspaceSymbols is true.
+---@field enableSourceErrorDiagnostics boolean|nil
+-- Configure explainshell server endpoint in order to get hover documentation on flags and options.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field explainshellEndpoint string|nil
+-- Glob pattern for finding and parsing shell script files in the workspace. Used by the background analysis features across files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globPattern string|nil
+-- Controls how symbols (e.g. variables and functions) are included and used for completion, documentation, and renaming. If false (default and recommended), then we only include symbols from sourced files (i.e. using non dynamic statements like 'source file.sh' or '. file.sh' or following ShellCheck directives). If true, then all symbols from the workspace are included.
+---@field includeAllWorkspaceSymbols boolean|nil
+-- Controls the log level of the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "debug" | "info" | "warning" | "error"|nil
+-- Additional ShellCheck arguments. Note that we already add the following arguments: --shell, --format, --external-sources.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field shellcheckArguments string|nil
+-- Controls the executable used for ShellCheck linting information. An empty string will disable linting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field shellcheckPath string|nil
+---@field shfmt lsp.bashls.Shfmt|nil
+
+---@class lsp.bashls
+---@field bashIde lsp.bashls.BashIde|nil
+
+---@class lsp.clangd.InactiveRegions
+-- Opacity of inactive regions (used only if clangd.inactiveRegions.useBackgroundHighlight=false)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field opacity number|nil
+-- Use a background highlight rather than opacity to identify inactive preprocessor regions.
+---@field useBackgroundHighlight boolean|nil
+
+---@class lsp.clangd.Clangd
+-- Arguments for clangd server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field arguments string[]|nil
+-- Check for language server updates on startup.
+---@field checkUpdates boolean|nil
+-- Warn about conflicting extensions and suggest disabling them.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field detectExtensionConflicts boolean|nil
+-- Enable clangd language server features
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Enable code completion provided by the language server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableCodeCompletion boolean|nil
+-- Enable hovers provided by the language server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableHover boolean|nil
+-- Extra clang flags used to parse files when no compilation database is found.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fallbackFlags string[]|nil
+---@field inactiveRegions lsp.clangd.InactiveRegions|nil
+-- What to do when clangd configuration files are changed. Ignored for clangd 12+, which can reload such files itself; however, this can be overridden with clangd.onConfigChangedForceEnable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field onConfigChanged "prompt" | "restart" | "ignore"|nil
+-- Force enable of "On Config Changed" option regardless of clangd version.
+---@field onConfigChangedForceEnable boolean|nil
+-- The path to clangd executable, e.g.: /usr/bin/clangd.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+-- Auto restart clangd (up to 4 times) if it crashes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field restartAfterCrash boolean|nil
+-- Enable semantic highlighting in clangd.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semanticHighlighting boolean|nil
+-- Always rank completion items on the server as you type. This produces more accurate results at the cost of higher latency than client-side filtering.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field serverCompletionRanking boolean|nil
+-- Names a file that clangd should log a performance trace to, in chrome trace-viewer JSON format.
+---@field trace string|nil
+-- Allows the path to be a script e.g.: clangd.sh.
+---@field useScriptAsExecutable boolean|nil
+
+---@class lsp.clangd
+---@field clangd lsp.clangd.Clangd|nil
+
+---@class lsp.cssls.Completion
+-- %css.completion.completePropertyWithSemicolon.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completePropertyWithSemicolon boolean|nil
+-- %css.completion.triggerPropertyValueCompletion.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field triggerPropertyValueCompletion boolean|nil
+
+---@class lsp.cssls.Format
+-- %css.format.braceStyle.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field braceStyle "collapse" | "expand"|nil
+-- %css.format.enable.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %css.format.maxPreserveNewLines.desc%
+---@field maxPreserveNewLines number|nil
+-- %css.format.newlineBetweenRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newlineBetweenRules boolean|nil
+-- %css.format.newlineBetweenSelectors.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newlineBetweenSelectors boolean|nil
+-- %css.format.preserveNewLines.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field preserveNewLines boolean|nil
+-- %css.format.spaceAroundSelectorSeparator.desc%
+---@field spaceAroundSelectorSeparator boolean|nil
+
+---@class lsp.cssls.Hover
+-- %css.hover.documentation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentation boolean|nil
+-- %css.hover.references%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field references boolean|nil
+
+---@class lsp.cssls.Lint
+-- %css.lint.argumentsInColorFunction.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field argumentsInColorFunction "ignore" | "warning" | "error"|nil
+-- %css.lint.boxModel.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field boxModel "ignore" | "warning" | "error"|nil
+-- %css.lint.compatibleVendorPrefixes.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compatibleVendorPrefixes "ignore" | "warning" | "error"|nil
+-- %css.lint.duplicateProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicateProperties "ignore" | "warning" | "error"|nil
+-- %css.lint.emptyRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field emptyRules "ignore" | "warning" | "error"|nil
+-- %css.lint.float.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field float "ignore" | "warning" | "error"|nil
+-- %css.lint.fontFaceProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fontFaceProperties "ignore" | "warning" | "error"|nil
+-- %css.lint.hexColorLength.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hexColorLength "ignore" | "warning" | "error"|nil
+-- %css.lint.idSelector.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field idSelector "ignore" | "warning" | "error"|nil
+-- %css.lint.ieHack.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ieHack "ignore" | "warning" | "error"|nil
+-- %css.lint.importStatement.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importStatement "ignore" | "warning" | "error"|nil
+-- %css.lint.important.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field important "ignore" | "warning" | "error"|nil
+-- %css.lint.propertyIgnoredDueToDisplay.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field propertyIgnoredDueToDisplay "ignore" | "warning" | "error"|nil
+-- %css.lint.universalSelector.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field universalSelector "ignore" | "warning" | "error"|nil
+-- %css.lint.unknownAtRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownAtRules "ignore" | "warning" | "error"|nil
+-- %css.lint.unknownProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownProperties "ignore" | "warning" | "error"|nil
+-- %css.lint.unknownVendorSpecificProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownVendorSpecificProperties "ignore" | "warning" | "error"|nil
+-- %css.lint.validProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validProperties string[]|nil
+-- %css.lint.vendorPrefix.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vendorPrefix "ignore" | "warning" | "error"|nil
+-- %css.lint.zeroUnits.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field zeroUnits "ignore" | "warning" | "error"|nil
+
+---@class lsp.cssls.Trace
+-- %css.trace.server.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.cssls.Css
+---@field completion lsp.cssls.Completion|nil
+-- %css.customData.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field customData string[]|nil
+---@field format lsp.cssls.Format|nil
+---@field hover lsp.cssls.Hover|nil
+---@field lint lsp.cssls.Lint|nil
+---@field trace lsp.cssls.Trace|nil
+-- %css.validate.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validate boolean|nil
+
+---@class lsp.cssls.Completion
+-- %less.completion.completePropertyWithSemicolon.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completePropertyWithSemicolon boolean|nil
+-- %less.completion.triggerPropertyValueCompletion.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field triggerPropertyValueCompletion boolean|nil
+
+---@class lsp.cssls.Format
+-- %less.format.braceStyle.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field braceStyle "collapse" | "expand"|nil
+-- %less.format.enable.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %less.format.maxPreserveNewLines.desc%
+---@field maxPreserveNewLines number|nil
+-- %less.format.newlineBetweenRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newlineBetweenRules boolean|nil
+-- %less.format.newlineBetweenSelectors.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newlineBetweenSelectors boolean|nil
+-- %less.format.preserveNewLines.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field preserveNewLines boolean|nil
+-- %less.format.spaceAroundSelectorSeparator.desc%
+---@field spaceAroundSelectorSeparator boolean|nil
+
+---@class lsp.cssls.Hover
+-- %less.hover.documentation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentation boolean|nil
+-- %less.hover.references%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field references boolean|nil
+
+---@class lsp.cssls.Lint
+-- %less.lint.argumentsInColorFunction.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field argumentsInColorFunction "ignore" | "warning" | "error"|nil
+-- %less.lint.boxModel.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field boxModel "ignore" | "warning" | "error"|nil
+-- %less.lint.compatibleVendorPrefixes.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compatibleVendorPrefixes "ignore" | "warning" | "error"|nil
+-- %less.lint.duplicateProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicateProperties "ignore" | "warning" | "error"|nil
+-- %less.lint.emptyRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field emptyRules "ignore" | "warning" | "error"|nil
+-- %less.lint.float.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field float "ignore" | "warning" | "error"|nil
+-- %less.lint.fontFaceProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fontFaceProperties "ignore" | "warning" | "error"|nil
+-- %less.lint.hexColorLength.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hexColorLength "ignore" | "warning" | "error"|nil
+-- %less.lint.idSelector.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field idSelector "ignore" | "warning" | "error"|nil
+-- %less.lint.ieHack.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ieHack "ignore" | "warning" | "error"|nil
+-- %less.lint.importStatement.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importStatement "ignore" | "warning" | "error"|nil
+-- %less.lint.important.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field important "ignore" | "warning" | "error"|nil
+-- %less.lint.propertyIgnoredDueToDisplay.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field propertyIgnoredDueToDisplay "ignore" | "warning" | "error"|nil
+-- %less.lint.universalSelector.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field universalSelector "ignore" | "warning" | "error"|nil
+-- %less.lint.unknownAtRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownAtRules "ignore" | "warning" | "error"|nil
+-- %less.lint.unknownProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownProperties "ignore" | "warning" | "error"|nil
+-- %less.lint.unknownVendorSpecificProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownVendorSpecificProperties "ignore" | "warning" | "error"|nil
+-- %less.lint.validProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validProperties string[]|nil
+-- %less.lint.vendorPrefix.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vendorPrefix "ignore" | "warning" | "error"|nil
+-- %less.lint.zeroUnits.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field zeroUnits "ignore" | "warning" | "error"|nil
+
+---@class lsp.cssls.Less
+---@field completion lsp.cssls.Completion|nil
+---@field format lsp.cssls.Format|nil
+---@field hover lsp.cssls.Hover|nil
+---@field lint lsp.cssls.Lint|nil
+-- %less.validate.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validate boolean|nil
+
+---@class lsp.cssls.Completion
+-- %scss.completion.completePropertyWithSemicolon.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completePropertyWithSemicolon boolean|nil
+-- %scss.completion.triggerPropertyValueCompletion.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field triggerPropertyValueCompletion boolean|nil
+
+---@class lsp.cssls.Format
+-- %scss.format.braceStyle.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field braceStyle "collapse" | "expand"|nil
+-- %scss.format.enable.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %scss.format.maxPreserveNewLines.desc%
+---@field maxPreserveNewLines number|nil
+-- %scss.format.newlineBetweenRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newlineBetweenRules boolean|nil
+-- %scss.format.newlineBetweenSelectors.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newlineBetweenSelectors boolean|nil
+-- %scss.format.preserveNewLines.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field preserveNewLines boolean|nil
+-- %scss.format.spaceAroundSelectorSeparator.desc%
+---@field spaceAroundSelectorSeparator boolean|nil
+
+---@class lsp.cssls.Hover
+-- %scss.hover.documentation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentation boolean|nil
+-- %scss.hover.references%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field references boolean|nil
+
+---@class lsp.cssls.Lint
+-- %scss.lint.argumentsInColorFunction.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field argumentsInColorFunction "ignore" | "warning" | "error"|nil
+-- %scss.lint.boxModel.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field boxModel "ignore" | "warning" | "error"|nil
+-- %scss.lint.compatibleVendorPrefixes.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compatibleVendorPrefixes "ignore" | "warning" | "error"|nil
+-- %scss.lint.duplicateProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicateProperties "ignore" | "warning" | "error"|nil
+-- %scss.lint.emptyRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field emptyRules "ignore" | "warning" | "error"|nil
+-- %scss.lint.float.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field float "ignore" | "warning" | "error"|nil
+-- %scss.lint.fontFaceProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fontFaceProperties "ignore" | "warning" | "error"|nil
+-- %scss.lint.hexColorLength.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hexColorLength "ignore" | "warning" | "error"|nil
+-- %scss.lint.idSelector.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field idSelector "ignore" | "warning" | "error"|nil
+-- %scss.lint.ieHack.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ieHack "ignore" | "warning" | "error"|nil
+-- %scss.lint.importStatement.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importStatement "ignore" | "warning" | "error"|nil
+-- %scss.lint.important.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field important "ignore" | "warning" | "error"|nil
+-- %scss.lint.propertyIgnoredDueToDisplay.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field propertyIgnoredDueToDisplay "ignore" | "warning" | "error"|nil
+-- %scss.lint.universalSelector.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field universalSelector "ignore" | "warning" | "error"|nil
+-- %scss.lint.unknownAtRules.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownAtRules "ignore" | "warning" | "error"|nil
+-- %scss.lint.unknownProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownProperties "ignore" | "warning" | "error"|nil
+-- %scss.lint.unknownVendorSpecificProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknownVendorSpecificProperties "ignore" | "warning" | "error"|nil
+-- %scss.lint.validProperties.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validProperties string[]|nil
+-- %scss.lint.vendorPrefix.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vendorPrefix "ignore" | "warning" | "error"|nil
+-- %scss.lint.zeroUnits.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field zeroUnits "ignore" | "warning" | "error"|nil
+
+---@class lsp.cssls.Scss
+---@field completion lsp.cssls.Completion|nil
+---@field format lsp.cssls.Format|nil
+---@field hover lsp.cssls.Hover|nil
+---@field lint lsp.cssls.Lint|nil
+-- %scss.validate.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validate boolean|nil
+
+---@class lsp.cssls
+---@field css lsp.cssls.Css|nil
+---@field less lsp.cssls.Less|nil
+---@field scss lsp.cssls.Scss|nil
+
+-- Custom settings for launching DevTools. This setting is intended for use by Dart DevTools developers.
+---@class lsp.dartls.CustomDevTools
+-- Extra arguments to pass when running the `devtools_tool serve` command.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args string[]|nil
+-- Any environment variables to set when spawning the command. 'LOCAL_DART_SDK' should usually be set to your Dart SDK checkout and 'FLUTTER_ROOT' to the version of Flutter that DevTools is pinned to.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field env table|nil
+-- The root directory containing a clone of the flutter/devtools repository.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+-- Where to open [Dart DevTools](https://dart.dev/tools/dart-devtools) pages.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.dartls.DevToolsLocation
+---@field cpu-profiler "beside" | "active" | "external" | "sidebar"|nil
+---@field default "beside" | "active" | "external" | "sidebar"|nil
+---@field inspector "beside" | "active" | "external" | "sidebar"|nil
+---@field logging "beside" | "active" | "external" | "sidebar"|nil
+---@field memory "beside" | "active" | "external" | "sidebar"|nil
+---@field network "beside" | "active" | "external" | "sidebar"|nil
+---@field performance "beside" | "active" | "external" | "sidebar"|nil
+
+---@class lsp.dartls.Dart
+-- Whether to add your selected Dart/Flutter SDK path to the `PATH` environment variable for the embedded terminal. This is useful when switching SDKs via `#dart.sdkPaths#` / `#dart.flutterSdkPaths#` to ensure commands run from the terminal are the same version as being used by the editor/debugger (requires restart).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addSdkToTerminalPath boolean|nil
+-- **LEGACY SETTING: Only applies to legacy analysis server protocol.**
+-- 
+-- Additional file extensions that should be analyzed (usually used in combination with analyzer plugins).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field additionalAnalyzerFileExtensions string[]|nil
+-- Whether to consider files ending `_test.dart` that are outside of the test directory as tests. This should be enabled if you put tests inside the `lib` directory of your Flutter app so they will be run with `flutter test` and not `flutter run`.
+---@field allowTestsOutsideTestFolder boolean|nil
+-- An array of paths to be excluded from Dart analysis. This option should usually be set at the Workspace level. Excluded folders will also be ignored when detecting project types.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analysisExcludedFolders string[]|nil
+-- **LEGACY SETTING: Only applies to legacy analysis server protocol.**
+-- 
+-- Whether to use folding data from the Dart Analysis Server instead of the built-in VS Code indent-based folding.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analysisServerFolding boolean|nil
+-- **LEGACY SETTING: The angular plugin is no longer supported.**
+-- 
+-- Whether to enable analysis for AngularDart templates (requires the Angular analyzer plugin to be enabled in `analysis_options.yaml`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analyzeAngularTemplates boolean|nil
+-- Additional arguments to pass to the Dart Analysis Server. This setting is can be useful for troubleshooting issues with the Dart Analysis Server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analyzerAdditionalArgs string[]|nil
+-- The port number to be used for the Dart analyzer diagnostic server. This setting is can be useful for troubleshooting issues with the Dart Analysis Server.
+---@field analyzerDiagnosticsPort number|nil
+-- The path to a log file for very detailed logging in the Dart Analysis Server that may be useful when trying to diagnose Analysis Server issues. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field analyzerInstrumentationLogFile string|nil
+-- The path to a log file for communication between Dart Code and the Analysis Server. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field analyzerLogFile string|nil
+-- The path to a custom Dart Analysis Server. This setting is intended for use by Dart Analysis Server developers. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+---@field analyzerPath string|nil
+-- An SSH host to run the Analysis Server.
+-- This can be useful when modifying code on a remote machine using SSHFS.
+---@field analyzerSshHost string|nil
+-- Additional arguments to pass to the VM running the Dart Analysis Server. This setting is can be useful for troubleshooting issues with the Dart Analysis Server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analyzerVmAdditionalArgs string[]|nil
+-- The port number to be used for the Dart Analysis Server VM service. This setting is intended for use by Dart Analysis Server developers.
+---@field analyzerVmServicePort number|nil
+-- Whether to include symbols that have not been imported in the code completion list and automatically insert the required import when selecting them (requires restart).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImportCompletions boolean|nil
+-- Determines when to insert comment slashes when pressing `<enter>` in the editor (requires restart).
+-- 
+-- When using `tripleSlash`, double-slashes will still be included when breaking existing double-slash comments across additional lines.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field automaticCommentSlashes "none" | "tripleSlash" | "all"|nil
+-- Additional args to pass to the `build_runner` when building/watching/serving.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field buildRunnerAdditionalArgs string[]|nil
+-- Whether to check you are using the latest version of the Dart SDK at startup.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checkForSdkUpdates boolean|nil
+-- Additional args to pass to the `dart` command when running CLI scripts. Using the `args`/`toolArgs` fields in `launch.json` is usually better than this setting as this setting will apply to _all_ projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cliAdditionalArgs string[]|nil
+-- Whether to run Dart CLI apps in the Debug Console or a terminal. The Debug Console has more functionality because the process is controlled by the debug adapter, but is unable to accept input from the user via stdin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cliConsole "debugConsole" | "terminal" | "externalTerminal"|nil
+-- Whether to automatically close embedded DevTools tabs when a debug session ends.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field closeDevTools "never" | "ifOpened" | "always"|nil
+-- Whether to show annotations against constructor, method invocations and lists that span multiple lines.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field closingLabels boolean|nil
+-- The prefix to use in closing labels.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field closingLabelsPrefix string|nil
+-- The text style to use in closing labels. Using _Italic_ requires a font that supports italic text.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field closingLabelsTextStyle "normal" | "italic"|nil
+-- Whether to insert parentheses and placeholders for positional and required arguments during code completions when using LSP. This feature is automatically disabled if commit characters are enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completeFunctionCalls boolean|nil
+-- An array of glob patterns to exclude from code coverage results. Paths matching any of these patterns will still be collected by the Dart VM but not be included in coverage reported to VS Code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field coverageExcludePatterns string[]|nil
+-- The path to a custom Dart Debug Adapter. This setting is intended for use by Dart Debug Adapter developers. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+---@field customDartDapPath string|nil
+-- Custom settings for launching DevTools. This setting is intended for use by Dart DevTools developers.
+---@field customDevTools lsp.dartls.CustomDevTools|nil
+-- The path to a custom Flutter Debug Adapter. This setting is intended for use by Dart Debug Adapter developers. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+---@field customFlutterDapPath string|nil
+-- EXPERIMENTAL: The port where flutter daemon can be accessed if daemon is run remotely. This setting is intended for use by Google developers.
+---@field daemonPort number|nil
+-- The path to a log file for communication with the DAP debug adapters. This is useful when trying to diagnose issues with debugging such as missed breakpoints. Use `${name}` in the log file name to insert the Debug Session name to prevent concurrent debug sessions overwriting each others logs. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `${kind}` to insert a description of the kind of debug session ('dart', 'dart_test', 'flutter' etc.). Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field dapLogFile string|nil
+-- **LEGACY SETTING: Only applies when using the legacy debug adapters.**
+-- 
+-- The path to a log file for Dart test runs. This is useful when trying to diagnose issues with unit test executions. Use `${name}` in the log file name to insert the Debug Session name to prevent concurrent debug sessions overwriting each others logs. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field dartTestLogFile string|nil
+-- The protocol to use for the Dart Debug Extension backend service and injected client. Using WebSockets can improve performance but may fail when connecting through some proxy servers.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugExtensionBackendProtocol "sse" | "ws"|nil
+-- Whether to mark external pub package libraries (including `package:flutter`) as debuggable, enabling stepping into them while debugging.
+---@field debugExternalPackageLibraries boolean|nil
+-- Whether to mark Dart SDK libraries (`dart:*`) as debuggable, enabling stepping into them while debugging.
+---@field debugSdkLibraries boolean|nil
+-- Whether to launch external DevTools windows using Chrome or the system default browser. This setting is ignored for remote workspaces (including Docker, SSH, WSL).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field devToolsBrowser "chrome" | "default"|nil
+-- Where to open [Dart DevTools](https://dart.dev/tools/dart-devtools) pages.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field devToolsLocation lsp.dartls.DevToolsLocation|nil
+-- The path to a low-traffic log file for the Dart DevTools service. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field devToolsLogFile string|nil
+-- The port number to be used for the Dart DevTools (requires restart).
+---@field devToolsPort number|nil
+-- Whether to try to reuse existing DevTools windows instead of launching new ones. Only works for instances of DevTools launched by the DevTools server on the local machine.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field devToolsReuseWindows boolean|nil
+-- The theme to use for Dart DevTools.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field devToolsTheme "dark" | "light"|nil
+-- **LEGACY SETTING: Only applies to legacy analysis server protocol.**
+-- 
+-- An array of glob patterns that should be excluded for formatting. The pattern is matched against the absolute path of the file. Use `**/test/**` to skip formatting for all test directories. Must always use forward slashes (even on Windows) as backslashes are used for escaping.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field doNotFormat string[]|nil
+-- What level of documentation to show in Hovers and Code Completion details. When `null`, defaults to 'full' when running locally and 'none' in remote workspaces. This setting is only supported for Dart SDKs after v2.18.
+---@field documentation "full" | "summary" | "none"|nil
+-- How long (in ms) to delay sending editor location change events over the Dart Tooling Daemon. Increasing this results in less events which may improve performance, at the expensive of tools that use these events not updating as quickly after your location/editor changes (requires restart).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dtdEditorActiveLocationDelay integer|nil
+-- Whether to automatically commit the selected completion item when pressing certain keys such as . , ( and \[. This setting does not currently apply to LSP, see `#dart.previewCommitCharacters#`.
+---@field enableCompletionCommitCharacters boolean|nil
+-- Whether to enable functionality for using Pub. Turning this setting off will prevent the extension from ever running pub and hide all commands relating to this. Use this if you are using an alternative package manager.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enablePub boolean|nil
+-- Whether to enable the [dart_style](https://pub.dev/packages/dart_style) formatter for Dart code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableSdkFormatter boolean|nil
+-- Whether to use code snippets from the Dart Analysis Server instead of those included in the extension. Server snippets are context and language-version aware and should be preferred.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableServerSnippets boolean|nil
+-- Whether to include Dart and Flutter snippets in code completion.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableSnippets boolean|nil
+-- Additional environment variables to be added to all Dart/Flutter processes spawned by the Dart and Flutter extensions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field env table|nil
+-- Whether to evaluate getters in order to display them in debug views (such as the Variables, Watch and Hovers views).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field evaluateGettersInDebugViews boolean|nil
+-- Whether to call toString() on objects when rendering them in debug views (such as the Variables, Watch and Hovers views). Only applies to views of 100 or fewer values for performance reasons.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field evaluateToStringInDebugViews boolean|nil
+-- Whether to enable experimental (possibly unfinished or unstable) LSP handlers through DTD. This setting is passed to the analysis server in the connectToDtd request and therefore relies on DTD being supported and enabled for the analysis server (requires restart).
+---@field experimentalDtdHandlers boolean|nil
+-- Whether to enable experimental (possibly unfinished or unstable) refactors on the lightbulb menu. This setting is intended for use by Dart Analysis Server developers or users that want to try out and provide feedback on in-progress refactors.
+---@field experimentalRefactors boolean|nil
+-- Whether to enable experimental tracking of test locations. This may improve the experience when using packages like `pkg:test_reflective_loader` where tests are only discovered during test runs and not during coding.
+---@field experimentalTestTracking boolean|nil
+-- The path to a low-traffic log file for basic extension and editor issues. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field extensionLogFile string|nil
+-- Whether to automatically run `adb connect 100.115.92.2:5555` when spawning the Flutter daemon when running on Chrome OS.
+---@field flutterAdbConnectOnChromeOs boolean|nil
+-- Additional args to pass to all `flutter` commands including `flutter daemon`. Do not use this to pass arguments to your Flutter app, use the `args` field in a `launch.json` or the `#dart.flutterRunAdditionalArgs#` setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterAdditionalArgs string[]|nil
+-- Additional args to pass to the `flutter attach` command. Using the `args`/`toolArgs` fields in `launch.json` is usually better than this setting as this setting will apply to _all_ projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterAttachAdditionalArgs string[]|nil
+-- The programming language to use for Android apps when creating new projects using the 'Flutter: New Project' command.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterCreateAndroidLanguage "java" | "kotlin"|nil
+-- The programming language to use for iOS apps when creating new projects using the 'Flutter: New Project' command. This is only supported up until Flutter 3.22 after which it will be ignored.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterCreateIOSLanguage "objc" | "swift"|nil
+-- The organization responsible for your new Flutter project, in reverse domain name notation (e.g. `com.google`). This string is used in Java package names and as prefix in the iOS bundle identifier when creating new projects using the 'Flutter: New Project' command.
+---@field flutterCreateOrganization string|nil
+-- The platforms to enable for new projects created using the 'Flutter: New Project' command. If unset, all platforms will be enabled.
+---@field flutterCreatePlatforms string[]|nil
+-- Custom emulators to show in the emulator list for easier launching. If IDs match existing emulators returned by Flutter, the custom emulators will override them.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterCustomEmulators object[]|nil
+-- The path to a log file for the `flutter daemon` service, which provides information about connected devices accessible from the status bar. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field flutterDaemonLogFile string|nil
+-- Whether to automatically run the Generate Localizations command for Flutter apps when saving .arb files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterGenerateLocalizationsOnSave "never" | "manual" | "manualIfDirty" | "all" | "allIfDirty"|nil
+-- Whether to show Flutter icons and colors in the editor gutter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterGutterIcons boolean|nil
+-- Whether to automatically send a Hot Reload request to Flutter apps during a debug session when saving files. Dart apps are controlled by the hotReloadOnSave setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterHotReloadOnSave "never" | "manual" | "manualIfDirty" | "all" | "allIfDirty"|nil
+-- Whether to show the Flutter Outline tree in the sidebar.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterOutline boolean|nil
+-- Whether to remember which device was last (explicitly) selected for each project. When the remembered device is selected, it will prevent newly-connected mobile devices from being automatically selected (regardless of the `#dart.flutterSelectDeviceWhenConnected#` setting).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterRememberSelectedDevice boolean|nil
+-- Additional args to pass to the `flutter run` command. Using the `args`/`toolArgs` fields in `launch.json` is usually better than this setting as this setting will apply to _all_ projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterRunAdditionalArgs string[]|nil
+-- **LEGACY SETTING: Only applies when using the legacy debug adapters.**
+-- 
+-- The path to a log file for `flutter run`, which is used to launch Flutter apps from VS Code. This is useful when trying to diagnose issues with apps launching (or failing to) on simulators and devices. Use `${name}` in the log file name to insert the Debug Session name to prevent concurrent debug sessions overwriting each others logs. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field flutterRunLogFile string|nil
+-- The path to a directory to save Flutter screenshots. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+---@field flutterScreenshotPath string|nil
+-- The location of the Flutter SDK to use. If blank (or not a valid SDK), Dart Code will attempt to find it from the project directory, `FLUTTER_ROOT` environment variable and the `PATH` environment variable. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+---@field flutterSdkPath string|nil
+-- An array of paths that either directly point to a Flutter SDK or the parent directory of multiple Flutter SDKs that can be used for fast SDK switching. These paths are not used directly when searching for an SDK. When this setting is populated, the version number in the status bar can be used to quickly switch between SDKs. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterSdkPaths string[]|nil
+-- Whether to set newly connected devices as the current device in Flutter projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterSelectDeviceWhenConnected boolean|nil
+-- When to show the Flutter emulators. These are usually hidden for remote workspaces because it is usually not possible to see or interact with emulators in a remote session. If you are using remoting/containers in a way that you can interact with launched emulator processes, you may wish to set this to 'always'.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterShowEmulators "local" | "always" | "never"|nil
+-- When to show the Flutter headless web-server device. This requires using the Dart Debug extension for Chrome and is usually only used for remote environments where Chrome is not available such as browser/cloud-based IDEs (requires restart).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterShowWebServerDevice "remote" | "always"|nil
+-- Additional args to pass to the `flutter test` command. Using the `args`/`toolArgs` fields in `launch.json` is usually better than this setting as this setting will apply to _all_ projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterTestAdditionalArgs string[]|nil
+-- **LEGACY SETTING: Only applies when using the legacy debug adapters.**
+-- 
+-- The path to a log file for `flutter test`, which is used to run unit tests from VS Code. This is useful when trying to diagnose issues with unit test executions. Use `${name}` in the log file name to insert the Debug Session name to prevent concurrent debug sessions overwriting each others logs. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field flutterTestLogFile string|nil
+-- **LEGACY SETTING: Disabling this may break functionality on modern SDKs.**
+-- 
+-- Whether to pass `--track-widget-creation` to Flutter apps (required to support 'Inspect Widget'). This setting is always ignored when running in Profile or Release mode.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterTrackWidgetCreation boolean|nil
+-- Sets the [Web renderer](https://flutter.dev/to/web-renderers) used for Flutter web apps.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterWebRenderer "flutter-default" | "canvaskit" | "html" | "auto"|nil
+-- Where to display the Flutter Widget Preview.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flutterWidgetPreviewLocation "beside" | "sidebar"|nil
+-- The path to a log file for the `flutter widget-preview` service. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field flutterWidgetPreviewLogFile string|nil
+-- Get the Dart SDK path from a command. Useful when using tools such as direnv, asdf, mise... The command should exit with a 0 status code and it should print to the standard output just the path to the SDK. If the command fails (non zero exit or bad path), the extension will keep looking for other SDK paths. Some configuration examples can be found in: https://github.com/Dart-Code/Dart-Code/pull/5377
+---@field getDartSdkCommand table|nil
+-- Get the Flutter SDK path from a command. Useful when using tools such as direnv, asdf, mise... The command should exit with a 0 status code and it should print to the standard output just the path to the SDK. If the command fails (non zero exit or bad path), the extension will keep looking for other SDK paths. Some configuration examples can be found in: https://github.com/Dart-Code/Dart-Code/pull/5377
+---@field getFlutterSdkCommand table|nil
+-- Whether to automatically send a Hot Reload request to Dart apps during a debug session when saving files. Flutter apps are controlled by the flutterHotReloadOnSave setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hotReloadOnSave "never" | "manual" | "manualIfDirty" | "all" | "allIfDirty"|nil
+-- An array of glob patterns that should trigger Hot Reload when saved. The pattern is matched against the absolute path of the file. Use `**/assets/**` to trigger reloading for everything in the assets directory. Must always start with "**/" and use forward slashes (even on Windows) as backslashes are used for escaping.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hotReloadPatterns string[]|nil
+-- Determines how to display Hot Restart and Hot Reload progress.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hotReloadProgress "notification" | "statusBar"|nil
+-- Whether to include symbols from the SDK and package dependencies in the "Go to Symbol in Workspace" (`cmd/ctrl`+`T`) list. This can only be disabled when using Dart 3.0 / Flutter 3.10 or later.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeDependenciesInWorkspaceSymbols boolean|nil
+-- Whether to show Inlay Hints. When set to `true`, enables all inlay hints with default settings. When set to `false`, disables all inlay hints. Can also be an object to configure individual hint types. Requires Dart 3.10.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inlayHints boolean|table|nil
+-- Whether to insert argument placeholders during code completions. This feature is automatically disabled when `enableCompletionCommitCharacters` is enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertArgumentPlaceholders boolean|nil
+-- The maximum length of a line of code. This is used by the document formatter. If you change this value, you may wish to update `editor.rulers` (which draws vertical lines in the editor) in the `["dart"]` section of your settings to match.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lineLength integer|nil
+-- Whether to enable [Snippet support in LSP TextEdits](https://github.com/rust-analyzer/rust-analyzer/blob/979e788957ced1957ee9ac1da70fb97abf9fe2b1/docs/dev/lsp-extensions.md#snippet-textedit).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lspSnippetTextEdits boolean|nil
+-- The maximum number of completion items to return from a code completion request. Updated results will be fetched as additional characters are typed. Lower numbers may improved performance. Defaults to a lower value in remote workspaces. Only affects LSP for > Dart SDK 2.17.
+---@field maxCompletionItems number|nil
+-- The maximum length of a line in the log file. Lines longer than this will be truncated and suffixed with an ellipsis.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxLogLineLength number|nil
+-- Whether to register the Dart SDK's MCP server with VS Code. This only applies to Dart SDKs >= v3.9.0 which added the server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mcpServer boolean|nil
+-- The path to a log file for the Dart SDK's MCP server. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field mcpServerLogFile string|nil
+-- A map of MCP tool names to booleans to enable/disable specific tools from the Dart MCP server. Tools set to `false` will be excluded (if supported). By default, tools that overlap with built-in VS Code functionality will be excluded.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mcpServerTools table|nil
+-- Whether to normalize file casings before sending them to the LSP server. This may fix issues with file_names lints not disappearing after renaming a file if the VS Code API continues to use the original casing.
+---@field normalizeFileCasing boolean|nil
+-- Whether to show a notification the first few times an Analysis Server exception occurs.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field notifyAnalyzerErrors boolean|nil
+-- Whether to use the --offline switch for commands like 'pub get' and 'Flutter: New Project'.
+---@field offline boolean|nil
+-- Whether to ignore workspace folders and perform analysis based on the open files, as if no workspace was open at all. This allows opening very large folders without causing them to be fully analyzed but will result a lot of re-analysis as files are opened/closed. This is **not** recommended for small or medium sized workspaces, only very large workspaces where you are working in only a small part.
+---@field onlyAnalyzeProjectsWithOpenFiles boolean|nil
+-- Whether to automatically open DevTools at the start of a debug session. If embedded DevTools is enabled, this will launch the Widget Inspector embedded for Flutter projects, or launch DevTools externally in a browser for Dart projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field openDevTools "never" | "flutter" | "always"|nil
+-- When to automatically switch focus to the test list (array to support multiple values).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field openTestView any[]|nil
+-- EXPERIMENTAL: Whether to enable commit characters for the LSP server. In a future release, the dart.enableCompletionCommitCharacters setting will also apply to LSP.
+---@field previewCommitCharacters boolean|nil
+-- EXPERIMENTAL: Whether to enable the [Flutter UI Guides preview](https://dartcode.org/releases/v3-1/#preview-flutter-ui-guides).
+---@field previewFlutterUiGuides boolean|nil
+-- EXPERIMENTAL: Whether to enable custom tracking of Flutter UI guidelines (to hide some latency of waiting for the next Flutter Outline).
+---@field previewFlutterUiGuidesCustomTracking boolean|nil
+-- Whether to perform hot reload on save based on a filesystem watcher for Dart files rather than using VS Code's `onDidSave` event. This allows reloads to trigger when external tools modify Dart source files.
+---@field previewHotReloadOnSaveWatcher boolean|nil
+-- How many levels (including the workspace roots) down the workspace to search for Dart/Flutter projects. Increasing this number may help detect Flutter projects that are deeply nested in your workspace but slow down all operations that search for projects, including extension activation (requires restart).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field projectSearchDepth number|nil
+-- Whether to prompt to get/upgrade packages when opening a project with missing/out of date packages.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field promptToGetPackages boolean|nil
+-- Whether to prompt before running if there are errors in your project. Test scripts will be excluded from the check unless they're the script being run.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field promptToRunIfErrors boolean|nil
+-- Additional args to pass to all `pub` commands.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pubAdditionalArgs string[]|nil
+-- Whether to rename files when renaming classes with matching names (for example renaming 'class Person' inside 'person.dart'). If set to 'prompt', will ask each time before renaming. If set to 'always', the file will automatically be renamed. This setting requires using LSP and a Dart SDK of at least v2.15.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renameFilesWithClasses "never" | "prompt" | "always"|nil
+-- Whether to automatically run `pub get` on nested projects above or below the one where the pubspec was changed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field runPubGetOnNestedProjects "none" | "both" | "above" | "below"|nil
+-- Whether to run `pub get` whenever `pubspec.yaml` is saved.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field runPubGetOnPubspecChanges "always" | "prompt" | "never"|nil
+-- The location of the Dart SDK to use for analyzing and executing code. If blank (or not a valid SDK), Dart Code will attempt to find it from the `PATH` environment variable. When editing a Flutter project, the version of Dart included in the Flutter SDK is used in preference. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+---@field sdkPath string|nil
+-- An array of paths that either directly point to a Dart SDK or the parent directory of multiple Dart SDKs that can be used for fast SDK switching. These paths are not used directly when searching for an SDK. When this setting is populated, the SDK version number in the status bar can be used to quickly switch between SDKs. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sdkPaths string[]|nil
+-- Where to save SDK selections when using fast SDK switching from the language status entry.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sdkSwitchingTarget "workspace" | "global"|nil
+-- Whether to eagerly run DevTools for Flutter workspaces and share the spawned server with `flutter run`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field shareDevToolsWithFlutter boolean|nil
+-- Whether to show logs from the `dart:developer` `log()` function in the debug console.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showDartDeveloperLogs boolean|nil
+-- Whether to show CodeLens actions in the editor for opening online DartPad samples.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showDartPadSampleCodeLens boolean|nil
+-- Whether to show integers formatted as Hex in Variables, Watch, Debug Consoles.
+---@field showDebuggerNumbersAsHex boolean|nil
+-- Whether to show DevTools buttons in the floating Debug toolbar.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showDevToolsDebugToolBarButtons boolean|nil
+-- Whether to show recommendations for other VS Code extensions based on the packages you're using.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showExtensionRecommendations boolean|nil
+-- Whether to show getters in order to display them in debug views (such as the Variables, Watch and Hovers views). If `evaluateGettersInDebugViews` is `true` getters will be eagerly evaluated, otherwise they will require clicking to evaluate.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showGettersInDebugViews boolean|nil
+-- Whether to show notifications for widget errors that offer Inspect Widget links. This requires that the `#dart.shareDevToolsWithFlutter#` setting is also enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showInspectorNotificationsForWidgetErrors boolean|nil
+-- Whether to show CodeLens actions in the editor for quick running / debugging scripts with main functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showMainCodeLens boolean|nil
+-- Whether to show skipped tests in the test tree.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showSkippedTests boolean|nil
+-- Whether to show CodeLens actions in the editor for quick running / debugging tests.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showTestCodeLens boolean|nil
+-- Whether to show TODOs in the Problems list. Can be a boolean to enable all TODO comments (TODO, FIXME, HACK, UNDONE) or an array of which types to enable. Older Dart SDKs may not support some TODO kinds.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showTodos boolean|string[]|nil
+-- Whether to suppress test timeouts when running/debugging tests. To work properly this requires package:test version 1.20.1 or newer. For older versions, the default timeout will be increased to 1d but this will not affect tests that have explicit (non-factor) timeouts set with @timeout.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressTestTimeouts "never" | "debug" | "always"|nil
+-- Additional args to pass to the `dart test` command. Using the `args`/`toolArgs` fields in `launch.json` is usually better than this setting as this setting will apply to _all_ projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field testAdditionalArgs string[]|nil
+-- How to identify tests when running/debugging. `name` is compatible with older versions of `package:test` but cannot handle some complex/dynamic test names. `line` will prefer to run tests by their line numbers (when available) and fall back to `name` only if the line number is unavailable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field testInvocationMode "name" | "line"|nil
+-- Additional args to pass to the `dart tooling-daemon` command that runs as a background service (requires restart).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field toolingDaemonAdditionalArgs string[]|nil
+-- The path to a log file for the `dart tooling-daemon` service, which coordinates between various Dart and Flutter tools and extensions. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field toolingDaemonLogFile string|nil
+-- **LEGACY SETTING: Only applies to Dart SDKs before v2.15 since DevTools now ships in the SDK.**
+-- 
+-- Whether to update DevTools if you are not using the latest version.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field updateDevTools boolean|nil
+-- Whether to automatically update imports when moving or renaming files. Currently only supports single file moves / renames.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field updateImportsOnRename boolean|nil
+-- Whether to use `flutter-dev` instead of `flutter`. This is a script for developers of the `flutter` tool to run from source and will run more slowly than the compiled tool.
+---@field useFlutterDev boolean|nil
+-- Arguments to be passed to the Dart VM when running Dart CLI scripts/tests.
+-- 
+-- These arguments appear after "dart" but before subcommands like "test":
+-- 
+-- `dart (vmAdditionalArgs) test (toolArgs) test/my_test.dart (args)`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vmAdditionalArgs string[]|nil
+-- **LEGACY SETTING: Only applies when using the legacy debug adapters.**
+-- 
+-- The path to a log file for communication between Dart Code and the VM service. This is useful when trying to diagnose issues with debugging such as missed breakpoints. Use `${name}` in the log file name to insert the Debug Session name to prevent concurrent debug sessions overwriting each others logs. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field vmServiceLogFile string|nil
+-- Whether to show a warning when modifying files in the [system package cache](https://dart.dev/tools/pub/glossary#system-cache) directory.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warnWhenEditingFilesInPubCache boolean|nil
+-- Whether to show a warning when modifying files outside of the workspace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warnWhenEditingFilesOutsideWorkspace boolean|nil
+-- **LEGACY SETTING: Only applies when using the legacy debug adapters.**
+-- 
+-- The path to a log file for communication between Dart Code and the webdev daemon. This is useful when trying to diagnose issues with launching web apps. Use `${name}` in the log file name to insert the Debug Session name to prevent concurrent debug sessions overwriting each others logs. Use `${workspaceName}` to insert the name of the current workspace in the file path. Use `~` to insert the user's home directory (the path should then use `/` separators even on Windows). Only the noted substitutions are supported, others will stay as-is.
+---@field webDaemonLogFile string|nil
+
+---@class lsp.dartls
+---@field dart lsp.dartls.Dart|nil
+
+---@class lsp.denols.CodeLens
+-- Enables or disables the display of code lens information for implementations of items in the code.
+---@field implementations boolean|nil
+-- Enables or disables the display of code lens information for references of items in the code.
+---@field references boolean|nil
+-- Enables or disables the display of code lens information for all functions in the code.
+---@field referencesAllFunctions boolean|nil
+-- Enables or disables the display of code lenses that allow running of individual tests in the code.
+---@field test boolean|nil
+-- Additional arguments to use with the run test code lens.  Defaults to `[ "--allow-all", "--no-check" ]`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field testArgs string[]|nil
+
+---@class lsp.denols.EnumMemberValues
+-- Enable/disable inlay hints for enum values.
+---@field enabled boolean|nil
+
+---@class lsp.denols.FunctionLikeReturnTypes
+-- Enable/disable inlay hints for implicit function return types.
+---@field enabled boolean|nil
+
+---@class lsp.denols.ParameterNames
+-- Enable/disable inlay hints for parameter names.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "none" | "literals" | "all"|nil
+-- Do not display an inlay hint when the argument name matches the parameter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenArgumentMatchesName boolean|nil
+
+---@class lsp.denols.ParameterTypes
+-- Enable/disable inlay hints for implicit parameter types.
+---@field enabled boolean|nil
+
+---@class lsp.denols.PropertyDeclarationTypes
+-- Enable/disable inlay hints for implicit property declarations.
+---@field enabled boolean|nil
+
+---@class lsp.denols.VariableTypes
+-- Enable/disable inlay hints for implicit variable types.
+---@field enabled boolean|nil
+-- Suppress type hints where the variable name matches the implicit type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenTypeMatchesName boolean|nil
+
+---@class lsp.denols.InlayHints
+---@field enumMemberValues lsp.denols.EnumMemberValues|nil
+---@field functionLikeReturnTypes lsp.denols.FunctionLikeReturnTypes|nil
+---@field parameterNames lsp.denols.ParameterNames|nil
+---@field parameterTypes lsp.denols.ParameterTypes|nil
+---@field propertyDeclarationTypes lsp.denols.PropertyDeclarationTypes|nil
+---@field variableTypes lsp.denols.VariableTypes|nil
+
+---@class lsp.denols.Imports
+-- If enabled, when new hosts/origins are encountered that support import suggestions, you will be prompted to enable or disable it.  Defaults to `true`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoDiscover boolean|nil
+-- Controls which hosts are enabled for import suggestions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hosts table|nil
+
+---@class lsp.denols.Suggest
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImports boolean|nil
+---@field completeFunctionCalls boolean|nil
+---@field imports lsp.denols.Imports|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field names boolean|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field paths boolean|nil
+
+---@class lsp.denols.Testing
+-- Arguments to use when running tests via the Test Explorer.  Defaults to `[ "--allow-all" ]`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args string[]|nil
+
+---@class lsp.denols.Trace
+-- Traces the communication between VS Code and the Deno Language Server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "messages" | "off" | "verbose"|nil
+
+---@class lsp.denols.Deno
+-- A path to the cache directory for Deno. By default, the operating system's cache path plus `deno` is used, or the `DENO_DIR` environment variable, but if set, this path will be used instead.
+---@field cache string|nil
+-- Controls if the extension should cache the active document's dependencies on save.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cacheOnSave boolean|nil
+-- A list of root certificate stores used to validate TLS certificates when fetching and caching remote resources. This overrides the `DENO_TLS_CA_STORE` environment variable if set.
+---@field certificateStores string[]|nil
+---@field codeLens lsp.denols.CodeLens|nil
+-- The file path to a configuration file. This is the equivalent to using `--config` on the command line. The path can be either be relative to the workspace, or an absolute path.
+-- 
+-- It is recommend you name it `deno.json` or `deno.jsonc`.
+-- 
+-- **Not recommended to be set globally.**
+---@field config string|nil
+-- Controls the default action when clicking on a task in the _Deno Tasks sidebar_.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field defaultTaskCommand "open" | "run"|nil
+-- Disables the Deno Language Server for specific paths. This will leave the built in TypeScript/JavaScript language server enabled for those paths. Takes priority over `deno.enablePaths`.
+-- 
+-- **Not recommended to be enabled in user settings.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disablePaths string[]|nil
+-- Maximum number of file system entries to traverse when finding scripts to preload into TypeScript on startup. Set this to 0 to disable document preloading.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentPreloadLimit number|nil
+-- Controls if the Deno Language Server is enabled. When enabled, the extension will disable the built-in VSCode JavaScript and TypeScript language services, and will use the Deno Language Server instead.
+-- 
+-- If omitted, your preference will be inferred as true if there is a `deno.json[c]` at your workspace root and false if not.
+-- 
+-- If you want to enable only part of your workspace folder, consider using `deno.enablePaths` setting instead.
+-- 
+-- **Not recommended to be enabled globally.**
+---@field enable boolean|nil
+-- Enables the Deno Language Server for specific paths, instead of for the whole workspace folder. This will disable the built in TypeScript/JavaScript language server for those paths.
+-- 
+-- When a value is set, the value of `"deno.enable"` is ignored.
+-- 
+-- The workspace folder is used as the base for the supplied paths. If for example you have all your Deno code in `worker` path in your workspace, you can add an item with the value of `./worker`, and the Deno will only provide diagnostics for the files within `worker` or any of its sub paths.
+-- 
+-- **Not recommended to be enabled in user settings.**
+---@field enablePaths string[]|nil
+-- Additional environment variables to pass to Deno processes. Overrides the user's env and `deno.envFile`. These will be overridden by more specific settings such as `deno.future` for `DENO_FUTURE`, and invariables like `NO_COLOR=1`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field env table|nil
+-- Env file containing additional environment variables to pass to Deno processes. Overrides the user's env. These will be overridden by `deno.env`, more specific settings such as `deno.future` for `DENO_FUTURE`, and invariables like `NO_COLOR=1`.
+---@field envFile string|nil
+-- Enable breaking features likely to be shipped in Deno 2.0.
+---@field future boolean|nil
+-- The file path to an import map. This is the equivalent to using `--import-map` on the command line.
+-- 
+-- [Import maps](https://deno.land/manual@v1.6.0/linking_to_external_code/import_maps) provide a way to "relocate" modules based on their specifiers. The path can either be relative to the workspace, or an absolute path.
+-- 
+-- **Not recommended to be set globally.**
+---@field importMap string|nil
+---@field inlayHints lsp.denols.InlayHints|nil
+-- Determines if the internal debugging information for the Deno language server will be logged to the _Deno Language Server_ console.
+---@field internalDebug boolean|nil
+-- Enables the inspector server for the JS runtime used by the Deno Language Server to host its TS server. Optionally provide an address for the inspector listener e.g. "127.0.0.1:9222" (default).
+---@field internalInspect boolean|string|nil
+-- Controls if linting information will be provided by the Deno Language Server.
+-- 
+-- **Not recommended to be enabled globally.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lint boolean|nil
+-- Write logs to a file in a project-local directory.
+---@field logFile boolean|nil
+-- Maximum amount of memory the TypeScript isolate can use. Defaults to 3072 (3GB).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxTsServerMemory number|nil
+-- A path to the `deno` CLI executable. By default, the extension looks for `deno` in the `PATH`, but if set, will use the path specified instead.
+---@field path string|nil
+---@field suggest lsp.denols.Suggest|nil
+---@field testing lsp.denols.Testing|nil
+-- A path to a PEM certificate to use as the certificate authority when validating TLS certificates when fetching and caching remote resources. This is like using `--cert` on the Deno CLI and overrides the `DENO_CERT` environment variable if set.
+---@field tlsCertificate string|nil
+---@field trace lsp.denols.Trace|nil
+-- **DANGER** disables verification of TLS certificates for the hosts provided. There is likely a better way to deal with any errors than use this option. This is like using `--unsafely-ignore-certificate-errors` in the Deno CLI.
+---@field unsafelyIgnoreCertificateErrors string[]|nil
+-- Controls which `--unstable-*` features tests will be run with when running them via the explorer.
+-- 
+-- **Not recommended to be enabled globally.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unstable string[]|nil
+
+---@class lsp.denols
+---@field deno lsp.denols.Deno|nil
+
+---@class lsp.elixirls.Trace
+-- Traces the communication between VS Code and the Elixir language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.elixirls.ElixirLS
+-- Additional file types capable of triggering a build on change
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field additionalWatchedExtensions string[]|nil
+-- Trigger ElixirLS build when code is saved
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoBuild boolean|nil
+-- Enable auto-insert required alias. This is true (enabled) by default.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoInsertRequiredAlias boolean|nil
+-- Run ElixirLS's rapid Dialyzer when code is saved
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dialyzerEnabled boolean|nil
+-- Formatter to use for Dialyzer warnings
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dialyzerFormat "dialyzer" | "dialyxir_short" | "dialyxir_long"|nil
+-- Dialyzer options to enable or disable warnings - See Dialyzer's documentation for options. Note that the "race_conditions" option is unsupported
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dialyzerWarnOpts string[]|nil
+-- Path to a custom .formatter.exs file used when formatting documents
+---@field dotFormatter string|nil
+-- Show code lenses to run tests in terminal.
+---@field enableTestLenses boolean|nil
+-- Environment variables to use for compilation
+---@field envVariables table|nil
+-- Automatically fetch project dependencies when compiling.
+---@field fetchDeps boolean|nil
+-- Use OTP incremental dialyzer (available on OTP 26+)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field incrementalDialyzer boolean|nil
+-- Absolute path to alternative ElixirLS release that will override the packaged release
+---@field languageServerOverridePath string|nil
+-- Enable or disable the MCP server
+---@field mcpEnabled boolean|nil
+-- Set a specific port for the MCP server. If not set, uses `3789 + hash(workspace_path)` for predictable port assignment per workspace
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mcpPort integer|nil
+-- Mix environment to use for compilation
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mixEnv string|nil
+-- Mix target to use for compilation
+---@field mixTarget string|nil
+-- Subdirectory containing Mix project if not in the project root
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field projectDir string|nil
+-- Show signature help after confirming autocomplete.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field signatureAfterComplete boolean|nil
+-- Subdirectory where the Elixir stdlib resides to allow for source code lookup. E.g. /home/youruser/.asdf/installs/elixir/1.18.2
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field stdlibSrcDir string|nil
+-- Suggest @spec annotations inline using Dialyzer's inferred success typings (Requires Dialyzer).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestSpecs boolean|nil
+---@field trace lsp.elixirls.Trace|nil
+-- Don't try to look for mix.exs in parent directories
+---@field useCurrentRootFolderAsProjectDir boolean|nil
+
+---@class lsp.elixirls
+---@field elixirLS lsp.elixirls.ElixirLS|nil
+
+---@class lsp.elmls.ElmTestRunner
+-- Show output of elm-test as terminal task
+---@field showElmTestOutput boolean|nil
+
+---@class lsp.elmls.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.elmls.ElmLS
+-- Disable linting diagnostics from the language server.
+---@field disableElmLSDiagnostics boolean|nil
+-- The path to your elm-format executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field elmFormatPath string|nil
+-- The path to your elm executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field elmPath string|nil
+-- Set severity or disable linting diagnostics for elm-review.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field elmReviewDiagnostics "off" | "warning" | "error"|nil
+-- The path to your elm-review executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field elmReviewPath string|nil
+-- The path to your elm-test executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field elmTestPath string|nil
+---@field elmTestRunner lsp.elmls.ElmTestRunner|nil
+-- Only update compiler diagnostics on save, not on document change.
+---@field onlyUpdateDiagnosticsOnSave boolean|nil
+-- Skips confirmation for the Install Package code action.
+---@field skipInstallPackageConfirmation boolean|nil
+---@field trace lsp.elmls.Trace|nil
+
+---@class lsp.elmls
+---@field elmLS lsp.elmls.ElmLS|nil
+
+-- Show disable lint rule in the quick fix menu.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.eslint.DisableRuleComment
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field commentStyle "line" | "block"|nil
+-- Show the disable code actions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Configure the disable rule code action to insert the comment on the same line or a new line.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field location "separateLine" | "sameLine"|nil
+
+-- Show open lint rule documentation web page in the quick fix menu.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.eslint.ShowDocumentation
+-- Show the documentation code actions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.eslint.CodeAction
+-- Show disable lint rule in the quick fix menu.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disableRuleComment lsp.eslint.DisableRuleComment|nil
+-- Show open lint rule documentation web page in the quick fix menu.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showDocumentation lsp.eslint.ShowDocumentation|nil
+
+---@class lsp.eslint.CodeActionsOnSave
+-- Specifies the code action mode. Possible values are 'all' and 'problems'.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mode "all" | "problems"|nil
+-- The ESLint options object to use on save (see https://eslint.org/docs/developer-guide/nodejs-api#eslint-class). `eslint.codeActionsOnSave.rules`, if specified, will take priority over any rule options here.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field options table|nil
+-- The rules that should be executed when computing the code actions on save or formatting a file. Defaults to the rules configured via the ESLint configuration
+---@field rules string[]|any|nil
+
+---@class lsp.eslint.Experimental
+-- Enables support of experimental Flat Config (aka eslint.config.js). Requires ESLint version >= 8.21 < 8.57.0).
+---@field useFlatConfig boolean|nil
+
+---@class lsp.eslint.Format
+-- Enables ESLint as a formatter.
+---@field enable boolean|nil
+
+---@class lsp.eslint.LintTask
+-- The command to run the task for linting the whole workspace. Defaults to the found eslint binary for the workspace, or 'eslint' if no binary could be found.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field command string|nil
+-- Controls whether a task for linting the whole workspace will be available.
+---@field enable boolean|nil
+-- Command line options applied when running the task for linting the whole workspace (see https://eslint.org/docs/user-guide/command-line-interface).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field options string|nil
+
+---@class lsp.eslint.Migration
+-- Whether ESlint should migrate auto fix on save settings.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field 2_x "off" | "on"|nil
+
+---@class lsp.eslint.Rules
+-- A special rules customization section for text cells in notebook documents.
+---@field customizations object[]|nil
+
+---@class lsp.eslint.Notebooks
+---@field rules lsp.eslint.Rules|nil
+
+---@class lsp.eslint.Problems
+-- Shortens the text spans of underlined problems to their first related line.
+---@field shortenToSingleLine boolean|nil
+
+---@class lsp.eslint.Rules
+-- Override the severity of one or more rules reported by this extension, regardless of the project's ESLint config. Use globs to apply default severities for multiple rules.
+---@field customizations object[]|nil
+
+-- The time budget in milliseconds to spend on computing fixes before showing a warning or error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.eslint.OnFixes
+-- The time budget in milliseconds to spend on computing fixes before showing an error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field error number|nil
+-- The time budget in milliseconds to spend on computing fixes before showing a warning.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warn number|nil
+
+-- The time budget in milliseconds to spend on validation before showing a warning or error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.eslint.OnValidation
+-- The time budget in milliseconds to spend on validation before showing an error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field error number|nil
+-- The time budget in milliseconds to spend on validation before showing a warning.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warn number|nil
+
+---@class lsp.eslint.TimeBudget
+-- The time budget in milliseconds to spend on computing fixes before showing a warning or error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field onFixes lsp.eslint.OnFixes|nil
+-- The time budget in milliseconds to spend on validation before showing a warning or error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field onValidation lsp.eslint.OnValidation|nil
+
+---@class lsp.eslint.Trace
+-- Traces the communication between VSCode and the eslint linter service.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|table|nil
+
+---@class lsp.eslint.Eslint
+-- Turns auto fix on save on or off.
+---@field autoFixOnSave boolean|nil
+---@field codeAction lsp.eslint.CodeAction|nil
+---@field codeActionsOnSave lsp.eslint.CodeActionsOnSave|nil
+-- Enables ESLint debug mode (same as `--debug` on the command line)
+---@field debug boolean|nil
+-- Controls whether eslint is enabled or not.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Additional exec argv argument passed to the runtime. This can for example be used to control the maximum heap space using --max_old_space_size
+---@field execArgv string[]|any|nil
+---@field experimental lsp.eslint.Experimental|nil
+---@field format lsp.eslint.Format|nil
+-- If true, untitled files won't be validated by ESLint.
+---@field ignoreUntitled boolean|nil
+---@field lintTask lsp.eslint.LintTask|nil
+---@field migration lsp.eslint.Migration|nil
+-- The value of `NODE_ENV` to use when running eslint tasks.
+---@field nodeEnv string|nil
+-- A path added to `NODE_PATH` when resolving the eslint module.
+---@field nodePath string|nil
+---@field notebooks lsp.eslint.Notebooks|nil
+-- Whether ESLint should issue a warning on ignored files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field onIgnoredFiles "warn" | "off"|nil
+-- The eslint options object to provide args normally passed to eslint when executed from a command line (see https://eslint.org/docs/developer-guide/nodejs-api#eslint-class).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field options table|nil
+-- The package manager you use to install node modules.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field packageManager "npm" | "yarn" | "pnpm"|nil
+-- An array of language ids for which the extension should probe if support is installed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field probe string[]|nil
+---@field problems lsp.eslint.Problems|nil
+-- Controls whether a task for linting the whole workspace will be available.
+---@field provideLintTask boolean|nil
+-- Turns on quiet mode, which ignores warnings.
+---@field quiet boolean|nil
+---@field rules lsp.eslint.Rules|nil
+-- Run the linter on save (onSave) or on type (onType)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field run "onSave" | "onType"|nil
+-- The location of the node binary to run ESLint under.
+---@field runtime string|nil
+---@field timeBudget lsp.eslint.TimeBudget|nil
+---@field trace lsp.eslint.Trace|nil
+-- Since version 7 ESLint offers a new API call ESLint. Use it even if the old CLIEngine is available. From version 8 on forward on ESLint class is available.
+---@field useESLintClass boolean|nil
+-- Controls whether flat config should be used or not. This setting requires ESLint version 8.57 or later and is interpreted according to the [ESLint Flat Config rollout plan](https://eslint.org/blog/2023/10/flat-config-rollout-plans/). This means:
+-- 
+--  - *8.57.0 <= ESLint version < 9.x*: setting is honored and defaults to false
+-- - *9.0.0 <= ESLint version < 10.x*: settings is honored and defaults to true
+-- - *10.0.0 <= ESLint version*: setting is ignored. Flat configs are the default and can't be turned off.
+---@field useFlatConfig boolean|nil
+-- Whether ESLint should use real paths when resolving files. This is useful when working with symlinks or when the casing of file paths is inconsistent.
+---@field useRealpaths boolean|nil
+-- An array of language ids which should be validated by ESLint. If not installed ESLint will show an error.
+---@field validate any[]|nil
+-- Specifies how the working directories ESLint is using are computed. ESLint resolves configuration files (e.g. `eslintrc`, `.eslintignore`) relative to a working directory so it is important to configure this correctly.
+---@field workingDirectories any[]|nil
+
+---@class lsp.eslint
+---@field eslint lsp.eslint.Eslint|nil
+
+---@class lsp.flow.Trace
+-- Traces the communication between VSCode and the flow lsp service.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.flow.Flow
+-- Type coverage diagnostic severity
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field coverageSeverity "error" | "warn" | "info"|nil
+-- Is flow enabled
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Set value to enable flow lazy mode
+---@field lazyMode string|nil
+-- Log level for output panel logs
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "error" | "warn" | "info" | "trace"|nil
+-- Absolute path to flow binary. Special var ${workspaceFolder} or ${flowconfigDir} can be used in path (NOTE: in windows you can use '/' and can omit '.cmd' in path)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pathToFlow string|nil
+-- If true will show uncovered code by default
+---@field showUncovered boolean|nil
+-- Stop Flow on Exit
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field stopFlowOnExit boolean|nil
+---@field trace lsp.flow.Trace|nil
+-- If true will use flow bundled with this plugin if nothing works
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useBundledFlow boolean|nil
+-- Complete functions with their parameter signature.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useCodeSnippetOnFunctionSuggest boolean|nil
+-- Support using flow through your node_modules folder, WARNING: Checking this box is a security risk. When you open a project we will immediately run code contained within it.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useNPMPackagedFlow boolean|nil
+
+---@class lsp.flow
+---@field flow lsp.flow.Flow|nil
+
+---@class lsp.fsautocomplete.TestExplorer
+-- Decides if the test explorer will automatically try discover tests when the workspace loads. You can still manually refresh the explorer to discover tests at any time
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field AutoDiscoverTestsOnLoad boolean|nil
+-- Use the dotnet cli to discover and run tests instead of the language server. Will lose features like streamed test results and Microsoft Testing Platform support.
+---@field UseLegacyDotnetCliIntegration boolean|nil
+
+---@class lsp.fsautocomplete.References
+-- If enabled, code lenses for reference counts for methods and functions will be shown.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.fsautocomplete.Signature
+-- If enabled, code lenses for type signatures on methods and functions will be shown.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.fsautocomplete.CodeLenses
+---@field references lsp.fsautocomplete.References|nil
+---@field signature lsp.fsautocomplete.Signature|nil
+
+---@class lsp.fsautocomplete.TransparentCompiler
+-- EXPERIMENTAL: Enables the FSharp Compiler Service's [transparent compiler](https://github.com/dotnet/fsharp/pull/15179) feature. Requires restart.
+---@field enabled boolean|nil
+
+---@class lsp.fsautocomplete.Fcs
+---@field transparentCompiler lsp.fsautocomplete.TransparentCompiler|nil
+
+---@class lsp.fsautocomplete.Gc
+-- Configures the garbage collector to [conserve memory](https://learn.microsoft.com/en-us/dotnet/core/runtime-config/garbage-collector#conserve-memory) at the expense of more frequent garbage collections and possibly longer pause times. Acceptable values are 0-9. Any non-zero value will allow the [Large Object Heap](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/large-object-heap) to be compacted automatically if it has too much fragmentation. Requires restart.
+---@field conserveMemory integer|nil
+-- Limits the number of [heaps](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals#the-managed-heap) created by the garbage collector. Applies to server garbage collection only. See [Middle Ground between Server and Workstation GC](https://devblogs.microsoft.com/dotnet/middle-ground-between-server-and-workstation-gc/) for more details. This can allow FSAC to still benefit from Server garbage collection while still limiting the number of heaps. [Only available on .NET 7 or higher](https://github.com/ionide/ionide-vscode-fsharp/issues/1899#issuecomment-1649009462). Requires restart. If FSAC is run on .NET 8 runtimes, this will be set to 2 by default to prevent inflated memory use. On .NET 9 with DATAS enabled, this will not be set. 
+---@field heapCount integer|nil
+-- Configures whether the application uses workstation garbage collection or server garbage collection. See [Workstation vs Server Garbage Collection](https://devblogs.microsoft.com/premier-developer/understanding-different-gc-modes-with-concurrency-visualizer/#workstation-gc-vs-server-gc) for more details. Workstation will use less memory but Server will have more throughput. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server boolean|nil
+-- Configures whether the application uses the DATAS(dynamic adaptation to application sizes) server garbage collection mode. See [DATAS](https://learn.microsoft.com/dotnet/core/runtime-config/garbage-collector#dynamic-adaptation-to-application-sizes-datas) for more details. Requires restart. When FSAC is run on .NET 8 runtimes, this will be set to false by default. On .NET 9 runtimes, this will be set to true by default.
+---@field useDatas boolean|nil
+
+---@class lsp.fsautocomplete.Fsac
+-- Appends the `--attachdebugger` argument to fsac, this will allow you to attach a debugger.
+---@field attachDebugger boolean|nil
+-- The MemoryCacheOptions.SizeLimit for caching typechecks.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cachedTypeCheckCount integer|nil
+-- Configures FsAutoComplete with settings intended to reduce memory consumption. Requires restart.
+---@field conserveMemory boolean|nil
+-- additional CLI arguments to be provided to the dotnet runner for FSAC
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dotnetArgs string[]|nil
+-- additional CLI arguments to be provided to FSAC itself. Useful for flags that aren't exposed in the settings or CLI arguments that only exist in custom built versions of FSAC. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fsacArgs string[]|nil
+---@field gc lsp.fsautocomplete.Gc|nil
+-- The path to the 'fsautocomplete.dll', a directory containing TFM-specific versions of fsautocomplete.dll, or a directory containing fsautocomplete.dll. Useful for debugging a self-built FSAC. If a DLL is specified, uses it directly. If a directory is specified and it contains TFM-specific folders (net6.0, net7.0, etc) then that directory will be probed for the best TFM to use for the current runtime. This is useful when working with a local copy of FSAC, you can point directly to the bin/Debug or bin/Release folder and it'll Just Work. Finally, if a directory is specified and there are no TFM paths, then fsautocomplete.dll from that directory is used. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field netCoreDllPath string|nil
+-- EXPERIMENTAL: Speed up analyzing of projects in parallel. Requires restart.
+---@field parallelReferenceResolution boolean|nil
+-- An array of log categories for FSAC to filter out. These can be found by viewing your log output and noting the text in between the brackets in the log line. For example, in the log line `[16:07:14.626 INF] [Compiler] done compiling foo.fsx`, the category is 'Compiler'. 
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field silencedLogs string[]|nil
+-- Enables the use of a new source text implementation. This may have better memory characteristics. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sourceTextImplementation "NamedText" | "RoslynSourceText"|nil
+
+---@class lsp.fsautocomplete.InlayHints
+-- Hides the explanatory tooltip that appears on InlayHints to describe the different configuration toggles.
+---@field disableLongTooltip boolean|nil
+-- Controls if the inlay hints feature is enabled
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Controls if parameter-name inlay hints will be displayed for functions and methods
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field parameterNames boolean|nil
+-- Controls if type-annotation inlay hints will be displayed for bindings.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeAnnotations boolean|nil
+
+---@class lsp.fsautocomplete.InlineValues
+-- Enables rendering all kinds of hints inline with your code. Currently supports pipelineHints, which are like LineLenses that appear along each step of a chain of piped expressions
+---@field enabled boolean|nil
+-- The prefix used when rendering inline values.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field prefix string|nil
+
+---@class lsp.fsautocomplete.LineLens
+-- Usage mode for LineLens. If `never`, LineLens will never be shown.  If `replaceCodeLens`, LineLens will be placed in a decoration on top of the current line.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "never" | "replaceCodeLens" | "always"|nil
+-- The prefix displayed before the signature in a LineLens
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field prefix string|nil
+
+---@class lsp.fsautocomplete.Notifications
+-- Enables more verbose notifications using System.Diagnostics.Activity to view traces from FSharp.Compiler.Service.
+---@field trace boolean|nil
+-- The set of System.Diagnostics.Activity names to watch.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field traceNamespaces string[]|nil
+
+---@class lsp.fsautocomplete.OpenTelemetry
+-- Enables OpenTelemetry exporter. See [OpenTelemetry Protocol Exporter](https://opentelemetry.io/docs/reference/specification/protocol/exporter/) for environment variables to configure for the exporter. Requires Restart.
+---@field enabled boolean|nil
+
+---@class lsp.fsautocomplete.PipelineHints
+-- Enables PipeLine hints, which are like LineLenses that appear along each step of a chain of piped expressions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- The prefix displayed before the signature
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field prefix string|nil
+
+---@class lsp.fsautocomplete.Trace
+-- Trace server messages at the LSP protocol level for diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.fsautocomplete.FSharp
+-- An array of additional command line parameters to pass to FSI when it is launched. See [the Microsoft documentation](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/fsharp-interactive-options) for an exhaustive list.  If both this and `#FSharp.fsiExtraParameters#` are used, both sets of arguments will be passed to the launched FSI.
+---@field FSIExtraInteractiveParameters any[]|nil
+-- An array of additional command line parameters to pass to the compiler to use when checking FSI scripts. See [the Microsoft documentation](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/fsharp-interactive-options) for an exhaustive list. If both this and `#FSharp.fsiExtraParameters#` are used, only `#FSharp.fsiExtraParameters#` will be used.
+---@field FSIExtraSharedParameters any[]|nil
+---@field TestExplorer lsp.fsautocomplete.TestExplorer|nil
+-- Enables a codefix that generates missing members for an abstract class when in an type inheriting from that abstract class.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field abstractClassStubGeneration boolean|nil
+-- The expression to fill in the right-hand side of inherited members when generating missing members for an abstract base class
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field abstractClassStubGenerationMethodBody string|nil
+-- The name of the 'self' identifier in an inherited member. For example, `this` in the expression `this.Member(x: int) = ()`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field abstractClassStubGenerationObjectIdentifier string|nil
+-- Enables a panel for FSI that shows the value of all existing bindings in the FSI session
+---@field addFsiWatcher boolean|nil
+-- Enables a codefix that adds a private access modifier
+---@field addPrivateAccessModifier boolean|nil
+-- Directories in the array are used as a source of custom analyzers. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analyzersPath any[]|nil
+-- Controls whether the solution explorer should automatically reveal and select files when opening them. If `sameAsFileExplorer` is set, then the value of the `explorer.autoReveal` setting will be used instead.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoRevealInExplorer "sameAsFileExplorer" | "enabled" | "disabled"|nil
+---@field codeLenses lsp.fsautocomplete.CodeLenses|nil
+-- Disables popup notifications for failed project loading
+---@field disableFailedProjectNotifications boolean|nil
+-- Sets the root path for finding locating the dotnet CLI binary. Defaults to the `dotnet` binary found on your system PATH.
+---@field dotnetRoot string|nil
+-- Enables Enable LSP Server based on FSharp.Data.Adaptive. This can improve stability. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableAdaptiveLspServer boolean|nil
+-- EXPERIMENTAL. Enables F# analyzers for custom code diagnostics. Requires restart.
+---@field enableAnalyzers boolean|nil
+-- EXPERIMENTAL. Enables support for loading workspaces with MsBuild's ProjectGraph. This can improve load times. Requires restart.
+---@field enableMSBuildProjectGraph boolean|nil
+-- Enables additional code lenses showing number of references of a function or value. Requires background services to be enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableReferenceCodeLens boolean|nil
+-- Enables TouchBar integration of build/run/debug buttons
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableTouchBar boolean|nil
+-- Enables the solution explorer view of the current workspace, which shows the workspace as MSBuild sees it
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableTreeView boolean|nil
+-- The names of custom analyzers that should not be executed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeAnalyzers any[]|nil
+-- Directories in the array are excluded from project file search. Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeProjectDirectories any[]|nil
+-- Includes external (from unopened modules and namespaces) symbols in autocomplete
+---@field externalAutocomplete boolean|nil
+---@field fcs lsp.fsautocomplete.Fcs|nil
+---@field fsac lsp.fsautocomplete.Fsac|nil
+-- An array of additional command line parameters to pass to FSI when it is started. See [the Microsoft documentation](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/fsharp-interactive-options) for an exhaustive list.
+---@field fsiExtraParameters any[]|nil
+-- The path to the F# Interactive tool used by Ionide-FSharp (When using .NET SDK scripts)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fsiSdkFilePath string|nil
+-- When selecting an external symbols in autocomplete, insert the full name to the editor rather than open its module/namespace. Also allow filtering suggestions by typing its full name. 
+-- 
+--  Requires `FSharp.externalAutocomplete` enabled.
+---@field fullNameExternalAutocomplete boolean|nil
+-- Enables generation of `msbuild.binlog` files for project loading. It works only for fresh, non-cached project loading. Run `F#: Clear Project Cache` and `Developer: Reload Window` to force fresh loading of all projects. These files can be loaded and inspected using the [MSBuild Structured Logger](https://github.com/KirillOsenkov/MSBuildStructuredLog)
+---@field generateBinlog boolean|nil
+-- The names of custom analyzers that should exclusively be executed, others should be ignored.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeAnalyzers any[]|nil
+-- The number of spaces used for indentation when generating code, e.g. for interface stubs
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field indentationSize number|nil
+-- Controls whether the info panel replaces tooltips
+---@field infoPanelReplaceHover boolean|nil
+-- Controls whether the info panel should be displayed at startup
+---@field infoPanelShowOnStartup boolean|nil
+-- Controls whether the info panel should be locked at startup
+---@field infoPanelStartLocked boolean|nil
+-- Controls when the info panel is updated
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field infoPanelUpdate "onCursorMove" | "onHover" | "both" | "none"|nil
+---@field inlayHints lsp.fsautocomplete.InlayHints|nil
+---@field inlineValues lsp.fsautocomplete.InlineValues|nil
+-- Enables a codefix that generates missing interface members when inside of an interface implementation expression
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field interfaceStubGeneration boolean|nil
+-- The expression to fill in the right-hand side of interface members when generating missing members for an interface implementation expression
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field interfaceStubGenerationMethodBody string|nil
+-- The name of the 'self' identifier in an interface member. For example, `this` in the expression `this.Member(x: int) = ()`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field interfaceStubGenerationObjectIdentifier string|nil
+-- Includes keywords in autocomplete
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field keywordsAutocomplete boolean|nil
+---@field lineLens lsp.fsautocomplete.LineLens|nil
+-- Enables integration with [FSharpLint](https://fsprojects.github.io/FSharpLint/) for additional (user-defined) warnings
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field linter boolean|nil
+-- Automatically shows the MSBuild output panel when MSBuild functionality is invoked
+---@field msbuildAutoshow boolean|nil
+---@field notifications lsp.fsautocomplete.Notifications|nil
+---@field openTelemetry lsp.fsautocomplete.OpenTelemetry|nil
+---@field pipelineHints lsp.fsautocomplete.PipelineHints|nil
+-- Enables a codefix that will generate missing record fields when inside a record construction expression
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field recordStubGeneration boolean|nil
+-- The expression to fill in the right-hand side of record fields when generating missing fields for a record construction expression
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field recordStubGenerationBody string|nil
+-- Enables a codefix that will suggest namespaces or module to open when a name is not recognized
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field resolveNamespaces boolean|nil
+-- If enabled, the current file will be saved before sending the last selection to FSI for evaluation
+---@field saveOnSendLastSelection boolean|nil
+-- Automatically shows solution explorer on plugin startup
+---@field showExplorerOnStartup boolean|nil
+-- Set the activity (left bar) where the project explorer view will be displayed. If `explorer`, then the project explorer will be a collapsible tab in the main explorer view, a sibling to the file system explorer. If `fsharp`, a new activity with the F# logo will be added and the project explorer will be rendered in this activity.Requires restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showProjectExplorerIn "explorer" | "fsharp"|nil
+-- Enables detection of cases when names of functions and values can be simplified
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field simplifyNameAnalyzer boolean|nil
+-- A set of regex patterns to exclude from the simplify name analyzer
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field simplifyNameAnalyzerExclusions string[]|nil
+-- Enables smart indent feature
+---@field smartIndent boolean|nil
+-- Allow Ionide to prompt whenever internal data files aren't included in your project's .gitignore
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestGitignore boolean|nil
+-- Allow Ionide to prompt to use SdkScripts
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestSdkScripts boolean|nil
+---@field trace lsp.fsautocomplete.Trace|nil
+-- Enables a codefix that generates missing union cases when in a match expression
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unionCaseStubGeneration boolean|nil
+-- The expression to fill in the right-hand side of match cases when generating missing cases for a match on a discriminated union
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unionCaseStubGenerationBody string|nil
+-- Enables detection of unnecessary parentheses
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unnecessaryParenthesesAnalyzer boolean|nil
+-- A set of regex patterns to exclude from the unnecessary parentheses analyzer
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unnecessaryParenthesesAnalyzerExclusions string[]|nil
+-- Enables detection of unused declarations
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unusedDeclarationsAnalyzer boolean|nil
+-- A set of regex patterns to exclude from the unused declarations analyzer
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unusedDeclarationsAnalyzerExclusions string[]|nil
+-- Enables detection of unused opens
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unusedOpensAnalyzer boolean|nil
+-- A set of regex patterns to exclude from the unused opens analyzer
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unusedOpensAnalyzerExclusions string[]|nil
+-- Logs additional information to F# output channel. This is equivalent to passing the `--verbose` flag to FSAC. Requires restart.
+---@field verboseLogging boolean|nil
+-- The deep level of directory hierarchy when searching for sln/projects
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspaceModePeekDeepLevel integer|nil
+-- Path to the directory or solution file that should be loaded as a workspace. If set, no workspace probing or discovery is done by Ionide at all.
+---@field workspacePath string|nil
+
+---@class lsp.fsautocomplete.Gc
+-- Specifies whether to [affinitize](https://learn.microsoft.com/en-us/dotnet/core/runtime-config/garbage-collector#affinitize) garbage collection threads with processors. To affinitize a GC thread means that it can only run on its specific CPU.. Applies to server garbage collection only. See [GCNoAffinitize](https://learn.microsoft.com/en-us/dotnet/framework/configure-apps/file-schema/runtime/gcnoaffinitize-element#remarks) for more details. [Only available on .NET 7 or higher](https://github.com/ionide/ionide-vscode-fsharp/issues/1899#issuecomment-1649009462). Requires restart. If FSAC is run on .NET 8 runtimes, this will be set by default. On .NET 9 with DATAS enabled, this will not be set.
+---@field noAffinitize boolean|nil
+
+---@class lsp.fsautocomplete.Fsac
+---@field gc lsp.fsautocomplete.Gc|nil
+
+---@class lsp.fsautocomplete.Fsharp
+---@field fsac lsp.fsautocomplete.Fsac|nil
+
+---@class lsp.fsautocomplete
+---@field FSharp lsp.fsautocomplete.FSharp|nil
+---@field Fsharp lsp.fsautocomplete.Fsharp|nil
+
+---@class lsp.grammarly.SuggestionCategories
+-- Flags use of conjunctions such as "but" and "and" at the beginning of sentences.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field conjugationAtStartOfSentence "on" | "off"|nil
+-- Suggests ways to sound more natural and fluent.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fluency "on" | "off"|nil
+-- Flags use of personal pronouns such as "I" and "you" in academic writing.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field informalPronounsAcademic "on" | "off"|nil
+-- Suggests adding missing spacing after a numeral when writing times.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missingSpaces "on" | "off"|nil
+-- Flags a series of nouns that modify a final noun.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nounStrings "on" | "off"|nil
+-- Suggests spelling out numbers at the beginning of sentences.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field numbersBeginningSentences "on" | "off"|nil
+-- Suggests spelling out numbers zero through ten.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field numbersZeroThroughTen "on" | "off"|nil
+-- Suggests adding the Oxford comma after the second-to-last item in a list of things.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field oxfordComma "on" | "off"|nil
+-- Flags use of passive voice.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field passiveVoice "on" | "off"|nil
+-- Suggests using person-first language to refer respectfully to an individual with a disability.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field personFirstLanguage "on" | "off"|nil
+-- Suggests alternatives to potentially biased language related to older adults.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageAgeRelated "on" | "off"|nil
+-- Suggests alternatives to potentially ableist language.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageDisabilityRelated "on" | "off"|nil
+-- Suggests alternatives to potentially biased language related to parenting and family systems.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageFamilyRelated "on" | "off"|nil
+-- Suggests alternatives to potentially gender-biased and non-inclusive phrasing.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageGenderRelated "on" | "off"|nil
+-- Suggests alternatives to language related to human slavery.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageHumanRights "on" | "off"|nil
+-- Suggests alternatives to terms with origins in the institution of slavery.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageHumanRightsRelated "on" | "off"|nil
+-- Flags LGBTQIA+-related terms that may be seen as biased, outdated, or disrespectful in some contexts.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageLGBTQIARelated "on" | "off"|nil
+-- Suggests alternatives to potentially biased language related to race and ethnicity.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyBiasedLanguageRaceEthnicityRelated "on" | "off"|nil
+-- Suggests alternatives to language that may be considered politically incorrect.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field possiblyPoliticallyIncorrectLanguage "on" | "off"|nil
+-- Flags use of prepositions such as "with" and "in" at the end of sentences.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field prepositionAtTheEndOfSentence "on" | "off"|nil
+-- Suggests placing punctuation before closing quotation marks.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field punctuationWithQuotation "on" | "off"|nil
+-- Flags long, complicated sentences that could potentially confuse your reader.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field readabilityFillerWords "on" | "off"|nil
+-- Suggests splitting long, complicated sentences that could potentially confuse your reader.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field readabilityTransforms "on" | "off"|nil
+-- Flags series of sentences that follow the same pattern.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sentenceVariety "on" | "off"|nil
+-- Suggests removing extra spaces surrounding a slash.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field spacesSurroundingSlash "on" | "off"|nil
+-- Suggests rewriting split infinitives so that an adverb doesn't come between "to" and the verb.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field splitInfinitive "on" | "off"|nil
+-- Suggests completing all incomplete sentences, including stylistic sentence fragments that may be intentional.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field stylisticFragments "on" | "off"|nil
+-- Flags unnecessary use of ellipses (...).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unnecessaryEllipses "on" | "off"|nil
+-- Suggests alternatives to words that occur frequently in the same paragraph.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field variety "on" | "off"|nil
+-- Suggests alternatives to bland and overused words such as "good" and "nice".
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vocabulary "on" | "off"|nil
+
+---@class lsp.grammarly.Suggestions
+-- Flags use of conjunctions such as 'but' and 'and' at the beginning of sentences.
+---@field ConjunctionAtStartOfSentence true | false|nil
+-- Suggests ways to sound more natural and fluent.
+---@field Fluency true | false|nil
+-- Flags use of personal pronouns such as 'I' and 'you' in academic writing.
+---@field InformalPronounsAcademic true | false|nil
+-- Suggests adding missing spacing after a numeral when writing times.
+---@field MissingSpaces true | false|nil
+-- Flags a series of nouns that modify a final noun.
+---@field NounStrings true | false|nil
+-- Suggests spelling out numbers at the beginning of sentences.
+---@field NumbersBeginningSentences true | false|nil
+-- Suggests spelling out numbers zero through ten.
+---@field NumbersZeroThroughTen true | false|nil
+-- Suggests adding the Oxford comma after the second-to-last item in a list of things.
+---@field OxfordComma true | false|nil
+-- Flags use of passive voice.
+---@field PassiveVoice true | false|nil
+-- Suggests using person-first language to refer respectfully to an individual with a disability.
+---@field PersonFirstLanguage true | false|nil
+-- Suggests alternatives to potentially biased language related to older adults.
+---@field PossiblyBiasedLanguageAgeRelated true | false|nil
+-- Suggests alternatives to potentially ableist language.
+---@field PossiblyBiasedLanguageDisabilityRelated true | false|nil
+-- Suggests alternatives to potentially biased language related to parenting and family systems.
+---@field PossiblyBiasedLanguageFamilyRelated true | false|nil
+-- Suggests alternatives to potentially gender-biased and non-inclusive phrasing.
+---@field PossiblyBiasedLanguageGenderRelated true | false|nil
+-- Suggests alternatives to language related to human slavery.
+---@field PossiblyBiasedLanguageHumanRights true | false|nil
+-- Suggests alternatives to terms with origins in the institution of slavery.
+---@field PossiblyBiasedLanguageHumanRightsRelated true | false|nil
+-- Flags LGBTQIA+-related terms that may be seen as biased, outdated, or disrespectful in some contexts.
+---@field PossiblyBiasedLanguageLgbtqiaRelated true | false|nil
+-- Suggests alternatives to potentially biased language related to race and ethnicity.
+---@field PossiblyBiasedLanguageRaceEthnicityRelated true | false|nil
+-- Suggests alternatives to language that may be considered politically incorrect.
+---@field PossiblyPoliticallyIncorrectLanguage true | false|nil
+-- Flags use of prepositions such as 'with' and 'in' at the end of sentences.
+---@field PrepositionAtTheEndOfSentence true | false|nil
+-- Suggests placing punctuation before closing quotation marks.
+---@field PunctuationWithQuotation true | false|nil
+-- Flags long, complicated sentences that could potentially confuse your reader.
+---@field ReadabilityFillerwords true | false|nil
+-- Suggests splitting long, complicated sentences that could potentially confuse your reader.
+---@field ReadabilityTransforms true | false|nil
+-- Flags series of sentences that follow the same pattern.
+---@field SentenceVariety true | false|nil
+-- Suggests removing extra spaces surrounding a slash.
+---@field SpacesSurroundingSlash true | false|nil
+-- Suggests rewriting split infinitives so that an adverb doesn't come between 'to' and the verb.
+---@field SplitInfinitive true | false|nil
+-- Suggests completing all incomplete sentences, including stylistic sentence fragments that may be intentional.
+---@field StylisticFragments true | false|nil
+-- Flags unnecessary use of ellipses (...).
+---@field UnnecessaryEllipses true | false|nil
+-- Suggests alternatives to words that occur frequently in the same paragraph.
+---@field Variety true | false|nil
+-- Suggests alternatives to bland and overused words such as 'good' and 'nice'.
+---@field Vocabulary true | false|nil
+
+---@class lsp.grammarly.Config
+-- Specific variety of English being written. See [this article](https://support.grammarly.com/hc/en-us/articles/115000089992-Select-between-British-English-American-English-Canadian-English-and-Australian-English) for differences.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentDialect "american" | "australian" | "british" | "canadian" | "auto-text"|nil
+-- The style or type of writing to be checked. See [What is domain/document type](https://support.grammarly.com/hc/en-us/articles/115000091472-What-is-domain-document-type-)?
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentDomain "academic" | "business" | "general" | "mail" | "casual" | "creative"|nil
+---@field suggestionCategories lsp.grammarly.SuggestionCategories|nil
+---@field suggestions lsp.grammarly.Suggestions|nil
+
+---@class lsp.grammarly.Files
+-- Configure [glob patterns](https://code.visualstudio.com/docs/editor/codebasics#_advanced-search-options) for excluding files and folders.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Configure [glob patterns](https://code.visualstudio.com/docs/editor/codebasics#_advanced-search-options) for including files and folders.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field include string[]|nil
+
+---@class lsp.grammarly.Grammarly
+---@field config lsp.grammarly.Config|nil
+---@field files lsp.grammarly.Files|nil
+-- A glob pattern, like `*.{md,txt}` for file scheme.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field patterns string[]|nil
+-- Filter documents to be checked with Grammarly.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field selectors object[]|nil
+-- Start text checking session in paused state
+---@field startTextCheckInPausedState boolean|nil
+
+---@class lsp.grammarly
+---@field grammarly lsp.grammarly.Grammarly|nil
+
+-- Options for generating anonymous functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.Anonymous
+-- Whether to include type hints for arguments
+---@field argumentTypeHints boolean|nil
+-- Whether to wrap types in `Null<T>` even if it can be omitted (for optional arguments with `?`)
+---@field explicitNull boolean|nil
+-- In which case to include return type hints
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field returnTypeHint "always" | "never" | "non-void"|nil
+-- Whether to use arrow function syntax (Haxe 4+)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useArrowSyntax boolean|nil
+
+-- Options for generating field-level functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.Field
+-- Whether to include type hints for arguments
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field argumentTypeHints boolean|nil
+-- Whether to wrap types in `Null<T>` even if it can be omitted (for optional arguments with `?`)
+---@field explicitNull boolean|nil
+-- Whether to include the private visibility modifier even if it can be omitted
+---@field explicitPrivate boolean|nil
+-- Whether to include the public visibility modifier even if it can be omitted
+---@field explicitPublic boolean|nil
+-- Whether to place `{` in a new line
+---@field placeOpenBraceOnNewLine boolean|nil
+-- In which case to include return type hints
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field returnTypeHint "always" | "never" | "non-void"|nil
+
+-- Options for generating functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.Functions
+-- Options for generating anonymous functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field anonymous lsp.haxe_language_server.Anonymous|nil
+-- Options for generating field-level functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field field lsp.haxe_language_server.Field|nil
+
+-- Options for generating imports
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.Imports
+-- Whether to insert an import automatically when selecting a not-yet-imported type from completion. If `false`, the fully qualified name is inserted instead.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableAutoImports boolean|nil
+-- How to deal with module subtypes when generating imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field style "type" | "module"|nil
+
+-- Options for generating switch expressions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.Switch
+-- Whether to wrap the switch subject in parentheses
+---@field parentheses boolean|nil
+
+-- Options for code generation
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.CodeGeneration
+-- Options for generating functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field functions lsp.haxe_language_server.Functions|nil
+-- Options for generating imports
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field imports lsp.haxe_language_server.Imports|nil
+-- Options for generating switch expressions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field switch lsp.haxe_language_server.Switch|nil
+
+-- Which debug output to print to the Haxe output channel. With `-v`, all flags default to `true`, and without it to `false`. Setting a flag here overrides the default. Only works with Haxe 4.0.0-preview.4 or newer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.Print
+---@field addedDirectory boolean|nil
+---@field arguments boolean|nil
+---@field cachedModules boolean|nil
+---@field changedDirectories boolean|nil
+---@field completion boolean|nil
+---@field defines boolean|nil
+---@field displayPosition boolean|nil
+---@field foundDirectories boolean|nil
+---@field message boolean|nil
+---@field modulePathChanged boolean|nil
+---@field newContext boolean|nil
+---@field notCached boolean|nil
+---@field parsed boolean|nil
+---@field removedDirectory boolean|nil
+---@field reusing boolean|nil
+---@field signature boolean|nil
+---@field skippingDep boolean|nil
+---@field socketMessage boolean|nil
+---@field stats boolean|nil
+---@field uncaughtError boolean|nil
+---@field unchangedContent boolean|nil
+
+-- Haxe completion server configuration
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.DisplayServer
+-- Array of arguments passed to the Haxe completion server at start. Can be used for debugging completion server issues, for example by adding the `"-v"` argument.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field arguments string[]|nil
+-- Which debug output to print to the Haxe output channel. With `-v`, all flags default to `true`, and without it to `false`. Setting a flag here overrides the default. Only works with Haxe 4.0.0-preview.4 or newer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field print lsp.haxe_language_server.Print|nil
+-- If possible, use a socket for communication with Haxe rather than stdio.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useSocket boolean|nil
+
+-- Options for inlay hints feature
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.InlayHints
+-- Show inlay hints for conditionals
+---@field conditionals boolean|nil
+-- Show inlay hints for function return types
+---@field functionReturnTypes boolean|nil
+-- Show inlay hints for parameter names
+---@field parameterNames boolean|nil
+-- Show inlay hints for parameter types
+---@field parameterTypes boolean|nil
+-- Show inlay hints for variables
+---@field variableTypes boolean|nil
+
+-- Options for postfix completion
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.PostfixCompletion
+-- Which kinds of postfix completions to include
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field level "full" | "filtered" | "off"|nil
+
+-- Options for compilation server recording
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.ServerRecording
+-- Enable recording of communication with Haxe Server to produce reproducible logs.
+---@field enabled boolean|nil
+-- Do not track these files in git/svn logged changes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude any[]|nil
+-- Do not add untracked files to recording.
+---@field excludeUntracked boolean|nil
+-- Root folder to use to save data related to server recording.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+-- Additional paths to watch for changes (e.g. resources used for compilation)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field watch any[]|nil
+
+-- Configures which presentation options to use for generated tasks by default (see `presentation` in `tasks.json`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.haxe_language_server.TaskPresentation
+-- Controls whether the terminal is cleared before executing the task.
+---@field clear boolean|nil
+-- Controls whether the executed command is echoed to the panel. Default is `true`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field echo boolean|nil
+-- Controls whether the panel takes focus. Default is `false`. If set to `true` the panel is revealed as well.
+---@field focus boolean|nil
+-- Controls if the panel is shared between tasks, dedicated to this task or a new one is created on every run.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field panel "shared" | "dedicated" | "new"|nil
+-- Controls whether the panel running the task is revealed or not. Default is `"always"`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reveal "always" | "silent" | "never"|nil
+-- Controls whether to show the `Terminal will be reused by tasks, press any key to close it` message.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showReuseMessage boolean|nil
+
+---@class lsp.haxe_language_server.Haxe
+-- Speed up completion by building the project once on startup to initialize the cache.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field buildCompletionCache boolean|nil
+-- Options for code generation
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeGeneration lsp.haxe_language_server.CodeGeneration|nil
+-- Array of switchable configurations for the Haxe completion server. Each configuration is an array of command-line arguments, see item documentation for more details.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field configurations any[]|nil
+-- When using Haxe >= 4.3.5, diagnostics will run for all open Haxe files instead of current file unless this option is set to false
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticsForAllOpenFiles boolean|nil
+-- A regex that paths of source files have to match to be included in diagnostics. Defaults to `"${workspaceRoot}"` so only files within your workspace are included. You can use `"${haxelibPath}/<library-name>"` to only show results for a specific haxelib. Use `".*?"` to see all results, including haxelibs.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticsPathFilter string|nil
+-- Disable inline value feature. Stops value annotations from showing up during debugging.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disableInlineValue boolean|nil
+-- Disable refactor / rename cache. Will also disbale all rename and refactor options (and inline value feature).
+---@field disableRefactorCache boolean|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field displayConfigurations any[]|nil
+-- IP address to use for display server. Can be used to `--connect` Haxe build commands.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field displayHost string|nil
+-- Integer value for the port to open on the display server, or `"auto"`. Can be used to `--connect` Haxe build commands.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field displayPort any|nil
+-- Haxe completion server configuration
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field displayServer lsp.haxe_language_server.DisplayServer|nil
+-- Add closing brace at the end of one-line `if/for/while` body expressions
+---@field enableBraceBodyWrapping boolean|nil
+-- Enable code lens to show some statistics
+---@field enableCodeLens boolean|nil
+-- Use the extension's Haxe server to compile auto-generated tasks. Requires `"haxe.displayPort"` to be set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableCompilationServer boolean|nil
+-- Whether a warning popup should be shown if the completion cache build has failed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableCompletionCacheWarning boolean|nil
+-- Enable automatic diagnostics of Haxe files, run automatically on open and save.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableDiagnostics boolean|nil
+-- Align new line brackets with Allman style. Can have typing overhead and is incompatible with the Vim extension.
+---@field enableExtendedIndentation boolean|nil
+---@field enableMethodsView boolean|nil
+-- Enable the "Haxe Server" view container for performance and cache debugging.
+---@field enableServerView boolean|nil
+-- Whether signature help should include documentation or not.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableSignatureHelpDocumentation boolean|nil
+-- A list of dot paths (packages, modules, types) to exclude from classpath parsing, completion and workspace symbols. Can be useful to improve performance.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude any[]|nil
+-- Path to the Haxe executable or an object containing a Haxe executable configuration
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field executable any|nil
+-- Sort order of imports
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importsSortOrder "all-alphabetical" | "stdlib -> libs -> project" | "non-project -> project"|nil
+-- Options for inlay hints feature
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inlayHints lsp.haxe_language_server.InlayHints|nil
+-- Upper limit for the number of completion items that can be shown at once.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxCompletionItems integer|nil
+-- Options for postfix completion
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field postfixCompletion lsp.haxe_language_server.PostfixCompletion|nil
+-- Folders to look for renamable identifiers. Rename will not see or touch files outside of those folders.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renameSourceFolders any[]|nil
+-- Options for compilation server recording
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field serverRecording lsp.haxe_language_server.ServerRecording|nil
+-- Configures which presentation options to use for generated tasks by default (see `presentation` in `tasks.json`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field taskPresentation lsp.haxe_language_server.TaskPresentation|nil
+-- Whether to revert to a Haxe 3 style completion where only toplevel packages and imported types are shown (effectively making it incompatible with auto-imports). *Note:* this setting has no effect with Haxe versions earlier than 4.0.0-rc.4.
+---@field useLegacyCompletion boolean|nil
+-- Haxe 4.3.5 introduces new Json RPC based diagnostics. in order to be able to opt out of them set option to true. *Note:* will stop working on nightlies once #11413 gets merged
+---@field useLegacyDiagnostics boolean|nil
+
+---@class lsp.haxe_language_server.Haxelib
+-- Path to the Haxelib executable
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field executable string|nil
+
+---@class lsp.haxe_language_server
+---@field haxe lsp.haxe_language_server.Haxe|nil
+---@field haxelib lsp.haxe_language_server.Haxelib|nil
+
+---@class lsp.hhvm.Docker
+-- Name of the local Docker container to run the language tools in
+---@field containerName string|nil
+
+---@class lsp.hhvm.Ssh
+-- Additional command line options to pass when establishing the SSH connection
+---@field flags any[]|nil
+-- Address for the remote development server to connect to (in the format `[user@]hostname`)
+---@field host string|nil
+
+---@class lsp.hhvm.Remote
+---@field docker lsp.hhvm.Docker|nil
+-- Run the Hack language tools on an external host
+---@field enabled boolean|nil
+---@field ssh lsp.hhvm.Ssh|nil
+-- The remote connection method
+---@field type "ssh" | "docker"|nil
+-- Absolute location of workspace root in the remote file system
+---@field workspacePath string|nil
+
+---@class lsp.hhvm.Trace
+-- Traces the communication between VS Code and the Hack & HHAST language servers
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.hhvm.Hack
+-- Absolute path to the hh_client executable. This can be left empty if hh_client is already in your environment $PATH.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field clientPath string|nil
+-- Enable calculation of Hack type coverage percentage for every file and display in status bar.
+---@field enableCoverageCheck boolean|nil
+-- Optional list of arguments passed to hhast-lint executable
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hhastArgs string[]|nil
+-- Whether to lint the entire project or just the open files
+---@field hhastLintMode "whole-project" | "open-files"|nil
+-- Use an alternate `hhast-lint` path. Can be abolute or relative to workspace root.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hhastPath string|nil
+---@field remote lsp.hhvm.Remote|nil
+---@field trace lsp.hhvm.Trace|nil
+-- Enable linting (needs [HHAST](https://github.com/hhvm/hhast) library set up and configured in project)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useHhast boolean|nil
+-- Start hh_client in Language Server mode. Only works for HHVM version 3.23 and above.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useLanguageServer boolean|nil
+-- Absolute path to the workspace root directory. This will be the VS Code workspace root by default, but can be changed if the project is in a subdirectory or mounted in a Docker container.
+---@field workspaceRootPath string|nil
+
+---@class lsp.hhvm
+---@field hack lsp.hhvm.Hack|nil
+
+---@class lsp.hie.AlternateNumberFormat
+-- Enables alternateNumberFormat plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Cabal
+-- Enables cabal code actions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActionsOn boolean|nil
+-- Enables cabal completions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completionOn boolean|nil
+-- Enables cabal diagnostics
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticsOn boolean|nil
+-- Enables cabal hover
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hoverOn boolean|nil
+-- Enables cabal symbols
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field symbolsOn boolean|nil
+
+---@class lsp.hie.Config
+-- Set path to 'cabal-fmt' executable
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+---@class lsp.hie.Cabal-fmt
+---@field config lsp.hie.Config|nil
+
+---@class lsp.hie.Config
+-- Set path to 'cabal-gild' executable
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+---@class lsp.hie.Cabal-gild
+---@field config lsp.hie.Config|nil
+
+---@class lsp.hie.CabalHaskellIntegration
+-- Enables cabalHaskellIntegration plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.CallHierarchy
+-- Enables callHierarchy plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.ChangeTypeSignature
+-- Enables changeTypeSignature plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Class
+-- Enables class code actions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActionsOn boolean|nil
+-- Enables class code lenses
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeLensOn boolean|nil
+
+---@class lsp.hie.Config
+-- Enable the diff output (WAS/NOW) of eval lenses
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diff boolean|nil
+-- Enable marking exceptions with `*** Exception:` similarly to doctest and GHCi.
+---@field exception boolean|nil
+
+---@class lsp.hie.Eval
+-- Enables eval code actions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActionsOn boolean|nil
+-- Enables eval code lenses
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeLensOn boolean|nil
+---@field config lsp.hie.Config|nil
+
+---@class lsp.hie.Explicit-fields
+-- Enables explicit-fields code actions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActionsOn boolean|nil
+-- Enables explicit-fields inlay hints
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inlayHintsOn boolean|nil
+
+---@class lsp.hie.Explicit-fixity
+-- Enables explicit-fixity plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Config
+-- Call out to an external "fourmolu" executable, rather than using the bundled library.
+---@field external boolean|nil
+-- Set path to executable (for "external" mode).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+---@class lsp.hie.Fourmolu
+---@field config lsp.hie.Config|nil
+
+---@class lsp.hie.Gadt
+-- Enables gadt plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Ghcide-code-actions-bindings
+-- Enables ghcide-code-actions-bindings plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Ghcide-code-actions-fill-holes
+-- Enables ghcide-code-actions-fill-holes plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Ghcide-code-actions-imports-exports
+-- Enables ghcide-code-actions-imports-exports plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Ghcide-code-actions-type-signatures
+-- Enables ghcide-code-actions-type-signatures plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Config
+-- Extends the import list automatically when completing a out-of-scope identifier
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoExtendOn boolean|nil
+-- Inserts snippets when using code completions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field snippetsOn boolean|nil
+
+---@class lsp.hie.Ghcide-completions
+---@field config lsp.hie.Config|nil
+-- Enables ghcide-completions plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Ghcide-hover-and-symbols
+-- Enables ghcide-hover-and-symbols hover
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hoverOn boolean|nil
+-- Enables ghcide-hover-and-symbols symbols
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field symbolsOn boolean|nil
+
+---@class lsp.hie.Config
+-- Control how type lenses are shown
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mode "always" | "exported" | "diagnostics"|nil
+
+---@class lsp.hie.Ghcide-type-lenses
+---@field config lsp.hie.Config|nil
+-- Enables ghcide-type-lenses plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Config
+-- Flags used by hlint
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field flags any[]|nil
+
+---@class lsp.hie.Hlint
+-- Enables hlint code actions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActionsOn boolean|nil
+---@field config lsp.hie.Config|nil
+-- Enables hlint diagnostics
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticsOn boolean|nil
+
+---@class lsp.hie.ImportLens
+-- Enables importLens code actions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActionsOn boolean|nil
+-- Enables importLens code lenses
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeLensOn boolean|nil
+-- Enables importLens inlay hints
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inlayHintsOn boolean|nil
+
+---@class lsp.hie.ModuleName
+-- Enables moduleName plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Config
+-- Call out to an external "ormolu" executable, rather than using the bundled library
+---@field external boolean|nil
+
+---@class lsp.hie.Ormolu
+---@field config lsp.hie.Config|nil
+
+---@class lsp.hie.Overloaded-record-dot
+-- Enables overloaded-record-dot plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Pragmas-completion
+-- Enables pragmas-completion plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Pragmas-disable
+-- Enables pragmas-disable plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Pragmas-suggest
+-- Enables pragmas-suggest plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.QualifyImportedNames
+-- Enables qualifyImportedNames plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Config
+-- Enable experimental cross-module renaming
+---@field crossModule boolean|nil
+
+---@class lsp.hie.Rename
+---@field config lsp.hie.Config|nil
+-- Enables rename plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Retrie
+-- Enables retrie plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Config
+-- LSP semantic token type to use for typeclass methods
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field classMethodToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for typeclasses
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field classToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for data constructors
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dataConstructorToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field functionToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for modules
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field moduleToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for operators
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field operatorToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for pattern synonyms
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field patternSynonymToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for record fields
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field recordFieldToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for type constructors
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeConstructorToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for type families
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeFamilyToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for type synonyms
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeSynonymToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for type variables
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeVariableToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+-- LSP semantic token type to use for variables
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field variableToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"|nil
+
+---@class lsp.hie.SemanticTokens
+---@field config lsp.hie.Config|nil
+-- Enables semanticTokens plugin
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Splice
+-- Enables splice plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Stan
+-- Enables stan plugin
+---@field globalOn boolean|nil
+
+---@class lsp.hie.Plugin
+---@field alternateNumberFormat lsp.hie.AlternateNumberFormat|nil
+---@field cabal lsp.hie.Cabal|nil
+---@field cabal-fmt lsp.hie.Cabal-fmt|nil
+---@field cabal-gild lsp.hie.Cabal-gild|nil
+---@field cabalHaskellIntegration lsp.hie.CabalHaskellIntegration|nil
+---@field callHierarchy lsp.hie.CallHierarchy|nil
+---@field changeTypeSignature lsp.hie.ChangeTypeSignature|nil
+---@field class lsp.hie.Class|nil
+---@field eval lsp.hie.Eval|nil
+---@field explicit-fields lsp.hie.Explicit-fields|nil
+---@field explicit-fixity lsp.hie.Explicit-fixity|nil
+---@field fourmolu lsp.hie.Fourmolu|nil
+---@field gadt lsp.hie.Gadt|nil
+---@field ghcide-code-actions-bindings lsp.hie.Ghcide-code-actions-bindings|nil
+---@field ghcide-code-actions-fill-holes lsp.hie.Ghcide-code-actions-fill-holes|nil
+---@field ghcide-code-actions-imports-exports lsp.hie.Ghcide-code-actions-imports-exports|nil
+---@field ghcide-code-actions-type-signatures lsp.hie.Ghcide-code-actions-type-signatures|nil
+---@field ghcide-completions lsp.hie.Ghcide-completions|nil
+---@field ghcide-hover-and-symbols lsp.hie.Ghcide-hover-and-symbols|nil
+---@field ghcide-type-lenses lsp.hie.Ghcide-type-lenses|nil
+---@field hlint lsp.hie.Hlint|nil
+---@field importLens lsp.hie.ImportLens|nil
+---@field moduleName lsp.hie.ModuleName|nil
+---@field ormolu lsp.hie.Ormolu|nil
+---@field overloaded-record-dot lsp.hie.Overloaded-record-dot|nil
+---@field pragmas-completion lsp.hie.Pragmas-completion|nil
+---@field pragmas-disable lsp.hie.Pragmas-disable|nil
+---@field pragmas-suggest lsp.hie.Pragmas-suggest|nil
+---@field qualifyImportedNames lsp.hie.QualifyImportedNames|nil
+---@field rename lsp.hie.Rename|nil
+---@field retrie lsp.hie.Retrie|nil
+---@field semanticTokens lsp.hie.SemanticTokens|nil
+---@field splice lsp.hie.Splice|nil
+---@field stan lsp.hie.Stan|nil
+
+---@class lsp.hie.Trace
+-- Sets the log level in the client side.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field client "off" | "error" | "info" | "debug"|nil
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.hie.Haskell
+-- The formatter to use when formatting a document or range of a cabal formatter. Ensure the plugin is enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cabalFormattingProvider "cabal-gild" | "cabal-fmt" | "none"|nil
+-- Whether to typecheck the entire project on load. It could drive to bad performance in large projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checkProject boolean|nil
+-- The formatter to use when formatting a document or range. Ensure the plugin is enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formattingProvider "brittany" | "floskell" | "fourmolu" | "ormolu" | "stylish-haskell" | "none"|nil
+-- Manually set a ghcup executable path.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ghcupExecutablePath string|nil
+-- If set, redirects the logs to a file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logFile string|nil
+-- How to manage/find HLS installations.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field manageHLS "GHCup" | "PATH"|nil
+-- Maximum number of completions sent to the editor.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxCompletions integer|nil
+-- An optional URL to override where ghcup checks for tool download info (usually at: https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field metadataURL string|nil
+-- When opening 'Documentation' for external libraries, open in hackage by default. Set to false to instead open in vscode.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field openDocumentationInHackage boolean|nil
+-- When opening 'Source' for external libraries, open in hackage by default. Set to false to instead open in vscode.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field openSourceInHackage boolean|nil
+---@field plugin lsp.hie.Plugin|nil
+-- Prompt before performing any downloads.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field promptBeforeDownloads boolean|nil
+-- An optional path where downloaded metadata will be stored. Check the default value [here](https://github.com/haskell/vscode-haskell#downloaded-binaries)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field releasesDownloadStoragePath string|nil
+-- An optional URL to override where ghcup checks for HLS-GHC compatibility list (usually at: https://raw.githubusercontent.com/haskell/ghcup-metadata/master/hls-metadata-0.0.1.json)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field releasesURL string|nil
+-- Define environment variables for the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field serverEnvironment table|nil
+-- Manually set a language server executable. Can be something on the $PATH or the full path to the executable itself. Works with `~,` `${HOME}` and `${workspaceFolder}`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field serverExecutablePath string|nil
+-- Pass additional arguments to the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field serverExtraArgs string|nil
+-- Preferred approach for loading package components. Setting this to 'multiple components' (EXPERIMENTAL) allows the build tool (such as `cabal` or `stack`) to [load multiple components at once](https://github.com/haskell/cabal/pull/8726), which is a significant improvement.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sessionLoading "singleComponent" | "multipleComponents"|nil
+-- Enable Language Server support for `.cabal` files. Requires Haskell Language Server version >= 1.9.0.0.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field supportCabalFiles "enable" | "disable" | "automatic"|nil
+-- When manageHLS is set to GHCup, this can overwrite the automatic toolchain configuration with a more specific one. When a tool is omitted, the extension will manage the version (for 'ghc' we try to figure out the version the project requires). The format is '{"tool": "version", ...}'. 'version' accepts all identifiers that 'ghcup' accepts.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field toolchain table|nil
+---@field trace lsp.hie.Trace|nil
+-- Whether to upgrade GHCup automatically when 'manageHLS' is set to 'GHCup'.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field upgradeGHCup boolean|nil
+
+---@class lsp.hie
+---@field haskell lsp.hie.Haskell|nil
+
+---@class lsp.html.Completion
+-- %html.completion.attributeDefaultValue%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field attributeDefaultValue "doublequotes" | "singlequotes" | "empty"|nil
+
+---@class lsp.html.Format
+-- %html.format.contentUnformatted.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field contentUnformatted string|nil
+-- %html.format.enable.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %html.format.extraLiners.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraLiners string|nil
+-- %html.format.indentHandlebars.desc%
+---@field indentHandlebars boolean|nil
+-- %html.format.indentInnerHtml.desc%
+---@field indentInnerHtml boolean|nil
+-- %html.format.maxPreserveNewLines.desc%
+---@field maxPreserveNewLines number|nil
+-- %html.format.preserveNewLines.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field preserveNewLines boolean|nil
+-- %html.format.templating.desc%
+---@field templating boolean|nil
+-- %html.format.unformatted.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unformatted string|nil
+-- %html.format.unformattedContentDelimiter.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unformattedContentDelimiter string|nil
+-- %html.format.wrapAttributes.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field wrapAttributes "auto" | "force" | "force-aligned" | "force-expand-multiline" | "aligned-multiple" | "preserve" | "preserve-aligned"|nil
+-- %html.format.wrapAttributesIndentSize.desc%
+---@field wrapAttributesIndentSize number|nil
+-- %html.format.wrapLineLength.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field wrapLineLength integer|nil
+
+---@class lsp.html.Hover
+-- %html.hover.documentation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentation boolean|nil
+-- %html.hover.references%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field references boolean|nil
+
+---@class lsp.html.Suggest
+-- %html.suggest.html5.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field html5 boolean|nil
+
+---@class lsp.html.Trace
+-- %html.trace.server.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.html.Validate
+-- %html.validate.scripts%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scripts boolean|nil
+-- %html.validate.styles%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field styles boolean|nil
+
+---@class lsp.html.Html
+-- %html.autoClosingTags%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoClosingTags boolean|nil
+-- %html.autoCreateQuotes%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoCreateQuotes boolean|nil
+---@field completion lsp.html.Completion|nil
+-- %html.customData.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field customData string[]|nil
+---@field format lsp.html.Format|nil
+---@field hover lsp.html.Hover|nil
+-- %html.mirrorCursorOnMatchingTag%
+---@field mirrorCursorOnMatchingTag boolean|nil
+---@field suggest lsp.html.Suggest|nil
+---@field trace lsp.html.Trace|nil
+---@field validate lsp.html.Validate|nil
+
+---@class lsp.html
+---@field html lsp.html.Html|nil
+
+---@class lsp.intelephense.Implementations
+-- Enable a code lens that shows an abstract and interface implementations count and command to peek locations.
+---@field enable boolean|nil
+
+---@class lsp.intelephense.Overrides
+-- Enable a code lens that shows method override count and command to peek locations.
+---@field enable boolean|nil
+
+---@class lsp.intelephense.Parent
+-- Enable a code lens that indicates if a method has a parent implementation and command to peek location.
+---@field enable boolean|nil
+
+---@class lsp.intelephense.References
+-- Enable a code lens that shows a reference count and command to peek locations.
+---@field enable boolean|nil
+
+---@class lsp.intelephense.Usages
+-- Enable a code lens that shows a trait usages count and command to peek locations.
+---@field enable boolean|nil
+
+---@class lsp.intelephense.CodeLens
+---@field implementations lsp.intelephense.Implementations|nil
+---@field overrides lsp.intelephense.Overrides|nil
+---@field parent lsp.intelephense.Parent|nil
+---@field references lsp.intelephense.References|nil
+---@field usages lsp.intelephense.Usages|nil
+
+---@class lsp.intelephense.Compatibility
+-- Resolves `ArrayAccess` and `Traversable` implementations that are unioned with a typed array to generic syntax. eg `ArrayAccessOrTraversable|ElementType[]` => `ArrayAccessOrTraversable<mixed, ElementType>`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field correctForArrayAccessArrayAndTraversableArrayUnionTypes boolean|nil
+-- Resolves `BaseClass|static` union types to `static` instead of `BaseClass`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field correctForBaseClassStaticUnionTypes boolean|nil
+-- Prefer `@psalm-` and `@phpstan-` prefixed `@return`, `@var`, `@param` tags when determining symbol types.
+---@field preferPsalmPhpstanPrefixedAnnotations boolean|nil
+
+---@class lsp.intelephense.Completion
+-- Global namespace constants and functions will be fully qualified (prefixed with a backslash).
+---@field fullyQualifyGlobalConstantsAndFunctions boolean|nil
+-- Use declarations will be automatically inserted for namespaced classes, traits, interfaces, functions, and constants.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertUseDeclaration boolean|nil
+-- The maximum number of completion items returned per request.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxItems number|nil
+-- PHP permits the calling of static methods using the object operator eg `$obj->myStaticMethod();`. If you would prefer not to have static methods suggested in this context then set this value to `false`. Defaults to `true`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestObjectOperatorStaticMethods boolean|nil
+-- Method and function completions will include parentheses and trigger parameter hints.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field triggerParameterHints boolean|nil
+
+---@class lsp.intelephense.Diagnostics
+-- Enables argument count diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field argumentCount boolean|nil
+-- Enables deprecated diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field deprecated boolean|nil
+-- Enables duplicate symbol diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicateSymbols boolean|nil
+-- Enables diagnostics in embedded languages.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field embeddedLanguages boolean|nil
+-- Enables diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Enables reporting of problems associated with method and class implementations. For example, unimplemented methods or method signature incompatibilities.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field implementationErrors boolean|nil
+-- Enables reporting of various language constraint errors.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageConstraints boolean|nil
+-- Enables reporting of errors associated with type member access.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field memberAccess boolean|nil
+-- This setting turns off type checking for the `mixed` type. This is useful for projects that may have incomplete or innacurate typings. Set to `false` to make type checking more thorough by not allowing `mixed` to satisy any type constraint. This setting has no effect when `relaxedTypeCheck` is `true`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field noMixedTypeCheck boolean|nil
+-- This setting makes type checking less thorough by allowing contravariant (wider) types to also satisfy a type constraint. This is useful for projects that may have incomplete or innacurate typings. Set to `false` for more thorough type checks. When this setting is `true`, the `noMixedTypeCheck` setting is ignored.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field relaxedTypeCheck boolean|nil
+-- Controls when diagnostics are run.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field run "onType" | "onSave"|nil
+-- Enables diagnostics on type compatibility of arguments, property assignments, and return statements where types have been declared.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeErrors boolean|nil
+-- Enables undefined class constant diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedClassConstants boolean|nil
+-- Enables undefined constant diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedConstants boolean|nil
+-- Enables undefined function diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedFunctions boolean|nil
+-- Enables undefined method diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedMethods boolean|nil
+-- Enables undefined property diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedProperties boolean|nil
+-- DEPRECATED. Use the setting for each symbol category.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedSymbols boolean|nil
+-- Enables undefined class, interface and trait diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedTypes boolean|nil
+-- Enables undefined variable diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefinedVariables boolean|nil
+-- Enables unexpected token diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unexpectedTokens boolean|nil
+-- Enables unused variable, private member, and import diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unusedSymbols boolean|nil
+
+---@class lsp.intelephense.Environment
+-- The directory of the entry point to the application (directory of index.php). Can be absolute or relative to the workspace folder. Used for resolving script inclusion and path suggestions.
+---@field documentRoot string|nil
+-- The include paths (as individual path items) as defined in the include_path ini setting or paths to external libraries. Can be absolute or relative to the workspace folder. Used for resolving script inclusion and/or adding external symbols to folder.
+---@field includePaths string[]|nil
+-- A semver compatible string that represents the target PHP version. Used for providing version appropriate suggestions and diagnostics. PHP 5.3.0 and greater supported.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field phpVersion string|nil
+-- When enabled '<?' will be parsed as a PHP open tag. Defaults to true.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field shortOpenTag boolean|nil
+
+---@class lsp.intelephense.Files
+-- Configure glob patterns to make files available for language server features. Inherits from files.associations.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field associations any[]|nil
+-- Configure glob patterns to exclude certain files and folders from all language server features. Inherits from files.exclude.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Maximum file size in bytes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxSize number|nil
+
+---@class lsp.intelephense.Format
+-- Controls formatting style of braces
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field braces "per" | "allman" | "k&r"|nil
+-- Enables formatting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+-- An object that describes the format of generated class/interface/trait phpdoc. The following snippet variables are available: SYMBOL_NAME; SYMBOL_KIND; SYMBOL_TYPE; SYMBOL_NAMESPACE.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.intelephense.ClassTemplate
+-- A snippet string representing a phpdoc description.
+---@field description string|nil
+-- A snippet string representing a phpdoc summary.
+---@field summary string|nil
+-- An array of snippet strings representing phpdoc tags.
+---@field tags string[]|nil
+
+-- An object that describes the format of generated function/method phpdoc. The following snippet variables are available: SYMBOL_NAME; SYMBOL_KIND; SYMBOL_TYPE; SYMBOL_NAMESPACE.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.intelephense.FunctionTemplate
+-- A snippet string representing a phpdoc description.
+---@field description string|nil
+-- A snippet string representing a phpdoc summary.
+---@field summary string|nil
+-- An array of snippet strings representing phpdoc tags.
+---@field tags string[]|nil
+
+-- An object that describes the format of generated property phpdoc. The following snippet variables are available: SYMBOL_NAME; SYMBOL_KIND; SYMBOL_TYPE; SYMBOL_NAMESPACE.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.intelephense.PropertyTemplate
+-- A snippet string representing a phpdoc description.
+---@field description string|nil
+-- A snippet string representing a phpdoc summary.
+---@field summary string|nil
+-- An array of snippet strings representing phpdoc tags.
+---@field tags string[]|nil
+
+---@class lsp.intelephense.Phpdoc
+-- An object that describes the format of generated class/interface/trait phpdoc. The following snippet variables are available: SYMBOL_NAME; SYMBOL_KIND; SYMBOL_TYPE; SYMBOL_NAMESPACE.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field classTemplate lsp.intelephense.ClassTemplate|nil
+-- An object that describes the format of generated function/method phpdoc. The following snippet variables are available: SYMBOL_NAME; SYMBOL_KIND; SYMBOL_TYPE; SYMBOL_NAMESPACE.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field functionTemplate lsp.intelephense.FunctionTemplate|nil
+-- An object that describes the format of generated property phpdoc. The following snippet variables are available: SYMBOL_NAME; SYMBOL_KIND; SYMBOL_TYPE; SYMBOL_NAMESPACE.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field propertyTemplate lsp.intelephense.PropertyTemplate|nil
+-- Adds `@return void` to auto generated phpdoc for definitions that do not return a value.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field returnVoid boolean|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field textFormat "snippet" | "text"|nil
+-- Fully qualified names will be used for types when true. When false short type names will be used and imported where appropriate. Overrides intelephense.completion.insertUseDeclaration.
+---@field useFullyQualifiedNames boolean|nil
+
+---@class lsp.intelephense.References
+-- Glob patterns matching files and folders that should be excluded from references search.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+
+---@class lsp.intelephense.Rename
+-- Glob patterns matching files and folders that should be excluded when renaming symbols. Rename operation will fail if the symbol definition is found in the excluded files/folders.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Controls the scope of a namespace rename operation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field namespaceMode "single" | "all"|nil
+
+---@class lsp.intelephense.Telemetry
+-- Anonymous usage and crash data will be sent to Azure Application Insights. Inherits from telemetry.enableTelemetry.
+---@field enabled boolean|nil
+
+---@class lsp.intelephense.Trace
+-- Traces the communication between VSCode and the intelephense language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.intelephense.Intelephense
+---@field codeLens lsp.intelephense.CodeLens|nil
+---@field compatibility lsp.intelephense.Compatibility|nil
+---@field completion lsp.intelephense.Completion|nil
+---@field diagnostics lsp.intelephense.Diagnostics|nil
+---@field environment lsp.intelephense.Environment|nil
+---@field files lsp.intelephense.Files|nil
+---@field format lsp.intelephense.Format|nil
+-- DEPRECATED. Don't use this. Go to command palette and search for enter licence key.
+---@field licenceKey string|nil
+-- Maximum memory (in MB) that the server should use. On some systems this may only have effect when runtime has been set. Minimum 256.
+---@field maxMemory number|nil
+---@field phpdoc lsp.intelephense.Phpdoc|nil
+---@field references lsp.intelephense.References|nil
+---@field rename lsp.intelephense.Rename|nil
+-- Path to a Node.js executable. Use this if you wish to use a different version of Node.js. Defaults to Node.js shipped with VSCode.
+---@field runtime string|nil
+-- Configure stub files for built in symbols and common extensions. The default setting includes PHP core and all bundled extensions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field stubs string[]|nil
+---@field telemetry lsp.intelephense.Telemetry|nil
+---@field trace lsp.intelephense.Trace|nil
+
+---@class lsp.intelephense
+---@field intelephense lsp.intelephense.Intelephense|nil
+
+---@class lsp.java_language_server.Trace
+-- Traces the communication between VSCode and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.java_language_server.Java
+-- List of modules to allow access to, for example ["jdk.compiler/com.sun.tools.javac.api"]
+---@field addExports string[]|nil
+-- Relative paths from workspace root to .jar files, .zip files, or folders that should be included in the Java class path
+---@field classPath string[]|nil
+-- Command to debug one test method, for example ["mvn", "test", "-Dmaven.surefire.debug", "-Dtest=${class}#${method}". The test should start paused, listening for the debugger on port 5005.
+---@field debugTestMethod string[]|nil
+-- Relative paths from workspace root to .jar files or .zip files containing source code, or to folders that should be included in the Java doc path
+---@field docPath string[]|nil
+-- External dependencies of the form groupId:artifactId:version or groupId:artifactId:packaging:version:scope
+---@field externalDependencies string[]|nil
+-- Absolute path to your Java home directory
+---@field home string|nil
+-- Command to run all tests in a class, for example ["mvn", "test", "-Dtest=${class}"
+---@field testClass string[]|nil
+-- Command to run one test method, for example ["mvn", "test", "-Dtest=${class}#${method}"
+---@field testMethod string[]|nil
+---@field trace lsp.java_language_server.Trace|nil
+
+---@class lsp.java_language_server
+---@field java lsp.java_language_server.Java|nil
+
+---@class lsp.jdtls.Autobuild
+-- Enable/disable the 'auto build'
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Cleanup
+-- The list of clean ups to be run on the current document when it's saved or when the cleanup command is issued. Clean ups can automatically fix code style or programming mistakes. Click [HERE](command:_java.learnMoreAboutCleanUps) to learn more about what each clean up does.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field actions string[]|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field actionsOnSave string[]|nil
+
+---@class lsp.jdtls.SortMembers
+-- Reordering of fields, enum constants, and initializers can result in semantic and runtime changes due to different initialization and persistence order. This setting prevents this from occurring.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field avoidVolatileChanges boolean|nil
+
+---@class lsp.jdtls.CodeAction
+---@field sortMembers lsp.jdtls.SortMembers|nil
+
+---@class lsp.jdtls.HashCodeEquals
+-- Use 'instanceof' to compare types when generating the hashCode and equals methods.
+---@field useInstanceof boolean|nil
+-- Use Objects.hash and Objects.equals when generating the hashCode and equals methods. This setting only applies to Java 7 and higher.
+---@field useJava7Objects boolean|nil
+
+---@class lsp.jdtls.ToString
+-- The code style for generating the toString method.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeStyle "STRING_CONCATENATION" | "STRING_BUILDER" | "STRING_BUILDER_CHAINED" | "STRING_FORMAT"|nil
+-- Limit number of items in arrays/collections/maps to list, if 0 then list all.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field limitElements integer|nil
+-- List contents of arrays instead of using native toString().
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field listArrayContents boolean|nil
+-- Skip null values when generating the toString method.
+---@field skipNullValues boolean|nil
+-- The template for generating the toString method.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field template string|nil
+
+---@class lsp.jdtls.CodeGeneration
+-- Whether to generate the 'final' modifer for code actions that create new declarations.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addFinalForNewDeclaration "none" | "fields" | "variables" | "all"|nil
+-- Generate method comments when generating the methods.
+---@field generateComments boolean|nil
+---@field hashCodeEquals lsp.jdtls.HashCodeEquals|nil
+-- Specifies the insertion location of the code generated by source actions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertionLocation "afterCursor" | "beforeCursor" | "lastMember"|nil
+---@field toString lsp.jdtls.ToString|nil
+-- Use blocks in 'if' statements when generating the methods.
+---@field useBlocks boolean|nil
+
+---@class lsp.jdtls.NullAnalysis
+-- Specify how to enable the annotation-based null analysis.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mode "disabled" | "interactive" | "automatic"|nil
+-- Specify the Nonnull annotation types to be used for null analysis. If more than one annotation is specified, then the topmost annotation will be used first if it exists in project dependencies. This setting will be ignored if `java.compile.nullAnalysis.mode` is set to `disabled`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nonnull any[]|nil
+-- Specify the NonNullByDefault annotation types to be used for null analysis. If more than one annotation is specified, then the topmost annotation will be used first if it exists in project dependencies. This setting will be ignored if `java.compile.nullAnalysis.mode` is set to `disabled`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nonnullbydefault any[]|nil
+-- Specify the Nullable annotation types to be used for null analysis. If more than one annotation is specified, then the topmost annotation will be used first if it exists in project dependencies. This setting will be ignored if `java.compile.nullAnalysis.mode` is set to `disabled`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nullable any[]|nil
+
+---@class lsp.jdtls.Compile
+---@field nullAnalysis lsp.jdtls.NullAnalysis|nil
+
+---@class lsp.jdtls.Chain
+-- Enable/disable chain completion support. Chain completions are only available when completions are invoked by the completions shortcut
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.LazyResolveTextEdit
+-- [Experimental] Enable/disable lazily resolving text edits for code completion.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Postfix
+-- Enable/disable postfix completion support. `#editor.snippetSuggestions#` can be used to customize how postfix snippets are sorted.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Completion
+---@field chain lsp.jdtls.Chain|nil
+-- Enable/disable the collapse of overloaded methods in completion items. Overrides `#java.completion.guessMethodArguments#`.
+---@field collapseCompletionItems boolean|nil
+-- Enable/disable code completion support
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- [Experimental] Select code completion engine
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field engine "ecj" | "dom"|nil
+-- Defines a list of static members or types with static members. Content assist will propose those static members even if the import is missing.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field favoriteStaticMembers any[]|nil
+-- Defines the type filters. All types whose fully qualified name matches the selected filter strings will be ignored in content assist or quick fix proposals and when organizing imports. For example 'java.awt.*' will hide all types from the awt packages.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field filteredTypes any[]|nil
+-- Specify how the arguments will be filled during completion.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field guessMethodArguments "auto" | "off" | "insertParameterNames" | "insertBestGuessedArguments"|nil
+-- Defines the sorting order of import statements. A package or type name prefix (e.g. 'org.eclipse') is a valid entry. An import is always added to the most specific group. As a result, the empty string (e.g. '') can be used to group all other imports. Static imports are prefixed with a '#'
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importOrder any[]|nil
+---@field lazyResolveTextEdit lsp.jdtls.LazyResolveTextEdit|nil
+-- Specify whether to match case for code completion.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field matchCase "firstLetter" | "off"|nil
+-- Maximum number of completion results (not including snippets).
+-- `0` (the default value) disables the limit, all results are returned. In case of performance problems, consider setting a sensible limit.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxResults integer|nil
+---@field postfix lsp.jdtls.Postfix|nil
+
+---@class lsp.jdtls.Maven
+-- Specifies default mojo execution action when no associated metadata can be detected.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field defaultMojoExecutionAction "ignore" | "warn" | "error" | "execute"|nil
+-- Path to Maven's global settings.xml
+---@field globalSettings string|nil
+-- Path to Maven's lifecycle mappings xml
+---@field lifecycleMappings string|nil
+-- Specifies severity if the plugin execution is not covered by Maven build lifecycle.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field notCoveredPluginExecutionSeverity "ignore" | "warning" | "error"|nil
+-- Path to Maven's user settings.xml
+---@field userSettings string|nil
+
+---@class lsp.jdtls.Configuration
+-- Controls whether to exclude extension-generated project settings files (.project, .classpath, .factorypath, .settings/) from the file explorer.
+---@field checkProjectSettingsExclusions boolean|nil
+-- Automatically detect JDKs installed on local machine at startup. If you have specified the same JDK version in `#java.configuration.runtimes#`, the extension will use that version first.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field detectJdksAtStart boolean|nil
+---@field maven lsp.jdtls.Maven|nil
+-- Map Java Execution Environments to local JDKs.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field runtimes object[]|nil
+-- Specifies how modifications on build files update the Java classpath/configuration
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field updateBuildConfiguration "disabled" | "interactive" | "automatic"|nil
+-- The number of days (if enabled) to keep unused workspace cache data. Beyond this limit, cached workspace data may be removed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspaceCacheLimit integer|nil
+
+---@class lsp.jdtls.ContentProvider
+-- Preferred content provider (a 3rd party decompiler id, usually)
+---@field preferred string|nil
+
+---@class lsp.jdtls.Diagnostic
+-- Specifies a list of file patterns for which matching documents should not have their diagnostics reported (eg. '**/Foo.java').
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field filter string[]|nil
+
+---@class lsp.jdtls.Eclipse
+-- Enable/disable download of Maven source artifacts for Eclipse projects.
+---@field downloadSources boolean|nil
+
+---@class lsp.jdtls.SmartSemicolonDetection
+-- Defines the `smart semicolon` detection. Defaults to `false`.
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Edit
+---@field smartSemicolonDetection lsp.jdtls.SmartSemicolonDetection|nil
+-- Specifies whether to recheck all open Java files for diagnostics when editing a Java file.
+---@field validateAllOpenBuffersOnChanges boolean|nil
+
+---@class lsp.jdtls.Editor
+-- Specifies whether to reload the sources of the open class files when their source jar files are changed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reloadChangedSources "ask" | "auto" | "manual"|nil
+
+---@class lsp.jdtls.IncompleteClasspath
+-- Specifies the severity of the message when the classpath is incomplete for a Java file
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field severity "ignore" | "info" | "warning" | "error"|nil
+
+---@class lsp.jdtls.Errors
+---@field incompleteClasspath lsp.jdtls.IncompleteClasspath|nil
+
+---@class lsp.jdtls.FoldingRange
+-- Enable/disable smart folding range support. If disabled, it will use the default indentation-based folding range provided by VS Code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Comments
+-- Includes the comments during code formatting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.OnType
+-- Enable/disable automatic block formatting when typing `;`, `<enter>` or `}`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Settings
+-- Optional formatter profile name from the Eclipse formatter settings.
+---@field profile string|nil
+-- Specifies the url or file path to the [Eclipse formatter xml settings](https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings).
+---@field url string|nil
+
+---@class lsp.jdtls.Format
+---@field comments lsp.jdtls.Comments|nil
+-- Enable/disable default Java formatter
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+---@field onType lsp.jdtls.OnType|nil
+---@field settings lsp.jdtls.Settings|nil
+
+---@class lsp.jdtls.AnnotationProcessing
+-- Enable/disable the annotation processing on Gradle projects and delegate Annotation Processing to JDT APT. Only works for Gradle 5.2 or higher.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Java
+-- The location to the JVM used to run the Gradle daemon.
+---@field home string|nil
+
+---@class lsp.jdtls.Offline
+-- Enable/disable the Gradle offline mode.
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.User
+-- Setting for GRADLE_USER_HOME.
+---@field home string|nil
+
+---@class lsp.jdtls.Wrapper
+-- Use Gradle from the 'gradle-wrapper.properties' file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Gradle
+---@field annotationProcessing lsp.jdtls.AnnotationProcessing|nil
+-- Arguments to pass to Gradle.
+---@field arguments string|nil
+-- Enable/disable the Gradle importer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Use Gradle from the specified local installation directory or GRADLE_HOME if the Gradle wrapper is missing or disabled and no 'java.import.gradle.version' is specified.
+---@field home string|nil
+---@field java lsp.jdtls.Java|nil
+-- JVM arguments to pass to Gradle.
+---@field jvmArguments string|nil
+---@field offline lsp.jdtls.Offline|nil
+---@field user lsp.jdtls.User|nil
+-- Use Gradle from the specific version if the Gradle wrapper is missing or disabled.
+---@field version string|nil
+---@field wrapper lsp.jdtls.Wrapper|nil
+
+---@class lsp.jdtls.Offline
+-- Enable/disable the Maven offline mode.
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Maven
+-- Enable/disable test classpath segregation. When enabled, this permits the usage of test resources within a Maven project as dependencies within the compile scope of other projects.
+---@field disableTestClasspathFlag boolean|nil
+-- Enable/disable the Maven importer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+---@field offline lsp.jdtls.Offline|nil
+
+---@class lsp.jdtls.Import
+-- Configure glob patterns for excluding folders. Use `!` to negate patterns to allow subfolders imports. You have to include a parent directory. The order is important.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclusions any[]|nil
+-- Specify whether the project metadata files(.project, .classpath, .factorypath, .settings/) will be generated at the project root. Click [HERE](command:_java.metadataFilesGeneration) to learn how to change the setting to make it take effect.
+---@field generatesMetadataFilesAtProjectRoot boolean|nil
+---@field gradle lsp.jdtls.Gradle|nil
+---@field maven lsp.jdtls.Maven|nil
+-- [Experimental] Specifies how to select build configuration files to import. 
+-- Note: Currently, `Gradle` projects cannot be partially imported.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field projectSelection "manual" | "automatic"|nil
+
+---@class lsp.jdtls.Wrapper
+-- Defines allowed/disallowed SHA-256 checksums of Gradle Wrappers
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checksums object[]|nil
+
+---@class lsp.jdtls.Gradle
+---@field wrapper lsp.jdtls.Wrapper|nil
+
+---@class lsp.jdtls.Imports
+---@field gradle lsp.jdtls.Gradle|nil
+
+---@class lsp.jdtls.ParameterNames
+-- Enable/disable inlay hints for parameter names:
+-- ```java
+-- 
+-- Integer.valueOf(/* s: */ '123', /* radix: */ 10)
+--  
+-- ```
+--  `#java.inlayHints.parameterNames.exclusions#` can be used to disable the inlay hints for methods.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "none" | "literals" | "all"|nil
+-- The patterns for the methods that will be disabled to show the inlay hints. Supported pattern examples:
+--  - `java.lang.Math.*` - All the methods from java.lang.Math.
+--  - `*.Arrays.asList` - Methods named as 'asList' in the types named as 'Arrays'.
+--  - `*.println(*)` - Methods named as 'println'.
+--  - `(from, to)` - Methods with two parameters named as 'from' and 'to'.
+--  - `(arg*)` - Methods with one parameter whose name starts with 'arg'.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclusions string[]|nil
+-- Suppress parameter name hints on arguments following the same-name numbered pattern.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenSameNameNumbered boolean|nil
+
+---@class lsp.jdtls.ParameterTypes
+-- Enable/disable inlay hints for (lambda) parameter types:
+-- ```java
+-- 
+-- List.of(1, 2, 3, 4).filter(/*Integer */ n -> n % 2 == 0).toList();
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.VariableTypes
+-- Enable/disable inlay hints for implicit variable types:
+-- ```java
+-- 
+-- var foo /* :Path */ = Path.of("foo");
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.InlayHints
+---@field parameterNames lsp.jdtls.ParameterNames|nil
+---@field parameterTypes lsp.jdtls.ParameterTypes|nil
+---@field variableTypes lsp.jdtls.VariableTypes|nil
+
+---@class lsp.jdtls.AndroidSupport
+-- [Experimental] Specify whether to enable Android project importing. When set to `auto`, the Android support will be enabled in Visual Studio Code - Insiders.
+-- 
+-- **Note:** Only works for Android Gradle Plugin `3.2.0` or higher.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "auto" | "on" | "off"|nil
+
+---@class lsp.jdtls.Appcds
+-- [Experimental] Enable Java AppCDS (Application Class Data Sharing) for improvements to extension activation. When set to `auto`, AppCDS will be enabled in Visual Studio Code - Insiders, and for pre-release versions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "auto" | "on" | "off"|nil
+
+---@class lsp.jdtls.Java
+-- Specifies the folder path to the JDK (21 or more recent) used to launch the Java Language Server. This setting will replace the Java extension's embedded JRE to start the Java Language Server. 
+-- 
+-- On Windows, backslashes must be escaped, i.e.
+-- "java.jdt.ls.java.home":"C:\\Program Files\\Java\\jdk-21.0_5"
+---@field home string|nil
+
+---@class lsp.jdtls.Javac
+-- [Experimental] Specify whether to enable Javac-based compilation in the language server. Requires running this extension with Java 25
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "on" | "off"|nil
+
+---@class lsp.jdtls.LombokSupport
+-- Whether to load lombok processors from project classpath
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.ProtobufSupport
+-- Specify whether to automatically add Protobuf output source directories to the classpath.
+-- 
+-- **Note:** Only works for Gradle `com.google.protobuf` plugin `0.8.4` or higher.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Ls
+---@field androidSupport lsp.jdtls.AndroidSupport|nil
+---@field appcds lsp.jdtls.Appcds|nil
+---@field java lsp.jdtls.Java|nil
+---@field javac lsp.jdtls.Javac|nil
+---@field lombokSupport lsp.jdtls.LombokSupport|nil
+---@field protobufSupport lsp.jdtls.ProtobufSupport|nil
+-- Specifies extra VM arguments used to launch the Java Language Server. Eg. use `-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable` to optimize memory usage with the parallel garbage collector
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vmargs string|nil
+
+---@class lsp.jdtls.Jdt
+---@field ls lsp.jdtls.Ls|nil
+
+---@class lsp.jdtls.Maven
+-- Enable/disable download of Maven source artifacts as part of importing Maven projects.
+---@field downloadSources boolean|nil
+-- Force update of Snapshots/Releases.
+---@field updateSnapshots boolean|nil
+
+---@class lsp.jdtls.Project
+-- Project encoding settings
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field encoding "ignore" | "warning" | "setDefault"|nil
+-- Enable/disable the server-mode switch information, when Java projects import is skipped on startup.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importHint boolean|nil
+-- Specifies whether to import the Java projects, when opening the folder in Hybrid mode for the first time.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importOnFirstTimeStartup "disabled" | "interactive" | "automatic"|nil
+-- A relative path to the workspace where stores the compiled output. `Only` effective in the `WORKSPACE` scope. The setting will `NOT` affect Maven or Gradle project.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field outputPath string|nil
+-- Configure glob patterns for referencing local libraries to a Java project.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field referencedLibraries any[]|table|nil
+-- Excludes files and folders from being refreshed by the Java Language Server, which can improve the overall performance. For example, ["node_modules","\.git"] will exclude all files and folders named `node_modules` or `.git`. Pattern expressions must be compatible with `java.util.regex.Pattern`. Defaults to ["node_modules","\.git"].
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field resourceFilters string[]|nil
+-- Relative paths to the workspace where stores the source files. `Only` effective in the `WORKSPACE` scope. The setting will `NOT` affect Maven or Gradle project.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sourcePaths string[]|nil
+
+---@class lsp.jdtls.Quickfix
+-- Show quickfixes at the problem or line level.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showAt "line" | "problem"|nil
+
+---@class lsp.jdtls.Interface
+-- Specify whether to replace all the occurrences of the subtype with the new extracted interface.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field replace boolean|nil
+
+---@class lsp.jdtls.Extract
+---@field interface lsp.jdtls.Interface|nil
+
+---@class lsp.jdtls.Refactoring
+---@field extract lsp.jdtls.Extract|nil
+
+---@class lsp.jdtls.References
+-- Include getter, setter and builder/constructor when finding references.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeAccessors boolean|nil
+-- Include declarations when finding references.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeDeclarations boolean|nil
+-- Include the decompiled sources when finding references.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeDecompiledSources boolean|nil
+
+---@class lsp.jdtls.ReferencesCodeLens
+-- Enable/disable the references code lens.
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.SaveActions
+-- Enable/disable cleanup actions on save.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cleanup boolean|nil
+-- Enable/disable auto organize imports on save action
+---@field organizeImports boolean|nil
+
+---@class lsp.jdtls.Search
+-- Specifies the scope which must be used for search operation like 
+--  - Find Reference
+--  - Call Hierarchy
+--  - Workspace Symbols
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scope "all" | "main"|nil
+
+---@class lsp.jdtls.SelectionRange
+-- Enable/disable Smart Selection support for Java. Disabling this option will not affect the VS Code built-in word-based and bracket-based smart selection.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Server
+-- The launch mode for the Java extension
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field launchMode "Standard" | "LightWeight" | "Hybrid"|nil
+
+---@class lsp.jdtls.Settings
+-- Specifies the url or file path to the workspace Java settings. See [Setting Global Preferences](https://github.com/redhat-developer/vscode-java/wiki/Settings-Global-Preferences)
+---@field url string|nil
+
+---@class lsp.jdtls.SharedIndexes
+-- [Experimental] Specify whether to share indexes between different workspaces. When set to `auto`, shared indexes will be enabled in Visual Studio Code - Insiders.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "auto" | "on" | "off"|nil
+-- Specifies a common index location for all workspaces. See default values as follows:
+--  
+-- Windows: First use `"$APPDATA\\.jdt\\index"`, or `"~\\.jdt\\index"` if it does not exist
+--  
+-- macOS: `"~/Library/Caches/.jdt/index"`
+--  
+-- Linux: First use `"$XDG_CACHE_HOME/.jdt/index"`, or `"~/.cache/.jdt/index"` if it does not exist
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field location string|nil
+
+---@class lsp.jdtls.ShowBuildStatusOnStart
+-- Automatically show build status on startup.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "notification" | "terminal" | "off"|any|nil
+
+---@class lsp.jdtls.Description
+-- Enable/disable to show the description in signature help.
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.SignatureHelp
+---@field description lsp.jdtls.Description|nil
+-- Enable/disable the signature help.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.OrganizeImports
+-- Specifies the number of imports added before a star-import declaration is used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field starThreshold integer|nil
+-- Specifies the number of static imports added before a star-import declaration is used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field staticStarThreshold integer|nil
+
+---@class lsp.jdtls.Sources
+---@field organizeImports lsp.jdtls.OrganizeImports|nil
+
+---@class lsp.jdtls.Symbols
+-- Include method declarations from source files in symbol search.
+---@field includeSourceMethodDeclarations boolean|nil
+
+---@class lsp.jdtls.Templates
+-- Specifies the file header comment for new Java file. Supports configuring multi-line comments with an array of strings, and using ${variable} to reference the [predefined variables](command:_java.templateVariables).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fileHeader any[]|nil
+-- Specifies the type comment for new Java type. Supports configuring multi-line comments with an array of strings, and using ${variable} to reference the [predefined variables](command:_java.templateVariables).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeComment any[]|nil
+
+---@class lsp.jdtls.Trace
+-- Traces the communication between VS Code and the Java language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.jdtls.TypeHierarchy
+-- Enable/disable lazy loading the content in type hierarchy. Lazy loading could save a lot of loading time but every type should be expanded manually to load its content.
+---@field lazyLoad boolean|nil
+
+---@class lsp.jdtls.Java
+---@field autobuild lsp.jdtls.Autobuild|nil
+---@field cleanup lsp.jdtls.Cleanup|nil
+---@field codeAction lsp.jdtls.CodeAction|nil
+---@field codeGeneration lsp.jdtls.CodeGeneration|nil
+---@field compile lsp.jdtls.Compile|nil
+---@field completion lsp.jdtls.Completion|nil
+---@field configuration lsp.jdtls.Configuration|nil
+---@field contentProvider lsp.jdtls.ContentProvider|nil
+---@field diagnostic lsp.jdtls.Diagnostic|nil
+---@field eclipse lsp.jdtls.Eclipse|nil
+---@field edit lsp.jdtls.Edit|nil
+---@field editor lsp.jdtls.Editor|nil
+---@field errors lsp.jdtls.Errors|nil
+---@field foldingRange lsp.jdtls.FoldingRange|nil
+---@field format lsp.jdtls.Format|nil
+-- Specifies the folder path to the JDK (21 or more recent) used to launch the Java Language Server.
+-- On Windows, backslashes must be escaped, i.e.
+-- "java.home":"C:\\Program Files\\Java\\jdk-21.0_5"
+---@field home string|nil
+-- Enable/disable the implementations code lens for the provided categories.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field implementationCodeLens "none" | "types" | "methods" | "all"|nil
+---@field import lsp.jdtls.Import|nil
+---@field imports lsp.jdtls.Imports|nil
+---@field inlayHints lsp.jdtls.InlayHints|nil
+---@field jdt lsp.jdtls.Jdt|nil
+---@field maven lsp.jdtls.Maven|nil
+-- Max simultaneous project builds
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxConcurrentBuilds integer|nil
+---@field project lsp.jdtls.Project|nil
+---@field quickfix lsp.jdtls.Quickfix|nil
+---@field refactoring lsp.jdtls.Refactoring|nil
+---@field references lsp.jdtls.References|nil
+---@field referencesCodeLens lsp.jdtls.ReferencesCodeLens|nil
+---@field saveActions lsp.jdtls.SaveActions|nil
+---@field search lsp.jdtls.Search|nil
+---@field selectionRange lsp.jdtls.SelectionRange|nil
+---@field server lsp.jdtls.Server|nil
+---@field settings lsp.jdtls.Settings|nil
+---@field sharedIndexes lsp.jdtls.SharedIndexes|nil
+---@field showBuildStatusOnStart lsp.jdtls.ShowBuildStatusOnStart|nil
+---@field signatureHelp lsp.jdtls.SignatureHelp|nil
+---@field sources lsp.jdtls.Sources|nil
+---@field symbols lsp.jdtls.Symbols|nil
+---@field templates lsp.jdtls.Templates|nil
+---@field trace lsp.jdtls.Trace|nil
+---@field typeHierarchy lsp.jdtls.TypeHierarchy|nil
+
+---@class lsp.jdtls.Telemetry
+-- Enable usage data and errors to be sent to Red Hat servers. Read our [privacy statement](https://developers.redhat.com/article/tool-data-collection).
+---@field enabled boolean|nil
+
+---@class lsp.jdtls.Redhat
+---@field telemetry lsp.jdtls.Telemetry|nil
+
+---@class lsp.jdtls
+---@field java lsp.jdtls.Java|nil
+---@field redhat lsp.jdtls.Redhat|nil
+
+---@class lsp.jsonls.ColorDecorators
+-- %json.colorDecorators.enable.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.jsonls.Format
+-- %json.format.enable.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %json.format.keepLines.desc%
+---@field keepLines boolean|nil
+
+---@class lsp.jsonls.SchemaDownload
+-- %json.enableSchemaDownload.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.jsonls.Trace
+-- %json.tracing.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.jsonls.Validate
+-- %json.validate.enable.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.jsonls.Json
+---@field colorDecorators lsp.jsonls.ColorDecorators|nil
+---@field format lsp.jsonls.Format|nil
+-- %json.maxItemsComputed.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxItemsComputed number|nil
+---@field schemaDownload lsp.jsonls.SchemaDownload|nil
+-- %json.schemas.desc%
+---@field schemas object[]|nil
+---@field trace lsp.jsonls.Trace|nil
+---@field validate lsp.jsonls.Validate|nil
+
+---@class lsp.jsonls
+---@field json lsp.jsonls.Json|nil
+
+---@class lsp.julials.Execution
+-- Print executed code in REPL and append it to the REPL history.
+---@field codeInREPL boolean|nil
+-- Show separate inline results for all code blocks in a cell
+---@field inlineResultsForCellEvaluation boolean|nil
+-- Specifies how to show inline execution results
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field resultType "REPL" | "inline" | "inline, errors in REPL" | "both"|nil
+-- Save file before execution
+---@field saveOnEval boolean|nil
+
+---@class lsp.julials.Runtime
+-- Enable display of runtime inlay hints. These hints are provided by packages that overload a `show` method for the `application/vnd.julia-vscode.inlayHints` MIME type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.julials.ParameterNames
+-- Enable name hints for function parameters:
+-- ```julia
+-- foo(#= bar: =# 42)
+-- ```
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "none" | "literals" | "all"|nil
+
+---@class lsp.julials.VariableTypes
+-- Enable type hints for variable definitions:
+-- ```julia
+-- foo #=::Int64=# = 42
+-- ```
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.julials.Static
+-- Enable display of static inlay hints.
+---@field enabled boolean|nil
+---@field parameterNames lsp.julials.ParameterNames|nil
+---@field variableTypes lsp.julials.VariableTypes|nil
+
+---@class lsp.julials.InlayHints
+---@field runtime lsp.julials.Runtime|nil
+---@field static lsp.julials.Static|nil
+
+---@class lsp.julials.Lint
+-- This compares call signatures against all known methods for the called function. Calls with too many or too few arguments, or unknown keyword parameters are highlighted.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field call boolean|nil
+-- Check for constant conditionals in if statements that result in branches never being reached.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field constif boolean|nil
+-- Check variables used in type declarations are datatypes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field datadecl boolean|nil
+-- Specifies sub-directories in [a package directory](https://docs.julialang.org/en/v1/manual/code-loading/#Package-directories-1) where only basic linting is. This drastically lowers the chance for false positives.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disabledDirs any[]|nil
+-- Check iterator syntax of loops. Will identify, for example, attempts to iterate over single values.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field iter boolean|nil
+-- Check for deterministic lazy boolean operators.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lazy boolean|nil
+-- Highlight unknown symbols. The `symbols` option will not mark unknown fields.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missingrefs "none" | "symbols" | "all"|nil
+-- Check submodule names do not shadow their parent's name.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field modname boolean|nil
+-- Check for use of `==` rather than `===` when comparing against `nothing`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nothingcomp boolean|nil
+-- Check for type piracy - the overloading of external functions with methods specified for external datatypes. 'External' here refers to imported code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pirates boolean|nil
+-- Run the linter on active files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field run boolean|nil
+-- Check parameters declared in `where` statements or datatype declarations are used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeparam boolean|nil
+-- Check that all declared arguments are used within the function body.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useoffuncargs boolean|nil
+
+---@class lsp.julials.PersistentSession
+-- Always copy the command for connecting to an external REPL to the clipboard.
+---@field alwaysCopy boolean|nil
+-- Behaviour when stopping a persistent session.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field closeStrategy "ask" | "close" | "disconnect"|nil
+-- Experimental: Starts the interactive Julia session in a persistent `tmux` session. Note that `tmux` must be available in the shell defined with `#julia.persistentSession.shell#`.
+---@field enabled boolean|nil
+-- Shell used to start the persistent session.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field shell string|nil
+-- Argument to execute code in the configured shell, e.g. `-c` for sh-likes or `/c` for `cmd`. Can contain multiple arguments separated by spaces.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field shellExecutionArgument string|nil
+-- Name of the `tmux` session. Explicitly supports substitution for the `${userHome}`, `${workspaceFolder}`, `${workspaceFolderBasename}`, `${workspaceFolder:<FOLDER_NAME>}`, `${pathSeparator}`, `${env:<ENVIRONMENT_VARIABLE>}`, `${config:<CONFIG_VARIABLE>} tokens.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field tmuxSessionName string|nil
+
+---@class lsp.julials.Plots
+-- Default directory for saving plots. Can either be relative to the current workspace or absolute.
+---@field path string|nil
+
+---@class lsp.julials.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.julials.Workspace
+-- Show top-level modules in the workspace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showModules boolean|nil
+
+---@class lsp.julials.Julia
+-- Number of threads to use for Julia processes. A value of `auto` works on Julia versions that allow for `--threads=auto`.
+---@field NumThreads integer|string|nil
+-- Additional Julia arguments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field additionalArgs any[]|nil
+-- Cell delimiter regular expressions for Julia files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cellDelimiters any[]|nil
+-- Sets the mode for completions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completionmode "exportedonly" | "import" | "qualify"|nil
+-- Functions or modules that are set to compiled mode when setting the defaults.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debuggerDefaultCompiled any[]|nil
+-- Delete Julia .cov files when running tests with coverage, leaving only a .lcov file behind.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field deleteJuliaCovFiles boolean|nil
+-- Command to open files from the REPL (via setting the `JULIA_EDITOR` environment variable).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field editor string|nil
+-- Enable crash reports to be sent to the julia VS Code extension developers.
+---@field enableCrashReporter boolean|nil
+-- Enable usage data and errors to be sent to the julia VS Code extension developers.
+---@field enableTelemetry boolean|nil
+-- Path to a julia environment. VS Code needs to be reloaded for changes to take effect. Explicitly supports substitution for the `${userHome}`, `${workspaceFolder}`, `${workspaceFolderBasename}`, `${workspaceFolder:<FOLDER_NAME>}`, `${pathSeparator}`, `${env:<ENVIRONMENT_VARIABLE>}`, `${config:<CONFIG_VARIABLE>} tokens.
+---@field environmentPath string|nil
+-- Points to the julia executable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field executablePath string|nil
+---@field execution lsp.julials.Execution|nil
+-- Whether to automatically show the plot navigator when plotting.
+---@field focusPlotNavigator boolean|nil
+---@field inlayHints lsp.julials.InlayHints|nil
+-- Points to the julia executable used to launch the language server process. This overwrites julia.executablePath for the language server launch if present.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageServerExecutablePath string|nil
+-- Juliaup channel to use for the language server (e.g., 'release', 'lts', 'beta'). Can be overridden by JULIA_VSCODE_LANGUAGESERVER_CHANNEL environment variable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageServerJuliaupChannel string|nil
+---@field lint lsp.julials.Lint|nil
+-- Number of processes to use for testing.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field numTestProcesses integer|nil
+-- Julia package server. Sets the `JULIA_PKG_SERVER` environment variable *before* starting a Julia process. Leave this empty to use the systemwide default. Requires a restart of the Julia process.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field packageServer string|nil
+---@field persistentSession lsp.julials.PersistentSession|nil
+---@field plots lsp.julials.Plots|nil
+-- Request runtime completions from the integrated REPL.
+---@field runtimeCompletions boolean|nil
+-- Enable display of runtime diagnostics. These diagnostics are provided by packages that overload a `show` method for the `application/vnd.julia-vscode.diagnostics` MIME type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showRuntimeDiagnostics boolean|nil
+-- Download symbol server cache files from GitHub.
+---@field symbolCacheDownload boolean|nil
+-- Symbol server cache download URL.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field symbolserverUpstream string|nil
+---@field trace lsp.julials.Trace|nil
+-- Display plots within VS Code. Might require a restart of the Julia process.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field usePlotPane boolean|nil
+-- Display [progress bars](https://github.com/JunoLab/ProgressLogging.jl) within VS Code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useProgressFrontend boolean|nil
+-- Load Revise.jl on startup of the REPL.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useRevise boolean|nil
+---@field workspace lsp.julials.Workspace|nil
+
+---@class lsp.julials
+---@field julia lsp.julials.Julia|nil
+
+---@class lsp.kotlin_language_server.Codegen
+-- Whether to enable code generation to a temporary build output directory for Java interoperability (via the non-standard kotlin/buildOutputLocation LSP method). Experimental.
+---@field enabled boolean|nil
+
+---@class lsp.kotlin_language_server.Jvm
+-- Specifies the JVM target, e.g. "1.6" or "1.8"
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field target string|nil
+
+---@class lsp.kotlin_language_server.Compiler
+---@field jvm lsp.kotlin_language_server.Jvm|nil
+
+---@class lsp.kotlin_language_server.Snippets
+-- Specifies whether code completion should provide snippets (true) or plain-text items (false).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.kotlin_language_server.Completion
+---@field snippets lsp.kotlin_language_server.Snippets|nil
+
+---@class lsp.kotlin_language_server.DebugAdapter
+-- [Recommended] Specifies whether the debug adapter should be used. When enabled a debugger for Kotlin will be available.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Optionally a custom path to the debug adapter executable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+---@class lsp.kotlin_language_server.Diagnostics
+-- [DEBUG] Specifies the debounce time limit. Lower to increase responsiveness at the cost of possible stability issues.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debounceTime integer|nil
+-- Whether diagnostics (e.g. errors or warnings from the Kotlin compiler) should be emitted.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- The minimum severity of diagnostics to emit.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field level "error" | "warning" | "information" | "hint"|nil
+
+---@class lsp.kotlin_language_server.ExternalSources
+-- Specifies whether decompiled/external classes should be auto-converted to Kotlin.
+---@field autoConvertToKotlin boolean|nil
+-- [Recommended] Specifies whether URIs inside JARs should be represented using the 'kls'-scheme.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useKlsScheme boolean|nil
+
+---@class lsp.kotlin_language_server.Indexing
+-- Whether global symbols in the project should be indexed automatically in the background. This enables e.g. code completion for unimported classes and functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.kotlin_language_server.InlayHints
+-- Whether to provide inlay hints on chained function calls or not.
+---@field chainedHints boolean|nil
+-- Whether to provide inlay hints for parameters on call sites or not.
+---@field parameterHints boolean|nil
+-- Whether to provide inlay hints for types on declaration sites or not.
+---@field typeHints boolean|nil
+
+---@class lsp.kotlin_language_server.Java
+-- A custom JAVA_HOME for the language server and debug adapter to use.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field home string|nil
+-- Custom options using JAVA_OPTS for the language server and debug adapter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field opts string|nil
+
+---@class lsp.kotlin_language_server.DebugAttach
+-- [DEBUG] If enabled (together with debugAttach.enabled), the language server will not immediately launch but instead listen on the specified attach port and wait for a debugger. This is ONLY useful if you need to debug the language server ITSELF.
+---@field autoSuspend boolean|nil
+-- [DEBUG] Whether the language server should listen for debuggers, i.e. be debuggable while running in VSCode. This is ONLY useful if you need to debug the language server ITSELF.
+---@field enabled boolean|nil
+-- [DEBUG] If transport is stdio this enables you to attach to the running language server with a debugger. This is ONLY useful if you need to debug the language server ITSELF.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field port integer|nil
+
+---@class lsp.kotlin_language_server.LanguageServer
+---@field debugAttach lsp.kotlin_language_server.DebugAttach|nil
+-- [Recommended] Specifies whether the language server should be used. When enabled the extension will provide code completions and linting, otherwise just syntax highlighting. Might require a reload to apply.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Optionally a custom path to the language server executable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+-- The port to which the client will attempt to connect to. A random port is used if zero. Only used if the transport layer is TCP.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field port integer|nil
+-- The transport layer beneath the language server protocol. Note that the extension will launch the server even if a TCP socket is used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field transport "stdio" | "tcp"|nil
+-- Specifies glob patterns of files, which would be watched by LSP client. The LSP client doesn't support watching files outside a workspace folder.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field watchFiles any[]|nil
+
+---@class lsp.kotlin_language_server.Linting
+-- [DEBUG] Specifies the debounce time limit. Lower to increase responsiveness at the cost of possible stability issues.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debounceTime integer|nil
+
+---@class lsp.kotlin_language_server.Scripts
+-- Whether language features are provided for .gradle.kts scripts. Experimental and may not work properly.
+---@field buildScriptsEnabled boolean|nil
+-- Whether language features are provided for .kts scripts. Experimental and may not work properly.
+---@field enabled boolean|nil
+
+---@class lsp.kotlin_language_server.Trace
+-- Traces the communication between VSCode and the Kotlin language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.kotlin_language_server.Kotlin
+---@field codegen lsp.kotlin_language_server.Codegen|nil
+---@field compiler lsp.kotlin_language_server.Compiler|nil
+---@field completion lsp.kotlin_language_server.Completion|nil
+-- [DEPRECATED] Specifies the debounce time limit. Lower to increase responsiveness at the cost of possible stability issues.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debounceTime integer|nil
+---@field debugAdapter lsp.kotlin_language_server.DebugAdapter|nil
+---@field diagnostics lsp.kotlin_language_server.Diagnostics|nil
+---@field externalSources lsp.kotlin_language_server.ExternalSources|nil
+---@field indexing lsp.kotlin_language_server.Indexing|nil
+---@field inlayHints lsp.kotlin_language_server.InlayHints|nil
+---@field java lsp.kotlin_language_server.Java|nil
+---@field languageServer lsp.kotlin_language_server.LanguageServer|nil
+---@field linting lsp.kotlin_language_server.Linting|nil
+---@field scripts lsp.kotlin_language_server.Scripts|nil
+-- [DEPRECATED] Specifies whether code completion should provide snippets (true) or plain-text items (false).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field snippetsEnabled boolean|nil
+---@field trace lsp.kotlin_language_server.Trace|nil
+
+---@class lsp.kotlin_language_server
+---@field kotlin lsp.kotlin_language_server.Kotlin|nil
+
+---@class lsp.ltex.AdditionalRules
+-- %ltex.i18n.configuration.ltex.additionalRules.enablePickyRules.markdownDescription%
+---@field enablePickyRules boolean|nil
+-- %ltex.i18n.configuration.ltex.additionalRules.languageModel.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageModel string|nil
+-- %ltex.i18n.configuration.ltex.additionalRules.motherTongue.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field motherTongue "" | "ar" | "ast-ES" | "be-BY" | "br-FR" | "ca-ES" | "ca-ES-valencia" | "da-DK" | "de" | "de-AT" | "de-CH" | "de-DE" | "de-DE-x-simple-language" | "el-GR" | "en" | "en-AU" | "en-CA" | "en-GB" | "en-NZ" | "en-US" | "en-ZA" | "eo" | "es" | "es-AR" | "fa" | "fr" | "ga-IE" | "gl-ES" | "it" | "ja-JP" | "km-KH" | "nl" | "nl-BE" | "pl-PL" | "pt" | "pt-AO" | "pt-BR" | "pt-MZ" | "pt-PT" | "ro-RO" | "ru-RU" | "sk-SK" | "sl-SI" | "sv" | "ta-IN" | "tl-PH" | "uk-UA" | "zh-CN"|nil
+-- %ltex.i18n.configuration.ltex.additionalRules.neuralNetworkModel.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field neuralNetworkModel string|nil
+-- %ltex.i18n.configuration.ltex.additionalRules.word2VecModel.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field word2VecModel string|nil
+
+---@class lsp.ltex.Bibtex
+-- %ltex.i18n.configuration.ltex.bibtex.fields.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fields table|nil
+
+-- %ltex.i18n.configuration.ltex.configurationTarget.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.ltex.ConfigurationTarget
+---@field dictionary "user" | "workspace" | "workspaceFolder" | "userExternalFile" | "workspaceExternalFile" | "workspaceFolderExternalFile"|nil
+---@field disabledRules "user" | "workspace" | "workspaceFolder" | "userExternalFile" | "workspaceExternalFile" | "workspaceFolderExternalFile"|nil
+---@field hiddenFalsePositives "user" | "workspace" | "workspaceFolder" | "userExternalFile" | "workspaceExternalFile" | "workspaceFolderExternalFile"|nil
+
+-- %ltex.i18n.configuration.ltex.dictionary.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.ltex.Dictionary
+-- %ltex.i18n.configuration.ltex.dictionary.ar.markdownDescription%
+---@field ar string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ast-ES.markdownDescription%
+---@field ast-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.be-BY.markdownDescription%
+---@field be-BY string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.br-FR.markdownDescription%
+---@field br-FR string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ca-ES.markdownDescription%
+---@field ca-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ca-ES-valencia.markdownDescription%
+---@field ca-ES-valencia string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.da-DK.markdownDescription%
+---@field da-DK string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.de.markdownDescription%
+---@field de string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.de-AT.markdownDescription%
+---@field de-AT string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.de-CH.markdownDescription%
+---@field de-CH string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.de-DE.markdownDescription%
+---@field de-DE string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.de-DE-x-simple-language.markdownDescription%
+---@field de-DE-x-simple-language string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.el-GR.markdownDescription%
+---@field el-GR string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.en.markdownDescription%
+---@field en string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.en-AU.markdownDescription%
+---@field en-AU string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.en-CA.markdownDescription%
+---@field en-CA string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.en-GB.markdownDescription%
+---@field en-GB string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.en-NZ.markdownDescription%
+---@field en-NZ string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.en-US.markdownDescription%
+---@field en-US string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.en-ZA.markdownDescription%
+---@field en-ZA string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.eo.markdownDescription%
+---@field eo string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.es.markdownDescription%
+---@field es string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.es-AR.markdownDescription%
+---@field es-AR string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.fa.markdownDescription%
+---@field fa string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.fr.markdownDescription%
+---@field fr string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ga-IE.markdownDescription%
+---@field ga-IE string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.gl-ES.markdownDescription%
+---@field gl-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.it.markdownDescription%
+---@field it string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ja-JP.markdownDescription%
+---@field ja-JP string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.km-KH.markdownDescription%
+---@field km-KH string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.nl.markdownDescription%
+---@field nl string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.nl-BE.markdownDescription%
+---@field nl-BE string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.pl-PL.markdownDescription%
+---@field pl-PL string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.pt.markdownDescription%
+---@field pt string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.pt-AO.markdownDescription%
+---@field pt-AO string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.pt-BR.markdownDescription%
+---@field pt-BR string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.pt-MZ.markdownDescription%
+---@field pt-MZ string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.pt-PT.markdownDescription%
+---@field pt-PT string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ro-RO.markdownDescription%
+---@field ro-RO string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ru-RU.markdownDescription%
+---@field ru-RU string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.sk-SK.markdownDescription%
+---@field sk-SK string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.sl-SI.markdownDescription%
+---@field sl-SI string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.sv.markdownDescription%
+---@field sv string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.ta-IN.markdownDescription%
+---@field ta-IN string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.tl-PH.markdownDescription%
+---@field tl-PH string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.uk-UA.markdownDescription%
+---@field uk-UA string[]|nil
+-- %ltex.i18n.configuration.ltex.dictionary.zh-CN.markdownDescription%
+---@field zh-CN string[]|nil
+
+-- %ltex.i18n.configuration.ltex.disabledRules.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.ltex.DisabledRules
+-- %ltex.i18n.configuration.ltex.disabledRules.ar.markdownDescription%
+---@field ar string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ast-ES.markdownDescription%
+---@field ast-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.be-BY.markdownDescription%
+---@field be-BY string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.br-FR.markdownDescription%
+---@field br-FR string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ca-ES.markdownDescription%
+---@field ca-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ca-ES-valencia.markdownDescription%
+---@field ca-ES-valencia string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.da-DK.markdownDescription%
+---@field da-DK string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.de.markdownDescription%
+---@field de string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.de-AT.markdownDescription%
+---@field de-AT string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.de-CH.markdownDescription%
+---@field de-CH string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.de-DE.markdownDescription%
+---@field de-DE string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.de-DE-x-simple-language.markdownDescription%
+---@field de-DE-x-simple-language string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.el-GR.markdownDescription%
+---@field el-GR string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.en.markdownDescription%
+---@field en string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.en-AU.markdownDescription%
+---@field en-AU string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.en-CA.markdownDescription%
+---@field en-CA string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.en-GB.markdownDescription%
+---@field en-GB string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.en-NZ.markdownDescription%
+---@field en-NZ string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.en-US.markdownDescription%
+---@field en-US string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.en-ZA.markdownDescription%
+---@field en-ZA string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.eo.markdownDescription%
+---@field eo string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.es.markdownDescription%
+---@field es string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.es-AR.markdownDescription%
+---@field es-AR string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.fa.markdownDescription%
+---@field fa string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.fr.markdownDescription%
+---@field fr string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ga-IE.markdownDescription%
+---@field ga-IE string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.gl-ES.markdownDescription%
+---@field gl-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.it.markdownDescription%
+---@field it string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ja-JP.markdownDescription%
+---@field ja-JP string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.km-KH.markdownDescription%
+---@field km-KH string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.nl.markdownDescription%
+---@field nl string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.nl-BE.markdownDescription%
+---@field nl-BE string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.pl-PL.markdownDescription%
+---@field pl-PL string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.pt.markdownDescription%
+---@field pt string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.pt-AO.markdownDescription%
+---@field pt-AO string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.pt-BR.markdownDescription%
+---@field pt-BR string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.pt-MZ.markdownDescription%
+---@field pt-MZ string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.pt-PT.markdownDescription%
+---@field pt-PT string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ro-RO.markdownDescription%
+---@field ro-RO string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ru-RU.markdownDescription%
+---@field ru-RU string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.sk-SK.markdownDescription%
+---@field sk-SK string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.sl-SI.markdownDescription%
+---@field sl-SI string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.sv.markdownDescription%
+---@field sv string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.ta-IN.markdownDescription%
+---@field ta-IN string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.tl-PH.markdownDescription%
+---@field tl-PH string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.uk-UA.markdownDescription%
+---@field uk-UA string[]|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.zh-CN.markdownDescription%
+---@field zh-CN string[]|nil
+
+-- %ltex.i18n.configuration.ltex.enabledRules.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.ltex.EnabledRules
+-- %ltex.i18n.configuration.ltex.enabledRules.ar.markdownDescription%
+---@field ar string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ast-ES.markdownDescription%
+---@field ast-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.be-BY.markdownDescription%
+---@field be-BY string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.br-FR.markdownDescription%
+---@field br-FR string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ca-ES.markdownDescription%
+---@field ca-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ca-ES-valencia.markdownDescription%
+---@field ca-ES-valencia string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.da-DK.markdownDescription%
+---@field da-DK string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.de.markdownDescription%
+---@field de string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.de-AT.markdownDescription%
+---@field de-AT string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.de-CH.markdownDescription%
+---@field de-CH string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.de-DE.markdownDescription%
+---@field de-DE string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.de-DE-x-simple-language.markdownDescription%
+---@field de-DE-x-simple-language string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.el-GR.markdownDescription%
+---@field el-GR string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.en.markdownDescription%
+---@field en string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.en-AU.markdownDescription%
+---@field en-AU string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.en-CA.markdownDescription%
+---@field en-CA string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.en-GB.markdownDescription%
+---@field en-GB string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.en-NZ.markdownDescription%
+---@field en-NZ string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.en-US.markdownDescription%
+---@field en-US string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.en-ZA.markdownDescription%
+---@field en-ZA string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.eo.markdownDescription%
+---@field eo string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.es.markdownDescription%
+---@field es string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.es-AR.markdownDescription%
+---@field es-AR string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.fa.markdownDescription%
+---@field fa string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.fr.markdownDescription%
+---@field fr string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ga-IE.markdownDescription%
+---@field ga-IE string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.gl-ES.markdownDescription%
+---@field gl-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.it.markdownDescription%
+---@field it string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ja-JP.markdownDescription%
+---@field ja-JP string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.km-KH.markdownDescription%
+---@field km-KH string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.nl.markdownDescription%
+---@field nl string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.nl-BE.markdownDescription%
+---@field nl-BE string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.pl-PL.markdownDescription%
+---@field pl-PL string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.pt.markdownDescription%
+---@field pt string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.pt-AO.markdownDescription%
+---@field pt-AO string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.pt-BR.markdownDescription%
+---@field pt-BR string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.pt-MZ.markdownDescription%
+---@field pt-MZ string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.pt-PT.markdownDescription%
+---@field pt-PT string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ro-RO.markdownDescription%
+---@field ro-RO string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ru-RU.markdownDescription%
+---@field ru-RU string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.sk-SK.markdownDescription%
+---@field sk-SK string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.sl-SI.markdownDescription%
+---@field sl-SI string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.sv.markdownDescription%
+---@field sv string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.ta-IN.markdownDescription%
+---@field ta-IN string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.tl-PH.markdownDescription%
+---@field tl-PH string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.uk-UA.markdownDescription%
+---@field uk-UA string[]|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.zh-CN.markdownDescription%
+---@field zh-CN string[]|nil
+
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.ltex.HiddenFalsePositives
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ar.markdownDescription%
+---@field ar string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ast-ES.markdownDescription%
+---@field ast-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.be-BY.markdownDescription%
+---@field be-BY string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.br-FR.markdownDescription%
+---@field br-FR string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ca-ES.markdownDescription%
+---@field ca-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ca-ES-valencia.markdownDescription%
+---@field ca-ES-valencia string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.da-DK.markdownDescription%
+---@field da-DK string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de.markdownDescription%
+---@field de string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-AT.markdownDescription%
+---@field de-AT string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-CH.markdownDescription%
+---@field de-CH string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-DE.markdownDescription%
+---@field de-DE string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-DE-x-simple-language.markdownDescription%
+---@field de-DE-x-simple-language string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.el-GR.markdownDescription%
+---@field el-GR string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en.markdownDescription%
+---@field en string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-AU.markdownDescription%
+---@field en-AU string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-CA.markdownDescription%
+---@field en-CA string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-GB.markdownDescription%
+---@field en-GB string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-NZ.markdownDescription%
+---@field en-NZ string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-US.markdownDescription%
+---@field en-US string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-ZA.markdownDescription%
+---@field en-ZA string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.eo.markdownDescription%
+---@field eo string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.es.markdownDescription%
+---@field es string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.es-AR.markdownDescription%
+---@field es-AR string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.fa.markdownDescription%
+---@field fa string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.fr.markdownDescription%
+---@field fr string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ga-IE.markdownDescription%
+---@field ga-IE string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.gl-ES.markdownDescription%
+---@field gl-ES string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.it.markdownDescription%
+---@field it string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ja-JP.markdownDescription%
+---@field ja-JP string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.km-KH.markdownDescription%
+---@field km-KH string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.nl.markdownDescription%
+---@field nl string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.nl-BE.markdownDescription%
+---@field nl-BE string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pl-PL.markdownDescription%
+---@field pl-PL string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt.markdownDescription%
+---@field pt string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-AO.markdownDescription%
+---@field pt-AO string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-BR.markdownDescription%
+---@field pt-BR string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-MZ.markdownDescription%
+---@field pt-MZ string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-PT.markdownDescription%
+---@field pt-PT string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ro-RO.markdownDescription%
+---@field ro-RO string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ru-RU.markdownDescription%
+---@field ru-RU string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.sk-SK.markdownDescription%
+---@field sk-SK string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.sl-SI.markdownDescription%
+---@field sl-SI string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.sv.markdownDescription%
+---@field sv string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ta-IN.markdownDescription%
+---@field ta-IN string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.tl-PH.markdownDescription%
+---@field tl-PH string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.uk-UA.markdownDescription%
+---@field uk-UA string[]|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.zh-CN.markdownDescription%
+---@field zh-CN string[]|nil
+
+---@class lsp.ltex.Java
+-- %ltex.i18n.configuration.ltex.java.initialHeapSize.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field initialHeapSize integer|nil
+-- %ltex.i18n.configuration.ltex.java.maximumHeapSize.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maximumHeapSize integer|nil
+-- %ltex.i18n.configuration.ltex.java.path.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+---@class lsp.ltex.LanguageToolOrg
+-- %ltex.i18n.configuration.ltex.languageToolOrg.apiKey.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field apiKey string|nil
+-- %ltex.i18n.configuration.ltex.languageToolOrg.username.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field username string|nil
+
+---@class lsp.ltex.Latex
+-- %ltex.i18n.configuration.ltex.latex.commands.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field commands table|nil
+-- %ltex.i18n.configuration.ltex.latex.environments.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field environments table|nil
+
+---@class lsp.ltex.Ltex-ls
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageToolHttpServerUri string|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageToolOrgApiKey string|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageToolOrgUsername string|nil
+-- %ltex.i18n.configuration.ltex.ltex-ls.logLevel.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "severe" | "warning" | "info" | "config" | "fine" | "finer" | "finest"|nil
+-- %ltex.i18n.configuration.ltex.ltex-ls.path.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+---@class lsp.ltex.Markdown
+-- %ltex.i18n.configuration.ltex.markdown.nodes.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nodes table|nil
+
+---@class lsp.ltex.Trace
+-- %ltex.i18n.configuration.ltex.trace.server.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.ltex.Ltex
+---@field additionalRules lsp.ltex.AdditionalRules|nil
+---@field bibtex lsp.ltex.Bibtex|nil
+-- %ltex.i18n.configuration.ltex.checkFrequency.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checkFrequency "edit" | "save" | "manual"|nil
+-- %ltex.i18n.configuration.ltex.clearDiagnosticsWhenClosingFile.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field clearDiagnosticsWhenClosingFile boolean|nil
+-- %ltex.i18n.configuration.ltex.completionEnabled.markdownDescription%
+---@field completionEnabled boolean|nil
+-- %ltex.i18n.configuration.ltex.configurationTarget.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field configurationTarget lsp.ltex.ConfigurationTarget|nil
+-- %ltex.i18n.configuration.ltex.diagnosticSeverity.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticSeverity any|nil
+-- %ltex.i18n.configuration.ltex.dictionary.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dictionary lsp.ltex.Dictionary|nil
+-- %ltex.i18n.configuration.ltex.disabledRules.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disabledRules lsp.ltex.DisabledRules|nil
+-- %ltex.i18n.configuration.ltex.enabled.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled any|nil
+-- %ltex.i18n.configuration.ltex.enabledRules.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabledRules lsp.ltex.EnabledRules|nil
+-- %ltex.i18n.configuration.ltex.hiddenFalsePositives.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hiddenFalsePositives lsp.ltex.HiddenFalsePositives|nil
+---@field java lsp.ltex.Java|nil
+-- %ltex.i18n.configuration.ltex.language.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field language "auto" | "ar" | "ast-ES" | "be-BY" | "br-FR" | "ca-ES" | "ca-ES-valencia" | "da-DK" | "de" | "de-AT" | "de-CH" | "de-DE" | "de-DE-x-simple-language" | "el-GR" | "en" | "en-AU" | "en-CA" | "en-GB" | "en-NZ" | "en-US" | "en-ZA" | "eo" | "es" | "es-AR" | "fa" | "fr" | "ga-IE" | "gl-ES" | "it" | "ja-JP" | "km-KH" | "nl" | "nl-BE" | "pl-PL" | "pt" | "pt-AO" | "pt-BR" | "pt-MZ" | "pt-PT" | "ro-RO" | "ru-RU" | "sk-SK" | "sl-SI" | "sv" | "ta-IN" | "tl-PH" | "uk-UA" | "zh-CN"|nil
+-- %ltex.i18n.configuration.ltex.languageToolHttpServerUri.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field languageToolHttpServerUri string|nil
+---@field languageToolOrg lsp.ltex.LanguageToolOrg|nil
+---@field latex lsp.ltex.Latex|nil
+---@field ltex-ls lsp.ltex.Ltex-ls|nil
+---@field markdown lsp.ltex.Markdown|nil
+-- %ltex.i18n.configuration.ltex.sentenceCacheSize.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sentenceCacheSize integer|nil
+-- %ltex.i18n.configuration.ltex.statusBarItem.markdownDescription%
+---@field statusBarItem boolean|nil
+---@field trace lsp.ltex.Trace|nil
+
+---@class lsp.ltex
+---@field ltex lsp.ltex.Ltex|nil
+
+---@class lsp.lua_ls.AddonManager
+-- %config.addonManager.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %config.addonManager.repositoryBranch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field repositoryBranch string|nil
+-- %config.addonManager.repositoryPath%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field repositoryPath string|nil
+
+---@class lsp.lua_ls.CodeLens
+-- %config.codeLens.enable%
+---@field enable boolean|nil
+
+---@class lsp.lua_ls.Completion
+-- %config.completion.autoRequire%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoRequire boolean|nil
+-- %config.completion.callSnippet%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field callSnippet "Disable" | "Both" | "Replace"|nil
+-- %config.completion.displayContext%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field displayContext integer|nil
+-- %config.completion.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %config.completion.keywordSnippet%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field keywordSnippet "Disable" | "Both" | "Replace"|nil
+-- %config.completion.postfix%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field postfix string|nil
+-- %config.completion.requireSeparator%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field requireSeparator string|nil
+-- %config.completion.showParams%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showParams boolean|nil
+-- %config.completion.showWord%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showWord "Enable" | "Fallback" | "Disable"|nil
+-- %config.completion.workspaceWord%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspaceWord boolean|nil
+
+-- %config.diagnostics.groupFileStatus%
+---@class lsp.lua_ls.GroupFileStatus
+-- %config.diagnostics.ambiguity%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ambiguity "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.await%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field await "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.codestyle%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codestyle "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.conventions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field conventions "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.duplicate%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.global%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field global "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.luadoc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field luadoc "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.redefined%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redefined "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.strict%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strict "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.strong%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strong "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.type-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field type-check "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.unbalanced%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unbalanced "Any" | "Opened" | "None" | "Fallback"|nil
+-- %config.diagnostics.unused%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused "Any" | "Opened" | "None" | "Fallback"|nil
+
+-- %config.diagnostics.groupSeverity%
+---@class lsp.lua_ls.GroupSeverity
+-- %config.diagnostics.ambiguity%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ambiguity "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.await%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field await "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.codestyle%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codestyle "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.conventions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field conventions "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.duplicate%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.global%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field global "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.luadoc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field luadoc "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.redefined%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redefined "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.strict%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strict "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.strong%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strong "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.type-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field type-check "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.unbalanced%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unbalanced "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+-- %config.diagnostics.unused%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused "Error" | "Warning" | "Information" | "Hint" | "Fallback"|nil
+
+-- %config.diagnostics.neededFileStatus%
+---@class lsp.lua_ls.NeededFileStatus
+-- %config.diagnostics.ambiguity-1%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ambiguity-1 "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.assign-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field assign-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.await-in-sync%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field await-in-sync "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.cast-local-type%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cast-local-type "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.cast-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cast-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.circle-doc-class%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field circle-doc-class "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.close-non-object%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field close-non-object "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.code-after-break%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field code-after-break "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.codestyle-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codestyle-check "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.count-down-loop%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field count-down-loop "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.deprecated%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field deprecated "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.different-requires%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field different-requires "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.discard-returns%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field discard-returns "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.doc-field-no-class%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field doc-field-no-class "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.duplicate-doc-alias%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-doc-alias "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.duplicate-doc-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-doc-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.duplicate-doc-param%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-doc-param "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.duplicate-index%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-index "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.duplicate-set-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-set-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.empty-block%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field empty-block "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.global-element%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field global-element "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.global-in-nil-env%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field global-in-nil-env "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.incomplete-signature-doc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field incomplete-signature-doc "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.inject-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inject-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.invisible%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invisible "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.lowercase-global%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lowercase-global "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.missing-fields%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-fields "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.missing-global-doc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-global-doc "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.missing-local-export-doc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-local-export-doc "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.missing-parameter%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-parameter "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.missing-return%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-return "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.missing-return-value%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-return-value "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.name-style-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field name-style-check "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.need-check-nil%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field need-check-nil "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.newfield-call%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newfield-call "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.newline-call%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newline-call "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.no-unknown%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field no-unknown "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.not-yieldable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field not-yieldable "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.param-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field param-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.redefined-local%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redefined-local "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.redundant-parameter%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-parameter "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.redundant-return%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-return "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.redundant-return-value%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-return-value "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.redundant-value%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-value "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.return-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field return-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.spell-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field spell-check "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.trailing-space%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field trailing-space "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unbalanced-assignments%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unbalanced-assignments "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.undefined-doc-class%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-doc-class "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.undefined-doc-name%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-doc-name "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.undefined-doc-param%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-doc-param "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.undefined-env-child%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-env-child "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.undefined-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.undefined-global%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-global "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unknown-cast-variable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknown-cast-variable "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unknown-diag-code%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknown-diag-code "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unknown-operator%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknown-operator "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unreachable-code%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unreachable-code "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unused-function%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-function "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unused-label%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-label "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unused-local%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-local "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+-- %config.diagnostics.unused-vararg%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-vararg "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"|nil
+
+-- %config.diagnostics.severity%
+---@class lsp.lua_ls.Severity
+-- %config.diagnostics.ambiguity-1%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ambiguity-1 "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.assign-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field assign-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.await-in-sync%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field await-in-sync "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.cast-local-type%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cast-local-type "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.cast-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cast-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.circle-doc-class%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field circle-doc-class "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.close-non-object%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field close-non-object "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.code-after-break%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field code-after-break "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.codestyle-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codestyle-check "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.count-down-loop%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field count-down-loop "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.deprecated%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field deprecated "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.different-requires%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field different-requires "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.discard-returns%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field discard-returns "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.doc-field-no-class%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field doc-field-no-class "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.duplicate-doc-alias%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-doc-alias "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.duplicate-doc-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-doc-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.duplicate-doc-param%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-doc-param "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.duplicate-index%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-index "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.duplicate-set-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field duplicate-set-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.empty-block%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field empty-block "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.global-element%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field global-element "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.global-in-nil-env%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field global-in-nil-env "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.incomplete-signature-doc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field incomplete-signature-doc "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.inject-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inject-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.invisible%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invisible "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.lowercase-global%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lowercase-global "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.missing-fields%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-fields "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.missing-global-doc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-global-doc "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.missing-local-export-doc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-local-export-doc "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.missing-parameter%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-parameter "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.missing-return%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-return "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.missing-return-value%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field missing-return-value "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.name-style-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field name-style-check "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.need-check-nil%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field need-check-nil "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.newfield-call%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newfield-call "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.newline-call%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newline-call "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.no-unknown%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field no-unknown "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.not-yieldable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field not-yieldable "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.param-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field param-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.redefined-local%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redefined-local "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.redundant-parameter%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-parameter "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.redundant-return%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-return "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.redundant-return-value%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-return-value "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.redundant-value%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field redundant-value "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.return-type-mismatch%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field return-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.spell-check%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field spell-check "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.trailing-space%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field trailing-space "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unbalanced-assignments%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unbalanced-assignments "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.undefined-doc-class%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-doc-class "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.undefined-doc-name%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-doc-name "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.undefined-doc-param%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-doc-param "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.undefined-env-child%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-env-child "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.undefined-field%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.undefined-global%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field undefined-global "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unknown-cast-variable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknown-cast-variable "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unknown-diag-code%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknown-diag-code "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unknown-operator%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unknown-operator "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unreachable-code%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unreachable-code "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unused-function%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-function "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unused-label%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-label "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unused-local%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-local "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+-- %config.diagnostics.unused-vararg%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unused-vararg "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"|nil
+
+---@class lsp.lua_ls.Diagnostics
+-- %config.diagnostics.disable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disable string[]|nil
+-- %config.diagnostics.disableScheme%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disableScheme string[]|nil
+-- %config.diagnostics.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %config.diagnostics.globals%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globals string[]|nil
+-- %config.diagnostics.globalsRegex%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalsRegex string[]|nil
+-- %config.diagnostics.groupFileStatus%
+---@field groupFileStatus lsp.lua_ls.GroupFileStatus|nil
+-- %config.diagnostics.groupSeverity%
+---@field groupSeverity lsp.lua_ls.GroupSeverity|nil
+-- %config.diagnostics.ignoredFiles%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoredFiles "Enable" | "Opened" | "Disable"|nil
+-- %config.diagnostics.libraryFiles%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field libraryFiles "Enable" | "Opened" | "Disable"|nil
+-- %config.diagnostics.neededFileStatus%
+---@field neededFileStatus lsp.lua_ls.NeededFileStatus|nil
+-- %config.diagnostics.severity%
+---@field severity lsp.lua_ls.Severity|nil
+-- %config.diagnostics.unusedLocalExclude%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unusedLocalExclude string[]|nil
+-- %config.diagnostics.workspaceDelay%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspaceDelay integer|nil
+-- %config.diagnostics.workspaceEvent%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspaceEvent "OnChange" | "OnSave" | "None"|nil
+-- %config.diagnostics.workspaceRate%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspaceRate integer|nil
+
+---@class lsp.lua_ls.Doc
+-- %config.doc.packageName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field packageName string[]|nil
+-- %config.doc.privateName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field privateName string[]|nil
+-- %config.doc.protectedName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field protectedName string[]|nil
+-- %config.doc.regengine%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field regengine "glob" | "lua"|nil
+
+---@class lsp.lua_ls.Format
+-- %config.format.defaultConfig%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field defaultConfig table|nil
+-- %config.format.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.lua_ls.Hint
+-- %config.hint.arrayIndex%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field arrayIndex "Enable" | "Auto" | "Disable"|nil
+-- %config.hint.await%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field await boolean|nil
+-- %config.hint.awaitPropagate%
+---@field awaitPropagate boolean|nil
+-- %config.hint.enable%
+---@field enable boolean|nil
+-- %config.hint.paramName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field paramName "All" | "Literal" | "Disable"|nil
+-- %config.hint.paramType%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field paramType boolean|nil
+-- %config.hint.semicolon%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semicolon "All" | "SameLine" | "Disable"|nil
+-- %config.hint.setType%
+---@field setType boolean|nil
+
+---@class lsp.lua_ls.Hover
+-- %config.hover.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %config.hover.enumsLimit%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enumsLimit integer|nil
+-- %config.hover.expandAlias%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field expandAlias boolean|nil
+-- %config.hover.previewFields%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field previewFields integer|nil
+-- %config.hover.viewNumber%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field viewNumber boolean|nil
+-- %config.hover.viewString%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field viewString boolean|nil
+-- %config.hover.viewStringMax%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field viewStringMax integer|nil
+
+---@class lsp.lua_ls.Language
+-- %config.language.completeAnnotation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completeAnnotation boolean|nil
+-- %config.language.fixIndent%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fixIndent boolean|nil
+
+---@class lsp.lua_ls.Misc
+-- %config.misc.executablePath%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field executablePath string|nil
+-- %config.misc.parameters%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field parameters string[]|nil
+
+---@class lsp.lua_ls.NameStyle
+-- %config.nameStyle.config%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field config table|nil
+
+-- %config.runtime.builtin%
+---@class lsp.lua_ls.Builtin
+-- %config.runtime.builtin.basic%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field basic "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.bit%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field bit "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.bit32%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field bit32 "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.builtin%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field builtin "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.coroutine%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field coroutine "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.debug%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debug "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.ffi%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ffi "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.io%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field io "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.jit%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field jit "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.jit.profile%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field jit.profile "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.jit.util%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field jit.util "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.math%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field math "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.os%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field os "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.package%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field package "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.string%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field string "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.string.buffer%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field string.buffer "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.table%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field table "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.table.clear%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field table.clear "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.table.new%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field table.new "default" | "enable" | "disable"|nil
+-- %config.runtime.builtin.utf8%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field utf8 "default" | "enable" | "disable"|nil
+
+---@class lsp.lua_ls.Runtime
+-- %config.runtime.builtin%
+---@field builtin lsp.lua_ls.Builtin|nil
+-- %config.runtime.fileEncoding%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fileEncoding "utf8" | "ansi" | "utf16le" | "utf16be"|nil
+-- %config.runtime.meta%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field meta string|nil
+-- %config.runtime.nonstandardSymbol%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nonstandardSymbol string[]|nil
+-- %config.runtime.path%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string[]|nil
+-- %config.runtime.pathStrict%
+---@field pathStrict boolean|nil
+-- %config.runtime.plugin%
+---@field plugin string|any[]|nil
+-- %config.runtime.pluginArgs%
+---@field pluginArgs any[]|table|nil
+-- %config.runtime.special%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field special table|nil
+-- %config.runtime.unicodeName%
+---@field unicodeName boolean|nil
+-- %config.runtime.version%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field version "Lua 5.1" | "Lua 5.2" | "Lua 5.3" | "Lua 5.4" | "Lua 5.5" | "LuaJIT"|nil
+
+---@class lsp.lua_ls.Semantic
+-- %config.semantic.annotation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field annotation boolean|nil
+-- %config.semantic.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %config.semantic.keyword%
+---@field keyword boolean|nil
+-- %config.semantic.variable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field variable boolean|nil
+
+---@class lsp.lua_ls.SignatureHelp
+-- %config.signatureHelp.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.lua_ls.Spell
+-- %config.spell.dict%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dict string[]|nil
+
+---@class lsp.lua_ls.Type
+-- %config.type.castNumberToInteger%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field castNumberToInteger boolean|nil
+-- %config.type.checkTableShape%
+---@field checkTableShape boolean|nil
+-- %config.type.inferParamType%
+---@field inferParamType boolean|nil
+-- %config.type.inferTableSize%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inferTableSize integer|nil
+-- %config.type.maxUnionVariants%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxUnionVariants integer|nil
+-- %config.type.weakNilCheck%
+---@field weakNilCheck boolean|nil
+-- %config.type.weakUnionCheck%
+---@field weakUnionCheck boolean|nil
+
+-- %config.typeFormat.config%
+---@class lsp.lua_ls.Config
+-- %config.typeFormat.config.auto_complete_end%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field auto_complete_end string|nil
+-- %config.typeFormat.config.auto_complete_table_sep%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field auto_complete_table_sep string|nil
+-- %config.typeFormat.config.format_line%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field format_line string|nil
+
+---@class lsp.lua_ls.TypeFormat
+-- %config.typeFormat.config%
+---@field config lsp.lua_ls.Config|nil
+
+---@class lsp.lua_ls.Window
+-- %config.window.progressBar%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field progressBar boolean|nil
+-- %config.window.statusBar%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field statusBar boolean|nil
+
+---@class lsp.lua_ls.Workspace
+-- %config.workspace.checkThirdParty%
+---@field checkThirdParty string|boolean|nil
+-- %config.workspace.ignoreDir%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoreDir string[]|nil
+-- %config.workspace.ignoreSubmodules%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoreSubmodules boolean|nil
+-- %config.workspace.library%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field library string[]|nil
+-- %config.workspace.maxPreload%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxPreload integer|nil
+-- %config.workspace.preloadFileSize%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field preloadFileSize integer|nil
+-- %config.workspace.useGitIgnore%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useGitIgnore boolean|nil
+-- %config.workspace.userThirdParty%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field userThirdParty string[]|nil
+
+---@class lsp.lua_ls.Lua
+---@field addonManager lsp.lua_ls.AddonManager|nil
+-- %config.addonRepositoryPath%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addonRepositoryPath string|nil
+---@field codeLens lsp.lua_ls.CodeLens|nil
+---@field completion lsp.lua_ls.Completion|nil
+---@field diagnostics lsp.lua_ls.Diagnostics|nil
+---@field doc lsp.lua_ls.Doc|nil
+-- %config.docScriptPath%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field docScriptPath string|nil
+---@field format lsp.lua_ls.Format|nil
+---@field hint lsp.lua_ls.Hint|nil
+---@field hover lsp.lua_ls.Hover|nil
+---@field language lsp.lua_ls.Language|nil
+---@field misc lsp.lua_ls.Misc|nil
+---@field nameStyle lsp.lua_ls.NameStyle|nil
+---@field runtime lsp.lua_ls.Runtime|nil
+---@field semantic lsp.lua_ls.Semantic|nil
+---@field signatureHelp lsp.lua_ls.SignatureHelp|nil
+---@field spell lsp.lua_ls.Spell|nil
+---@field type lsp.lua_ls.Type|nil
+---@field typeFormat lsp.lua_ls.TypeFormat|nil
+---@field window lsp.lua_ls.Window|nil
+---@field workspace lsp.lua_ls.Workspace|nil
+
+---@class lsp.lua_ls
+---@field Lua lsp.lua_ls.Lua|nil
+
+---@class lsp.luau_lsp.Trace
+-- Traces the communication between VS Code and the Luau language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.luau_lsp.Luau
+---@field trace lsp.luau_lsp.Trace|nil
+
+---@class lsp.luau_lsp.Bytecode
+-- The `debugLevel` to use when compiling bytecode
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugLevel number|nil
+-- The `typeInfoLevel` to use when compiling bytecode
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeInfoLevel number|nil
+-- The `vectorCtor` to use when compiling bytecode
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vectorCtor string|nil
+-- The `vectorLib` to use when compiling bytecode
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vectorLib string|nil
+-- The `vectorType` to use when compiling bytecode
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vectorType string|nil
+
+---@class lsp.luau_lsp.StringRequires
+-- Whether to use string requires when auto-importing requires. Only checked if `#luau-lsp.platform.type#` is `roblox`
+---@field enabled boolean|nil
+
+---@class lsp.luau_lsp.Imports
+-- Suggest automatic imports in completion items
+---@field enabled boolean|nil
+-- Files that match these globs will not be shown during auto-import
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoreGlobs string[]|nil
+-- The style of requires when autocompleted
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field requireStyle "auto" | "alwaysRelative" | "alwaysAbsolute"|nil
+-- Whether services and requires should be separated by an empty line
+---@field separateGroupsWithLine boolean|nil
+---@field stringRequires lsp.luau_lsp.StringRequires|nil
+-- Whether module requires are suggested in autocomplete
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestRequires boolean|nil
+-- Whether GetService completions are suggested in autocomplete
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestServices boolean|nil
+
+---@class lsp.luau_lsp.Completion
+-- Add parentheses after completing a function call
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addParentheses boolean|nil
+-- If `#luau-lsp.completion.addParentheses#` is enabled, then include a tabstop after the parentheses for the cursor to move to
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addTabstopAfterParentheses boolean|nil
+-- Automatically insert an `end` when opening a block
+---@field autocompleteEnd boolean|nil
+-- Enables the experimental fragment autocomplete system for performance improvements
+---@field enableFragmentAutocomplete boolean|nil
+-- Enable autocomplete
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Fill parameter names in an autocompleted function call, which can be tabbed through. Requires `#luau-lsp.completion.addParentheses#` to be enabled
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fillCallArguments boolean|nil
+---@field imports lsp.luau_lsp.Imports|nil
+-- Whether to show non-function properties when performing a method call with a colon (e.g., `foo:bar`)
+---@field showPropertiesOnMethodCall boolean|nil
+-- Suggest automatic imports in completion items
+---@field suggestImports boolean|nil
+
+---@class lsp.luau_lsp.Diagnostics
+-- Recompute diagnostics for dependents when a file changes. If `#luau-lsp.diagnostics.workspace#` is enabled, this is ignored
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeDependents boolean|nil
+-- Whether to update document diagnostics whenever the text file changes
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pullOnChange boolean|nil
+-- Whether to update document diagnostics whenever the text file is saved
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pullOnSave boolean|nil
+-- Use strict DataModel types in diagnostics. When on, this is equivalent to the more expressive autocompletion types. When this is off, `game`/`script`/`workspace` (and their members) are all typed as `any`, and helps to prevent false positives. [Read More](https://github.com/JohnnyMorganz/luau-lsp/issues/83#issuecomment-1192865024)
+---@field strictDatamodelTypes boolean|nil
+-- Compute diagnostics for the whole workspace
+---@field workspace boolean|nil
+
+---@class lsp.luau_lsp.Fflags
+-- Enable all (boolean) Luau FFlags by default. These flags can later be overriden by `#luau-lsp.fflags.override#` and `#luau-lsp.fflags.sync#`
+---@field enableByDefault boolean|nil
+-- Enables the flags required for Luau's new type solver. These flags can be overriden by `#luau-lsp.fflags.override#`
+---@field enableNewSolver boolean|nil
+-- Override FFlags passed to Luau
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field override table|nil
+-- Sync currently enabled FFlags with Roblox's published FFlags.
+-- This currently only syncs FFlags which begin with 'Luau'
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sync boolean|nil
+
+---@class lsp.luau_lsp.Hover
+-- Enable hover
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Show string length when hovering over a string literal
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeStringLength boolean|nil
+-- Show function definitions on multiple lines
+---@field multilineFunctionDefinitions boolean|nil
+-- Show table kinds
+---@field showTableKinds boolean|nil
+-- Use strict DataModel types in hover display. When on, this is equivalent to autocompletion types. When off, this is equivalent to diagnostic types
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strictDatamodelTypes boolean|nil
+
+---@class lsp.luau_lsp.Index
+-- Whether all files in a workspace should be indexed into memory. If disabled, only limited support is available for features such as 'Find All References' and 'Rename'
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- The maximum amount of files that can be indexed. If more files are indexed, more memory is needed
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxFiles number|nil
+
+---@class lsp.luau_lsp.InlayHints
+-- Show inlay hints for function return types
+---@field functionReturnTypes boolean|nil
+-- Whether type hints should be hidden if they resolve to an error type
+---@field hideHintsForErrorTypes boolean|nil
+-- Whether type hints should be hidden if the resolved variable name matches the parameter name
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hideHintsForMatchingParameterNames boolean|nil
+-- Whether type annotation inlay hints can be made insertable by clicking
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field makeInsertable boolean|nil
+-- Show inlay hints for function parameter names
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field parameterNames "none" | "literals" | "all"|nil
+-- Show inlay hints for parameter types
+---@field parameterTypes boolean|nil
+-- The maximum length a type hint should be before being truncated
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeHintMaxLength number|nil
+-- Show inlay hints for variable types
+---@field variableTypes boolean|nil
+
+---@class lsp.luau_lsp.Platform
+-- Platform-specific support features
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field type "standard" | "roblox"|nil
+
+---@class lsp.luau_lsp.Plugin
+-- Use Roblox Studio Plugin to provide DataModel information
+---@field enabled boolean|nil
+-- The maximum request body size accepted from the plugin, in a string representation parse-able by the [bytes](https://www.npmjs.com/package/bytes) library
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maximumRequestBodySize string|nil
+-- Port number to connect to the Studio Plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field port number|nil
+
+---@class lsp.luau_lsp.Require
+-- A mapping of custom require string prefixes to directory paths. The aliases should include trailing slashes
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field directoryAliases table|nil
+-- A mapping of custom require string aliases to file paths
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fileAliases table|nil
+-- Use the old require-by-string semantics for init.luau resolution
+---@field useOriginalRequireByStringSemantics boolean|nil
+
+---@class lsp.luau_lsp.CrashReporting
+-- Upload crash reports to Sentry
+---@field enabled boolean|nil
+
+---@class lsp.luau_lsp.Server
+-- Type of communication channel to use for communicating with the server. Only useful for debug purposes
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field communicationChannel "stdio" | "pipe"|nil
+---@field crashReporting lsp.luau_lsp.CrashReporting|nil
+-- Make the server spin indefinitely when starting up to allow time to attach a debugger. Only useful for debug purposes
+---@field delayStartup boolean|nil
+-- Path to the Luau LSP server binary. If not provided, uses the binary included in the extension.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+
+---@class lsp.luau_lsp.SignatureHelp
+-- Enable signature help
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.luau_lsp.Sourcemap
+-- Automatically run the `rojo sourcemap` command to regenerate sourcemaps on changes
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autogenerate boolean|nil
+-- Whether Rojo sourcemap parsing is enabled
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- A command to run to generate the sourcemap. If not specified, defaults to `rojo`
+---@field generatorCommand string|nil
+-- Include non-script instances in the generated sourcemap
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeNonScripts boolean|nil
+-- Path to the Rojo executable. If not provided, attempts to run `rojo` in the workspace directory, so it must be available on the PATH
+---@field rojoPath string|nil
+-- The name of the Rojo project file to generate a sourcemap for.
+-- Only applies if `#luau-lsp.sourcemap.autogenerate#` is enabled
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field rojoProjectFile string|nil
+-- The name of the sourcemap file
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sourcemapFile string|nil
+-- Whether the VSCode filesystem watchers are used to regenerate the sourcemap. If disabled, delegates to the generator process. If using `rojo`, this command stops using `--watch`
+---@field useVSCodeWatcher boolean|nil
+
+---@class lsp.luau_lsp.Types
+-- A list of paths to definition files to load in to the type checker. Note that definition file syntax is currently unstable and may change at any time
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field definitionFiles string[]|nil
+-- A list of globals to remove from the global scope. Accepts full libraries or particular functions (e.g., `table` or `table.clone`)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disabledGlobals string[]|nil
+-- A list of paths to documentation files which provide documentation support to the definition files provided
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentationFiles string[]|nil
+-- Load in and automatically update Roblox type definitions for the type checker
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field roblox boolean|nil
+-- Security Level to use in the Roblox API definitions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field robloxSecurityLevel "None" | "LocalUserSecurity" | "PluginSecurity" | "RobloxScriptSecurity"|nil
+
+---@class lsp.luau_lsp.Luau-lsp
+-- Automatically insert an `end` when opening a block
+---@field autocompleteEnd boolean|nil
+---@field bytecode lsp.luau_lsp.Bytecode|nil
+---@field completion lsp.luau_lsp.Completion|nil
+---@field diagnostics lsp.luau_lsp.Diagnostics|nil
+---@field fflags lsp.luau_lsp.Fflags|nil
+---@field hover lsp.luau_lsp.Hover|nil
+-- Diagnostics will not be reported for any file matching these globs unless the file is currently open
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoreGlobs string[]|nil
+---@field index lsp.luau_lsp.Index|nil
+---@field inlayHints lsp.luau_lsp.InlayHints|nil
+---@field platform lsp.luau_lsp.Platform|nil
+---@field plugin lsp.luau_lsp.Plugin|nil
+---@field require lsp.luau_lsp.Require|nil
+---@field server lsp.luau_lsp.Server|nil
+---@field signatureHelp lsp.luau_lsp.SignatureHelp|nil
+---@field sourcemap lsp.luau_lsp.Sourcemap|nil
+---@field types lsp.luau_lsp.Types|nil
+
+---@class lsp.luau_lsp
+---@field luau lsp.luau_lsp.Luau|nil
+---@field luau-lsp lsp.luau_lsp.Luau-lsp|nil
+
+---@class lsp.omnisharp.ExpressionEvaluationOptions
+-- %generateOptionsSchema.expressionEvaluationOptions.allowFastEvaluate.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field allowFastEvaluate boolean|nil
+-- %generateOptionsSchema.expressionEvaluationOptions.allowImplicitFuncEval.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field allowImplicitFuncEval boolean|nil
+-- %generateOptionsSchema.expressionEvaluationOptions.allowToString.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field allowToString boolean|nil
+-- %generateOptionsSchema.expressionEvaluationOptions.showRawValues.description%
+---@field showRawValues boolean|nil
+
+---@class lsp.omnisharp.DiagnosticsLog
+-- %generateOptionsSchema.logging.diagnosticsLog.debugEngineAPITracing.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugEngineAPITracing "none" | "error" | "all"|nil
+-- %generateOptionsSchema.logging.diagnosticsLog.debugRuntimeEventTracing.markdownDescription%
+---@field debugRuntimeEventTracing boolean|nil
+-- %generateOptionsSchema.logging.diagnosticsLog.dispatcherMessages.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dispatcherMessages "none" | "error" | "important" | "normal"|nil
+-- %generateOptionsSchema.logging.diagnosticsLog.expressionEvaluationTracing.markdownDescription%
+---@field expressionEvaluationTracing boolean|nil
+-- %generateOptionsSchema.logging.diagnosticsLog.protocolMessages.markdownDescription%
+---@field protocolMessages boolean|nil
+-- %generateOptionsSchema.logging.diagnosticsLog.startDebuggingTracing.markdownDescription%
+---@field startDebuggingTracing boolean|nil
+
+---@class lsp.omnisharp.Logging
+-- %generateOptionsSchema.logging.browserStdOut.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field browserStdOut boolean|nil
+-- %generateOptionsSchema.logging.consoleUsageMessage.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field consoleUsageMessage boolean|nil
+---@field diagnosticsLog lsp.omnisharp.DiagnosticsLog|nil
+-- %generateOptionsSchema.logging.elapsedTiming.markdownDescription%
+---@field elapsedTiming boolean|nil
+---@field engineLogging boolean|nil
+-- %generateOptionsSchema.logging.exceptions.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exceptions boolean|nil
+-- %generateOptionsSchema.logging.moduleLoad.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field moduleLoad boolean|nil
+-- %generateOptionsSchema.logging.processExit.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field processExit boolean|nil
+-- %generateOptionsSchema.logging.programOutput.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field programOutput boolean|nil
+-- %generateOptionsSchema.logging.threadExit.markdownDescription%
+---@field threadExit boolean|nil
+
+---@class lsp.omnisharp.ModuleFilter
+-- %generateOptionsSchema.symbolOptions.moduleFilter.excludedModules.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludedModules string[]|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsNextToModules.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeSymbolsNextToModules boolean|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsOnDemand.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeSymbolsOnDemand boolean|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.includedModules.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includedModules string[]|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.mode.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mode "loadAllButExcluded" | "loadOnlyIncluded"|nil
+
+---@class lsp.omnisharp.SymbolOptions
+-- %generateOptionsSchema.symbolOptions.cachePath.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cachePath string|nil
+---@field moduleFilter lsp.omnisharp.ModuleFilter|nil
+-- %generateOptionsSchema.symbolOptions.searchMicrosoftSymbolServer.description%
+---@field searchMicrosoftSymbolServer boolean|nil
+-- %generateOptionsSchema.symbolOptions.searchNuGetOrgSymbolServer.description%
+---@field searchNuGetOrgSymbolServer boolean|nil
+-- %generateOptionsSchema.symbolOptions.searchPaths.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field searchPaths string[]|nil
+
+---@class lsp.omnisharp.Debug
+-- %generateOptionsSchema.console.settingsDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field console "internalConsole" | "integratedTerminal" | "externalTerminal"|nil
+-- %generateOptionsSchema.enableStepFiltering.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableStepFiltering boolean|nil
+---@field expressionEvaluationOptions lsp.omnisharp.ExpressionEvaluationOptions|nil
+-- %generateOptionsSchema.justMyCode.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field justMyCode boolean|nil
+---@field logging lsp.omnisharp.Logging|nil
+-- %generateOptionsSchema.requireExactSource.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field requireExactSource boolean|nil
+-- %generateOptionsSchema.sourceFileMap.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sourceFileMap table|nil
+-- %generateOptionsSchema.stopAtEntry.markdownDescription%
+---@field stopAtEntry boolean|nil
+-- %generateOptionsSchema.suppressJITOptimizations.markdownDescription%
+---@field suppressJITOptimizations boolean|nil
+---@field symbolOptions lsp.omnisharp.SymbolOptions|nil
+
+---@class lsp.omnisharp.Format
+-- %configuration.omnisharp.csharp.format.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.omnisharp.InlayHints
+-- %configuration.csharp.inlayHints.enableInlayHintsForImplicitObjectCreation%
+---@field enableInlayHintsForImplicitObjectCreation boolean|nil
+-- %configuration.csharp.inlayHints.enableInlayHintsForImplicitVariableTypes%
+---@field enableInlayHintsForImplicitVariableTypes boolean|nil
+-- %configuration.csharp.inlayHints.enableInlayHintsForLambdaParameterTypes%
+---@field enableInlayHintsForLambdaParameterTypes boolean|nil
+-- %configuration.csharp.inlayHints.enableInlayHintsForTypes%
+---@field enableInlayHintsForTypes boolean|nil
+
+---@class lsp.omnisharp.ReferencesCodeLens
+-- %configuration.omnisharp.csharp.referencesCodeLens.filteredSymbols%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field filteredSymbols string[]|nil
+
+---@class lsp.omnisharp.SemanticHighlighting
+-- %configuration.omnisharp.csharp.semanticHighlighting.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.omnisharp.Csharp
+---@field debug lsp.omnisharp.Debug|nil
+---@field format lsp.omnisharp.Format|nil
+---@field inlayHints lsp.omnisharp.InlayHints|nil
+-- %configuration.omnisharp.csharp.maxProjectFileCountForDiagnosticAnalysis%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxProjectFileCountForDiagnosticAnalysis number|nil
+---@field referencesCodeLens lsp.omnisharp.ReferencesCodeLens|nil
+---@field semanticHighlighting lsp.omnisharp.SemanticHighlighting|nil
+-- %configuration.omnisharp.csharp.showOmnisharpLogOnError%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showOmnisharpLogOnError boolean|nil
+-- %configuration.omnisharp.csharp.suppressBuildAssetsNotification%
+---@field suppressBuildAssetsNotification boolean|nil
+-- %configuration.omnisharp.csharp.suppressDotnetInstallWarning%
+---@field suppressDotnetInstallWarning boolean|nil
+-- %configuration.omnisharp.csharp.suppressDotnetRestoreNotification%
+---@field suppressDotnetRestoreNotification boolean|nil
+-- %configuration.omnisharp.csharp.suppressHiddenDiagnostics%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressHiddenDiagnostics boolean|nil
+-- %configuration.omnisharp.csharp.suppressProjectJsonWarning%
+---@field suppressProjectJsonWarning boolean|nil
+
+---@class lsp.omnisharp.AutoInsert
+-- %configuration.dotnet.autoInsert.enableAutoInsert%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableAutoInsert boolean|nil
+
+---@class lsp.omnisharp.BackgroundAnalysis
+-- %configuration.dotnet.backgroundAnalysis.analyzerDiagnosticsScope%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analyzerDiagnosticsScope "openFiles" | "fullSolution" | "none"|nil
+-- %configuration.dotnet.backgroundAnalysis.compilerDiagnosticsScope%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compilerDiagnosticsScope "openFiles" | "fullSolution" | "none"|nil
+
+---@class lsp.omnisharp.CodeLens
+-- %configuration.dotnet.codeLens.enableReferencesCodeLens%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableReferencesCodeLens boolean|nil
+-- %configuration.dotnet.codeLens.enableTestsCodeLens%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableTestsCodeLens boolean|nil
+
+---@class lsp.omnisharp.Completion
+-- %configuration.dotnet.completion.provideRegexCompletions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field provideRegexCompletions boolean|nil
+-- %configuration.dotnet.completion.showCompletionItemsFromUnimportedNamespaces%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showCompletionItemsFromUnimportedNamespaces boolean|nil
+-- %configuration.dotnet.completion.showNameCompletionSuggestions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showNameCompletionSuggestions boolean|nil
+-- %configuration.dotnet.completion.triggerCompletionInArgumentLists%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field triggerCompletionInArgumentLists boolean|nil
+
+---@class lsp.omnisharp.Diagnostics
+-- %configuration.dotnet.diagnostics.reportInformationAsHint%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInformationAsHint boolean|nil
+
+---@class lsp.omnisharp.Formatting
+-- %configuration.dotnet.formatting.organizeImportsOnFormat%
+---@field organizeImportsOnFormat boolean|nil
+
+---@class lsp.omnisharp.Highlighting
+-- %configuration.dotnet.highlighting.highlightRelatedJsonComponents%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field highlightRelatedJsonComponents boolean|nil
+-- %configuration.dotnet.highlighting.highlightRelatedRegexComponents%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field highlightRelatedRegexComponents boolean|nil
+
+---@class lsp.omnisharp.InlayHints
+-- %configuration.csharp.inlayHints.enableInlayHintsForIndexerParameters%
+---@field enableInlayHintsForIndexerParameters boolean|nil
+-- %configuration.dotnet.inlayHints.enableInlayHintsForLiteralParameters%
+---@field enableInlayHintsForLiteralParameters boolean|nil
+-- %configuration.dotnet.inlayHints.enableInlayHintsForObjectCreationParameters%
+---@field enableInlayHintsForObjectCreationParameters boolean|nil
+-- %configuration.dotnet.inlayHints.enableInlayHintsForOtherParameters%
+---@field enableInlayHintsForOtherParameters boolean|nil
+-- %configuration.dotnet.inlayHints.enableInlayHintsForParameters%
+---@field enableInlayHintsForParameters boolean|nil
+-- %configuration.dotnet.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix%
+---@field suppressInlayHintsForParametersThatDifferOnlyBySuffix boolean|nil
+-- %configuration.dotnet.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName%
+---@field suppressInlayHintsForParametersThatMatchArgumentName boolean|nil
+-- %configuration.dotnet.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent%
+---@field suppressInlayHintsForParametersThatMatchMethodIntent boolean|nil
+
+---@class lsp.omnisharp.Navigation
+-- %configuration.dotnet.navigation.navigateToDecompiledSources%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field navigateToDecompiledSources boolean|nil
+-- %configuration.dotnet.navigation.navigateToSourceLinkAndEmbeddedSources%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field navigateToSourceLinkAndEmbeddedSources boolean|nil
+
+---@class lsp.omnisharp.Projects
+-- %configuration.dotnet.projects.binaryLogPath%
+---@field binaryLogPath string|nil
+-- %configuration.dotnet.projects.enableAutomaticRestore%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableAutomaticRestore boolean|nil
+-- %configuration.dotnet.projects.enableFileBasedPrograms%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableFileBasedPrograms boolean|nil
+
+---@class lsp.omnisharp.QuickInfo
+-- %configuration.dotnet.quickInfo.showRemarksInQuickInfo%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showRemarksInQuickInfo boolean|nil
+
+-- %configuration.dotnet.server.componentPaths%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.omnisharp.ComponentPaths
+-- %configuration.dotnet.server.componentPaths.razorDevKit%
+---@field razorDevKit string|nil
+-- %configuration.dotnet.server.componentPaths.razorExtension%
+---@field razorExtension string|nil
+-- %configuration.dotnet.server.componentPaths.roslynCopilot%
+---@field roslynCopilot string|nil
+-- %configuration.dotnet.server.componentPaths.roslynDevKit%
+---@field roslynDevKit string|nil
+-- %configuration.dotnet.server.componentPaths.xamlTools%
+---@field xamlTools string|nil
+
+---@class lsp.omnisharp.Server
+-- %configuration.dotnet.server.componentPaths%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field componentPaths lsp.omnisharp.ComponentPaths|nil
+-- %configuration.dotnet.server.crashDumpPath%
+---@field crashDumpPath string|nil
+-- %configuration.dotnet.server.extensionPaths%
+---@field extensionPaths string[]|nil
+-- %configuration.dotnet.server.path%
+---@field path string|nil
+-- %configuration.dotnet.server.startTimeout%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field startTimeout number|nil
+-- %configuration.dotnet.server.suppressLspErrorToasts%
+---@field suppressLspErrorToasts boolean|nil
+-- %configuration.dotnet.server.suppressMiscellaneousFilesToasts%
+---@field suppressMiscellaneousFilesToasts boolean|nil
+-- %configuration.omnisharp.dotnet.server.useOmnisharp%
+---@field useOmnisharp boolean|nil
+-- %configuration.dotnet.server.useServerGC%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useServerGC boolean|nil
+-- %configuration.dotnet.server.waitForDebugger%
+---@field waitForDebugger boolean|nil
+
+---@class lsp.omnisharp.SymbolSearch
+-- %configuration.dotnet.symbolSearch.searchReferenceAssemblies%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field searchReferenceAssemblies boolean|nil
+
+---@class lsp.omnisharp.TypeMembers
+-- %configuration.dotnet.typeMembers.memberInsertionLocation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field memberInsertionLocation "withOtherMembersOfTheSameKind" | "atTheEnd"|nil
+-- %configuration.dotnet.typeMembers.propertyGenerationBehavior%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field propertyGenerationBehavior "preferThrowingProperties" | "preferAutoProperties"|nil
+
+-- %generateOptionsSchema.expressionEvaluationOptions.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.omnisharp.ExpressionEvaluationOptions
+-- %generateOptionsSchema.expressionEvaluationOptions.allowFastEvaluate.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field allowFastEvaluate boolean|nil
+-- %generateOptionsSchema.expressionEvaluationOptions.allowImplicitFuncEval.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field allowImplicitFuncEval boolean|nil
+-- %generateOptionsSchema.expressionEvaluationOptions.allowToString.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field allowToString boolean|nil
+-- %generateOptionsSchema.expressionEvaluationOptions.showRawValues.description%
+---@field showRawValues boolean|nil
+
+-- %generateOptionsSchema.logging.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.omnisharp.Logging
+-- %generateOptionsSchema.logging.exceptions.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exceptions boolean|nil
+-- %generateOptionsSchema.logging.moduleLoad.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field moduleLoad boolean|nil
+-- %generateOptionsSchema.logging.processExit.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field processExit boolean|nil
+-- %generateOptionsSchema.logging.programOutput.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field programOutput boolean|nil
+-- %generateOptionsSchema.logging.threadExit.markdownDescription%
+---@field threadExit boolean|nil
+
+-- %generateOptionsSchema.symbolOptions.moduleFilter.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.omnisharp.ModuleFilter
+-- %generateOptionsSchema.symbolOptions.moduleFilter.excludedModules.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludedModules string[]|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsNextToModules.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeSymbolsNextToModules boolean|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsOnDemand.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeSymbolsOnDemand boolean|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.includedModules.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includedModules string[]|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.mode.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mode "loadAllButExcluded" | "loadOnlyIncluded"|nil
+
+-- %generateOptionsSchema.symbolOptions.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.omnisharp.SymbolOptions
+-- %generateOptionsSchema.symbolOptions.cachePath.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cachePath string|nil
+-- %generateOptionsSchema.symbolOptions.moduleFilter.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field moduleFilter lsp.omnisharp.ModuleFilter|nil
+-- %generateOptionsSchema.symbolOptions.searchMicrosoftSymbolServer.description%
+---@field searchMicrosoftSymbolServer boolean|nil
+-- %generateOptionsSchema.symbolOptions.searchNuGetOrgSymbolServer.description%
+---@field searchNuGetOrgSymbolServer boolean|nil
+-- %generateOptionsSchema.symbolOptions.searchPaths.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field searchPaths string[]|nil
+
+-- %configuration.dotnet.unitTestDebuggingOptions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.omnisharp.UnitTestDebuggingOptions
+-- %generateOptionsSchema.debugServer.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugServer number|nil
+-- %generateOptionsSchema.enableStepFiltering.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableStepFiltering boolean|nil
+-- %generateOptionsSchema.expressionEvaluationOptions.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field expressionEvaluationOptions lsp.omnisharp.ExpressionEvaluationOptions|nil
+-- %generateOptionsSchema.justMyCode.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field justMyCode boolean|nil
+-- %generateOptionsSchema.logging.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logging lsp.omnisharp.Logging|nil
+-- %generateOptionsSchema.requireExactSource.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field requireExactSource boolean|nil
+-- %generateOptionsSchema.sourceFileMap.markdownDescription%
+---@field sourceFileMap table|nil
+-- %generateOptionsSchema.sourceLinkOptions.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sourceLinkOptions table|nil
+-- %generateOptionsSchema.suppressJITOptimizations.markdownDescription%
+---@field suppressJITOptimizations boolean|nil
+-- %generateOptionsSchema.symbolOptions.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field symbolOptions lsp.omnisharp.SymbolOptions|nil
+-- %generateOptionsSchema.targetArchitecture.markdownDescription%
+---@field targetArchitecture "x86_64" | "arm64"|nil
+-- %generateOptionsSchema.type.markdownDescription%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field type "coreclr" | "clr"|nil
+
+---@class lsp.omnisharp.UnitTests
+-- %configuration.dotnet.unitTests.runSettingsPath%
+---@field runSettingsPath string|nil
+
+---@class lsp.omnisharp.Dotnet
+---@field autoInsert lsp.omnisharp.AutoInsert|nil
+---@field backgroundAnalysis lsp.omnisharp.BackgroundAnalysis|nil
+---@field codeLens lsp.omnisharp.CodeLens|nil
+---@field completion lsp.omnisharp.Completion|nil
+-- %configuration.dotnet.defaultSolution.description%
+---@field defaultSolution string|nil
+---@field diagnostics lsp.omnisharp.Diagnostics|nil
+-- %configuration.dotnet.enableXamlTools%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableXamlTools boolean|nil
+---@field formatting lsp.omnisharp.Formatting|nil
+---@field highlighting lsp.omnisharp.Highlighting|nil
+---@field inlayHints lsp.omnisharp.InlayHints|nil
+---@field navigation lsp.omnisharp.Navigation|nil
+-- %configuration.dotnet.preferCSharpExtension%
+---@field preferCSharpExtension boolean|nil
+---@field projects lsp.omnisharp.Projects|nil
+---@field quickInfo lsp.omnisharp.QuickInfo|nil
+---@field server lsp.omnisharp.Server|nil
+---@field symbolSearch lsp.omnisharp.SymbolSearch|nil
+---@field typeMembers lsp.omnisharp.TypeMembers|nil
+-- %configuration.dotnet.unitTestDebuggingOptions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unitTestDebuggingOptions lsp.omnisharp.UnitTestDebuggingOptions|nil
+---@field unitTests lsp.omnisharp.UnitTests|nil
+
+---@class lsp.omnisharp.Omnisharp
+-- %configuration.omnisharp.autoStart%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoStart boolean|nil
+-- %configuration.omnisharp.disableMSBuildDiagnosticWarning%
+---@field disableMSBuildDiagnosticWarning boolean|nil
+-- %configuration.omnisharp.dotNetCliPaths%
+---@field dotNetCliPaths string[]|nil
+-- %configuration.omnisharp.dotnetPath%
+---@field dotnetPath string|nil
+-- %configuration.omnisharp.enableAsyncCompletion%
+---@field enableAsyncCompletion boolean|nil
+-- %configuration.omnisharp.enableDecompilationSupport%
+---@field enableDecompilationSupport boolean|nil
+-- %configuration.omnisharp.enableEditorConfigSupport%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableEditorConfigSupport boolean|nil
+-- %configuration.omnisharp.enableLspDriver%
+---@field enableLspDriver boolean|nil
+-- %configuration.omnisharp.enableMsBuildLoadProjectsOnDemand%
+---@field enableMsBuildLoadProjectsOnDemand boolean|nil
+-- %configuration.omnisharp.loggingLevel%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field loggingLevel "trace" | "debug" | "information" | "warning" | "error" | "critical"|nil
+-- %configuration.omnisharp.maxFindSymbolsItems%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxFindSymbolsItems number|nil
+-- %configuration.omnisharp.maxProjectResults%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxProjectResults number|nil
+-- %configuration.omnisharp.minFindSymbolsFilterLength%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field minFindSymbolsFilterLength number|nil
+-- %configuration.omnisharp.monoPath%
+---@field monoPath string|nil
+-- %configuration.omnisharp.projectFilesExcludePattern%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field projectFilesExcludePattern string|nil
+-- %configuration.omnisharp.projectLoadTimeout%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field projectLoadTimeout number|nil
+-- %configuration.omnisharp.sdkIncludePrereleases%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sdkIncludePrereleases boolean|nil
+-- %configuration.omnisharp.sdkPath%
+---@field sdkPath string|nil
+-- %configuration.omnisharp.sdkVersion%
+---@field sdkVersion string|nil
+-- %configuration.omnisharp.useEditorFormattingSettings%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useEditorFormattingSettings boolean|nil
+-- %configuration.omnisharp.useModernNet.description%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useModernNet boolean|nil
+
+---@class lsp.omnisharp.Completion
+-- %configuration.omnisharp.razor.completion.commitElementsWithSpace%
+---@field commitElementsWithSpace boolean|nil
+
+---@class lsp.omnisharp.Format
+-- %configuration.omnisharp.razor.format.codeBlockBraceOnNextLine%
+---@field codeBlockBraceOnNextLine boolean|nil
+-- %configuration.omnisharp.razor.format.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.omnisharp.LanguageServer
+-- %configuration.razor.languageServer.cohostingEnabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cohostingEnabled boolean|nil
+-- %configuration.razor.languageServer.debug%
+---@field debug boolean|nil
+-- %configuration.razor.languageServer.directory%
+---@field directory string|nil
+-- %configuration.razor.languageServer.suppressLspErrorToasts%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressLspErrorToasts boolean|nil
+
+---@class lsp.omnisharp.Plugin
+-- %configuration.omnisharp.razor.plugin.path%
+---@field path string|nil
+
+---@class lsp.omnisharp.Razor
+---@field completion lsp.omnisharp.Completion|nil
+-- %configuration.omnisharp.razor.devmode%
+---@field devmode boolean|nil
+---@field format lsp.omnisharp.Format|nil
+---@field languageServer lsp.omnisharp.LanguageServer|nil
+---@field plugin lsp.omnisharp.Plugin|nil
+
+---@class lsp.omnisharp
+---@field csharp lsp.omnisharp.Csharp|nil
+---@field dotnet lsp.omnisharp.Dotnet|nil
+---@field omnisharp lsp.omnisharp.Omnisharp|nil
+---@field razor lsp.omnisharp.Razor|nil
+
+---@class lsp.perlls.Perl
+-- directory for caching of parsed symbols, if the directory does not exists, it will be created, defaults to ${workspace}/.vscode/perl-lang. This should be one unqiue directory per project and an absolute path.
+---@field cacheDir string|nil
+-- arguments for containerCmd. Varies depending on containerCmd.
+---@field containerArgs any[]|nil
+-- If set Perl::LanguageServer can run inside a container. Options are: 'docker', 'docker-compose', 'podman', 'kubectl'
+---@field containerCmd string|nil
+-- To start a new container, set to 'run', to execute inside an existing container set to 'exec'. Note: kubectl only supports 'exec'
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field containerMode string|nil
+-- Image to start or container to exec inside or pod to use
+---@field containerName string|nil
+-- port to use for connection between vscode and debug adapter inside Perl::LanguageServer. On a multi user system every user must use a different port.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugAdapterPort integer|nil
+-- if debugAdapterPort is in use try ports from debugAdapterPort to debugAdapterPort + debugAdapterPortRange. Default 100.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugAdapterPortRange integer|nil
+-- if true, the LanguageServer will not cache the result of parsing source files on disk, so it can be used within readonly directories
+---@field disableCache boolean|nil
+-- per default enviroment from vscode will be passed to debuggee, syntax check and perltidy. If set to true, no enviroment variables will be passed.
+---@field disablePassEnv boolean|nil
+-- enable/disable this extension
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- object with environment settings for command that starts the LanguageServer, e.g. can be used to set KUBECONFIG.
+---@field env table|nil
+-- array for filtering perl file, defaults to *.pm|*.pl
+---@field fileFilter any[]|nil
+-- directories to ignore, defaults to .vscode, .git, .svn
+---@field ignoreDirs any[]|nil
+-- If set, log output is written to the given logfile, instead of displaying it in the vscode output pane. Log output is always appended so you are responsible for rotating the file.
+---@field logFile string|nil
+-- Log level 0-2
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel integer|nil
+-- mapping of local to remote paths
+---@field pathMap any[]|nil
+-- defaults to perl
+---@field perlCmd string|nil
+-- array with paths to add to perl library path. This setting is used by the syntax checker and for the debuggee and also for the LanguageServer itself. perl.perlInc should be absolute paths.
+---@field perlInc any[]|nil
+-- if true, show also local variables in symbol view
+---@field showLocalVars boolean|nil
+-- ip address of remote system
+---@field sshAddr string|nil
+-- optional arguments for ssh
+---@field sshArgs any[]|nil
+-- defaults to ssh on unix and plink on windows
+---@field sshCmd string|nil
+-- optional, port for ssh to remote system
+---@field sshPort string|nil
+-- user for ssh login
+---@field sshUser string|nil
+-- path of the workspace root on remote system
+---@field sshWorkspaceRoot string|nil
+-- Use -T for syntax check.
+---@field useTaintForSyntaxCheck boolean|nil
+
+---@class lsp.perlls
+---@field perl lsp.perlls.Perl|nil
+
+---@class lsp.perlnavigator.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.perlnavigator.Perlnavigator
+-- Enable warnings using -Mwarnings command switch
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableWarnings boolean|nil
+-- Boolean to indicate if $project/lib should be added to the path by default
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeLib boolean|nil
+-- Array of paths added to @INC. You can use $workspaceFolder as a placeholder.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includePaths any[]|nil
+-- Log to stdout from the navigator. Viewable in the Perl Navigator LSP log
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logging boolean|nil
+-- Enable running perl -c on your code
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlCompileEnabled boolean|nil
+-- Pass environment variables to the perl executable. Skipped if undefined.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlEnv table|nil
+-- Add environment variables to current environment, or totally replace (perlEnv related).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlEnvAdd boolean|nil
+-- Pass miscellaneous command line arguments to pass to the perl executable
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlParams any[]|nil
+-- Full path to the perl executable (no aliases, .bat files or ~/)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlPath string|nil
+-- Enable perl critic.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlcriticEnabled boolean|nil
+-- Regex pattern with policies to exclude for perl critic (normally in profile)
+---@field perlcriticExclude string|nil
+-- Regex pattern with policies to include for perl critic (normally in profile)
+---@field perlcriticInclude string|nil
+-- Format for Perl::Critic messages. Use %e to include policy explanations
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlcriticMessageFormat string|nil
+-- Path to perl critic profile. Otherwise perlcritic itself will default to ~/.perlcriticrc. (no aliases, .bat files or ~/)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlcriticProfile string|nil
+-- Override severity level for perl critic (normally in profile)
+---@field perlcriticSeverity number|nil
+-- Override theme for perl critic (normally in profile)
+---@field perlcriticTheme string|nil
+-- Enable perlimports as a linter.
+---@field perlimportsLintEnabled boolean|nil
+-- Path to perlimports.toml (no aliases, .bat files or ~/)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlimportsProfile string|nil
+-- Enable perlimports as a tidier.
+---@field perlimportsTidyEnabled boolean|nil
+-- Enable perl tidy.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perltidyEnabled boolean|nil
+-- Path to perl tidy profile (no aliases, .bat files or ~/)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perltidyProfile string|nil
+-- Editor Diagnostic severity level for Critic severity 1
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field severity1 "error" | "warning" | "info" | "hint" | "none"|nil
+-- Editor Diagnostic severity level for Critic severity 2
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field severity2 "error" | "warning" | "info" | "hint" | "none"|nil
+-- Editor Diagnostic severity level for Critic severity 3
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field severity3 "error" | "warning" | "info" | "hint" | "none"|nil
+-- Editor Diagnostic severity level for Critic severity 4
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field severity4 "error" | "warning" | "info" | "hint" | "none"|nil
+-- Editor Diagnostic severity level for Critic severity 5
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field severity5 "error" | "warning" | "info" | "hint" | "none"|nil
+---@field trace lsp.perlnavigator.Trace|nil
+
+---@class lsp.perlnavigator
+---@field perlnavigator lsp.perlnavigator.Perlnavigator|nil
+
+---@class lsp.perlpls.Perlcritic
+-- Enable perlcritic
+---@field enabled boolean|nil
+-- Path to .perlcriticrc
+---@field perlcriticrc string|nil
+
+---@class lsp.perlpls.Syntax
+-- Enable syntax checking
+---@field enabled boolean|nil
+-- Path to the perl binary to use for syntax checking
+---@field perl string|nil
+
+---@class lsp.perlpls.Perl
+-- Current working directory to use
+---@field cwd string|nil
+-- Paths to add to @INC.
+---@field inc any[]|nil
+---@field perlcritic lsp.perlpls.Perlcritic|nil
+-- Path to .perltidyrc
+---@field perltidyrc string|nil
+-- Path to the pls executable script
+---@field pls string|nil
+-- Arguments to pass to the pls command
+---@field plsargs any[]|nil
+---@field syntax lsp.perlpls.Syntax|nil
+
+---@class lsp.perlpls.Perlcritic
+-- Enable perlcritic
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Path to .perlcriticrc
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perlcriticrc string|nil
+
+---@class lsp.perlpls.Perltidy
+-- Path to .perltidyrc
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perltidyrc string|nil
+
+---@class lsp.perlpls.Podchecker
+-- Enable podchecker (requires Pod::Checker to be installed)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.perlpls.Syntax
+-- Additional arguments to pass when syntax checking. This is useful if there is a BEGIN block in your code that changes behavior depending on the contents of @ARGV.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args any[]|nil
+-- Enable syntax checking
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Path to the perl binary to use for syntax checking
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perl string|nil
+
+---@class lsp.perlpls.Pls
+-- Arguments to pass to the pls command
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args any[]|nil
+-- Path to the pls executable script
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cmd string|nil
+-- Current working directory to use
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cwd string|nil
+-- Paths to add to @INC.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inc any[]|nil
+---@field perlcritic lsp.perlpls.Perlcritic|nil
+---@field perltidy lsp.perlpls.Perltidy|nil
+---@field podchecker lsp.perlpls.Podchecker|nil
+---@field syntax lsp.perlpls.Syntax|nil
+
+---@class lsp.perlpls
+---@field perl lsp.perlpls.Perl|nil
+---@field pls lsp.perlpls.Pls|nil
+
+---@class lsp.powershell_es.BugReporting
+-- **Deprecated:** Specifies the URL of the GitHub project in which to generate bug reports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field project string|nil
+
+---@class lsp.powershell_es.Buttons
+-- Show buttons in the editor's title bar for moving the terminals pane (with the PowerShell Extension Terminal) around.
+---@field showPanelMovementButtons boolean|nil
+-- Show the `Run` and `Run Selection` buttons in the editor's title bar.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showRunButtons boolean|nil
+
+---@class lsp.powershell_es.CodeFolding
+-- Enables syntax based code folding. When disabled, the default indentation based code folding is used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Shows the last line of a folded section similar to the default VS Code folding style. When disabled, the entire folded region is hidden.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showLastLine boolean|nil
+
+---@class lsp.powershell_es.CodeFormatting
+-- Adds a space before and after the pipeline operator (`|`) if it is missing.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addWhitespaceAroundPipe boolean|nil
+-- Align assignment statements in a hashtable or a DSC Configuration.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field alignPropertyValuePairs boolean|nil
+-- Replaces aliases with their aliased name.
+---@field autoCorrectAliases boolean|nil
+-- Removes redundant semicolon(s) at the end of a line where a line terminator is sufficient.
+---@field avoidSemicolonsAsLineTerminators boolean|nil
+-- Does not reformat one-line code blocks, such as: `if (...) {...} else {...}`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoreOneLineBlock boolean|nil
+-- Adds a newline (line break) after a closing brace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newLineAfterCloseBrace boolean|nil
+-- Adds a newline (line break) after an open brace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field newLineAfterOpenBrace boolean|nil
+-- Places open brace on the same line as its associated statement.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field openBraceOnSameLine boolean|nil
+-- Whether to increase indentation after a pipeline for multi-line statements. See [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer/blob/a94d9f5666bba9f569cdf9c1bc99556934f2b8f4/docs/Rules/UseConsistentIndentation.md#pipelineindentation-string-default-value-is-increaseindentationforfirstpipeline) for examples. It is suggested to use `IncreaseIndentationForFirstPipeline` instead of the default `NoIndentation`. **This default may change in the future,** please see the [Request For Comment](https://github.com/PowerShell/vscode-powershell/issues/4296).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pipelineIndentationStyle "IncreaseIndentationForFirstPipeline" | "IncreaseIndentationAfterEveryPipeline" | "NoIndentation" | "None"|nil
+-- Sets the code formatting options to follow the given indent style in a way that is compatible with PowerShell syntax. Any setting other than `Custom` will configure (and override) the settings:
+-- 
+-- * `#powershell.codeFormatting.openBraceOnSameLine#`
+-- 
+-- * `#powershell.codeFormatting.newLineAfterOpenBrace#`
+-- 
+-- * `#powershell.codeFormatting.newLineAfterCloseBrace#`
+-- 
+-- For more information about the brace styles, please see [PoshCode's discussion](https://github.com/PoshCode/PowerShellPracticeAndStyle/issues/81).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field preset "Custom" | "Allman" | "OTBS" | "Stroustrup"|nil
+-- Trims extraneous whitespace (more than one character) before and after the pipeline operator (`|`).
+---@field trimWhitespaceAroundPipe boolean|nil
+-- Use single quotes if a string is not interpolated and its value does not contain a single quote.
+---@field useConstantStrings boolean|nil
+-- Use correct casing for cmdlets.
+---@field useCorrectCasing boolean|nil
+-- Adds a space after a separator (`,` and `;`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field whitespaceAfterSeparator boolean|nil
+-- Adds spaces before and after an operator (`=`, `+`, `-`, etc.).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field whitespaceAroundOperator boolean|nil
+-- **Deprecated:** Please use the `#powershell.codeFormatting.addWhitespaceAroundPipe#` setting instead. If you've used this setting before, we have moved it for you automatically.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field whitespaceAroundPipe boolean|nil
+-- Adds a space between a keyword and its associated script-block expression.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field whitespaceBeforeOpenBrace boolean|nil
+-- Adds a space between a keyword (`if`, `elseif`, `while`, `switch`, etc.) and its associated conditional expression.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field whitespaceBeforeOpenParen boolean|nil
+-- Removes redundant whitespace between parameters.
+---@field whitespaceBetweenParameters boolean|nil
+-- Adds a space after an opening brace (`{`) and before a closing brace (`}`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field whitespaceInsideBrace boolean|nil
+
+---@class lsp.powershell_es.Debugging
+-- Creates a temporary PowerShell Extension Terminal for each debugging session. This is useful for debugging PowerShell classes and binary modules.
+---@field createTemporaryIntegratedConsole boolean|nil
+-- Sets the operator used to launch scripts.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field executeMode "DotSource" | "Call"|nil
+
+---@class lsp.powershell_es.Developer
+-- Specifies an alternative path to the folder containing modules that are bundled with the PowerShell extension, that is: PowerShell Editor Services, PSScriptAnalyzer and PSReadLine. **This setting is only meant for extension developers and requires the extension to be run in development mode!**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field bundledModulesPath string|nil
+-- Sets the log verbosity for both the extension and its LSP server, PowerShell Editor Services. **Please set to `Trace` when recording logs for a bug report!**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field editorServicesLogLevel "Trace" | "Debug" | "Information" | "Warning" | "Error" | "None"|nil
+-- Launches the LSP server with the `/waitForDebugger` flag to force it to wait for a .NET debugger to attach before proceeding, and emit its PID until then. **This setting is only meant for extension developers and requires the extension to be run in development mode!**
+---@field editorServicesWaitForDebugger boolean|nil
+-- An array of strings that enable experimental features in the PowerShell extension. **No flags are currently available!**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field featureFlags string[]|nil
+-- On Windows we launch the PowerShell executable with `-ExecutionPolicy Bypass` so that the LSP server (PowerShell Editor Services module) will launch without issue. Some anti-virus programs disallow this command-line argument and this flag can be used to remove it. **Using this setting may require trusting the script manually in order for it to launch!**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field setExecutionPolicy boolean|nil
+-- Traces the DAP communication between VS Code and the PowerShell Editor Services [DAP Server](https://microsoft.github.io/debug-adapter-protocol/). The output will be logged and also visible in the Output pane, where the verbosity is configurable. **For extension developers and issue troubleshooting only!**
+---@field traceDap boolean|nil
+-- Specifies how many seconds the extension will wait for the LSP server, PowerShell Editor Services, to connect. The default is four minutes; try increasing this value if your computer is particularly slow (often caused by overactive anti-malware programs).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field waitForSessionFileTimeoutSeconds number|nil
+
+---@class lsp.powershell_es.IntegratedConsole
+-- Switches focus to the console when a script selection is run or a script file is debugged.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field focusConsoleOnExecute boolean|nil
+-- Use the VS Code API to clear the terminal since that's the only reliable way to clear the scrollback buffer. Turn this on if you're used to `Clear-Host` clearing scroll history. **This setting is not recommended and likely to be deprecated!**
+---@field forceClearScrollbackBuffer boolean|nil
+-- Shows the Extension Terminal when the PowerShell extension is initialized. When disabled, the pane is not opened on startup, but the Extension Terminal is still created in order to power the extension's features.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showOnStartup boolean|nil
+-- Starts the Extension Terminal in the background. **If this is enabled, to access the terminal you must run the [Show Extension Terminal command](command:PowerShell.ShowSessionConsole), and once shown it cannot be put back into the background.** This option completely hides the Extension Terminal from the terminals view. You are probably looking for the `#powershell.integratedConsole.showOnStartup#` option instead.
+---@field startInBackground boolean|nil
+-- Sets the startup location for Extension Terminal.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field startLocation "Editor" | "Panel"|nil
+-- Do not show the startup banner in the PowerShell Extension Terminal.
+---@field suppressStartupBanner boolean|nil
+-- This will disable the use of PSReadLine in the PowerShell Extension Terminal and use a legacy implementation. **This setting is not recommended and likely to be deprecated!**
+---@field useLegacyReadLine boolean|nil
+
+---@class lsp.powershell_es.Pester
+-- This setting controls the appearance of the `Run Tests` and `Debug Tests` CodeLenses that appears above Pester tests.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeLens boolean|nil
+-- Defines the verbosity of output to be used when debugging a test or a block. For Pester 5 and newer the default value `Diagnostic` will print additional information about discovery, skipped and filtered tests, mocking and more.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugOutputVerbosity "None" | "Minimal" | "Normal" | "Detailed" | "Diagnostic"|nil
+-- Defines the verbosity of output to be used. For Pester 5 and newer the default value `FromPreference` will use the `Output` settings from the `$PesterPreference` defined in the caller's context, and will default to `Normal` if there is none. For Pester 4 the `FromPreference` and `Normal` options map to `All`, and `Minimal` option maps to `Fails`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field outputVerbosity "FromPreference" | "None" | "Minimal" | "Normal" | "Detailed" | "Diagnostic"|nil
+-- Use a CodeLens that is compatible with Pester 4. Disabling this will show `Run Tests` on all `It`, `Describe` and `Context` blocks, and will correctly work only with Pester 5 and newer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useLegacyCodeLens boolean|nil
+
+---@class lsp.powershell_es.ScriptAnalysis
+-- Enables real-time script analysis using [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) that populates the [Problems view](command:workbench.panel.markers.view.focus).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Specifies the path to a [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) settings file. **This setting may not work as expected currently!**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field settingsPath string|nil
+
+---@class lsp.powershell_es.SideBar
+-- Specifies an array of modules to exclude from Command Explorer listing.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field CommandExplorerExcludeFilter string[]|nil
+-- Specifies the visibility of the Command Explorer in the side bar.
+---@field CommandExplorerVisibility boolean|nil
+
+---@class lsp.powershell_es.StartAsLoginShell
+-- Starts the PowerShell extension's underlying PowerShell process as a login shell, if applicable.
+---@field linux boolean|nil
+-- Starts the PowerShell extension's underlying PowerShell process as a login shell, if applicable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field osx boolean|nil
+
+---@class lsp.powershell_es.Trace
+-- Traces the communication between VS Code and the PowerShell Editor Services [LSP Server](https://microsoft.github.io/language-server-protocol/). The output will be logged and also visible in the Output pane, where the verbosity is configurable. **For extension developers and issue troubleshooting only!**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.powershell_es.Powershell
+-- Specifies to search for references only within open documents instead of all workspace files. An alternative to `#powershell.enableReferencesCodeLens#` that allows large workspaces to support some references without the performance impact.
+---@field analyzeOpenDocumentsOnly boolean|nil
+---@field bugReporting lsp.powershell_es.BugReporting|nil
+---@field buttons lsp.powershell_es.Buttons|nil
+---@field codeFolding lsp.powershell_es.CodeFolding|nil
+---@field codeFormatting lsp.powershell_es.CodeFormatting|nil
+-- A path where the Extension Terminal will be launched. Both the PowerShell process's and the shell's location will be set to this directory. Does not support variables, but does support the use of '~' and paths relative to a single workspace. **For multi-root workspaces, use the name of the folder you wish to have as the cwd.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cwd string|nil
+---@field debugging lsp.powershell_es.Debugging|nil
+---@field developer lsp.powershell_es.Developer|nil
+-- Specifies whether the extension loads [PowerShell profiles](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles). Note that the extension's "Current Host" profile is `Microsoft.VSCode_profile.ps1`, which will be loaded instead of the default "Current Host" profile of `Microsoft.PowerShell_profile.ps1`. Use the "All Hosts" profile `profile.ps1` for common configuration.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableProfileLoading boolean|nil
+-- Specifies if Code Lenses are displayed above function definitions, used to show the number of times the function is referenced in the workspace and navigate to those references. Large workspaces may want to disable this setting if performance is compromised. See also `#powershell.analyzeOpenDocumentsOnly#`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableReferencesCodeLens boolean|nil
+-- Specifies the [comment based help](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comment_based_help) completion style triggered by typing ` ##`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field helpCompletion "Disabled" | "BlockComment" | "LineComment"|nil
+---@field integratedConsole lsp.powershell_es.IntegratedConsole|nil
+---@field pester lsp.powershell_es.Pester|nil
+-- Specifies a list of Item / Value pairs where the **Item** is a user-chosen name and the **Value** is an absolute path to a PowerShell executable. The name appears in the [Session Menu Command](command:PowerShell.ShowSessionMenu) and is used to reference this executable in the `#powershell.powerShellDefaultVersion#` setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field powerShellAdditionalExePaths table|nil
+-- Specifies the default PowerShell version started by the extension. The name must match what is displayed in the [Session Menu command](command:PowerShell.ShowSessionMenu), for example, `Windows PowerShell (x86)`. You can specify additional PowerShell executables with the `#powershell.powerShellAdditionalExePaths#` setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field powerShellDefaultVersion string|nil
+-- **Deprecated:** Specifies the path to the PowerShell executable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field powerShellExePath string|nil
+-- **Deprecated:** Specifies whether you should be prompted to update your version of `PackageManagement` if it's under 1.4.6.
+---@field promptToUpdatePackageManagement boolean|nil
+-- Specifies whether you may be prompted to update your version of PowerShell.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field promptToUpdatePowerShell boolean|nil
+---@field scriptAnalysis lsp.powershell_es.ScriptAnalysis|nil
+---@field sideBar lsp.powershell_es.SideBar|nil
+---@field startAsLoginShell lsp.powershell_es.StartAsLoginShell|nil
+-- Starts the PowerShell extension automatically when a PowerShell file is opened. If `false`, to start the extension use the [Restart Session command](command:PowerShell.RestartSession). **IntelliSense, code navigation, the Extension Terminal, code formatting, and other features are not enabled until the extension starts.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field startAutomatically boolean|nil
+-- Suppresses the warning message when any of `#powershell.powerShellAdditionalExePaths#` is not found.
+---@field suppressAdditionalExeNotFoundWarning boolean|nil
+---@field trace lsp.powershell_es.Trace|nil
+-- **Deprecated:** Uses the 32-bit language service on 64-bit Windows. This setting has no effect on 32-bit Windows or on the PowerShell extension debugger, which has its own architecture configuration.
+---@field useX86Host boolean|nil
+
+---@class lsp.powershell_es
+---@field powershell lsp.powershell_es.Powershell|nil
+
+---@class lsp.psalm.Trace
+-- Traces the communication between VSCode and the Psalm language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.psalm.Psalm
+-- A list of file extensions to request Psalm to analyze. By default, this only includes 'php' (Modifying requires VSCode reload)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analyzedFileExtensions any[]|nil
+-- A list of files to checkup for psalm configuration (relative to the workspace directory)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field configPaths string[]|nil
+-- If this is set to true, this VSCode extension will use TCP instead of the default STDIO to communicate with the Psalm language server. (Modifying requires VSCode reload)
+---@field connectToServerWithTcp boolean|nil
+-- Enable to disable autocomplete on methods and properties (Modifying requires VSCode reload)
+---@field disableAutoComplete boolean|nil
+-- Enable this to print messages to the debug console when developing or debugging this VS Code extension. (Modifying requires VSCode reload)
+---@field enableDebugLog boolean|nil
+-- Enable this to use PHP-provided ini defaults for memory and error display. (Modifying requires restart)
+---@field enableUseIniDefaults boolean|nil
+-- Enable --verbose mode on the Psalm Language Server (Modifying requires VSCode reload)
+---@field enableVerbose boolean|nil
+-- This will hide the Psalm status from the status bar when it is started and running.  This is useful to clear up a cluttered status bar.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hideStatusMessageWhenRunning boolean|nil
+-- Traces the communication between VSCode and the Psalm language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "NONE" | "ERROR" | "WARN" | "INFO" | "DEBUG" | "TRACE"|nil
+-- The number of times the Language Server is allowed to crash and restart before it will no longer try to restart (Modifying requires VSCode reload)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxRestartCount number|nil
+-- Optional (Advanced), default is '-dxdebug.remote_autostart=0 -dxdebug.remote_enable=0 -dxdebug_profiler_enable=0'.  Additional PHP executable CLI arguments to use. (Modifying requires VSCode reload)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field phpExecutableArgs string[]|nil
+-- Optional, defaults to searching for "php". The path to a PHP 7.0+ executable to use to execute the Psalm server. The PHP 7.0+ installation should preferably include and enable the PHP module `pcntl`. (Modifying requires VSCode reload)
+---@field phpExecutablePath string|nil
+-- Optional (Advanced). If provided, this overrides the Psalm script to use, e.g. vendor/bin/psalm. (Modifying requires VSCode reload)
+---@field psalmClientScriptPath string|nil
+-- Optional (Advanced). Additional arguments to the Psalm language server. (Modifying requires VSCode reload)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field psalmScriptArgs string[]|nil
+-- Optional (Advanced). If provided, this overrides the Psalm script to use, e.g. vendor/bin/psalm-language-server. (Modifying requires VSCode reload)
+---@field psalmScriptPath string|nil
+-- Optional (Advanced). If provided, this overrides the Psalm version detection (Modifying requires VSCode reload)
+---@field psalmVersion string|nil
+---@field trace lsp.psalm.Trace|nil
+-- Enable this to enable unused variable and parameter detection
+---@field unusedVariableDetection boolean|nil
+
+---@class lsp.psalm
+---@field psalm lsp.psalm.Psalm|nil
+
+---@class lsp.puppet.FoldingRange
+-- Enable/disable syntax aware code folding provider
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Show or hide the last line in code folding regions
+---@field showLastLine boolean|nil
+
+---@class lsp.puppet.FormatOnType
+-- Enable/disable the Puppet document on-type formatter, for example hashrocket alignment
+---@field enable boolean|nil
+-- Sets the maximum file size (in Bytes) that document on-type formatting will occur. Setting this to zero (0) will disable the file size check. Note that large file sizes can cause performance issues.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxFileSize integer|nil
+
+---@class lsp.puppet.Hover
+-- Enable or disable showing Puppet Module version information in the metadata.json file
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showMetadataInfo boolean|nil
+
+---@class lsp.puppet.Puppet
+-- The Puppet configuration directory. See https://puppet.com/docs/puppet/latest/dirs_confdir.html for more information
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field confdir string|nil
+-- The Puppet environment to use. See https://puppet.com/docs/puppet/latest/config_print.html#environments for more information
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field environment string|nil
+-- Additional module paths to use when starting the Editor Services. On Windows this is delimited with a semicolon, and on all other platforms, with a colon. For example C:\Path1;C:\Path2
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field modulePath string|nil
+-- The Puppet cache directory. See https://puppet.com/docs/puppet/latest/dirs_vardir.html for more information
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vardir string|nil
+-- The version of Puppet to use. For example '5.4.0'. This is generally only applicable when using the PDK installation type. If Puppet Editor Services is unable to use this version, it will default to the latest available version of Puppet.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field version string|nil
+
+---@class lsp.puppet.Tcp
+-- The IP address or hostname of the remote Puppet Editor Service to connect to, for example 'computer.domain' or '192.168.0.1'. Only applicable when the editorService.protocol is set to tcp
+---@field address string|nil
+-- The TCP Port of the remote Puppet Editor Service to connect to. Only applicable when the editorService.protocol is set to tcp
+---@field port integer|nil
+
+---@class lsp.puppet.EditorService
+-- The absolute filepath where the Puppet Editor Service will output the debugging log. By default no logfile is generated
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugFilePath string|nil
+-- Enable/disable advanced Puppet Language Features
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- An array of strings of experimental features to enable in the Puppet Editor Service
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field featureFlags any[]|nil
+---@field foldingRange lsp.puppet.FoldingRange|nil
+---@field formatOnType lsp.puppet.FormatOnType|nil
+---@field hover lsp.puppet.Hover|nil
+-- Set the logging verbosity level for the Puppet Editor Service, with Debug producing the most output and Error producing the least
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field loglevel "debug" | "error" | "normal" | "warning" | "verbose"|nil
+-- The protocol used to communicate with the Puppet Editor Service. By default the local STDIO protocol is used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field protocol "stdio" | "tcp"|nil
+---@field puppet lsp.puppet.Puppet|nil
+---@field tcp lsp.puppet.Tcp|nil
+-- The timeout to connect to the Puppet Editor Service
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field timeout integer|nil
+
+---@class lsp.puppet.Format
+-- Enable/disable the Puppet document formatter
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.puppet.Notification
+-- The type of notification used when a node graph is being generated. Default value of messagebox
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nodeGraph "messagebox" | "statusbar" | "none"|nil
+-- The type of notification used when a running Puppet Resouce. Default value of messagebox
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field puppetResource "messagebox" | "statusbar" | "none"|nil
+
+---@class lsp.puppet.Pdk
+-- Enable/disable checking if installed PDK version is latest
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checkVersion boolean|nil
+
+---@class lsp.puppet.PdkNewModule
+-- Enable/disable the PDK New Module icon in the Editor Title Bar
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.puppet.TitleBar
+---@field pdkNewModule lsp.puppet.PdkNewModule|nil
+
+---@class lsp.puppet.Validate
+-- Enable/disable using dependency resolution for Puppetfiles
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field resolvePuppetfiles boolean|nil
+
+---@class lsp.puppet.Puppet
+---@field editorService lsp.puppet.EditorService|nil
+---@field format lsp.puppet.Format|nil
+-- The fully qualified path to the Puppet install directory. This can be a PDK or Puppet Agent installation. For example: 'C:\Program Files\Puppet Labs\Puppet' or '/opt/puppetlabs/puppet'. If this is not set the extension will attempt to detect the installation directory. Do **not** use when `#puppet.installType#` is set to `auto`
+---@field installDirectory string|nil
+-- The type of Puppet installation. Either the Puppet Development Kit (pdk) or the Puppet Agent (agent). Choose `auto` to have the extension detect which to use automatically based on default install locations
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field installType "auto" | "pdk" | "agent"|nil
+---@field notification lsp.puppet.Notification|nil
+---@field pdk lsp.puppet.Pdk|nil
+---@field titleBar lsp.puppet.TitleBar|nil
+---@field validate lsp.puppet.Validate|nil
+
+---@class lsp.puppet
+---@field puppet lsp.puppet.Puppet|nil
+
+---@class lsp.purescriptls.Trace
+-- Traces the communication between VSCode and the PureScript language service.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.purescriptls.Purescript
+-- Whether to add the local npm bin directory to the PATH for purs IDE server and build command.
+---@field addNpmPath boolean|nil
+-- Whether to add psc-package sources to the globs passed to the IDE server for source locations (specifically the output of `psc-package sources`, if this is a psc-package project). Update due to adding packages/changing package set requires psc-ide server restart.
+---@field addPscPackageSources boolean|nil
+-- Whether to add spago sources to the globs passed to the IDE server for source locations (specifically the output of `spago sources`, if this is a spago project). Update due to adding packages/changing package set requires psc-ide server restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addSpagoSources boolean|nil
+-- Whether to automatically start/connect to purs IDE server when editing a PureScript file (includes connecting to an existing running instance). If this is disabled, various features like autocomplete, tooltips, and other type info will not work until start command is run manually.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoStartPscIde boolean|nil
+-- Whether to automatically add imported identifiers when accepting autocomplete result.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autocompleteAddImport boolean|nil
+-- Whether to always autocomplete from all built modules, or just those imported in the file. Suggestions from all modules always available by explicitly triggering autocomplete.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autocompleteAllModules boolean|nil
+-- Whether to group completions in autocomplete results. Requires compiler 0.11.6
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autocompleteGrouped boolean|nil
+-- Maximum number of results to fetch for an autocompletion request. May improve performance on large projects.
+---@field autocompleteLimit integer|nil
+-- Build command to use with arguments. Not passed to shell. eg `spago build --purs-args --json-errors`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field buildCommand string|nil
+-- **EXPERIMENTAL** Enable purs IDE server fast rebuild of opened files. This includes both newly opened tabs and those present at startup.
+---@field buildOpenedFiles boolean|nil
+-- The warning codes to censor, both for fast rebuild and a full build. Unrelated to any psa setup. e.g.: ["ShadowedName","MissingTypeDeclaration"]
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field censorWarnings string[]|nil
+-- List of codegen targets to pass to the compiler for rebuild. e.g. js, corefn. If not specified (rather than empty array) this will not be passed and the compiler will default to js. Requires 0.12.1+
+---@field codegenTargets string[]|nil
+-- Enable declaration codelens to add types to declarations
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field declarationTypeCodeLens boolean|nil
+-- **EXPERIMENTAL** Enable diagnostics on file open, as per diagnostics on type
+---@field diagnosticsOnOpen boolean|nil
+-- **EXPERIMENTAL** Enable rebuilding modules for diagnostics automatically on typing. This may provide quicker feedback on errors, but could interfere with other functionality.
+---@field diagnosticsOnType boolean|nil
+-- **EXPERIMENTAL**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticsOnTypeDebounce integer|nil
+-- Enable declaration codelenses for export management
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exportsCodeLens boolean|nil
+-- Enable purs IDE server fast rebuild (rebuilding single files on saving them)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fastRebuild boolean|nil
+-- Extension for foreign files
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field foreignExt string|nil
+-- Tool to use to for formatting. Must be installed and on PATH (or npm installed with addNpmPath set)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formatter "none" | "purty" | "purs-tidy" | "pose"|nil
+-- Whether to perform a full build on save with the configured build command (rather than IDE server fast rebuild). This is not generally recommended because it is slow, but it does mean that dependent modules are rebuilt as necessary.
+---@field fullBuildOnSave boolean|nil
+-- Whether to show progress for full build on save (if enabled)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fullBuildOnSaveProgress boolean|nil
+-- Module to prefer to insert when adding imports which have been re-exported. In order of preference, most preferred first.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importsPreferredModules string[]|nil
+-- Override purs ide output directory (output/ if not specified). This should match up to your build command
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field outputDirectory string|nil
+-- Path to installed packages. Will be used to control globs passed to IDE server for source locations.  Change requires IDE server restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field packagePath string|nil
+-- Module to consider as your default prelude, if an auto-complete suggestion comes from this module it will be imported unqualified.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field preludeModule string|nil
+-- Port to use for purs IDE server (whether an existing server or to start a new one). By default a random port is chosen (or an existing port in .psc-ide-port if present), if this is specified no attempt will be made to select an alternative port on failure.
+---@field pscIdePort integer|nil
+-- Log level for purs IDE server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pscIdelogLevel string|nil
+-- Location of purs executable (resolved wrt PATH)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pursExe string|nil
+-- Path to application source root. Will be used to control globs passed to IDE server for source locations. Change requires IDE server restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sourcePath string|nil
+---@field trace lsp.purescriptls.Trace|nil
+
+---@class lsp.purescriptls
+---@field purescript lsp.purescriptls.Purescript|nil
+
+---@class lsp.pylsp.Autopep8
+-- Enable or disable the plugin (disabling required to use `yapf`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Flake8
+-- Path to the config file that will be the authoritative config source.
+---@field config string|nil
+-- Enable or disable the plugin.
+---@field enabled boolean|nil
+-- List of files or directories to exclude.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Path to the flake8 executable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field executable string|nil
+-- List of errors and warnings to append to ignore list.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extendIgnore string[]|nil
+-- List of errors and warnings to append to select list.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extendSelect string[]|nil
+-- Only check for filenames matching the patterns in this list.
+---@field filename string|nil
+-- Hang closing bracket instead of matching indentation of opening bracket's line.
+---@field hangClosing boolean|nil
+-- List of errors and warnings to ignore (or skip).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignore string[]|nil
+-- Set indentation spaces.
+---@field indentSize integer|nil
+-- Maximum allowed complexity threshold.
+---@field maxComplexity integer|nil
+-- Maximum allowed line length for the entirety of this run.
+---@field maxLineLength integer|nil
+-- A pairing of filenames and violation codes that defines which violations to ignore in a particular file, for example: `["file_path.py:W305,W304"]`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field perFileIgnores string[]|nil
+-- List of errors and warnings to enable.
+---@field select string[]|nil
+
+---@class lsp.pylsp.Jedi
+-- List of module names for jedi.settings.auto_import_modules.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field auto_import_modules string[]|nil
+-- Define environment variables for jedi.Script and Jedi.names.
+---@field env_vars table|nil
+-- Define environment for jedi.Script and Jedi.names.
+---@field environment string|nil
+-- Define extra paths for jedi.Script.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extra_paths string[]|nil
+-- Whether to place extra_paths at the beginning (true) or end (false) of `sys.path`
+---@field prioritize_extra_paths boolean|nil
+
+---@class lsp.pylsp.Jedi.Completion
+-- Modules for which labels and snippets should be cached.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cache_for string[]|nil
+-- Resolve documentation and detail eagerly.
+---@field eager boolean|nil
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Enable fuzzy when requesting autocomplete.
+---@field fuzzy boolean|nil
+-- Adds class objects as a separate completion item.
+---@field include_class_objects boolean|nil
+-- Adds function objects as a separate completion item.
+---@field include_function_objects boolean|nil
+-- Auto-completes methods and classes with tabstops for each parameter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field include_params boolean|nil
+-- How many labels and snippets (at most) should be resolved?
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field resolve_at_most integer|nil
+
+---@class lsp.pylsp.Jedi.Definition
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Follow builtin and extension definitions to stubs.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field follow_builtin_definitions boolean|nil
+-- If follow_imports is True will decide if it follow builtin imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field follow_builtin_imports boolean|nil
+-- The goto call will follow imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field follow_imports boolean|nil
+
+---@class lsp.pylsp.Jedi.Hover
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Jedi.References
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Jedi.Signature.Help
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Jedi.Symbols
+-- If True lists the names of all scopes instead of only the module namespace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field all_scopes boolean|nil
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- If True includes symbols imported from other libraries.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field include_import_symbols boolean|nil
+
+---@class lsp.pylsp.Jedi.Type.Definition
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Mccabe
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- The minimum threshold that triggers warnings about cyclomatic complexity.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field threshold integer|nil
+
+---@class lsp.pylsp.Preload
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- List of modules to import on startup
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field modules string[]|nil
+
+---@class lsp.pylsp.Pycodestyle
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Exclude files or directories which match these patterns.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- When parsing directories, only check filenames matching these patterns.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field filename string[]|nil
+-- Hang closing bracket instead of matching indentation of opening bracket's line.
+---@field hangClosing boolean|nil
+-- Ignore errors and warnings
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignore string[]|nil
+-- Set indentation spaces.
+---@field indentSize integer|nil
+-- Set maximum allowed line length.
+---@field maxLineLength integer|nil
+-- Select errors and warnings
+---@field select string[]|nil
+
+---@class lsp.pylsp.Pydocstyle
+-- Ignore errors and warnings in addition to the specified convention.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addIgnore string[]|nil
+-- Select errors and warnings in addition to the specified convention.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addSelect string[]|nil
+-- Choose the basic list of checked errors by specifying an existing convention.
+---@field convention "pep257" | "numpy" | "google"|nil
+-- Enable or disable the plugin.
+---@field enabled boolean|nil
+-- Ignore errors and warnings
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignore string[]|nil
+-- Check only files that exactly match the given regular expression; default is to match files that don't start with 'test_' but end with '.py'.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field match string|nil
+-- Search only dirs that exactly match the given regular expression; default is to match dirs which do not begin with a dot.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field matchDir string|nil
+-- Select errors and warnings
+---@field select string[]|nil
+
+---@class lsp.pylsp.Pyflakes
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Pylint
+-- Arguments to pass to pylint.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args string[]|nil
+-- Enable or disable the plugin.
+---@field enabled boolean|nil
+-- Executable to run pylint with. Enabling this will run pylint on unsaved files via stdin. Can slow down workflow. Only works with python3.
+---@field executable string|nil
+
+---@class lsp.pylsp.Code.Actions
+-- Enable or disable autoimport code actions (e.g. for quick fixes).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Completions
+-- Enable or disable autoimport completions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Rope.Autoimport
+---@field code_actions lsp.pylsp.Code.Actions|nil
+---@field completions lsp.pylsp.Completions|nil
+-- Enable or disable autoimport. If false, neither completions nor code actions are enabled. If true, the respective features can be enabled or disabled individually.
+---@field enabled boolean|nil
+-- Make the autoimport database memory only. Drastically increases startup time.
+---@field memory boolean|nil
+
+---@class lsp.pylsp.Rope.Completion
+-- Resolve documentation and detail eagerly.
+---@field eager boolean|nil
+-- Enable or disable the plugin.
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Yapf
+-- Enable or disable the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.pylsp.Plugins
+---@field autopep8 lsp.pylsp.Autopep8|nil
+---@field flake8 lsp.pylsp.Flake8|nil
+---@field jedi lsp.pylsp.Jedi|nil
+---@field jedi_completion lsp.pylsp.Jedi.Completion|nil
+---@field jedi_definition lsp.pylsp.Jedi.Definition|nil
+---@field jedi_hover lsp.pylsp.Jedi.Hover|nil
+---@field jedi_references lsp.pylsp.Jedi.References|nil
+---@field jedi_signature_help lsp.pylsp.Jedi.Signature.Help|nil
+---@field jedi_symbols lsp.pylsp.Jedi.Symbols|nil
+---@field jedi_type_definition lsp.pylsp.Jedi.Type.Definition|nil
+---@field mccabe lsp.pylsp.Mccabe|nil
+---@field preload lsp.pylsp.Preload|nil
+---@field pycodestyle lsp.pylsp.Pycodestyle|nil
+---@field pydocstyle lsp.pylsp.Pydocstyle|nil
+---@field pyflakes lsp.pylsp.Pyflakes|nil
+---@field pylint lsp.pylsp.Pylint|nil
+---@field rope_autoimport lsp.pylsp.Rope.Autoimport|nil
+---@field rope_completion lsp.pylsp.Rope.Completion|nil
+---@field yapf lsp.pylsp.Yapf|nil
+
+---@class lsp.pylsp.Rope
+-- Builtin and c-extension modules that are allowed to be imported and inspected by rope.
+---@field extensionModules string|nil
+-- The name of the folder in which rope stores project configurations and data.  Pass `null` for not using such a folder at all.
+---@field ropeFolder string[]|nil
+
+---@class lsp.pylsp.Signature
+-- Formatter to use for reformatting signatures in docstrings.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formatter "black" | "ruff"|nil
+-- Maximum line length in signatures.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field line_length number|nil
+
+---@class lsp.pylsp.Pylsp
+-- List of configuration sources to use.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field configurationSources string[]|nil
+---@field plugins lsp.pylsp.Plugins|nil
+---@field rope lsp.pylsp.Rope|nil
+---@field signature lsp.pylsp.Signature|nil
+
+---@class lsp.pylsp
+---@field pylsp lsp.pylsp.Pylsp|nil
+
+---@class lsp.pyright.Pyright
+-- Disables type completion, definitions, and references.
+---@field disableLanguageServices boolean|nil
+-- Disables the “Organize Imports” command.
+---@field disableOrganizeImports boolean|nil
+-- Disables the use of pull diagnostics from VS Code.
+---@field disablePullDiagnostics boolean|nil
+-- Disable hint diagnostics with special hints for grayed-out or strike-through text.
+---@field disableTaggedHints boolean|nil
+
+-- Allows a user to override the severity levels for individual diagnostics. Use the rule name as a key and one of "error", "warning", "information", "none", `true` (alias for "error") or `false` (alias for "none") as value. The default value shown for each diagnostic is the default when "python.analysis.typeCheckingMode" is set to "standard". See [here](https://github.com/microsoft/pyright/blob/main/docs/configuration.md#diagnostic-rule-defaults) for defaults for each type checking mode ("off", "basic", "standard", and "strict").
+---@class lsp.pyright.DiagnosticSeverityOverrides
+-- Diagnostics for an attempt to instantiate an abstract or protocol class or use an abstract method.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAbstractUsage "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a type incompatibility for an argument to a call.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportArgumentType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'assert' statement that will provably always assert. This can be indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAssertAlwaysTrue "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a type incompatibility detected by a typing.assert_type call.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAssertTypeFailure "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for type incompatibilities for assignments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAssignmentType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for issues involving attribute accesses.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportAttributeAccessIssue "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for function calls within a default value initialization expression. Such calls can mask expensive operations that are performed at module initialization time.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportCallInDefaultInitializer "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for issues involving call expressions and arguments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportCallIssue "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for attempts to redefine variables whose names are all-caps with underscores and numerals.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportConstantRedefinition "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for use of deprecated classes or functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportDeprecated "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an imported symbol or module that is imported more than once.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportDuplicateImport "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for member accesses on functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportFunctionMemberAccess "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for general type inconsistencies, unsupported operations, argument/parameter mismatches, etc. Covers all of the basic type-checking rules not covered by other rules. Does not include syntax errors.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportGeneralTypeIssues "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for overridden methods that do not include an `@override` decorator.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImplicitOverride "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for two or more string literals that follow each other, indicating an implicit concatenation. This is considered a bad practice and often masks bugs such as missing commas.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImplicitStringConcatenation "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for cyclical import chains. These are not errors in Python, but they do slow down type analysis and often hint at architectural layering issues. Generally, they should be avoided.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportImportCycles "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for methods that override a method of the same name in a base class in an incompatible manner (wrong number of parameters, incompatible parameter types, or incompatible return type).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIncompatibleMethodOverride "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for overrides in subclasses that redefine a variable in an incompatible way.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIncompatibleVariableOverride "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of a module-level “__getattr__” function, indicating that the stub is incomplete.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIncompleteStub "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for __init__ and __new__ methods whose signatures are inconsistent.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInconsistentConstructor "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for inconsistencies between function overload signatures and implementation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInconsistentOverload "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics related to index operations and expressions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportIndexIssue "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for invalid escape sequences used within string literals. The Python specification indicates that such sequences will generate a syntax error in future versions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidStringEscapeSequence "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for type stub statements that do not conform to PEP 484.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidStubStatement "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for invalid type argument usage.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidTypeArguments "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for type expression that uses an invalid form.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidTypeForm "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for improper use of type variables in a function signature.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportInvalidTypeVarUse "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'match' statements that do not exhaustively match all possible values.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMatchNotExhaustive "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for imports that have no corresponding imported python file or type stub file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingImports "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for imports that have no corresponding source file. This happens when a type stub is found, but the module source file was not found, indicating that the code may fail at runtime when using this execution environment. Type checking will be done using the type stub.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingModuleSource "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for parameters that are missing a type annotation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingParameterType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for missing call to parent class for inherited `__init__` methods.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingSuperCall "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for generic class reference with missing type arguments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingTypeArgument "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for imports that have no corresponding type stub file (either a typeshed file or a custom type stub). The type checker requires type stubs to do its best job at analysis.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportMissingTypeStubs "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an overloaded function or method with a missing implementation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportNoOverloadImplementation "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for related to unary or binary operators.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOperatorIssue "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to call a variable with an Optional type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalCall "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to use an Optional type as a context manager (as a parameter to a with statement).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalContextManager "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to use an Optional type as an iterable value (e.g. within a for statement).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalIterable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to access a member of a variable with an Optional type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalMemberAccess "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to use an Optional type as an operand to a binary or unary operator (like '+', '<<', '~').
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalOperand "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to subscript (index) a variable with an Optional type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOptionalSubscript "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for function overloads that overlap in signature and obscure each other or have incompatible return types.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportOverlappingOverload "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of variables that may be unbound on some code paths.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPossiblyUnboundVariable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for incorrect usage of symbol imported from a "py.typed" module that is not re-exported from that module.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPrivateImportUsage "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for incorrect usage of private or protected variables or functions. Protected class members begin with a single underscore _ and can be accessed only by subclasses. Private class members begin with a double underscore but do not end in a double underscore and can be accessed only within the declaring class. Variables and functions declared outside of a class are considered private if their names start with either a single or double underscore, and they cannot be accessed outside of the declaring module.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPrivateUsage "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for property whose setter and getter have mismatched types.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportPropertyTypeMismatch "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to declare the type of a symbol multiple times.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportRedeclaration "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics related to function return type compatibility.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportReturnType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a missing or misnamed “self” parameter in instance methods and “cls” parameter in class methods. Instance methods in metaclasses (classes that derive from “type”) are allowed to use “cls” for instance methods.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportSelfClsParameterName "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for usage of deprecated type comments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportTypeCommentUsage "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an attempt to access a non-required key within a TypedDict without a check for its presence.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportTypedDictNotRequiredAccess "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of unbound variables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnboundVariable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for undefined variables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUndefinedVariable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for the use of an unhashable object in a container that requires hashability.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnhashable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for instance variables that are not declared or initialized within class body or `__init__` method.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUninitializedInstanceVariable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for call arguments for functions or methods that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownArgumentType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for input or return parameters for lambdas that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownLambdaType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for class or instance variables that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownMemberType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for input or return parameters for functions or methods that have an unknown type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownParameterType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for variables that have an unknown type..
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnknownVariableType "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'cast' calls that are statically determined to be unnecessary. Such calls are sometimes indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryCast "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for '==' and '!=' comparisons that are statically determined to be unnecessary. Such calls are sometimes indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryComparison "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'in' operation that is statically determined to be unnecessary. Such operations are sometimes indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryContains "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for 'isinstance' or 'issubclass' calls where the result is statically determined to be always (or never) true. Such calls are often indicative of a programming error.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryIsInstance "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for '# type: ignore' comments that have no effect.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnnecessaryTypeIgnoreComment "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for code that is determined by type analysis to be unreachable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnreachable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for unsupported operations performed on __all__.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnsupportedDunderAll "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for base classes whose type cannot be determined statically. These obscure the class type, defeating many type analysis features.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedBaseClass "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for class decorators that have no type annotations. These obscure the class type, defeating many type analysis features.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedClassDecorator "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for function decorators that have no type annotations. These obscure the function type, defeating many type analysis features.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedFunctionDecorator "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics when “namedtuple” is used rather than “NamedTuple”. The former contains no type information, whereas the latter does.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUntypedNamedTuple "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for call expressions whose results are not consumed and are not None.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedCallResult "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a class with a private name (starting with an underscore) that is not accessed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedClass "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for call expressions that return a Coroutine and whose results are not consumed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedCoroutine "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for unreachable except clause.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedExcept "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for simple expressions whose value is not used in any way.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedExpression "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a function or method with a private name (starting with an underscore) that is not accessed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedFunction "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an imported symbol that is not referenced within that file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedImport "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for a variable that is not accessed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportUnusedVariable "none" | "information" | "warning" | "error" | true | false|nil
+-- Diagnostics for an wildcard import from an external library.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportWildcardImportFromLibrary "none" | "information" | "warning" | "error" | true | false|nil
+
+---@class lsp.pyright.Analysis
+-- Offer auto-import completions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImportCompletions boolean|nil
+-- Automatically add common search paths like 'src'?
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoSearchPaths boolean|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticMode "openFilesOnly" | "workspace"|nil
+-- Allows a user to override the severity levels for individual diagnostics. Use the rule name as a key and one of "error", "warning", "information", "none", `true` (alias for "error") or `false` (alias for "none") as value. The default value shown for each diagnostic is the default when "python.analysis.typeCheckingMode" is set to "standard". See [here](https://github.com/microsoft/pyright/blob/main/docs/configuration.md#diagnostic-rule-defaults) for defaults for each type checking mode ("off", "basic", "standard", and "strict").
+---@field diagnosticSeverityOverrides lsp.pyright.DiagnosticSeverityOverrides|nil
+-- Paths of directories or files that should not be included. These override the include directories, allowing specific subdirectories to be excluded. Note that files in the exclude paths may still be included in the analysis if they are referenced (imported) by source files that are not excluded. Paths may contain wildcard characters ** (a directory or multiple levels of directories), * (a sequence of zero or more characters), or ? (a single character). If no exclude paths are specified, pyright automatically excludes the following: `**/node_modules`, `**/__pycache__`, `.git` and any virtual environment directories.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Additional import search resolution paths
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraPaths string[]|nil
+-- Paths of directories or files whose diagnostic output (errors and warnings) should be suppressed even if they are an included file or within the transitive closure of an included file. Paths may contain wildcard characters ** (a directory or multiple levels of directories), * (a sequence of zero or more characters), or ? (a single character). If no value is provided, the value of python.linting.ignorePatterns (if set) will be used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignore string[]|nil
+-- Paths of directories or files that should be included. If no paths are specified, pyright defaults to the workspace root directory. Paths may contain wildcard characters ** (a directory or multiple levels of directories), * (a sequence of zero or more characters), or ? (a single character).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field include string[]|nil
+-- Specifies the level of logging for the Output panel
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "Error" | "Warning" | "Information" | "Trace"|nil
+-- Path to directory containing custom type stub files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field stubPath string|nil
+-- Defines the default rule set for type checking.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeCheckingMode "off" | "basic" | "standard" | "strict"|nil
+-- Paths to look for typeshed modules.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeshedPaths string[]|nil
+-- Use library implementations to extract type information when type stub is not present.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useLibraryCodeForTypes boolean|nil
+
+---@class lsp.pyright.Python
+---@field analysis lsp.pyright.Analysis|nil
+-- Path to Python, you can use a custom version of Python.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pythonPath string|nil
+-- Path to folder with a list of Virtual Environments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field venvPath string|nil
+
+---@class lsp.pyright
+---@field pyright lsp.pyright.Pyright|nil
+---@field python lsp.pyright.Python|nil
+
+---@class lsp.r_language_server.Lsp
+-- The command line arguments to use when launching R Language Server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args any[]|nil
+-- Debug R Language Server
+---@field debug boolean|nil
+-- Enable Diagnostics
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnostics boolean|nil
+-- Override default LANG environment variable
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lang string|nil
+-- Path to R binary for launching Language Server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+-- Use STDIO connection instead of TCP. (Unix/macOS users only)
+---@field use_stdio boolean|nil
+
+---@class lsp.r_language_server.Rpath
+-- Path to an R executable for Linux. Must be "vanilla" R, not radian etc.!
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field linux string|nil
+-- Path to an R executable for macOS. Must be "vanilla" R, not radian etc.!
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mac string|nil
+-- Path to an R executable for Windows. Must be "vanilla" R, not radian etc.!
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field windows string|nil
+
+---@class lsp.r_language_server.R
+---@field lsp lsp.r_language_server.Lsp|nil
+---@field rpath lsp.r_language_server.Rpath|nil
+
+---@class lsp.r_language_server
+---@field r lsp.r_language_server.R|nil
+
+---@class lsp.rescriptls.ProjectConfig
+-- Enable project config caching. Can speed up latency dramatically.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rescriptls.Cache
+---@field projectConfig lsp.rescriptls.ProjectConfig|nil
+
+---@class lsp.rescriptls.CompileStatus
+-- Show compile status in the status bar (compiling/errors/warnings/success).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rescriptls.IncrementalTypechecking
+-- (beta/experimental) Enable incremental type checking across files, so that unsaved file A gets access to unsaved file B.
+---@field acrossFiles boolean|nil
+-- (debug) Enable debug logging (ends up in the extension output).
+---@field debugLogging boolean|nil
+-- Enable incremental type checking.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rescriptls.InlayHints
+-- Enable (experimental) inlay hints.
+---@field enable boolean|nil
+-- Maximum length of character for inlay hints. Set to null to have an unlimited length. Inlay hints that exceed the maximum length will not be shown.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxLength integer|nil
+
+---@class lsp.rescriptls.SignatureHelp
+-- Enable signature help for function calls.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Enable signature help for variant constructor payloads.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field forConstructorPayloads boolean|nil
+
+---@class lsp.rescriptls.Settings
+-- Whether you want the extension to prompt for autostarting a ReScript build if a project is opened with no build running.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field askToStartBuild boolean|nil
+-- Path to the directory where cross-platform ReScript binaries are. You can use it if you haven't or don't want to use the installed ReScript from node_modules in your project.
+---@field binaryPath string|nil
+---@field cache lsp.rescriptls.Cache|nil
+-- Enable (experimental) code lens for function definitions.
+---@field codeLens boolean|nil
+---@field compileStatus lsp.rescriptls.CompileStatus|nil
+---@field incrementalTypechecking lsp.rescriptls.IncrementalTypechecking|nil
+---@field inlayHints lsp.rescriptls.InlayHints|nil
+-- Path to the directory where platform-specific ReScript binaries are. You can use it if you haven't or don't want to use the installed ReScript from node_modules in your project.
+---@field platformPath string|nil
+-- Optional path to the directory containing the @rescript/runtime package. Set this if your tooling is unable to automatically locate the package in your project.
+---@field runtimePath string|nil
+---@field signatureHelp lsp.rescriptls.SignatureHelp|nil
+
+---@class lsp.rescriptls.Rescript
+---@field settings lsp.rescriptls.Settings|nil
+
+---@class lsp.rescriptls
+---@field rescript lsp.rescriptls.Rescript|nil
+
+---@class lsp.rls.Rust
+-- Enable all Cargo features.
+---@field all_features boolean|nil
+-- Checks the project as if you were running cargo check --all-targets (I.e., check all targets and integration tests too).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field all_targets boolean|nil
+-- Specify to run analysis as if running `cargo check --bin <name>`. Use `null` to auto-detect. (unstable)
+---@field build_bin string|nil
+-- EXPERIMENTAL (requires `unstable_features`)
+-- If set, executes a given program responsible for rebuilding save-analysis to be loaded by the RLS. The program given should output a list of resulting .json files on stdout. 
+-- Implies `rust.build_on_save`: true.
+---@field build_command string|nil
+-- Specify to run analysis as if running `cargo check --lib`. Use `null` to auto-detect. (unstable)
+---@field build_lib boolean|nil
+-- Only index the project when a file is saved and not on change.
+---@field build_on_save boolean|nil
+-- Build cfg(test) code. (unstable)
+---@field cfg_test boolean|nil
+-- Clear the RUST_LOG environment variable before running rustc or cargo.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field clear_env_rust_log boolean|nil
+-- Controls eagerness of clippy diagnostics when available. Valid values are (case-insensitive):
+--  - "off": Disable clippy lints.
+--  - "on": Display the same diagnostics as command-line clippy invoked with no arguments (`clippy::all` unless overridden).
+--  - "opt-in": Only display the lints explicitly enabled in the code. Start by adding `#![warn(clippy::all)]` to the root of each crate you want linted.
+-- You need to install clippy via rustup if you haven't already.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field clippy_preference "on" | "opt-in" | "off"|nil
+-- Overrides the default list of packages for which analysis is skipped.
+-- Available since RLS 1.38
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field crate_blacklist any[]|nil
+-- A list of Cargo features to enable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field features any[]|nil
+-- Instructs cargo to enable full documentation extraction during save-analysis while building the crate.
+---@field full_docs boolean|nil
+-- Whether to surpress the deprecation notification on start up.
+---@field ignore_deprecation_warning boolean|nil
+-- Number of Cargo jobs to be run in parallel.
+---@field jobs number|nil
+-- Do not enable default Cargo features.
+---@field no_default_features boolean|nil
+-- Enables code completion using racer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field racer_completion boolean|nil
+-- Settings passed down to rust-analyzer server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field rust-analyzer table|nil
+-- Flags added to RUSTFLAGS.
+---@field rustflags string|nil
+-- When specified, RLS will use the Rustfmt pointed at the path instead of the bundled one
+---@field rustfmt_path string|nil
+-- Show additional context in hover tooltips when available. This is often the type local variable declaration.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field show_hover_context boolean|nil
+-- Show warnings.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field show_warnings boolean|nil
+-- --sysroot
+---@field sysroot string|nil
+-- --target
+---@field target string|nil
+-- When specified, it places the generated analysis files at the specified target directory. By default it is placed target/rls directory.
+---@field target_dir string|nil
+-- Enable unstable features.
+---@field unstable_features boolean|nil
+-- Time in milliseconds between receiving a change notification and starting build.
+---@field wait_to_build number|nil
+
+---@class lsp.rls.Trace
+-- Traces the communication between VS Code and the Rust language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.rls.Rust-client
+-- Start RLS automatically when opening a file or project.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoStartRls boolean|nil
+-- Rust channel to invoke rustup with. Ignored if rustup is disabled. By default, uses the same channel as your currently open project.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field channel string|"default" | "stable" | "beta" | "nightly"|nil
+-- Disable usage of rustup and use rustc/rls/rust-analyzer from PATH.
+---@field disableRustup boolean|nil
+-- Allow multiple projects in the same folder, along with removing the constraint that the cargo.toml must be located at the root. (Experimental: might not work for certain setups)
+---@field enableMultiProjectSetup boolean|nil
+-- The underlying LSP server used to provide IDE support for Rust projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field engine "rls" | "rust-analyzer"|nil
+-- When set to true, RLS stderr is logged to a file at workspace root level. Requires reloading extension after change.
+---@field logToFile boolean|nil
+-- Specifies message severity on which the output channel will be revealed. Requires reloading extension after change.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field revealOutputChannelOn "info" | "warn" | "error" | "never"|nil
+-- Override RLS path. Only required for RLS developers. If you set this and use rustup, you should also set `rust-client.channel` to ensure your RLS sees the right libraries. If you don't use rustup, make sure to set `rust-client.disableRustup`.
+---@field rlsPath string|nil
+-- Path to rustup executable. Ignored if rustup is disabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field rustupPath string|nil
+---@field trace lsp.rls.Trace|nil
+-- Update the Rust toolchain and its required components whenever the extension starts up.
+---@field updateOnStartup boolean|nil
+
+---@class lsp.rls
+---@field rust lsp.rls.Rust|nil
+---@field rust-client lsp.rls.Rust-client|nil
+
+---@class lsp.rome.Rome
+-- The rome lsp server executable. If the path is relative, the workspace folder will be used as base path
+---@field lspBin string|nil
+-- Enable/Disable Rome handling renames in the workspace. (Experimental)
+---@field rename boolean|nil
+-- Require a Rome configuration file to enable syntax errors, formatting and linting. Requires Rome 12 or newer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field requireConfiguration boolean|nil
+
+---@class lsp.rome.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.rome.Rome.Lsp
+---@field trace lsp.rome.Trace|nil
+
+---@class lsp.rome
+---@field rome lsp.rome.Rome|nil
+---@field rome_lsp lsp.rome.Rome.Lsp|nil
+
+-- Whether to display Quick Fix actions to disable rules via `noqa` suppression comments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.ruff_lsp.DisableRuleComment
+-- Enable the Quick Fix.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+-- Whether to display Quick Fix actions to autofix violations.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.ruff_lsp.FixViolation
+-- Enable the Quick Fix.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.ruff_lsp.CodeAction
+-- Whether to display Quick Fix actions to disable rules via `noqa` suppression comments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disableRuleComment lsp.ruff_lsp.DisableRuleComment|nil
+-- Whether to display Quick Fix actions to autofix violations.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fixViolation lsp.ruff_lsp.FixViolation|nil
+
+---@class lsp.ruff_lsp.Format
+-- Additional command-line arguments to pass to `ruff format`, e.g., `"args": ["--config=/path/to/pyproject.toml"]`. Supports a subset of Ruff's command-line arguments, ignoring those that are required to operate the LSP, like `--force-exclude` and `--verbose`.
+-- 
+-- **This setting is not supported by the native server.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args string[]|nil
+-- The backend to use for formatting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field backend "internal" | "uv"|nil
+-- Enable [preview mode](https://docs.astral.sh/ruff/settings/#format_preview) for the formatter; enables unstable formatting.
+-- 
+-- **This setting is used only by the native server.**
+---@field preview boolean|nil
+
+---@class lsp.ruff_lsp.Lint
+-- Additional command-line arguments to pass to `ruff check`, e.g., `"args": ["--config=/path/to/pyproject.toml"]`. Supports a subset of Ruff's command-line arguments, ignoring those that are required to operate the LSP, like `--force-exclude` and `--verbose`.
+-- 
+-- **This setting is not supported by the native server.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args string[]|nil
+-- Whether to enable linting. Set to `false` to use Ruff exclusively as a formatter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Enable additional rule codes on top of existing configuration, instead of overriding it. Use `ALL` to enable all rules.
+-- 
+-- **This setting is used only by the native server.**
+---@field extendSelect string[]|nil
+-- Set rule codes to disable. See [the documentation](https://docs.astral.sh/ruff/settings/#lint_ignore) for more details.
+-- 
+-- **This setting is used only by the native server.**
+---@field ignore string[]|nil
+-- Enable [preview mode](https://docs.astral.sh/ruff/settings/#lint_preview) for the linter; enables unstable rules and fixes.
+-- 
+-- **This setting is used only by the native server.**
+---@field preview boolean|nil
+-- Run Ruff on every keystroke (`onType`) or on save (`onSave`).
+-- 
+-- **This setting is not supported by the native server.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field run "onType" | "onSave"|nil
+-- Set rule codes to enable. Use `ALL` to enable all rules. See [the documentation](https://docs.astral.sh/ruff/settings/#lint_select) for more details.
+-- 
+-- **This setting is used only by the native server.**
+---@field select string[]|nil
+
+---@class lsp.ruff_lsp.Trace
+-- Traces the communication between VSCode and the ruff-lsp.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.ruff_lsp.Ruff
+-- Additional command-line arguments to pass to `ruff check`, e.g., `"args": ["--config=/path/to/pyproject.toml"]`. Supports a subset of Ruff's command-line arguments, ignoring those that are required to operate the LSP, like `--force-exclude` and `--verbose`.
+-- 
+-- **This setting is not supported by the native server.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args string[]|nil
+---@field codeAction lsp.ruff_lsp.CodeAction|nil
+-- Configuration overrides for Ruff. See [the documentation](https://docs.astral.sh/ruff/editors/settings/#configuration) for more details.
+-- 
+-- **This setting is used only by the native server.**
+---@field configuration string|table|nil
+-- The preferred method of resolving configuration in the editor with local configuration from `.toml` files.
+-- 
+-- **This setting is used only by the native server.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field configurationPreference "editorFirst" | "filesystemFirst" | "editorOnly"|nil
+-- Whether to enable the Ruff extension.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Controls whether Ruff registers as capable of code formatting.
+---@field enableExperimentalFormatter boolean|nil
+-- Set paths for the linter and formatter to ignore. See [the documentation](https://docs.astral.sh/ruff/settings/#lint_exclude) for more details.
+-- 
+-- **This setting is used only by the native server.**
+---@field exclude string[]|nil
+-- Whether to register Ruff as capable of handling `source.fixAll` actions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fixAll boolean|nil
+---@field format lsp.ruff_lsp.Format|nil
+-- Whether to ignore files that are inferred to be part of the Python standard library.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoreStandardLibrary boolean|nil
+-- Strategy for loading the `ruff` executable. `fromEnvironment` picks up Ruff from the environment, falling back to the bundled version if needed. `useBundled` uses the version bundled with the extension.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importStrategy "fromEnvironment" | "useBundled"|nil
+-- Path to a Python interpreter to use to find the `ruff` executable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field interpreter string[]|nil
+-- Set the [line length](https://docs.astral.sh/ruff/settings/#line-length) used by the formatter and linter. Must be greater than 0 and less than or equal to 320.
+-- 
+-- **This setting is used only by the native server.**
+---@field lineLength integer|nil
+---@field lint lsp.ruff_lsp.Lint|nil
+-- Path to the log file for the language server.
+-- 
+-- **This setting is used only by the native server.**
+---@field logFile string|nil
+-- Controls the log level of the language server.
+-- 
+-- **This setting is used only by the native server.**
+---@field logLevel "error" | "warning" | "info" | "debug" | "trace"|nil
+-- Whether to use the native language server, [`ruff-lsp`](https://github.com/astral-sh/ruff-lsp) or automatically decide between the two based on the Ruff version and extension settings.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nativeServer "on" | "off" | "auto" | true | false|nil
+-- Whether to register Ruff as capable of handling `source.organizeImports` actions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field organizeImports boolean|nil
+-- Path to a custom `ruff` executable, e.g., `["/path/to/ruff"]`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string[]|nil
+-- Run Ruff on every keystroke (`onType`) or on save (`onSave`).
+-- 
+-- **This setting is not supported by the native server.**
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field run "onType" | "onSave"|nil
+-- Controls when notifications are shown by this extension.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showNotifications "off" | "onError" | "onWarning" | "always"|nil
+-- Whether to show syntax error diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showSyntaxErrors boolean|nil
+---@field trace lsp.ruff_lsp.Trace|nil
+
+---@class lsp.ruff_lsp
+---@field ruff lsp.ruff_lsp.Ruff|nil
+
+---@class lsp.rust_analyzer.TermSearch
+-- Enable borrow checking for term search code assists. If set to false, also there will be
+-- more suggestions, but some of them may not borrow-check.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field borrowcheck boolean|nil
+-- Term search fuel in "units of work" for assists (Defaults to 1800).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fuel integer|nil
+
+---@class lsp.rust_analyzer.Assist
+-- Insert #[must_use] when generating `as_` methods for enum variants.
+---@field emitMustUse boolean|nil
+-- Placeholder expression to use for missing expressions in assists.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field expressionFillDefault "todo" | "default"|nil
+-- Prefer to use `Self` over the type name when inserting a type (e.g. in "fill match arms" assist).
+---@field preferSelf boolean|nil
+---@field termSearch lsp.rust_analyzer.TermSearch|nil
+
+---@class lsp.rust_analyzer.CachePriming
+-- Warm up caches on project load.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- How many worker threads to handle priming caches. The default `0` means to pick
+-- automatically.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field numThreads number|"physical" | "logical"|nil
+
+---@class lsp.rust_analyzer.BuildScripts
+-- Run build scripts (`build.rs`) for more precise code analysis.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Specifies the invocation strategy to use when running the build scripts command.
+-- If `per_workspace` is set, the command will be executed for each Rust workspace with the
+-- workspace as the working directory.
+-- If `once` is set, the command will be executed once with the opened project as the
+-- working directory.
+-- This config only has an effect when `#rust-analyzer.cargo.buildScripts.overrideCommand#`
+-- is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invocationStrategy "per_workspace" | "once"|nil
+-- Override the command rust-analyzer uses to run build scripts and
+-- build procedural macros. The command is required to output json
+-- and should therefore include `--message-format=json` or a similar
+-- option.
+-- 
+-- If there are multiple linked projects/workspaces, this command is invoked for
+-- each of them, with the working directory being the workspace root
+-- (i.e., the folder containing the `Cargo.toml`). This can be overwritten
+-- by changing `#rust-analyzer.cargo.buildScripts.invocationStrategy#`.
+-- 
+-- By default, a cargo invocation will be constructed for the configured
+-- targets and features, with the following base command line:
+-- 
+-- ```bash
+-- cargo check --quiet --workspace --message-format=json --all-targets --keep-going
+-- ```
+-- 
+-- Note: The option must be specified as an array of command line arguments, with
+-- the first argument being the name of the command to run.
+---@field overrideCommand string[]|nil
+-- Rerun proc-macros building/build-scripts running when proc-macro
+-- or build-script sources change and are saved.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field rebuildOnSave boolean|nil
+-- Use `RUSTC_WRAPPER=rust-analyzer` when running build scripts to
+-- avoid checking unnecessary things.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useRustcWrapper boolean|nil
+
+---@class lsp.rust_analyzer.Cargo
+-- Pass `--all-targets` to cargo invocation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field allTargets boolean|nil
+-- Automatically refresh project info via `cargo metadata` on
+-- `Cargo.toml` or `.cargo/config.toml` changes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoreload boolean|nil
+---@field buildScripts lsp.rust_analyzer.BuildScripts|nil
+-- List of cfg options to enable with the given values.
+-- 
+-- To enable a name without a value, use `"key"`.
+-- To enable a name with a value, use `"key=value"`.
+-- To disable, prefix the entry with a `!`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cfgs string[]|nil
+-- Extra arguments that are passed to every cargo invocation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraArgs string[]|nil
+-- Extra environment variables that will be set when running cargo, rustc
+-- or other commands within the workspace. Useful for setting RUSTFLAGS.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraEnv table|nil
+-- List of features to activate.
+-- 
+-- Set this to `"all"` to pass `--all-features` to cargo.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field features "all"|string[]|nil
+-- Whether to pass `--no-default-features` to cargo.
+---@field noDefaultFeatures boolean|nil
+-- Whether to skip fetching dependencies. If set to "true", the analysis is performed
+-- entirely offline, and Cargo metadata for dependencies is not fetched.
+---@field noDeps boolean|nil
+-- Relative path to the sysroot, or "discover" to try to automatically find it via
+-- "rustc --print sysroot".
+-- 
+-- Unsetting this disables sysroot loading.
+-- 
+-- This option does not take effect until rust-analyzer is restarted.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sysroot string|nil
+-- Relative path to the sysroot library sources. If left unset, this will default to
+-- `{cargo.sysroot}/lib/rustlib/src/rust/library`.
+-- 
+-- This option does not take effect until rust-analyzer is restarted.
+---@field sysrootSrc string|nil
+-- Compilation target override (target tuple).
+---@field target string|nil
+-- Optional path to a rust-analyzer specific target directory.
+-- This prevents rust-analyzer's `cargo check` and initial build-script and proc-macro
+-- building from locking the `Cargo.lock` at the expense of duplicating build artifacts.
+-- 
+-- Set to `true` to use a subdirectory of the existing target directory or
+-- set to a path relative to the workspace to use that path.
+---@field targetDir any|boolean|string|nil
+
+---@class lsp.rust_analyzer.Cfg
+-- Set `cfg(test)` for local crates. Defaults to true.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field setTest boolean|nil
+
+---@class lsp.rust_analyzer.Check
+-- Check all targets and tests (`--all-targets`). Defaults to
+-- `#rust-analyzer.cargo.allTargets#`.
+---@field allTargets boolean|nil
+-- Cargo command to use for `cargo check`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field command string|nil
+-- Extra arguments for `cargo check`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraArgs string[]|nil
+-- Extra environment variables that will be set when running `cargo check`.
+-- Extends `#rust-analyzer.cargo.extraEnv#`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraEnv table|nil
+-- List of features to activate. Defaults to
+-- `#rust-analyzer.cargo.features#`.
+-- 
+-- Set to `"all"` to pass `--all-features` to Cargo.
+---@field features "all"|string[]|any|nil
+-- List of `cargo check` (or other command specified in `check.command`) diagnostics to ignore.
+-- 
+-- For example for `cargo check`: `dead_code`, `unused_imports`, `unused_variables`,...
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignore string[]|nil
+-- Specifies the invocation strategy to use when running the check command.
+-- If `per_workspace` is set, the command will be executed for each workspace.
+-- If `once` is set, the command will be executed once.
+-- This config only has an effect when `#rust-analyzer.check.overrideCommand#`
+-- is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invocationStrategy "per_workspace" | "once"|nil
+-- Whether to pass `--no-default-features` to Cargo. Defaults to
+-- `#rust-analyzer.cargo.noDefaultFeatures#`.
+---@field noDefaultFeatures boolean|nil
+-- Override the command rust-analyzer uses instead of `cargo check` for
+-- diagnostics on save. The command is required to output json and
+-- should therefore include `--message-format=json` or a similar option
+-- (if your client supports the `colorDiagnosticOutput` experimental
+-- capability, you can use `--message-format=json-diagnostic-rendered-ansi`).
+-- 
+-- If you're changing this because you're using some tool wrapping
+-- Cargo, you might also want to change
+-- `#rust-analyzer.cargo.buildScripts.overrideCommand#`.
+-- 
+-- If there are multiple linked projects/workspaces, this command is invoked for
+-- each of them, with the working directory being the workspace root
+-- (i.e., the folder containing the `Cargo.toml`). This can be overwritten
+-- by changing `#rust-analyzer.check.invocationStrategy#`.
+-- 
+-- If `$saved_file` is part of the command, rust-analyzer will pass
+-- the absolute path of the saved file to the provided command. This is
+-- intended to be used with non-Cargo build systems.
+-- Note that `$saved_file` is experimental and may be removed in the future.
+-- 
+-- An example command would be:
+-- 
+-- ```bash
+-- cargo check --workspace --message-format=json --all-targets
+-- ```
+-- 
+-- Note: The option must be specified as an array of command line arguments, with
+-- the first argument being the name of the command to run.
+---@field overrideCommand string[]|nil
+-- Check for specific targets. Defaults to `#rust-analyzer.cargo.target#` if empty.
+-- 
+-- Can be a single target, e.g. `"x86_64-unknown-linux-gnu"` or a list of targets, e.g.
+-- `["aarch64-apple-darwin", "x86_64-apple-darwin"]`.
+-- 
+-- Aliased as `"checkOnSave.targets"`.
+---@field targets any|string|string[]|nil
+-- Whether `--workspace` should be passed to `cargo check`.
+-- If false, `-p <package>` will be passed instead if applicable. In case it is not, no
+-- check will be performed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspace boolean|nil
+
+---@class lsp.rust_analyzer.AutoAwait
+-- Show method calls and field accesses completions with `await` prefixed to them when
+-- completing on a future.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.AutoIter
+-- Show method call completions with `iter()` or `into_iter()` prefixed to them when
+-- completing on a type that has them.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Autoimport
+-- Show completions that automatically add imports when completed.
+-- 
+-- Note that your client must specify the `additionalTextEdits` LSP client capability to
+-- truly have this feature enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- A list of full paths to items to exclude from auto-importing completions.
+-- 
+-- Traits in this list won't have their methods suggested in completions unless the trait
+-- is in scope.
+-- 
+-- You can either specify a string path which defaults to type "always" or use the more
+-- verbose form `{ "path": "path::to::item", type: "always" }`.
+-- 
+-- For traits the type "methods" can be used to only exclude the methods but not the trait
+-- itself.
+-- 
+-- This setting also inherits `#rust-analyzer.completion.excludeTraits#`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude any[]|nil
+
+---@class lsp.rust_analyzer.Autoself
+-- Show method calls and field access completions with `self` prefixed to them when
+-- inside a method.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Callable
+-- Add parenthesis and argument snippets when completing function.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field snippets "fill_arguments" | "add_parentheses" | "none"|nil
+
+---@class lsp.rust_analyzer.FullFunctionSignatures
+-- Show full function / method signatures in completion docs.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Postfix
+-- Show postfix snippets like `dbg`, `if`, `not`, etc.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.PrivateEditable
+-- Show completions of private items and fields that are defined in the current workspace
+-- even if they are not visible at the current position.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Snippets
+-- Custom completion snippets.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field custom table|nil
+
+---@class lsp.rust_analyzer.TermSearch
+-- Enable term search based snippets like `Some(foo.bar().baz())`.
+---@field enable boolean|nil
+-- Term search fuel in "units of work" for autocompletion (Defaults to 1000).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fuel integer|nil
+
+---@class lsp.rust_analyzer.Completion
+-- Automatically add a semicolon when completing unit-returning functions.
+-- 
+-- In `match` arms it completes a comma instead.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addSemicolonToUnit boolean|nil
+---@field autoAwait lsp.rust_analyzer.AutoAwait|nil
+---@field autoIter lsp.rust_analyzer.AutoIter|nil
+---@field autoimport lsp.rust_analyzer.Autoimport|nil
+---@field autoself lsp.rust_analyzer.Autoself|nil
+---@field callable lsp.rust_analyzer.Callable|nil
+-- A list of full paths to traits whose methods to exclude from completion.
+-- 
+-- Methods from these traits won't be completed, even if the trait is in scope. However,
+-- they will still be suggested on expressions whose type is `dyn Trait`, `impl Trait` or
+-- `T where T: Trait`.
+-- 
+-- Note that the trait themselves can still be completed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeTraits string[]|nil
+---@field fullFunctionSignatures lsp.rust_analyzer.FullFunctionSignatures|nil
+-- Omit deprecated items from completions. By default they are marked as deprecated but not
+-- hidden.
+---@field hideDeprecated boolean|nil
+-- Maximum number of completions to return. If `None`, the limit is infinite.
+---@field limit integer|nil
+---@field postfix lsp.rust_analyzer.Postfix|nil
+---@field privateEditable lsp.rust_analyzer.PrivateEditable|nil
+---@field snippets lsp.rust_analyzer.Snippets|nil
+---@field termSearch lsp.rust_analyzer.TermSearch|nil
+
+---@class lsp.rust_analyzer.Debug
+-- Whether to rebuild the project modules before debugging the same test again
+---@field buildBeforeRestart boolean|nil
+-- Preferred debug engine.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field engine "auto" | "llvm-vs-code-extensions.lldb-dap" | "vadimcn.vscode-lldb" | "ms-vscode.cpptools" | "webfreak.debug"|nil
+-- Optional settings passed to the debug engine. Example: `{ "lldb": { "terminal":"external"} }`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field engineSettings table|nil
+-- Optional source file mappings passed to the debug engine.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sourceFileMap table|string|nil
+
+---@class lsp.rust_analyzer.Experimental
+-- Show experimental rust-analyzer diagnostics that might have more false positives than
+-- usual.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.StyleLints
+-- Run additional style lints.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Diagnostics
+-- List of rust-analyzer diagnostics to disable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disabled string[]|nil
+-- Show native rust-analyzer diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field experimental lsp.rust_analyzer.Experimental|nil
+-- Whether to show the main part of the rendered rustc output of a diagnostic message.
+---@field previewRustcOutput boolean|nil
+-- Map of prefixes to be substituted when parsing diagnostic file paths. This should be the
+-- reverse mapping of what is passed to `rustc` as `--remap-path-prefix`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field remapPrefix table|nil
+---@field styleLints lsp.rust_analyzer.StyleLints|nil
+-- Whether to show diagnostics using the original rustc error code. If this is false, all rustc diagnostics will have the code 'rustc(Click for full compiler diagnostics)'
+---@field useRustcErrorCode boolean|nil
+-- List of warnings that should be displayed with hint severity.
+-- 
+-- The warnings will be indicated by faded text or three dots in code and will not show up
+-- in the `Problems Panel`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warningsAsHint string[]|nil
+-- List of warnings that should be displayed with info severity.
+-- 
+-- The warnings will be indicated by a blue squiggly underline in code and a blue icon in
+-- the `Problems Panel`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warningsAsInfo string[]|nil
+
+---@class lsp.rust_analyzer.Search
+-- Exclude all locals from document symbol search.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeLocals boolean|nil
+
+---@class lsp.rust_analyzer.Symbol
+---@field search lsp.rust_analyzer.Search|nil
+
+---@class lsp.rust_analyzer.Document
+---@field symbol lsp.rust_analyzer.Symbol|nil
+
+---@class lsp.rust_analyzer.Files
+-- List of files to ignore
+-- 
+-- These paths (file/directories) will be ignored by rust-analyzer. They are relative to
+-- the workspace root, and globs are not supported. You may also need to add the folders to
+-- Code's `files.watcherExclude`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Controls file watching implementation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field watcher "client" | "server"|nil
+
+---@class lsp.rust_analyzer.BranchExitPoints
+-- Highlight related return values while the cursor is on any `match`, `if`, or match arm
+-- arrow (`=>`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.BreakPoints
+-- Highlight related references while the cursor is on `break`, `loop`, `while`, or `for`
+-- keywords.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ClosureCaptures
+-- Highlight all captures of a closure while the cursor is on the `|` or move keyword of a closure.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ExitPoints
+-- Highlight all exit points while the cursor is on any `return`, `?`, `fn`, or return type
+-- arrow (`->`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.References
+-- Highlight related references while the cursor is on any identifier.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.YieldPoints
+-- Highlight all break points for a loop or block context while the cursor is on any
+-- `async` or `await` keywords.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.HighlightRelated
+---@field branchExitPoints lsp.rust_analyzer.BranchExitPoints|nil
+---@field breakPoints lsp.rust_analyzer.BreakPoints|nil
+---@field closureCaptures lsp.rust_analyzer.ClosureCaptures|nil
+---@field exitPoints lsp.rust_analyzer.ExitPoints|nil
+---@field references lsp.rust_analyzer.References|nil
+---@field yieldPoints lsp.rust_analyzer.YieldPoints|nil
+
+---@class lsp.rust_analyzer.Debug
+-- Show `Debug` action. Only applies when `#rust-analyzer.hover.actions.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.GotoTypeDef
+-- Show `Go to Type Definition` action. Only applies when
+-- `#rust-analyzer.hover.actions.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Implementations
+-- Show `Implementations` action. Only applies when `#rust-analyzer.hover.actions.enable#`
+-- is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.References
+-- Show `References` action. Only applies when `#rust-analyzer.hover.actions.enable#` is
+-- set.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Run
+-- Show `Run` action. Only applies when `#rust-analyzer.hover.actions.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.UpdateTest
+-- Show `Update Test` action. Only applies when `#rust-analyzer.hover.actions.enable#` and
+-- `#rust-analyzer.hover.actions.run.enable#` are set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Actions
+---@field debug lsp.rust_analyzer.Debug|nil
+-- Show HoverActions in Rust files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field gotoTypeDef lsp.rust_analyzer.GotoTypeDef|nil
+---@field implementations lsp.rust_analyzer.Implementations|nil
+---@field references lsp.rust_analyzer.References|nil
+---@field run lsp.rust_analyzer.Run|nil
+---@field updateTest lsp.rust_analyzer.UpdateTest|nil
+
+---@class lsp.rust_analyzer.Keywords
+-- Show keyword hover popups. Only applies when
+-- `#rust-analyzer.hover.documentation.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Documentation
+-- Show documentation on hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field keywords lsp.rust_analyzer.Keywords|nil
+
+---@class lsp.rust_analyzer.DropGlue
+-- Show drop glue information on hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Links
+-- Use markdown syntax for links on hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.MemoryLayout
+-- How to render the align information in a memory layout hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field alignment any|"both" | "decimal" | "hexadecimal"|nil
+-- Show memory layout data on hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- How to render the niche information in a memory layout hover.
+---@field niches boolean|nil
+-- How to render the offset information in a memory layout hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field offset any|"both" | "decimal" | "hexadecimal"|nil
+-- How to render the padding information in a memory layout hover.
+---@field padding any|"both" | "decimal" | "hexadecimal"|nil
+-- How to render the size information in a memory layout hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field size any|"both" | "decimal" | "hexadecimal"|nil
+
+---@class lsp.rust_analyzer.Show
+-- How many variants of an enum to display when hovering on. Show none if empty.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enumVariants integer|nil
+-- How many fields of a struct, variant or union to display when hovering on. Show none if
+-- empty.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fields integer|nil
+-- How many associated items of a trait to display when hovering a trait.
+---@field traitAssocItems integer|nil
+
+---@class lsp.rust_analyzer.Hover
+---@field actions lsp.rust_analyzer.Actions|nil
+---@field documentation lsp.rust_analyzer.Documentation|nil
+---@field dropGlue lsp.rust_analyzer.DropGlue|nil
+---@field links lsp.rust_analyzer.Links|nil
+-- Show what types are used as generic arguments in calls etc. on hover, and limit the max
+-- length to show such types, beyond which they will be shown with ellipsis.
+-- 
+-- This can take three values: `null` means "unlimited", the string `"hide"` means to not
+-- show generic substitutions at all, and a number means to limit them to X characters.
+-- 
+-- The default is 20 characters.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxSubstitutionLength any|"hide"|integer|nil
+---@field memoryLayout lsp.rust_analyzer.MemoryLayout|nil
+---@field show lsp.rust_analyzer.Show|nil
+
+---@class lsp.rust_analyzer.Granularity
+-- Enforce the import granularity setting for all files. If set to false rust-analyzer will
+-- try to keep import styles consistent per file.
+---@field enforce boolean|nil
+-- How imports should be grouped into use statements.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field group string|nil
+
+---@class lsp.rust_analyzer.Group
+-- Group inserted imports by the [following
+-- order](https://rust-analyzer.github.io/book/features.html#auto-import). Groups are
+-- separated by newlines.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Merge
+-- Allow import insertion to merge new imports into single path glob imports like `use
+-- std::fmt::*;`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field glob boolean|nil
+
+---@class lsp.rust_analyzer.Imports
+---@field granularity lsp.rust_analyzer.Granularity|nil
+---@field group lsp.rust_analyzer.Group|nil
+---@field merge lsp.rust_analyzer.Merge|nil
+-- Prefer to unconditionally use imports of the core and alloc crate, over the std crate.
+---@field preferNoStd boolean|nil
+-- Prefer import paths containing a `prelude` module.
+---@field preferPrelude boolean|nil
+-- The path structure for newly inserted paths to use.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field prefix "plain" | "self" | "crate"|nil
+-- Prefix external (including std, core) crate imports with `::`.
+-- 
+-- E.g. `use ::std::io::Read;`.
+---@field prefixExternPrelude boolean|nil
+
+---@class lsp.rust_analyzer.BindingModeHints
+-- Show inlay type hints for binding modes.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ChainingHints
+-- Show inlay type hints for method chains.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ClosingBraceHints
+-- Show inlay hints after a closing `}` to indicate what item it belongs to.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Minimum number of lines required before the `}` until the hint is shown (set to 0 or 1
+-- to always show them).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field minLines integer|nil
+
+---@class lsp.rust_analyzer.ClosureCaptureHints
+-- Show inlay hints for closure captures.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ClosureReturnTypeHints
+-- Show inlay type hints for return types of closures.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable "always" | "never" | "with_block"|nil
+
+---@class lsp.rust_analyzer.DiscriminantHints
+-- Show enum variant discriminant hints.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable "always" | "never" | "fieldless"|nil
+
+---@class lsp.rust_analyzer.ExpressionAdjustmentHints
+-- Disable reborrows in expression adjustments inlay hints.
+-- 
+-- Reborrows are a pair of a builtin deref then borrow, i.e. `&*`. They are inserted by the compiler but are mostly useless to the programmer.
+-- 
+-- Note: if the deref is not builtin (an overloaded deref), or the borrow is `&raw const`/`&raw mut`, they are not removed.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disableReborrows boolean|nil
+-- Show inlay hints for type adjustments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable "always" | "never" | "reborrow"|nil
+-- Hide inlay hints for type adjustments outside of `unsafe` blocks.
+---@field hideOutsideUnsafe boolean|nil
+-- Show inlay hints as postfix ops (`.*` instead of `*`, etc).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mode "prefix" | "postfix" | "prefer_prefix" | "prefer_postfix"|nil
+
+---@class lsp.rust_analyzer.Const
+-- Show const generic parameter name inlay hints.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Lifetime
+-- Show generic lifetime parameter name inlay hints.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Type
+-- Show generic type parameter name inlay hints.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.GenericParameterHints
+---@field const lsp.rust_analyzer.Const|nil
+---@field lifetime lsp.rust_analyzer.Lifetime|nil
+---@field type lsp.rust_analyzer.Type|nil
+
+---@class lsp.rust_analyzer.ImplicitDrops
+-- Show implicit drop hints.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ImplicitSizedBoundHints
+-- Show inlay hints for the implied type parameter `Sized` bound.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.LifetimeElisionHints
+-- Show inlay type hints for elided lifetimes in function signatures.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable "always" | "never" | "skip_trivial"|nil
+-- Prefer using parameter names as the name for elided lifetime hints if possible.
+---@field useParameterNames boolean|nil
+
+---@class lsp.rust_analyzer.ParameterHints
+-- Show function parameter name inlay hints at the call site.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.RangeExclusiveHints
+-- Show exclusive range inlay hints.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ReborrowHints
+-- Show inlay hints for compiler inserted reborrows.
+-- 
+-- This setting is deprecated in favor of
+-- #rust-analyzer.inlayHints.expressionAdjustmentHints.enable#.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable "always" | "never" | "mutable"|nil
+
+---@class lsp.rust_analyzer.TypeHints
+-- Show inlay type hints for variables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Hide inlay type hints for `let` statements that initialize to a closure.
+-- 
+-- Only applies to closures with blocks, same as
+-- `#rust-analyzer.inlayHints.closureReturnTypeHints.enable#`.
+---@field hideClosureInitialization boolean|nil
+-- Hide inlay parameter type hints for closures.
+---@field hideClosureParameter boolean|nil
+-- Hide inlay type hints for constructors.
+---@field hideNamedConstructor boolean|nil
+
+---@class lsp.rust_analyzer.InlayHints
+---@field bindingModeHints lsp.rust_analyzer.BindingModeHints|nil
+---@field chainingHints lsp.rust_analyzer.ChainingHints|nil
+---@field closingBraceHints lsp.rust_analyzer.ClosingBraceHints|nil
+---@field closureCaptureHints lsp.rust_analyzer.ClosureCaptureHints|nil
+---@field closureReturnTypeHints lsp.rust_analyzer.ClosureReturnTypeHints|nil
+-- Closure notation in type and chaining inlay hints.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field closureStyle "impl_fn" | "rust_analyzer" | "with_id" | "hide"|nil
+---@field discriminantHints lsp.rust_analyzer.DiscriminantHints|nil
+---@field expressionAdjustmentHints lsp.rust_analyzer.ExpressionAdjustmentHints|nil
+---@field genericParameterHints lsp.rust_analyzer.GenericParameterHints|nil
+---@field implicitDrops lsp.rust_analyzer.ImplicitDrops|nil
+---@field implicitSizedBoundHints lsp.rust_analyzer.ImplicitSizedBoundHints|nil
+---@field lifetimeElisionHints lsp.rust_analyzer.LifetimeElisionHints|nil
+-- Maximum length for inlay hints. Set to null to have an unlimited length.
+-- 
+-- **Note:** This is mostly a hint, and we don't guarantee to strictly follow the limit.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxLength integer|nil
+---@field parameterHints lsp.rust_analyzer.ParameterHints|nil
+---@field rangeExclusiveHints lsp.rust_analyzer.RangeExclusiveHints|nil
+---@field reborrowHints lsp.rust_analyzer.ReborrowHints|nil
+-- Whether to render leading colons for type hints, and trailing colons for parameter hints.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renderColons boolean|nil
+---@field typeHints lsp.rust_analyzer.TypeHints|nil
+
+---@class lsp.rust_analyzer.Interpret
+-- Enable the experimental support for interpreting tests.
+---@field tests boolean|nil
+
+---@class lsp.rust_analyzer.JoinLines
+-- Join lines merges consecutive declaration and initialization of an assignment.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field joinAssignments boolean|nil
+-- Join lines inserts else between consecutive ifs.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field joinElseIf boolean|nil
+-- Join lines removes trailing commas.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field removeTrailingComma boolean|nil
+-- Join lines unwraps trivial blocks.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unwrapTrivialBlock boolean|nil
+
+---@class lsp.rust_analyzer.Debug
+-- Show `Debug` lens. Only applies when `#rust-analyzer.lens.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Implementations
+-- Show `Implementations` lens. Only applies when `#rust-analyzer.lens.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Adt
+-- Show `References` lens for Struct, Enum, and Union. Only applies when
+-- `#rust-analyzer.lens.enable#` is set.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.EnumVariant
+-- Show `References` lens for Enum Variants. Only applies when
+-- `#rust-analyzer.lens.enable#` is set.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Method
+-- Show `Method References` lens. Only applies when `#rust-analyzer.lens.enable#` is set.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Trait
+-- Show `References` lens for Trait. Only applies when `#rust-analyzer.lens.enable#` is
+-- set.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.References
+---@field adt lsp.rust_analyzer.Adt|nil
+---@field enumVariant lsp.rust_analyzer.EnumVariant|nil
+---@field method lsp.rust_analyzer.Method|nil
+---@field trait lsp.rust_analyzer.Trait|nil
+
+---@class lsp.rust_analyzer.Run
+-- Show `Run` lens. Only applies when `#rust-analyzer.lens.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.UpdateTest
+-- Show `Update Test` lens. Only applies when `#rust-analyzer.lens.enable#` and
+-- `#rust-analyzer.lens.run.enable#` are set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Lens
+---@field debug lsp.rust_analyzer.Debug|nil
+-- Show CodeLens in Rust files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field implementations lsp.rust_analyzer.Implementations|nil
+-- Where to render annotations.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field location "above_name" | "above_whole_item"|nil
+---@field references lsp.rust_analyzer.References|nil
+---@field run lsp.rust_analyzer.Run|nil
+---@field updateTest lsp.rust_analyzer.UpdateTest|nil
+
+---@class lsp.rust_analyzer.Query
+-- The LRU capacity of the specified queries.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field capacities table|nil
+
+---@class lsp.rust_analyzer.Lru
+-- Number of syntax trees rust-analyzer keeps in memory. Defaults to 128.
+---@field capacity integer|nil
+---@field query lsp.rust_analyzer.Query|nil
+
+---@class lsp.rust_analyzer.Notifications
+-- Show `can't find Cargo.toml` error message.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cargoTomlNotFound boolean|nil
+
+---@class lsp.rust_analyzer.Attributes
+-- Expand attribute macros. Requires `#rust-analyzer.procMacro.enable#` to be set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.ProcMacro
+---@field attributes lsp.rust_analyzer.Attributes|nil
+-- Enable support for procedural macros, implies `#rust-analyzer.cargo.buildScripts.enable#`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- These proc-macros will be ignored when trying to expand them.
+-- 
+-- This config takes a map of crate names with the exported proc-macro names to ignore as values.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignored table|nil
+-- Internal config, path to proc-macro server executable.
+---@field server string|nil
+
+---@class lsp.rust_analyzer.References
+-- Exclude imports from find-all-references.
+---@field excludeImports boolean|nil
+-- Exclude tests from find-all-references and call-hierarchy.
+---@field excludeTests boolean|nil
+
+---@class lsp.rust_analyzer.Runnables
+-- Ask before updating the test when running it.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field askBeforeUpdateTest boolean|nil
+-- Command to be executed instead of 'cargo' for runnables.
+---@field command string|nil
+-- Additional arguments to be passed to cargo for runnables such as
+-- tests or binaries. For example, it may be `--release`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraArgs string[]|nil
+-- Environment variables passed to the runnable launched using `Test` or `Debug` lens or `rust-analyzer.run` command.
+---@field extraEnv any|object[]|table|nil
+-- Additional arguments to be passed through Cargo to launched tests, benchmarks, or
+-- doc-tests.
+-- 
+-- Unless the launched target uses a
+-- [custom test harness](https://doc.rust-lang.org/cargo/reference/cargo-targets.html#the-harness-field),
+-- they will end up being interpreted as options to
+-- [`rustc`’s built-in test harness (“libtest”)](https://doc.rust-lang.org/rustc/tests/index.html#cli-arguments).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraTestBinaryArgs string[]|nil
+-- Problem matchers to use for `rust-analyzer.run` command, eg `["$rustc", "$rust-panic"]`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field problemMatcher string[]|nil
+
+---@class lsp.rust_analyzer.Rustc
+-- Path to the Cargo.toml of the rust compiler workspace, for usage in rustc_private
+-- projects, or "discover" to try to automatically find it if the `rustc-dev` component
+-- is installed.
+-- 
+-- Any project which uses rust-analyzer with the rustcPrivate
+-- crates must set `[package.metadata.rust-analyzer] rustc_private=true` to use it.
+-- 
+-- This option does not take effect until rust-analyzer is restarted.
+---@field source string|nil
+
+---@class lsp.rust_analyzer.RangeFormatting
+-- Enables the use of rustfmt's unstable range formatting command for the
+-- `textDocument/rangeFormatting` request. The rustfmt option is unstable and only
+-- available on a nightly build.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Rustfmt
+-- Additional arguments to `rustfmt`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraArgs string[]|nil
+-- Advanced option, fully override the command rust-analyzer uses for
+-- formatting. This should be the equivalent of `rustfmt` here, and
+-- not that of `cargo fmt`. The file contents will be passed on the
+-- standard input and the formatted result will be read from the
+-- standard output.
+-- 
+-- Note: The option must be specified as an array of command line arguments, with
+-- the first argument being the name of the command to run.
+---@field overrideCommand string[]|nil
+---@field rangeFormatting lsp.rust_analyzer.RangeFormatting|nil
+
+---@class lsp.rust_analyzer.Comments
+-- Use semantic tokens for comments.
+-- 
+-- In some editors (e.g. vscode) semantic tokens override other highlighting grammars.
+-- By disabling semantic tokens for comments, other grammars can be used to highlight
+-- their contents.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Inject
+-- Inject additional highlighting into doc comments.
+-- 
+-- When enabled, rust-analyzer will highlight rust source in doc comments as well as intra
+-- doc links.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Comment
+---@field inject lsp.rust_analyzer.Inject|nil
+
+---@class lsp.rust_analyzer.Doc
+---@field comment lsp.rust_analyzer.Comment|nil
+
+---@class lsp.rust_analyzer.Specialization
+-- Use specialized semantic tokens for operators.
+-- 
+-- When enabled, rust-analyzer will emit special token types for operator tokens instead
+-- of the generic `operator` token type.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Operator
+-- Use semantic tokens for operators.
+-- 
+-- When disabled, rust-analyzer will emit semantic tokens only for operator tokens when
+-- they are tagged with modifiers.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field specialization lsp.rust_analyzer.Specialization|nil
+
+---@class lsp.rust_analyzer.Macro
+-- When enabled, rust-analyzer will emit a punctuation semantic token for the `!` of macro
+-- calls.
+---@field bang boolean|nil
+
+---@class lsp.rust_analyzer.Separate
+---@field macro lsp.rust_analyzer.Macro|nil
+
+---@class lsp.rust_analyzer.Specialization
+-- Use specialized semantic tokens for punctuation.
+-- 
+-- When enabled, rust-analyzer will emit special token types for punctuation tokens instead
+-- of the generic `punctuation` token type.
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.Punctuation
+-- Use semantic tokens for punctuation.
+-- 
+-- When disabled, rust-analyzer will emit semantic tokens only for punctuation tokens when
+-- they are tagged with modifiers or have a special role.
+---@field enable boolean|nil
+---@field separate lsp.rust_analyzer.Separate|nil
+---@field specialization lsp.rust_analyzer.Specialization|nil
+
+---@class lsp.rust_analyzer.Strings
+-- Use semantic tokens for strings.
+-- 
+-- In some editors (e.g. vscode) semantic tokens override other highlighting grammars.
+-- By disabling semantic tokens for strings, other grammars can be used to highlight
+-- their contents.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.SemanticHighlighting
+---@field comments lsp.rust_analyzer.Comments|nil
+---@field doc lsp.rust_analyzer.Doc|nil
+-- Emit non-standard tokens and modifiers
+-- 
+-- When enabled, rust-analyzer will emit tokens and modifiers that are not part of the
+-- standard set of semantic tokens.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nonStandardTokens boolean|nil
+---@field operator lsp.rust_analyzer.Operator|nil
+---@field punctuation lsp.rust_analyzer.Punctuation|nil
+---@field strings lsp.rust_analyzer.Strings|nil
+
+---@class lsp.rust_analyzer.Server
+-- Extra environment variables that will be passed to the rust-analyzer executable. Useful for passing e.g. `RA_LOG` for debugging.
+---@field extraEnv table|nil
+-- Path to rust-analyzer executable (points to bundled binary by default).
+---@field path string|nil
+
+---@class lsp.rust_analyzer.Documentation
+-- Show documentation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.rust_analyzer.SignatureInfo
+-- Show full signature of the callable. Only shows parameters if disabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field detail "full" | "parameters"|nil
+---@field documentation lsp.rust_analyzer.Documentation|nil
+
+---@class lsp.rust_analyzer.StatusBar
+-- Action to run when clicking the extension status bar item.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field clickAction "stopServer" | "openLogs"|nil
+-- When to show the extension status bar.
+-- 
+-- `"always"` Always show the status bar.
+-- 
+-- `"never"` Never show the status bar.
+-- 
+-- `{ documentSelector: <DocumentSelector>[] }` Show the status bar if the open file matches any of the given document selectors.
+-- 
+-- See [VS Code -- DocumentSelector](https://code.visualstudio.com/api/references/document-selector) for more information.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showStatusBar "always" | "never"|table|nil
+
+---@class lsp.rust_analyzer.Trace
+-- Enable logging of VS Code extensions itself.
+---@field extension boolean|nil
+-- Trace requests to the rust-analyzer (this is usually overly verbose and not recommended for regular users).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.rust_analyzer.Typing
+-- Whether to prefix newlines after comments with the corresponding comment prefix.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field continueCommentsOnNewline boolean|nil
+-- Specify the characters allowed to invoke special on typing triggers.
+-- 
+-- - typing `=` after `let` tries to smartly add `;` if `=` is followed by an existing
+--     expression
+-- - typing `=` between two expressions adds `;` when in statement position
+-- - typing `=` to turn an assignment into an equality comparison removes `;` when in
+--     expression position
+-- - typing `.` in a chain method call auto-indents
+-- - typing `{` or `(` in front of an expression inserts a closing `}` or `)` after the
+--     expression
+-- - typing `{` in a use item adds a closing `}` in the right place
+-- - typing `>` to complete a return type `->` will insert a whitespace after it
+-- - typing `<` in a path or type position inserts a closing `>` after the path or type.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field triggerChars string|nil
+
+---@class lsp.rust_analyzer.Vfs
+-- Additional paths to include in the VFS. Generally for code that is
+-- generated or otherwise managed by a build system outside of Cargo,
+-- though Cargo might be the eventual consumer.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraIncludes string[]|nil
+
+---@class lsp.rust_analyzer.Search
+-- Exclude all imports from workspace symbol search.
+-- 
+-- In addition to regular imports (which are always excluded),
+-- this option removes public imports (better known as re-exports)
+-- and removes imports that rename the imported symbol.
+---@field excludeImports boolean|nil
+-- Workspace symbol search kind.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field kind "only_types" | "all_symbols"|nil
+-- Limits the number of items returned from a workspace symbol search (Defaults to 128).
+-- Some clients like vs-code issue new searches on result filtering and don't require all results to be returned in the initial search.
+-- Other clients requires all results upfront and might require a higher limit.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field limit integer|nil
+-- Workspace symbol search scope.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scope "workspace" | "workspace_and_dependencies"|nil
+
+---@class lsp.rust_analyzer.Symbol
+---@field search lsp.rust_analyzer.Search|nil
+
+---@class lsp.rust_analyzer.Workspace
+-- Enables automatic discovery of projects using [`DiscoverWorkspaceConfig::command`].
+-- 
+-- [`DiscoverWorkspaceConfig`] also requires setting `progress_label` and `files_to_watch`.
+-- `progress_label` is used for the title in progress indicators, whereas `files_to_watch`
+-- is used to determine which build system-specific files should be watched in order to
+-- reload rust-analyzer.
+-- 
+-- Below is an example of a valid configuration:
+-- ```json
+-- "rust-analyzer.workspace.discoverConfig": {
+--         "command": [
+--                 "rust-project",
+--                 "develop-json"
+--         ],
+--         "progressLabel": "rust-analyzer",
+--         "filesToWatch": [
+--                 "BUCK"
+--         ]
+-- }
+-- ```
+-- 
+-- ## On `DiscoverWorkspaceConfig::command`
+-- 
+-- **Warning**: This format is provisional and subject to change.
+-- 
+-- [`DiscoverWorkspaceConfig::command`] *must* return a JSON object corresponding to
+-- `DiscoverProjectData::Finished`:
+-- 
+-- ```norun
+-- #[derive(Debug, Clone, Deserialize, Serialize)]
+-- #[serde(tag = "kind")]
+-- #[serde(rename_all = "snake_case")]
+-- enum DiscoverProjectData {
+--         Finished { buildfile: Utf8PathBuf, project: ProjectJsonData },
+--         Error { error: String, source: Option<String> },
+--         Progress { message: String },
+-- }
+-- ```
+-- 
+-- As JSON, `DiscoverProjectData::Finished` is:
+-- 
+-- ```json
+-- {
+--         // the internally-tagged representation of the enum.
+--         "kind": "finished",
+--         // the file used by a non-Cargo build system to define
+--         // a package or target.
+--         "buildfile": "rust-analyzer/BUILD",
+--         // the contents of a rust-project.json, elided for brevity
+--         "project": {
+--                 "sysroot": "foo",
+--                 "crates": []
+--         }
+-- }
+-- ```
+-- 
+-- It is encouraged, but not required, to use the other variants on `DiscoverProjectData`
+-- to provide a more polished end-user experience.
+-- 
+-- `DiscoverWorkspaceConfig::command` may *optionally* include an `{arg}`, which will be
+-- substituted with the JSON-serialized form of the following enum:
+-- 
+-- ```norun
+-- #[derive(PartialEq, Clone, Debug, Serialize)]
+-- #[serde(rename_all = "camelCase")]
+-- pub enum DiscoverArgument {
+--      Path(AbsPathBuf),
+--      Buildfile(AbsPathBuf),
+-- }
+-- ```
+-- 
+-- The JSON representation of `DiscoverArgument::Path` is:
+-- 
+-- ```json
+-- {
+--         "path": "src/main.rs"
+-- }
+-- ```
+-- 
+-- Similarly, the JSON representation of `DiscoverArgument::Buildfile` is:
+-- 
+-- ```json
+-- {
+--         "buildfile": "BUILD"
+-- }
+-- ```
+-- 
+-- `DiscoverArgument::Path` is used to find and generate a `rust-project.json`, and
+-- therefore, a workspace, whereas `DiscoverArgument::buildfile` is used to to update an
+-- existing workspace. As a reference for implementors, buck2's `rust-project` will likely
+-- be useful: https://github.com/facebook/buck2/tree/main/integrations/rust-project.
+---@field discoverConfig any|table|nil
+---@field symbol lsp.rust_analyzer.Symbol|nil
+
+---@class lsp.rust_analyzer.Rust-analyzer
+---@field assist lsp.rust_analyzer.Assist|nil
+---@field cachePriming lsp.rust_analyzer.CachePriming|nil
+---@field cargo lsp.rust_analyzer.Cargo|nil
+---@field cfg lsp.rust_analyzer.Cfg|nil
+---@field check lsp.rust_analyzer.Check|nil
+-- Run the check command for diagnostics on save.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checkOnSave boolean|nil
+---@field completion lsp.rust_analyzer.Completion|nil
+---@field debug lsp.rust_analyzer.Debug|nil
+---@field diagnostics lsp.rust_analyzer.Diagnostics|nil
+---@field document lsp.rust_analyzer.Document|nil
+---@field files lsp.rust_analyzer.Files|nil
+---@field highlightRelated lsp.rust_analyzer.HighlightRelated|nil
+---@field hover lsp.rust_analyzer.Hover|nil
+---@field imports lsp.rust_analyzer.Imports|nil
+-- Do not start rust-analyzer server when the extension is activated.
+---@field initializeStopped boolean|nil
+---@field inlayHints lsp.rust_analyzer.InlayHints|nil
+---@field interpret lsp.rust_analyzer.Interpret|nil
+---@field joinLines lsp.rust_analyzer.JoinLines|nil
+---@field lens lsp.rust_analyzer.Lens|nil
+-- Disable project auto-discovery in favor of explicitly specified set of projects.
+-- 
+-- Elements must be paths pointing to `Cargo.toml`, `rust-project.json`, `.rs` files (which
+-- will be treated as standalone files) or JSON objects in `rust-project.json` format.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field linkedProjects any[]|nil
+---@field lru lsp.rust_analyzer.Lru|nil
+---@field notifications lsp.rust_analyzer.Notifications|nil
+-- The number of worker threads in the main loop. The default `null` means to pick
+-- automatically.
+---@field numThreads any|number|"physical" | "logical"|nil
+---@field procMacro lsp.rust_analyzer.ProcMacro|nil
+---@field references lsp.rust_analyzer.References|nil
+-- Restart the server automatically when settings that require a restart are changed.
+---@field restartServerOnConfigChange boolean|nil
+---@field runnables lsp.rust_analyzer.Runnables|nil
+---@field rustc lsp.rust_analyzer.Rustc|nil
+---@field rustfmt lsp.rust_analyzer.Rustfmt|nil
+---@field semanticHighlighting lsp.rust_analyzer.SemanticHighlighting|nil
+---@field server lsp.rust_analyzer.Server|nil
+-- Show Rust Dependencies in the Explorer view.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showDependenciesExplorer boolean|nil
+-- Show error notifications when requests fail.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showRequestFailedErrorNotification boolean|nil
+-- Show Syntax Tree in the Explorer view.
+---@field showSyntaxTree boolean|nil
+-- Show a notification for unlinked files, prompting the user to add the corresponding Cargo.toml to the linked projects setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showUnlinkedFileNotification boolean|nil
+---@field signatureInfo lsp.rust_analyzer.SignatureInfo|nil
+---@field statusBar lsp.rust_analyzer.StatusBar|nil
+-- Show the Test Explorer view.
+---@field testExplorer boolean|nil
+---@field trace lsp.rust_analyzer.Trace|nil
+---@field typing lsp.rust_analyzer.Typing|nil
+---@field vfs lsp.rust_analyzer.Vfs|nil
+---@field workspace lsp.rust_analyzer.Workspace|nil
+
+---@class lsp.rust_analyzer
+---@field rust-analyzer lsp.rust_analyzer.Rust-analyzer|nil
+
+-- The host and port to use for external transports. (Ignored for stdio and socket transports.)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.solargraph.ExternalServer
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field host string|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field port integer|nil
+
+---@class lsp.solargraph.Solargraph
+-- Enable automatic formatting while typing (WARNING: experimental)
+---@field autoformat true | false|nil
+-- Path to the bundle executable, defaults to 'bundle'. Needs to be an absolute path for the 'bundle' exec/shim
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field bundlerPath string|nil
+-- Automatically check if a new version of the Solargraph gem is available.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checkGemVersion true | false|nil
+-- Path to the solargraph command.  Set this to an absolute path to select from multiple installed Ruby versions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field commandPath string|nil
+-- Enable completion
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completion true | false|nil
+-- Enable definitions (go to, etc.)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field definitions true | false|nil
+-- Enable diagnostics
+---@field diagnostics true | false|nil
+-- The host and port to use for external transports. (Ignored for stdio and socket transports.)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field externalServer lsp.solargraph.ExternalServer|nil
+-- Enable folding ranges
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field folding boolean|nil
+-- Enable document formatting
+---@field formatting true | false|nil
+-- Enable hover
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hover true | false|nil
+-- Level of debug info to log. `warn` is least and `debug` is most.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "warn" | "info" | "debug"|nil
+-- Enable finding references
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field references true | false|nil
+-- Enable symbol renaming
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field rename true | false|nil
+-- Enable symbols
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field symbols true | false|nil
+-- The type of transport to use.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field transport "socket" | "stdio" | "external"|nil
+-- Use `bundle exec` to run solargraph. (If this is true, the solargraph.commandPath setting is ignored.)
+---@field useBundler boolean|nil
+
+---@class lsp.solargraph
+---@field solargraph lsp.solargraph.Solargraph|nil
+
+---@class lsp.solidity_ls.Solidity
+-- Compile using a local solc (js) binary file, please include the path of the file if wanted: 'C://v0.4.3+commit.2353da71.js'
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compileUsingLocalVersion string|nil
+-- Configuration to download a 'remote' solc (js) version binary file from 'https://binaries.soliditylang.org/', for example: 'latest' will always use the latest version, or a specific version like: 'v0.4.3+commit.2353da71', use the command 'Solidity: Get solidity releases' to list all versions available, or just right click in a solidity file and select either `Solidity: Change global compiler version (Remote)` or `Solidity: Change workspace compiler version (Remote)` to use the wizard to set the correct version or setting for either the current workspace or globally
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compileUsingRemoteVersion string|nil
+-- Optimize for how many times you intend to run the code. Lower values will optimize more for initial deployment cost, higher values will optimize more for high-frequency usage.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compilerOptimization number|nil
+-- Sets the default compiler and compiler configuration to use. Remote will use the configured compiler using the setting 'compileUsingRemoteVersion' downloaded from https://binaries.soliditylang.org/', `localFile` will use the solc file in the location configured in the setting: `compileUsingLocalVersion`, `localNodeModule` will attempt to find the solc file in the node_modules folder / package configured on 'nodemodulespackage' and 'embedded' which will use the solc version packaged with the extension. The default is 'remote' which is configured as 'latest'
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field defaultCompiler "remote" | "localFile" | "localNodeModule" | "embedded"|nil
+-- Enables as you type compilation of the document and error highlighting
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabledAsYouTypeCompilationErrorCheck boolean|nil
+-- Evm version, ie london, istanbul, petersburg, constantinople, byzantium, tangerineWhistle, spuriousDragon, homestead, frontier, or leave it blank for the default evm version
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field evmVersion string|nil
+-- Api key for downloading Binance smart chain smart contracts from api.bscscan.com
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field explorer_bscscan_apikey string|nil
+-- Api key for downloading ethereum smart contracts from etherscan.io
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field explorer_etherscan_apikey string|nil
+-- Api key for downloading optimism smart contracts from api-optimistic.etherscan.io
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field explorer_etherscan_optimism_apikey string|nil
+-- Api key for downloading polygon smart contracts from api.polygonscan.com
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field explorer_polygonscan_apikey string|nil
+-- Enables / disables the solidity formatter prettier (default) or forge (note it needs to be installed)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formatter "none" | "prettier" | "forge"|nil
+-- Enables linting using either solium (ethlint) or solhint. Possible options 'solhint' and 'solium', the default is solhint
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field linter "" | "solhint" | "solium"|nil
+-- Enables mono repo support in the current workspace, a project folder will be signaled if a file is found on the current folder or above including: remappings.txt, truffle-config.js, brownie-config.yaml, foundry.toml, hardhat.config.js, hardhat.config.ts, dappfile
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field monoRepoSupport boolean|nil
+-- The node modules package to find the solcjs compiler
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nodemodulespackage string|nil
+-- Default directory where the Package Dependency store its contracts, i.e: 'src', 'contracts', or just a blank string '', this is used to avoid typing imports with subfolder paths
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field packageDefaultDependenciesContractsDirectory string|string[]|nil
+-- Default directory for Packages Dependencies, i.e: 'node_modules', 'lib'. This is used to avoid typing imports with that path prefix, multiple dependency paths can be set as an array: ['node_modules', 'lib'] 
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field packageDefaultDependenciesDirectory string|string[]|nil
+-- Remappings to resolve contracts to local files / directories, i.e: ["@openzeppelin/=lib/openzeppelin-contracts","ds-test/=lib/ds-test/src/"]
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field remappings any[]|nil
+-- Unix Remappings to resolve contracts to local Unix files / directories (Note this overrides the generic remapping settings if the OS is Unix based), i.e: ["@openzeppelin/=/opt/lib/openzeppelin-contracts","ds-test/=/opt/lib/ds-test/src/"]
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field remappingsUnix any[]|nil
+-- Windows Remappings to resolve contracts to local Windows files / directories (Note this overrides the generic remapping settings if the OS is Windows) , i.e: ["@openzeppelin/=C:/lib/openzeppelin-contracts","ds-test/=C:/lib/ds-test/src/"]
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field remappingsWindows any[]|nil
+-- Solhint linting validation rules
+---@field solhintRules table|nil
+-- Solium linting validation rules
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field soliumRules table|nil
+-- Delay to trigger the validation of the changes of the current document (compilation, solium)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validationDelay number|nil
+-- Compile using the intermediate representation (IR) instead of the AST
+---@field viaIR boolean|nil
+
+---@class lsp.solidity_ls
+---@field solidity lsp.solidity_ls.Solidity|nil
+
+---@class lsp.sonarlint.Connections
+-- Connect SonarQube for IDE to SonarQube Cloud to apply the same code quality and security standards as your team. Analyze more languages, detect more issues **on the whole project**, receive notifications about the quality gate status, and more. Quality Profiles and file exclusion settings defined on the server are shared between all connected users. Please find the documentation [here](https://docs.sonarsource.com/sonarqube-for-vs-code/team-features/connected-mode/)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sonarcloud object[]|nil
+-- Connect SonarQube for IDE to SonarQube Server to apply the same code quality and security standards as your team. Analyze more languages, detect more issues **on the whole project**, receive notifications about the quality gate status, and more. Quality Profiles and file exclusion settings defined on the server are shared between all connected users. Please find the documentation [here](https://docs.sonarsource.com/sonarqube-for-vs-code/team-features/connected-mode/)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sonarqube object[]|nil
+
+---@class lsp.sonarlint.ConnectedMode
+---@field connections lsp.sonarlint.Connections|nil
+-- Bind the current workspace folder to a [SonarQube Server](command:SonarLint.HelpAndFeedbackLinkClicked?%22sonarQubeProductPage%22) or [SonarQube Cloud](command:SonarLint.HelpAndFeedbackLinkClicked?%5B%7B%22id%22%3A%22sonarCloudProductPage%22%2C%22utm%22%3A%7B%22content%22%3A%22settings-connected-mode%22%2C%22term%22%3A%22bind-current-workspace%22%7D%7D%5D) project. Requires connection details to be defined in the setting `#sonarlint.connectedMode.connections.sonarqube#` or `#sonarlint.connectedMode.connections.sonarcloud#`.
+-- 
+-- Binding a workspace folder to a server project allows SonarQube for VS Code to match, as much as possible, the same rules and settings as found on the server, and hence share the analysis configuration with other contributors.
+-- 
+-- Example:
+-- 
+--     "sonarlint.connectedMode.project": {
+--       "projectKey": "my_project",
+--       "connectionId":"my_connection_id"
+--     }
+-- 
+-- 
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field project table|table|nil
+-- Configure one or more connection(s) to SonarQube (Server, Cloud). For security reasons, the token should not be stored in SCM with workspace settings. The `serverId` can be any identifier and will be referenced in `#sonarlint.connectedMode.project#`.
+-- 
+-- Example for SonarQube Cloud:
+-- 
+--     "sonarlint.connectedMode.servers": [
+--       {
+--         "serverId": "my_orga_in_sonarcloud.io",
+--         "serverUrl": "https://sonarcloud.io",
+--         "organizationKey": "my_organization",
+--         "token": "V2VkIE1..."
+--       }
+--     ]
+-- 
+-- Example for SonarQube Server:
+-- 
+--     "sonarlint.connectedMode.servers": [
+--       {
+--         "serverId": "my_sonarqube",
+--         "serverUrl": "https://sonar.mycompany.com",
+--         "token": "V2VkIE1..."
+--       }
+--     ]
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field servers any[]|nil
+
+---@class lsp.sonarlint.EarlyAccess
+-- Show region selection while creating SonarQube Cloud Connection
+---@field showRegionSelection boolean|nil
+
+---@class lsp.sonarlint.Ls
+-- Path to a Java Runtime Environment (17 or more recent) used to launch the SonarQube for VS Code Language Server.
+-- * On Windows, backslashes must be escaped, e.g. `C:\\Program Files\\Java\\jdk-17` 
+-- * On macOS, this path should include the `/Contents/Home` directory, e.g `/Library/Java/JavaVirtualMachines/corretto-17.0.5/Contents/Home`
+---@field javaHome string|nil
+-- Extra JVM arguments used to launch the SonarLint Language Server. e.g. `-Xmx1024m`
+---@field vmargs string|nil
+
+---@class lsp.sonarlint.Output
+-- Enable verbose log level in the SonarQube for IDE output.
+---@field showVerboseLogs boolean|nil
+
+---@class lsp.sonarlint.Trace
+-- Traces the communication between VS Code and the SonarLint language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|table|nil
+
+---@class lsp.sonarlint.Sonarlint
+-- Files whose name match this [glob pattern](https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob) will not be processed by analyzers. In [Connected Mode](command:SonarLint.HelpAndFeedbackLinkClicked?%22connectedModeDocs%22) with SonarQube Server or SonarQube Cloud, this property will be ignored and the server's exclusion settings will be applied. No rules are evaluated on excluded files. Example: `**/lib/**,**/*generated*`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field analysisExcludesStandalone string|nil
+-- Extra properties that could be passed to the code analyzers. Only for advanced use cases.
+---@field analyzerProperties table|nil
+-- Enable or disable on-the-fly analysis of files you work on. When enabled, SonarQube for IDE will automatically analyze open files and show findings in real-time.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field automaticAnalysis boolean|nil
+---@field connectedMode lsp.sonarlint.ConnectedMode|nil
+-- Disable sending anonymous usage statistics to SonarSource. Click [here](https://github.com/SonarSource/sonarlint-vscode/blob/master/telemetry-sample.md) to see a sample of the data that are collected.
+---@field disableTelemetry boolean|nil
+---@field earlyAccess lsp.sonarlint.EarlyAccess|nil
+-- If enabled, by default, [focusing on new code](https://docs.sonarsource.com/sonarqube-for-vs-code/using/investigating-issues/#focusing-on-new-code) shows issues introduced in the last 30 days.
+-- 
+-- For the most accurate and customizable new code definition, use [Connected Mode](https://docs.sonarsource.com/sonarqube-for-vs-code/team-features/connected-mode) with SonarQube (Server, Cloud).
+---@field focusOnNewCode boolean|nil
+---@field ls lsp.sonarlint.Ls|nil
+---@field output lsp.sonarlint.Output|nil
+-- Path to the active compilation database, e.g. `C:\\Repos\\MyProject\\compile_commands.json`
+---@field pathToCompileCommands string|nil
+-- Path to a Node.js executable (versions above 20.12.0, or 22.11.0) used to analyze JavaScript and TypeScript code. 
+-- On Windows, backslashes must be escaped, e.g. `C:\\Program Files\\NodeJS\\20-lts\\bin\\node.exe`
+---@field pathToNodeExecutable string|nil
+-- Customize applied rule set. This property contains a list of rules whose activation level or parameter values differ from the one provided by default. In [Connected Mode](command:SonarLint.HelpAndFeedbackLinkClicked?%22connectedModeDocs%22), this configuration is overridden by the projects's Quality Profile, as configured on server side and can be **shared among contributors**. See [SonarLint Rules](command:SonarLint.AllRules.focus) view for the list of **locally** available rules.
+-- 
+-- Example:
+-- 
+--     "sonarlint.rules": {
+--         "javascript:S1481": {
+--             "level": "off",
+--          },
+--         "javascript:S103": {
+--             "level": "on",
+--             "parameters": {
+--                 "maximumLineLength": "120"
+--             }
+--         }
+--     }
+-- 
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field rules table|nil
+-- Start the language server's flight recorder mode.
+-- 
+-- ⚠ **This feature shares detailed information with SonarSource (logs, telemetry events) that may include _confidential_ data, only enable if requested to help investigate an issue.**
+---@field startFlightRecorder boolean|nil
+-- Files whose name match this [glob pattern](https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob) are considered as test files by analyzers. Most rules are *not* evaluated on test files.
+-- 
+-- In [Connected Mode](command:SonarLint.HelpAndFeedbackLinkClicked?%22connectedModeDocs%22), this setting is configured **on the server-side** and shared among all contributors.
+-- 
+-- Example: `**/test/**,**/*test*,**/*Test*`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field testFilePattern string|nil
+---@field trace lsp.sonarlint.Trace|nil
+
+---@class lsp.sonarlint
+---@field sonarlint lsp.sonarlint.Sonarlint|nil
+
+---@class lsp.sorbet.Sorbet
+-- List of workspace file patterns that contribute to Sorbet's configuration.  Changes to any of those files should trigger a restart of any actively running Sorbet language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field configFilePatterns string[]|nil
+-- Enable Sorbet Ruby IDE features
+---@field enabled boolean|nil
+-- Shows warning for untyped values.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field highlightUntyped "nowhere" | "everywhere-but-tests" | "everywhere"|nil
+-- Which severity to use to highlight untyped usages with (controls the squiggle colors)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field highlightUntypedDiagnosticSeverity 1 | 2 | 3 | 4|nil
+-- Standard Ruby LSP configurations.  If you commit your VSCode settings to source control, you probably want to commit *this* setting, not `sorbet.userLspConfigs`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field lspConfigs object[]|nil
+-- Show the extension output window on errors.
+---@field revealOutputOnError boolean|nil
+-- The default configuration to use from `sorbet.userLspConfigs` or `sorbet.lspConfigs`.  If unset, defaults to the first item in `sorbet.userLspConfigs` or `sorbet.lspConfigs`.
+---@field selectedLspConfigId string|nil
+-- Displays an auto-complete nudge in `typed: false` files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typedFalseCompletionNudges boolean|nil
+-- Custom user LSP configurations that supplement `sorbet.lspConfigs` (and override configurations with the same id).  If you commit your VSCode settings to source control, you probably want to commit `sorbet.lspConfigs`, not this value.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field userLspConfigs object[]|nil
+
+---@class lsp.sorbet
+---@field sorbet lsp.sorbet.Sorbet|nil
+
+---@class lsp.sourcekit.InlayHints
+-- Display Inlay Hints. Inlay Hints are variable annotations indicating their inferred type. They are only available if you are using Swift 5.6 or later.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.sourcekit.Trace
+-- Traces the communication between VS Code and the SourceKit-LSP language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.sourcekit.Sourcekit-lsp
+-- Disable the running of SourceKit-LSP.
+---@field disable boolean|nil
+---@field inlayHints lsp.sourcekit.InlayHints|nil
+-- Arguments to pass to SourceKit-LSP. Keys and values should be provided as individual entries in the list. e.g. `--experimental-feature=show-macro-expansions`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field serverArguments string[]|nil
+-- The path of the `sourcekit-lsp` executable. The default is to look in the path where `swift` is found.
+---@field serverPath string|nil
+-- Add LSP functionality for C/C++ files. By default this is set to disable when the C/C++ extension is active.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field support-c-cpp "enable" | "disable" | "cpptools-inactive"|nil
+---@field trace lsp.sourcekit.Trace|nil
+
+---@class lsp.sourcekit.Debugger
+-- Select which debug adapter to use to debug Swift executables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field debugAdapter "auto" | "lldb-dap" | "CodeLLDB"|nil
+-- Path to lldb debug adapter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+-- Choose how CodeLLDB settings are updated when debugging Swift executables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field setupCodeLLDB "prompt" | "alwaysUpdateGlobal" | "alwaysUpdateWorkspace" | "never"|nil
+-- Use the LLDB debug adapter packaged with the Swift toolchain as your debug adapter. Note: this is only available starting with Swift 6. The CodeLLDB extension will be used if your Swift toolchain does not contain lldb-dap.
+---@field useDebugAdapterFromToolchain boolean|nil
+
+---@class lsp.sourcekit.Trace
+-- Controls logging the communication between VS Code and the SourceKit-LSP language server. Logs can be viewed in Output > SourceKit Language Server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.sourcekit.Sourcekit-lsp
+-- Turns background indexing `on` or `off`. `auto` will enable background indexing if the Swift version is >= 6.1. This option has no effect in Swift versions prior to 6.0.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field backgroundIndexing "on" | "off" | "auto"|nil
+-- Disable SourceKit-LSP. This will turn off features like code completion, error diagnostics and jump-to-definition. Features like swift-testing test discovery will not work correctly.
+---@field disable boolean|nil
+-- Arguments to pass to SourceKit-LSP. Keys and values should be provided as individual entries in the list. e.g. `--experimental-feature=show-macro-expansions`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field serverArguments string[]|nil
+-- The path of the `sourcekit-lsp` executable. The default is to look in the path where `swift` is found.
+---@field serverPath string|nil
+-- List of languages supported by SourceKit-LSP. This is used to determine whether SourceKit-LSP should provide language features for a particular file type. If you want a different extension to provide support for a language, remove it from the list.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field supported-languages string[]|nil
+---@field trace lsp.sourcekit.Trace|nil
+
+---@class lsp.sourcekit.Swift
+-- The path of the SDK to compile against (`--sdk` parameter). This is of use when supporting non-standard SDK layouts on Windows and using custom SDKs. The default SDK is determined by the environment on macOS and Windows.
+-- 
+-- For SwiftPM projects, prefer using `swift.swiftSDK` with a triple (such as `arm64-apple-ios`) or Swift SDK name instead.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field SDK string|nil
+-- Action after a Build task generates errors.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field actionAfterBuildError "Focus Problems" | "Focus Terminal" | "Do Nothing"|nil
+-- Additional arguments to pass to the `swift test` or `swift build` commands used when building and running tests from within VS Code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field additionalTestArguments string[]|nil
+-- The path to a directory that will be used to store attachments produced during a test run.
+-- 
+-- A relative path resolves relative to the root directory of the workspace running the test(s)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field attachmentsPath string|nil
+-- When loading a `Package.swift`, auto-generate `launch.json` configurations for running any executables.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoGenerateLaunchConfigurations boolean|nil
+-- Run `swift build` in the background whenever a file is saved. Setting to `true` enables, or you can use `object` notation for more fine grained control. It is possible the background compilation will already be running when you attempt a compile yourself, so this is disabled by default.
+---@field backgroundCompilation boolean|table|nil
+-- Additional arguments to pass to `swift build` and `swift test`. Keys and values should be provided as individual entries in the list. If you have created a copy of the build task in `tasks.json` then these build arguments will not be propagated to that task.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field buildArguments string[]|nil
+-- The path to a directory that will be used for build artifacts. This path will be added to all swift package manager commands that are executed by vscode-swift extension via `--scratch-path` option. When no value provided - nothing gets passed to swift package manager and it will use its default value of `.build` folder in the workspace.
+-- 
+-- You can use absolute path for directory or the relative path, which will use the workspace path as a base. Note that VS Code does not respect tildes (`~`) in paths which represents user home folder under *nix systems.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field buildPath string|nil
+-- When opening a .sourckit-lsp/config.json configuration file, whether or not to check if the $schema matches the version of Swift you are using.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field checkLspConfigurationSchema boolean|nil
+-- When enabled, the extension will create "swift" build tasks for library products in the package manifest. Note that automatic library products will not be included.
+---@field createTasksForLibraryProducts boolean|nil
+---@field debugger lsp.sourcekit.Debugger|nil
+-- Output additional diagnostics to the Swift output channel.
+---@field diagnostics boolean|nil
+-- Controls how diagnostics from the various providers are merged into the collection of `swift` errors and warnings shown in the Problems pane.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticsCollection "onlySwiftc" | "onlySourceKit" | "keepSwiftc" | "keepSourceKit" | "keepAll"|nil
+-- The formatting style used when printing diagnostics in the Problems panel. Corresponds to the `-diagnostic-style` option to pass to `swiftc` when running `swift` tasks.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field diagnosticsStyle "default" | "llvm" | "swift"|nil
+-- Disable automatic running of `swift package resolve` whenever the `Package.swift` or `Package.resolved` files are updated. This will also disable searching for command plugins and the initial test discovery process.
+---@field disableAutoResolve boolean|nil
+-- Disable sandboxing when running SwiftPM commands. In most cases you should keep the sandbox enabled and leave this setting set to `false`
+---@field disableSandox boolean|nil
+-- Disables automated Build Tasks, Package Dependency view, Launch configuration generation and TestExplorer.
+---@field disableSwiftPackageManagerIntegration boolean|nil
+-- Controls whether or not the extension will contribute environment variables defined in `Swift: Environment Variables` to the integrated terminal. If this is set to `true` and a custom `Swift: Path` is also set then the swift path is appended to the terminal's `PATH`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableTerminalEnvironment boolean|nil
+-- A list of paths to exclude from code coverage reports. Paths can be absolute or relative to the workspace root.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeFromCodeCoverage string[]|nil
+-- Configure glob patterns for excluding Swift package folders from getting activated. This will take precedence over the glob patterns provided to `files.exclude`.
+---@field excludePathsFromActivation table|nil
+-- A list of glob patterns to exclude from the Package Dependencies view. Always use forward-slashes in glob expressions regardless of platform. This is combined with VS Code's default `files.exclude` setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludePathsFromPackageDependencies string[]|nil
+-- Set the branch to use when setting the `$schema` property of the SourceKit-LSP configuration. For example: "release/6.1" or "main". When this setting is unset, the extension will determine the branch based on the version of the toolchain that is in use.
+---@field lspConfigurationBranch string|nil
+-- Controls whether to open a swift project automatically after creating it.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field openAfterCreateNewProject "always" | "alwaysNewWindow" | "whenNoFolderOpen" | "prompt"|nil
+-- The log level of the Swift output channel. This has no effect on the verbosity of messages written to the extension's log file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field outputChannelLogLevel "debug" | "info" | "warn" | "error"|nil
+-- Additional arguments to pass to swift commands that do package resolution, such as `swift package resolve`, `swift package update`, `swift build` and `swift test`. Keys and values should be provided as individual entries in the list.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field packageArguments string[]|nil
+-- Override the default path of the folder containing the Swift executables. The default is to look in the `PATH` environment variable. This path is also used to search for other executables used by the extension like `sourcekit-lsp` and `lldb`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+-- Configure a list of arguments to pass to command invocations. This can either be an array of arguments, which will apply to all command invocations, or an object with command names as the key where the value is an array of arguments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pluginArguments any|nil
+-- Configures a list of permissions to be used when running a command plugins.
+-- 
+-- Permissions objects are defined in the form:
+-- 
+-- `{ "PluginName:command": { "allowWritingToPackageDirectory": true } }`.
+-- 
+-- A key of `PluginName:command` will set permissions for a specific command. A key of `PluginName` will set permissions for all commands in the plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pluginPermissions table|nil
+-- Controls whether or not to record the duration of tests in the Test Explorer. This is used to show the duration of tests in the Test Explorer view. If you're experiencing performance issues when running a large number of tests that complete quickly, disabling this setting can make the UI more responsive.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field recordTestDuration boolean|nil
+-- The path of the folder containing the Swift runtime libraries. This is of use when supporting non-standard SDK layouts on Windows. On Windows the runtime path is added to the `Path` environment variable. This is of less use on macOS and Linux but will be added to `DYLD_LIBRARY_PATH` and `LD_LIBRARY_PATH` environment variables respectively on each platform. 
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field runtimePath string|nil
+-- Runtime [sanitizer instrumentation](https://www.swift.org/documentation/server/guides/llvm-sanitizers.html).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sanitizer "off" | "thread" | "address"|nil
+-- The default Swift version to use when running Swift scripts.
+---@field scriptSwiftLanguageVersion "6" | "5" | "4.2" | "4" | "Ask Every Run"|nil
+-- Search sub-folders of workspace folder for Swift Packages at start up.
+---@field searchSubfoldersForPackages boolean|nil
+-- Controls where to show the Swift build progress when running a `swift` build task.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showBuildStatus "never" | "swiftStatus" | "progress" | "notification"|nil
+-- Controls whether or not the create new swift project button appears in the welcome page.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showCreateSwiftProjectInWelcomePage boolean|nil
+-- Controls whether or not to show inline code lenses for running and debugging tests inline, above test and suite declarations. If set to an array, specify one or more of the following: 'run', 'debug', 'coverage'.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showTestCodeLenses boolean|string[]|nil
+---@field sourcekit-lsp lsp.sourcekit.Sourcekit-lsp|nil
+-- Additional environment variables to pass to swift operations (`swift build`, `swift resolve`, etc...).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field swiftEnvironmentVariables table|nil
+-- The [Swift SDK](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0387-cross-compilation-destinations.md) to compile against (`--swift-sdk` parameter).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field swiftSDK string|nil
+-- Environment variables to set when running tests. To set environment variables when debugging an application you should edit the `env` field in the relevant `launch.json` configuration.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field testEnvironmentVariables table|nil
+-- Controls whether or not the extension will warn about being unable to create symlinks. (Windows only)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warnAboutSymlinkCreation boolean|nil
+
+---@class lsp.sourcekit
+---@field sourcekit-lsp lsp.sourcekit.Sourcekit-lsp|nil
+---@field swift lsp.sourcekit.Swift|nil
+
+---@class lsp.spectral.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.spectral.Spectral
+-- Controls whether or not Spectral is enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Location of the ruleset file to use when validating. If omitted, the default is a .spectral.yml/.spectral.json in the same folder as the document being validated. Paths are relative to the workspace. This can also be a remote HTTP url.
+---@field rulesetFile string|nil
+-- Run the linter on save (onSave) or as you type (onType).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field run "onSave" | "onType"|nil
+---@field trace lsp.spectral.Trace|nil
+-- An array of file globs (e.g., `**/*.yaml`) in minimatch glob format which should be validated by Spectral. If language identifiers are also specified, the file must match both in order to be validated. You can also use negative file globs (e.g., `!**/package.json`) here to exclude files.
+---@field validateFiles string[]|nil
+-- An array of language IDs which should be validated by Spectral. If file globs are also specified, the file must match both in order to be validated.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validateLanguages string[]|nil
+
+---@class lsp.spectral
+---@field spectral lsp.spectral.Spectral|nil
+
+---@class lsp.stylelint_lsp.Trace
+-- Capture trace messages from the server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.stylelint_lsp.Stylelintplus
+-- Auto-fix on format request.
+---@field autoFixOnFormat boolean|nil
+-- Auto-fix and format on save.
+---@field autoFixOnSave boolean|nil
+-- Stylelint config. If config and configFile are unset, stylelint will automatically look for a config file.
+---@field config table|nil
+-- Stylelint config file. If config and configFile are unset, stylelint will automatically look for a config file.
+---@field configFile string|nil
+-- Stylelint config overrides. These will be applied on top of the config, configFile, or auto-discovered config file loaded by stylelint.
+---@field configOverrides table|nil
+-- Run stylelint on javascript/typescript files.
+---@field cssInJs boolean|nil
+-- If false, stylelint will not validate the file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Filetypes that coc-stylelintplus will lint.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field filetypes string[]|nil
+---@field trace lsp.stylelint_lsp.Trace|nil
+-- Validate after saving. Automatically enabled if autoFixOnSave is enabled.
+---@field validateOnSave boolean|nil
+-- Validate after making changes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validateOnType boolean|nil
+
+---@class lsp.stylelint_lsp
+---@field stylelintplus lsp.stylelint_lsp.Stylelintplus|nil
+
+---@class lsp.svelte.Language-server
+-- - You normally don't set this - Enable more verbose logging for the language server useful for debugging language server execution.
+---@field debug boolean|nil
+-- - You normally don't set this - Path to the language server executable. If you installed the "svelte-language-server" npm package, it's within there at "bin/server.js". Path can be either relative to your workspace root or absolute. Set this only if you want to use a custom version of the language server. This will then also use the workspace version of TypeScript. This setting can only be changed in user settings for security reasons.
+---@field ls-path string|nil
+-- - You normally don't set this - At which port to spawn the language server. Can be used for attaching to the process for debugging / profiling. If you experience crashes due to "port already in use", try setting the port. -1 = default port is used.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field port number|nil
+-- - You normally don't need this - Path to the node executable to use to spawn the language server. This is useful when you depend on native modules such as node-sass as without this they will run in the context of vscode, meaning node version mismatch is likely. Minimum required node version is 12.17. This setting can only be changed in user settings for security reasons.
+---@field runtime string|nil
+-- You normally don't set this. Additional arguments to pass to the node executable when spawning the language server. This is useful when you use something like Yarn PnP and need its loader arguments `["--loader", ".pnp.loader.mjs"]`.
+---@field runtime-args any[]|nil
+
+---@class lsp.svelte.ColorPresentations
+-- Enable color picker for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Completions
+-- Enable emmet auto completions for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field emmet boolean|nil
+-- Enable auto completions for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Diagnostics
+-- Enable diagnostic messages for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.DocumentColors
+-- Enable document colors for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.DocumentSymbols
+-- Enable document symbols for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Hover
+-- Enable hover info for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.SelectionRange
+-- Enable selection range for CSS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Css
+---@field colorPresentations lsp.svelte.ColorPresentations|nil
+---@field completions lsp.svelte.Completions|nil
+---@field diagnostics lsp.svelte.Diagnostics|nil
+---@field documentColors lsp.svelte.DocumentColors|nil
+---@field documentSymbols lsp.svelte.DocumentSymbols|nil
+-- Enable the CSS plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Which css files should be checked for global variables (`--global-var: value;`). These variables are added to the css completions. String of comma-separated file paths or globs relative to workspace root.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globals string|nil
+---@field hover lsp.svelte.Hover|nil
+---@field selectionRange lsp.svelte.SelectionRange|nil
+
+---@class lsp.svelte.Completions
+-- Enable emmet auto completions for HTML
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field emmet boolean|nil
+-- Enable auto completions for HTML
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.DocumentSymbols
+-- Enable document symbols for HTML
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Hover
+-- Enable hover info for HTML
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.LinkedEditing
+-- Enable Linked Editing for HTML
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.TagComplete
+-- Enable HTML tag auto closing
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Html
+---@field completions lsp.svelte.Completions|nil
+---@field documentSymbols lsp.svelte.DocumentSymbols|nil
+-- Enable the HTML plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field hover lsp.svelte.Hover|nil
+---@field linkedEditing lsp.svelte.LinkedEditing|nil
+---@field tagComplete lsp.svelte.TagComplete|nil
+
+---@class lsp.svelte.CodeActions
+-- Enable Code Actions for Svelte
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Completions
+-- Enable auto completions for Svelte
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Diagnostics
+-- Enable diagnostic messages for Svelte
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.DocumentHighlight
+-- Enable document highlight support. Requires a restart.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Config
+-- Maximum line width after which code is tried to be broken up. This is a Prettier core option. If you have the Prettier extension installed, this option is ignored and the corresponding option of that extension is used instead. This option is also ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field printWidth number|nil
+-- Use single quotes instead of double quotes, where possible. This is a Prettier core option. If you have the Prettier extension installed, this option is ignored and the corresponding option of that extension is used instead. This option is also ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+---@field singleQuote boolean|nil
+-- Option to enable/disable component attribute shorthand if attribute name and expression are the same. This option is ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field svelteAllowShorthand boolean|nil
+-- Put the `>` of a multiline element on a new line. This option is ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field svelteBracketNewLine boolean|nil
+-- Whether or not to indent code inside `<script>` and `<style>` tags. This option is ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field svelteIndentScriptAndStyle boolean|nil
+-- Format: join the keys `options`, `scripts`, `markup`, `styles` with a - in the order you want. This option is ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field svelteSortOrder string|nil
+-- More strict HTML syntax. This option is ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+---@field svelteStrictMode boolean|nil
+
+---@class lsp.svelte.Format
+---@field config lsp.svelte.Config|nil
+-- Enable formatting for Svelte (includes css & js). You can set some formatting options through this extension. They will be ignored if there's any kind of configuration file, for example a `.prettierrc` file.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Hover
+-- Enable hover information for Svelte
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Rename
+-- Enable rename/move Svelte files functionality
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.RunesLegacyModeCodeLens
+-- Show a code lens at the top of Svelte files indicating if they are in runes mode or legacy mode. Only visible in Svelte 5 projects.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.SelectionRange
+-- Enable selection range for Svelte
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Svelte
+---@field codeActions lsp.svelte.CodeActions|nil
+-- Svelte compiler warning codes to ignore or to treat as errors. Example: { 'css-unused-selector': 'ignore', 'unused-export-let': 'error'}
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compilerWarnings table|nil
+---@field completions lsp.svelte.Completions|nil
+-- The default language to use when generating new script tags
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field defaultScriptLanguage "none" | "ts"|nil
+---@field diagnostics lsp.svelte.Diagnostics|nil
+---@field documentHighlight lsp.svelte.DocumentHighlight|nil
+-- Enable the Svelte plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field format lsp.svelte.Format|nil
+---@field hover lsp.svelte.Hover|nil
+---@field rename lsp.svelte.Rename|nil
+---@field runesLegacyModeCodeLens lsp.svelte.RunesLegacyModeCodeLens|nil
+---@field selectionRange lsp.svelte.SelectionRange|nil
+
+---@class lsp.svelte.CodeActions
+-- Enable code actions for TypeScript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Completions
+-- Enable completions for TypeScript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Diagnostics
+-- Enable diagnostic messages for TypeScript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.DocumentSymbols
+-- Enable document symbols for TypeScript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Hover
+-- Enable hover info for TypeScript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.SelectionRange
+-- Enable selection range for TypeScript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.SemanticTokens
+-- Enable semantic tokens (semantic highlight) for TypeScript.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.SignatureHelp
+-- Enable signature help (parameter hints) for TypeScript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.WorkspaceSymbols
+-- Enable workspace symbols for TypeScript.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.svelte.Typescript
+---@field codeActions lsp.svelte.CodeActions|nil
+---@field completions lsp.svelte.Completions|nil
+---@field diagnostics lsp.svelte.Diagnostics|nil
+---@field documentSymbols lsp.svelte.DocumentSymbols|nil
+-- Enable the TypeScript plugin
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field hover lsp.svelte.Hover|nil
+---@field selectionRange lsp.svelte.SelectionRange|nil
+---@field semanticTokens lsp.svelte.SemanticTokens|nil
+---@field signatureHelp lsp.svelte.SignatureHelp|nil
+---@field workspaceSymbols lsp.svelte.WorkspaceSymbols|nil
+
+---@class lsp.svelte.Plugin
+---@field css lsp.svelte.Css|nil
+---@field html lsp.svelte.Html|nil
+---@field svelte lsp.svelte.Svelte|nil
+---@field typescript lsp.svelte.Typescript|nil
+
+---@class lsp.svelte.Trace
+-- Traces the communication between VS Code and the Svelte Language Server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.svelte.SvelteKitFilesContextMenu
+-- Show a context menu to generate SvelteKit files. "always" to always show it. "never" to always disable it. "auto" to show it when in a SvelteKit project. 
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable "auto" | "never" | "always"|nil
+
+---@class lsp.svelte.Ui
+---@field svelteKitFilesContextMenu lsp.svelte.SvelteKitFilesContextMenu|nil
+
+---@class lsp.svelte.Svelte
+-- Ask on startup to enable the TypeScript plugin.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ask-to-enable-ts-plugin boolean|nil
+-- Enables a TypeScript plugin which provides intellisense for Svelte files inside TS/JS files.
+---@field enable-ts-plugin boolean|nil
+---@field language-server lsp.svelte.Language-server|nil
+---@field plugin lsp.svelte.Plugin|nil
+---@field trace lsp.svelte.Trace|nil
+---@field ui lsp.svelte.Ui|nil
+
+---@class lsp.svelte
+---@field svelte lsp.svelte.Svelte|nil
+
+---@class lsp.svlangserver.Trace
+-- Traces the communication between VS Code and the SystemVerilog language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.svlangserver.Systemverilog
+-- Use ANTLR parser to verify text documents when edited.
+---@field antlrVerification boolean|nil
+-- Compile all files when opened.
+---@field compileOnOpen boolean|nil
+-- Compile SystemVerilog/Verilog files when saved.
+---@field compileOnSave boolean|nil
+-- Select the compiler type from the drop down list.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compilerType "Verilator" | "VCS" | "Verible"|nil
+-- Disable automatic indexing when opening a folder or workspace.
+---@field disableIndexing boolean|nil
+-- The level of detail the parser should use when looking for symbols:
+--   - 'full': detect blocks, ports, parameters, classes, methods, typedefs, defines, labels, instantiations, assertions, and references
+--   - 'full_no_references': detect blocks, ports, parameters, classes, methods, typedefs, defines, labels, instantiations, and assertions
+--   - 'declarations': detect blocks, ports, parameters, classes, methods, typedefs, and defines
+--   - 'fast': detect only common blocks (module, class, interface, package, program) without hierarchy
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field documentSymbolsPrecision "full" | "full_no_references" | "declaration" | "fast"|nil
+-- Enable incremental indexation as you open files.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableIncrementalIndexing boolean|nil
+-- Files excluded from compiling (glob pattern).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeCompiling string|nil
+-- Files excluded from indexing (glob pattern).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeIndexing string|nil
+-- Force indexing to use fast regular expression parsing.
+---@field forceFastIndexing boolean|nil
+-- Launch command for running the formatter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formatCommand string|nil
+-- Files included for indexing (glob pattern). Examples: 
+--   - Include files within the workspace's rtl folder ('*' at front of pattern denotes that path is relative to workspace root): **/rtl/**/*.{sv,v,svh,vh}
+--   - Add all files with a '.svp' extension: **/*.svp
+--   - Add files only when in a specific workspace: /abs/path/to/workspace/rtl/**/*.{sv,v,svh,vh}
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeIndexing any[]|nil
+-- Launch command for running VCS as the compiler.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field launchConfigurationVCS string|nil
+-- Launch command for running Verible as the compiler.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field launchConfigurationVerible string|nil
+-- Launch command for running Verilator as the compiler.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field launchConfigurationVerilator string|nil
+-- When indexing a file, if the line count is larger than this number, fast indexing will be used to improve symbol lookup performance.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxLineCountIndexing integer|nil
+-- The number of files the extension should attempt to process in parallel. Processing consist of opening found files and perform matching to find symbols.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field parallelProcessing integer|nil
+---@field trace lsp.svlangserver.Trace|nil
+-- Run ANTLR verification on all files when opened.
+---@field verifyOnOpen boolean|nil
+
+---@class lsp.svlangserver
+---@field systemverilog lsp.svlangserver.Systemverilog|nil
+
+---@class lsp.tailwindcss.Experimental
+---@field classRegex any[]|nil
+-- Manually specify the Tailwind config file or files that should be read to provide IntelliSense features. Can either be a single string value, or an object where each key is a config file path and each value is a glob or array of globs representing the set of files that the config file applies to.
+---@field configFile string|table|nil
+
+---@class lsp.tailwindcss.Files
+-- Configure glob patterns to exclude from all IntelliSense features. Inherits all glob patterns from the `#files.exclude#` setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+
+---@class lsp.tailwindcss.Lint
+-- Class names on the same HTML element which apply the same CSS property or properties
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field cssConflict "ignore" | "warning" | "error"|nil
+-- Unsupported use of the [`@apply` directive](https://tailwindcss.com/docs/functions-and-directives/#apply)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invalidApply "ignore" | "warning" | "error"|nil
+-- Unknown or invalid path used with the [`theme` helper](https://tailwindcss.com/docs/functions-and-directives/#theme)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invalidConfigPath "ignore" | "warning" | "error"|nil
+-- Unknown screen name used with the [`@screen` directive](https://tailwindcss.com/docs/functions-and-directives/#screen)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invalidScreen "ignore" | "warning" | "error"|nil
+-- Unknown value used with the [`@tailwind` directive](https://tailwindcss.com/docs/functions-and-directives/#tailwind)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invalidTailwindDirective "ignore" | "warning" | "error"|nil
+-- Unknown variant name used with the [`@variants` directive](https://tailwindcss.com/docs/functions-and-directives/#variants)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invalidVariant "ignore" | "warning" | "error"|nil
+-- Class variants not in the recommended order (applies in [JIT mode](https://tailwindcss.com/docs/just-in-time-mode) only)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field recommendedVariantOrder "ignore" | "warning" | "error"|nil
+-- Indicate when utilities may be written in a more optimal form
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestCanonicalClasses "ignore" | "warning" | "error"|nil
+-- Usage of class names that have been blocklisted via `@source not inline(…)`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field usedBlocklistedClass "ignore" | "warning" | "error"|nil
+
+---@class lsp.tailwindcss.TailwindCSS
+-- The HTML attributes for which to provide class completions, hover previews, linting etc.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field classAttributes string[]|nil
+-- The function or tagged template literal names for which to provide class completions, hover previews, linting etc.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field classFunctions string[]|nil
+-- Enable code actions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActions boolean|nil
+-- Enable code lens.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeLens boolean|nil
+-- Controls whether the editor should render inline color decorators for Tailwind CSS classes and helper functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field colorDecorators boolean|nil
+-- Enable class name completions when using Emmet-style syntax, for example `div.bg-red-500.uppercase`
+---@field emmetCompletions boolean|nil
+---@field experimental lsp.tailwindcss.Experimental|nil
+---@field files lsp.tailwindcss.Files|nil
+-- Enable hovers.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hovers boolean|nil
+-- Enable features in languages that are not supported by default. Add a mapping here between the new language and an already supported language.
+--  E.g.: `{"plaintext": "html"}`
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeLanguages table|nil
+-- Enable the Node.js inspector agent for the language server and listen on the specified port.
+---@field inspectPort number|nil
+---@field lint lsp.tailwindcss.Lint|nil
+-- Root font size in pixels. Used to convert `rem` CSS values to their `px` equivalents. See `#tailwindCSS.showPixelEquivalents#`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field rootFontSize number|nil
+-- Show `px` equivalents for `rem` CSS values.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showPixelEquivalents boolean|nil
+-- Enable autocomplete suggestions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suggestions boolean|nil
+-- Enable linting. Rules can be configured individually using the `tailwindcss.lint.*` settings
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validate boolean|nil
+
+---@class lsp.tailwindcss.Trace
+-- Traces the communication between VS Code and the Tailwind CSS Language Server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.tailwindcss.Tailwindcss-intellisense
+---@field trace lsp.tailwindcss.Trace|nil
+
+---@class lsp.tailwindcss
+---@field tailwindCSS lsp.tailwindcss.TailwindCSS|nil
+---@field tailwindcss-intellisense lsp.tailwindcss.Tailwindcss-intellisense|nil
+
+---@class lsp.terraformls.Codelens
+-- Display reference counts above top level blocks and attributes.
+---@field referenceCount boolean|nil
+
+---@class lsp.terraformls.ExperimentalFeatures
+-- Enable autocompletion for required fields when completing Terraform blocks. Combine with `#editor.suggest.preview#` and the editor will provide inline snippet suggestions for blocks of code
+---@field prefillRequiredFields boolean|nil
+-- Enable validating the currently open file on save
+---@field validateOnSave boolean|nil
+
+---@class lsp.terraformls.Indexing
+-- Per-workspace list of directory names for the language server to ignore when indexing files
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignoreDirectoryNames string[]|nil
+-- Per-workspace list of paths for the language server to ignore when indexing files
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ignorePaths string[]|nil
+
+---@class lsp.terraformls.Tcp
+-- Language server TCP port to connect to. This is not compatible with `#terraform.languageServer.path#`. This is used when you want the extension to connect via TCP to an already running language server process.
+---@field port number|nil
+
+---@class lsp.terraformls.Terraform
+-- Path to a file (`TF_LOG_PATH`) for Terraform executions to be logged used by the the Terraform Language Server. Support for variables (e.g. timestamp, pid, ppid) via Go template syntax `{{varName}}`
+---@field logFilePath string|nil
+-- Path to the Terraform binary used by the Terraform Language Server
+---@field path string|nil
+-- Overrides Terraform execution timeout (e.g. 30s) used by the Terraform Language Server
+---@field timeout string|nil
+
+---@class lsp.terraformls.LanguageServer
+-- Arguments to pass to language server binary
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field args string[]|nil
+-- Enable Terraform Language Server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Enable warning when opening a single Terraform file instead of a Terraform folder. Enabling this will prevent the message being sent
+---@field ignoreSingleFileWarning boolean|nil
+---@field indexing lsp.terraformls.Indexing|nil
+-- Path to the Terraform Language Server binary (optional)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field path string|nil
+---@field tcp lsp.terraformls.Tcp|nil
+---@field terraform lsp.terraformls.Terraform|nil
+
+---@class lsp.terraformls.Server
+-- Enable HashiCorp Terraform MCP Server integration
+---@field enable boolean|nil
+
+---@class lsp.terraformls.Mcp
+---@field server lsp.terraformls.Server|nil
+
+---@class lsp.terraformls.Validation
+-- Enable enhanced validation of Terraform files and modules
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableEnhancedValidation boolean|nil
+
+---@class lsp.terraformls.Terraform
+---@field codelens lsp.terraformls.Codelens|nil
+---@field experimentalFeatures lsp.terraformls.ExperimentalFeatures|nil
+---@field languageServer lsp.terraformls.LanguageServer|nil
+---@field mcp lsp.terraformls.Mcp|nil
+---@field validation lsp.terraformls.Validation|nil
+
+---@class lsp.terraformls
+---@field terraform lsp.terraformls.Terraform|nil
+
+---@class lsp.tinymist.Completion
+-- %extension.tinymist.config.tinymist.completion.postfix.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field postfix boolean|nil
+-- %extension.tinymist.config.tinymist.completion.postfixUfcs.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field postfixUfcs boolean|nil
+-- %extension.tinymist.config.tinymist.completion.postfixUfcsLeft.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field postfixUfcsLeft boolean|nil
+-- %extension.tinymist.config.tinymist.completion.postfixUfcsRight.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field postfixUfcsRight boolean|nil
+-- Whether to make symbol completion stepless. For example, `$ar|$` will be completed to `$arrow.r$`. Hint: Restarting the editor is required to change this setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field symbol "step" | "stepless"|nil
+-- %extension.tinymist.config.tinymist.completion.triggerOnSnippetPlaceholders.desc%
+---@field triggerOnSnippetPlaceholders boolean|nil
+
+---@class lsp.tinymist.Lint
+-- %extension.tinymist.config.tinymist.lint.enabled.desc%
+---@field enabled boolean|nil
+-- %extension.tinymist.config.tinymist.lint.when.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field when "onSave" | "onType"|nil
+
+---@class lsp.tinymist.Preview
+-- %extension.tinymist.config.tinymist.preview.cursorIndicator.desc%
+---@field cursorIndicator boolean|nil
+-- %extension.tinymist.config.tinymist.preview.fontPaths.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fontPaths string[]|nil
+-- %extension.tinymist.config.tinymist.preview.invertColors.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field invertColors "never" | "auto" | "always"|table|nil
+-- %extension.tinymist.config.tinymist.preview.partialRendering.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field partialRendering boolean|nil
+-- %extension.tinymist.config.tinymist.preview.pinPreviewFile.desc%
+---@field pinPreviewFile boolean|nil
+-- %extension.tinymist.config.tinymist.preview.refresh.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field refresh "onSave" | "onType"|nil
+-- %extension.tinymist.config.tinymist.preview.scrollSync.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scrollSync "never" | "onSelectionChangeByMouse" | "onSelectionChange"|nil
+-- %extension.tinymist.config.tinymist.preview.sysInputs.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sysInputs table|nil
+-- %extension.tinymist.config.tinymist.preview.systemFonts.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field systemFonts boolean|nil
+
+---@class lsp.tinymist.Trace
+-- %extension.tinymist.config.tinymist.trace.server.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.tinymist.Tinymist
+-- %extension.tinymist.config.tinymist.compileStatus.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field compileStatus "enable" | "disable"|nil
+---@field completion lsp.tinymist.Completion|nil
+-- %extension.tinymist.config.tinymist.configureDefaultWordSeparator.string.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field configureDefaultWordSeparator "enable" | "disable"|nil
+-- %extension.tinymist.config.tinymist.copyAndPaste.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field copyAndPaste "enable" | "disable"|nil
+-- %extension.tinymist.config.tinymist.dragAndDrop.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field dragAndDrop "enable" | "disable"|nil
+-- %extension.tinymist.config.tinymist.exportPdf.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exportPdf "never" | "onSave" | "onType" | "onDocumentHasTitle"|nil
+-- %extension.tinymist.config.tinymist.exportTarget.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exportTarget "paged" | "html"|nil
+-- %extension.tinymist.config.tinymist.fontPaths.desc%
+---@field fontPaths any[]|nil
+-- %extension.tinymist.config.tinymist.formatterIndentSize.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formatterIndentSize number|nil
+-- %extension.tinymist.config.tinymist.formatterMode.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formatterMode "disable" | "typstyle" | "typstfmt"|nil
+-- %extension.tinymist.config.tinymist.formatterPrintWidth.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field formatterPrintWidth number|nil
+-- %extension.tinymist.config.tinymist.formatterProseWrap.desc%
+---@field formatterProseWrap boolean|nil
+---@field lint lsp.tinymist.Lint|nil
+-- %extension.tinymist.config.tinymist.onEnterEvent.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field onEnterEvent boolean|nil
+-- %extension.tinymist.config.tinymist.outputPath.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field outputPath string|nil
+---@field preview lsp.tinymist.Preview|nil
+-- %extension.tinymist.config.tinymist.previewFeature.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field previewFeature "enable" | "disable"|nil
+-- %extension.tinymist.config.tinymist.projectResolution.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field projectResolution "singleFile" | "lockDatabase"|nil
+-- %extension.tinymist.config.tinymist.renderDocs.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renderDocs "enable" | "disable"|nil
+-- %extension.tinymist.config.tinymist.rootPath.desc%
+---@field rootPath string|nil
+-- %extension.tinymist.config.tinymist.semanticTokens.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semanticTokens "enable" | "disable"|nil
+-- %extension.tinymist.config.tinymist.serverPath.desc%
+---@field serverPath string|nil
+-- %extension.tinymist.config.tinymist.showExportFileIn.desc%
+---@field showExportFileIn "editorTab" | "systemDefault"|nil
+-- %extension.tinymist.config.tinymist.statusBarFormat.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field statusBarFormat string|nil
+-- %extension.tinymist.config.tinymist.systemFonts.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field systemFonts boolean|nil
+---@field trace lsp.tinymist.Trace|nil
+-- %extension.tinymist.config.tinymist.typingContinueCommentsOnNewline.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typingContinueCommentsOnNewline boolean|nil
+-- %extension.tinymist.config.tinymist.typstExtraArgs.desc%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typstExtraArgs string[]|nil
+
+---@class lsp.tinymist
+---@field tinymist lsp.tinymist.Tinymist|nil
+
+---@class lsp.ts_ls.Format
+-- %javascript.format.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %format.indentSwitchCase%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field indentSwitchCase boolean|nil
+-- %format.insertSpaceAfterCommaDelimiter%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterCommaDelimiter boolean|nil
+-- %format.insertSpaceAfterConstructor%
+---@field insertSpaceAfterConstructor boolean|nil
+-- %format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean|nil
+-- %format.insertSpaceAfterKeywordsInControlFlowStatements%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterKeywordsInControlFlowStatements boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%
+---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%
+---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean|nil
+-- %format.insertSpaceAfterSemicolonInForStatements%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterSemicolonInForStatements boolean|nil
+-- %format.insertSpaceBeforeAndAfterBinaryOperators%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceBeforeAndAfterBinaryOperators boolean|nil
+-- %format.insertSpaceBeforeFunctionParenthesis%
+---@field insertSpaceBeforeFunctionParenthesis boolean|nil
+-- %format.placeOpenBraceOnNewLineForControlBlocks%
+---@field placeOpenBraceOnNewLineForControlBlocks boolean|nil
+-- %format.placeOpenBraceOnNewLineForFunctions%
+---@field placeOpenBraceOnNewLineForFunctions boolean|nil
+-- %format.semicolons%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semicolons "ignore" | "insert" | "remove"|nil
+
+---@class lsp.ts_ls.FunctionLikeReturnTypes
+-- %configuration.inlayHints.functionLikeReturnTypes.enabled%
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.ParameterNames
+-- %configuration.inlayHints.parameterNames.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "none" | "literals" | "all"|nil
+-- %configuration.inlayHints.parameterNames.suppressWhenArgumentMatchesName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenArgumentMatchesName boolean|nil
+
+---@class lsp.ts_ls.ParameterTypes
+-- %configuration.inlayHints.parameterTypes.enabled%
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.PropertyDeclarationTypes
+-- %configuration.inlayHints.propertyDeclarationTypes.enabled%
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.VariableTypes
+-- %configuration.inlayHints.variableTypes.enabled%
+---@field enabled boolean|nil
+-- %configuration.inlayHints.variableTypes.suppressWhenTypeMatchesName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenTypeMatchesName boolean|nil
+
+---@class lsp.ts_ls.InlayHints
+---@field functionLikeReturnTypes lsp.ts_ls.FunctionLikeReturnTypes|nil
+---@field parameterNames lsp.ts_ls.ParameterNames|nil
+---@field parameterTypes lsp.ts_ls.ParameterTypes|nil
+---@field propertyDeclarationTypes lsp.ts_ls.PropertyDeclarationTypes|nil
+---@field variableTypes lsp.ts_ls.VariableTypes|nil
+
+-- %typescript.preferences.organizeImports%
+---@class lsp.ts_ls.OrganizeImports
+-- %typescript.preferences.organizeImports.accentCollation%
+---@field accentCollation boolean|nil
+-- %typescript.preferences.organizeImports.caseFirst%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseFirst "default" | "upper" | "lower"|nil
+-- %typescript.preferences.organizeImports.caseSensitivity%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"|nil
+-- %typescript.preferences.organizeImports.locale%
+---@field locale string|nil
+-- %typescript.preferences.organizeImports.numericCollation%
+---@field numericCollation boolean|nil
+-- %typescript.preferences.organizeImports.typeOrder%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeOrder "auto" | "last" | "inline" | "first"|nil
+-- %typescript.preferences.organizeImports.unicodeCollation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unicodeCollation "ordinal" | "unicode"|nil
+
+---@class lsp.ts_ls.Preferences
+-- %typescript.preferences.autoImportFileExcludePatterns%
+---@field autoImportFileExcludePatterns string[]|nil
+-- %typescript.preferences.autoImportSpecifierExcludeRegexes%
+---@field autoImportSpecifierExcludeRegexes string[]|nil
+-- %typescript.preferences.importModuleSpecifier%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"|nil
+-- %typescript.preferences.importModuleSpecifierEnding%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"|nil
+-- %typescript.preferences.jsxAttributeCompletionStyle%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"|nil
+-- %typescript.preferences.organizeImports%
+---@field organizeImports lsp.ts_ls.OrganizeImports|nil
+-- %typescript.preferences.quoteStyle%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field quoteStyle "auto" | "single" | "double"|nil
+-- %typescript.preferences.renameMatchingJsxTags%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renameMatchingJsxTags boolean|nil
+-- %typescript.preferences.useAliasesForRenames%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useAliasesForRenames boolean|nil
+
+---@class lsp.ts_ls.ReferencesCodeLens
+-- %javascript.referencesCodeLens.enabled%
+---@field enabled boolean|nil
+-- %javascript.referencesCodeLens.showOnAllFunctions%
+---@field showOnAllFunctions boolean|nil
+
+---@class lsp.ts_ls.ClassMemberSnippets
+-- %configuration.suggest.classMemberSnippets.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.Jsdoc
+-- %configuration.suggest.jsdoc.generateReturns%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field generateReturns boolean|nil
+
+---@class lsp.ts_ls.Suggest
+-- %configuration.suggest.autoImports%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImports boolean|nil
+---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets|nil
+-- %configuration.suggest.completeFunctionCalls%
+---@field completeFunctionCalls boolean|nil
+-- %configuration.suggest.completeJSDocs%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completeJSDocs boolean|nil
+-- %typescript.suggest.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- %configuration.suggest.includeAutomaticOptionalChainCompletions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeAutomaticOptionalChainCompletions boolean|nil
+-- %configuration.suggest.includeCompletionsForImportStatements%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeCompletionsForImportStatements boolean|nil
+---@field jsdoc lsp.ts_ls.Jsdoc|nil
+-- %configuration.suggest.names%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field names boolean|nil
+-- %configuration.suggest.paths%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field paths boolean|nil
+
+---@class lsp.ts_ls.SuggestionActions
+-- %javascript.suggestionActions.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.UpdateImportsOnFileMove
+-- %typescript.updateImportsOnFileMove.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "prompt" | "always" | "never"|nil
+
+---@class lsp.ts_ls.UpdateImportsOnPaste
+-- %configuration.updateImportsOnPaste%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.Validate
+-- %javascript.validate.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.ts_ls.Javascript
+-- %typescript.autoClosingTags%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoClosingTags boolean|nil
+---@field format lsp.ts_ls.Format|nil
+---@field inlayHints lsp.ts_ls.InlayHints|nil
+-- %configuration.preferGoToSourceDefinition%
+---@field preferGoToSourceDefinition boolean|nil
+---@field preferences lsp.ts_ls.Preferences|nil
+---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens|nil
+---@field suggest lsp.ts_ls.Suggest|nil
+---@field suggestionActions lsp.ts_ls.SuggestionActions|nil
+---@field updateImportsOnFileMove lsp.ts_ls.UpdateImportsOnFileMove|nil
+---@field updateImportsOnPaste lsp.ts_ls.UpdateImportsOnPaste|nil
+---@field validate lsp.ts_ls.Validate|nil
+
+---@class lsp.ts_ls.Hover
+-- %configuration.hover.maximumLength%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maximumLength number|nil
+
+---@class lsp.ts_ls.ImplicitProjectConfig
+-- %configuration.implicitProjectConfig.checkJs%
+---@field checkJs boolean|nil
+-- %configuration.implicitProjectConfig.experimentalDecorators%
+---@field experimentalDecorators boolean|nil
+-- %configuration.implicitProjectConfig.module%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field module "CommonJS" | "AMD" | "System" | "UMD" | "ES6" | "ES2015" | "ES2020" | "ESNext" | "None" | "ES2022" | "Node12" | "NodeNext"|nil
+-- %configuration.implicitProjectConfig.strict%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strict boolean|nil
+-- %configuration.implicitProjectConfig.strictFunctionTypes%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strictFunctionTypes boolean|nil
+-- %configuration.implicitProjectConfig.strictNullChecks%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strictNullChecks boolean|nil
+-- %configuration.implicitProjectConfig.target%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field target "ES3" | "ES5" | "ES6" | "ES2015" | "ES2016" | "ES2017" | "ES2018" | "ES2019" | "ES2020" | "ES2021" | "ES2022" | "ES2023" | "ES2024" | "ESNext"|nil
+
+---@class lsp.ts_ls.Js/ts
+---@field hover lsp.ts_ls.Hover|nil
+---@field implicitProjectConfig lsp.ts_ls.ImplicitProjectConfig|nil
+
+---@class lsp.ts_ls.Check
+-- %typescript.check.npmIsInstalled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field npmIsInstalled boolean|nil
+
+---@class lsp.ts_ls.Experimental
+-- %typescript.useTsgo%
+---@field useTsgo boolean|nil
+
+---@class lsp.ts_ls.Format
+-- %typescript.format.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- %format.indentSwitchCase%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field indentSwitchCase boolean|nil
+-- %format.insertSpaceAfterCommaDelimiter%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterCommaDelimiter boolean|nil
+-- %format.insertSpaceAfterConstructor%
+---@field insertSpaceAfterConstructor boolean|nil
+-- %format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean|nil
+-- %format.insertSpaceAfterKeywordsInControlFlowStatements%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterKeywordsInControlFlowStatements boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%
+---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean|nil
+-- %format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%
+---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean|nil
+-- %format.insertSpaceAfterSemicolonInForStatements%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterSemicolonInForStatements boolean|nil
+-- %format.insertSpaceAfterTypeAssertion%
+---@field insertSpaceAfterTypeAssertion boolean|nil
+-- %format.insertSpaceBeforeAndAfterBinaryOperators%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceBeforeAndAfterBinaryOperators boolean|nil
+-- %format.insertSpaceBeforeFunctionParenthesis%
+---@field insertSpaceBeforeFunctionParenthesis boolean|nil
+-- %format.placeOpenBraceOnNewLineForControlBlocks%
+---@field placeOpenBraceOnNewLineForControlBlocks boolean|nil
+-- %format.placeOpenBraceOnNewLineForFunctions%
+---@field placeOpenBraceOnNewLineForFunctions boolean|nil
+-- %format.semicolons%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semicolons "ignore" | "insert" | "remove"|nil
+
+---@class lsp.ts_ls.ImplementationsCodeLens
+-- %typescript.implementationsCodeLens.enabled%
+---@field enabled boolean|nil
+-- %typescript.implementationsCodeLens.showOnInterfaceMethods%
+---@field showOnInterfaceMethods boolean|nil
+
+---@class lsp.ts_ls.EnumMemberValues
+-- %configuration.inlayHints.enumMemberValues.enabled%
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.FunctionLikeReturnTypes
+-- %configuration.inlayHints.functionLikeReturnTypes.enabled%
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.ParameterNames
+-- %configuration.inlayHints.parameterNames.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "none" | "literals" | "all"|nil
+-- %configuration.inlayHints.parameterNames.suppressWhenArgumentMatchesName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenArgumentMatchesName boolean|nil
+
+---@class lsp.ts_ls.ParameterTypes
+-- %configuration.inlayHints.parameterTypes.enabled%
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.PropertyDeclarationTypes
+-- %configuration.inlayHints.propertyDeclarationTypes.enabled%
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.VariableTypes
+-- %configuration.inlayHints.variableTypes.enabled%
+---@field enabled boolean|nil
+-- %configuration.inlayHints.variableTypes.suppressWhenTypeMatchesName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenTypeMatchesName boolean|nil
+
+---@class lsp.ts_ls.InlayHints
+---@field enumMemberValues lsp.ts_ls.EnumMemberValues|nil
+---@field functionLikeReturnTypes lsp.ts_ls.FunctionLikeReturnTypes|nil
+---@field parameterNames lsp.ts_ls.ParameterNames|nil
+---@field parameterTypes lsp.ts_ls.ParameterTypes|nil
+---@field propertyDeclarationTypes lsp.ts_ls.PropertyDeclarationTypes|nil
+---@field variableTypes lsp.ts_ls.VariableTypes|nil
+
+-- %typescript.preferences.organizeImports%
+---@class lsp.ts_ls.OrganizeImports
+-- %typescript.preferences.organizeImports.accentCollation%
+---@field accentCollation boolean|nil
+-- %typescript.preferences.organizeImports.caseFirst%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseFirst "default" | "upper" | "lower"|nil
+-- %typescript.preferences.organizeImports.caseSensitivity%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"|nil
+-- %typescript.preferences.organizeImports.locale%
+---@field locale string|nil
+-- %typescript.preferences.organizeImports.numericCollation%
+---@field numericCollation boolean|nil
+-- %typescript.preferences.organizeImports.typeOrder%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeOrder "auto" | "last" | "inline" | "first"|nil
+-- %typescript.preferences.organizeImports.unicodeCollation%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unicodeCollation "ordinal" | "unicode"|nil
+
+---@class lsp.ts_ls.Preferences
+-- %typescript.preferences.autoImportFileExcludePatterns%
+---@field autoImportFileExcludePatterns string[]|nil
+-- %typescript.preferences.autoImportSpecifierExcludeRegexes%
+---@field autoImportSpecifierExcludeRegexes string[]|nil
+-- %typescript.preferences.importModuleSpecifier%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"|nil
+-- %typescript.preferences.importModuleSpecifierEnding%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"|nil
+-- %typescript.preferences.includePackageJsonAutoImports%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includePackageJsonAutoImports "auto" | "on" | "off"|nil
+-- %typescript.preferences.jsxAttributeCompletionStyle%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"|nil
+-- %typescript.preferences.organizeImports%
+---@field organizeImports lsp.ts_ls.OrganizeImports|nil
+-- %typescript.preferences.preferTypeOnlyAutoImports%
+---@field preferTypeOnlyAutoImports boolean|nil
+-- %typescript.preferences.quoteStyle%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field quoteStyle "auto" | "single" | "double"|nil
+-- %typescript.preferences.renameMatchingJsxTags%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renameMatchingJsxTags boolean|nil
+-- %typescript.preferences.useAliasesForRenames%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useAliasesForRenames boolean|nil
+
+---@class lsp.ts_ls.ReferencesCodeLens
+-- %typescript.referencesCodeLens.enabled%
+---@field enabled boolean|nil
+-- %typescript.referencesCodeLens.showOnAllFunctions%
+---@field showOnAllFunctions boolean|nil
+
+---@class lsp.ts_ls.ClassMemberSnippets
+-- %configuration.suggest.classMemberSnippets.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.Jsdoc
+-- %configuration.suggest.jsdoc.generateReturns%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field generateReturns boolean|nil
+
+---@class lsp.ts_ls.ObjectLiteralMethodSnippets
+-- %configuration.suggest.objectLiteralMethodSnippets.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.Suggest
+-- %configuration.suggest.autoImports%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImports boolean|nil
+---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets|nil
+-- %configuration.suggest.completeFunctionCalls%
+---@field completeFunctionCalls boolean|nil
+-- %configuration.suggest.completeJSDocs%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completeJSDocs boolean|nil
+-- %typescript.suggest.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- %configuration.suggest.includeAutomaticOptionalChainCompletions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeAutomaticOptionalChainCompletions boolean|nil
+-- %configuration.suggest.includeCompletionsForImportStatements%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeCompletionsForImportStatements boolean|nil
+---@field jsdoc lsp.ts_ls.Jsdoc|nil
+---@field objectLiteralMethodSnippets lsp.ts_ls.ObjectLiteralMethodSnippets|nil
+-- %configuration.suggest.paths%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field paths boolean|nil
+
+---@class lsp.ts_ls.SuggestionActions
+-- %typescript.suggestionActions.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.Tsc
+-- %typescript.tsc.autoDetect%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoDetect "on" | "off" | "build" | "watch"|nil
+
+---@class lsp.ts_ls.Experimental
+-- %configuration.tsserver.experimental.enableProjectDiagnostics%
+---@field enableProjectDiagnostics boolean|nil
+
+---@class lsp.ts_ls.ProjectWideIntellisense
+-- %configuration.tsserver.web.projectWideIntellisense.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- %configuration.tsserver.web.projectWideIntellisense.suppressSemanticErrors%
+---@field suppressSemanticErrors boolean|nil
+
+---@class lsp.ts_ls.TypeAcquisition
+-- %configuration.tsserver.web.typeAcquisition.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.Web
+---@field projectWideIntellisense lsp.ts_ls.ProjectWideIntellisense|nil
+---@field typeAcquisition lsp.ts_ls.TypeAcquisition|nil
+
+---@class lsp.ts_ls.Tsserver
+-- %typescript.tsserver.enableRegionDiagnostics%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enableRegionDiagnostics boolean|nil
+-- %typescript.tsserver.enableTracing%
+---@field enableTracing boolean|nil
+---@field experimental lsp.ts_ls.Experimental|nil
+-- %typescript.tsserver.log%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field log "off" | "terse" | "normal" | "verbose" | "requestTime"|nil
+-- %configuration.tsserver.maxTsServerMemory%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxTsServerMemory number|nil
+-- %configuration.tsserver.nodePath%
+---@field nodePath string|nil
+-- %typescript.tsserver.pluginPaths%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pluginPaths string[]|nil
+-- %configuration.tsserver.useSyntaxServer%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useSyntaxServer "always" | "never" | "auto"|nil
+-- %configuration.tsserver.watchOptions%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field watchOptions any|nil
+---@field web lsp.ts_ls.Web|nil
+
+---@class lsp.ts_ls.UpdateImportsOnFileMove
+-- %typescript.updateImportsOnFileMove.enabled%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "prompt" | "always" | "never"|nil
+
+---@class lsp.ts_ls.UpdateImportsOnPaste
+-- %configuration.updateImportsOnPaste%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.ts_ls.Validate
+-- %typescript.validate.enable%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.ts_ls.WorkspaceSymbols
+-- %typescript.workspaceSymbols.excludeLibrarySymbols%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeLibrarySymbols boolean|nil
+-- %typescript.workspaceSymbols.scope%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scope "allOpenProjects" | "currentProject"|nil
+
+---@class lsp.ts_ls.Typescript
+-- %typescript.autoClosingTags%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoClosingTags boolean|nil
+---@field check lsp.ts_ls.Check|nil
+-- %typescript.disableAutomaticTypeAcquisition%
+---@field disableAutomaticTypeAcquisition boolean|nil
+-- %typescript.enablePromptUseWorkspaceTsdk%
+---@field enablePromptUseWorkspaceTsdk boolean|nil
+---@field experimental lsp.ts_ls.Experimental|nil
+---@field format lsp.ts_ls.Format|nil
+---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens|nil
+---@field inlayHints lsp.ts_ls.InlayHints|nil
+-- %typescript.locale%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field locale "auto" | "de" | "es" | "en" | "fr" | "it" | "ja" | "ko" | "ru" | "zh-CN" | "zh-TW"|nil
+-- %typescript.npm%
+---@field npm string|nil
+-- %configuration.preferGoToSourceDefinition%
+---@field preferGoToSourceDefinition boolean|nil
+---@field preferences lsp.ts_ls.Preferences|nil
+---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens|nil
+-- %typescript.reportStyleChecksAsWarnings%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportStyleChecksAsWarnings boolean|nil
+---@field suggest lsp.ts_ls.Suggest|nil
+---@field suggestionActions lsp.ts_ls.SuggestionActions|nil
+---@field tsc lsp.ts_ls.Tsc|nil
+-- %typescript.tsdk.desc%
+---@field tsdk string|nil
+---@field tsserver lsp.ts_ls.Tsserver|nil
+---@field updateImportsOnFileMove lsp.ts_ls.UpdateImportsOnFileMove|nil
+---@field updateImportsOnPaste lsp.ts_ls.UpdateImportsOnPaste|nil
+---@field validate lsp.ts_ls.Validate|nil
+---@field workspaceSymbols lsp.ts_ls.WorkspaceSymbols|nil
+
+---@class lsp.ts_ls
+---@field javascript lsp.ts_ls.Javascript|nil
+---@field js/ts lsp.ts_ls.Js/ts|nil
+---@field typescript lsp.ts_ls.Typescript|nil
+
+---@class lsp.typst_lsp.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.typst_lsp.Typst-lsp
+-- The extension can format Typst files using typstfmt (experimental).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field experimentalFormatterMode "off" | "on"|nil
+-- The extension can export PDFs of your Typst files. This setting controls whether this feature is enabled and how often it runs.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exportPdf "never" | "onSave" | "onPinnedMainSave" | "onType" | "onPinnedMainType"|nil
+-- Configure the root for absolute paths in typst
+---@field rootPath string|nil
+-- Enable or disable semantic tokens (LSP syntax highlighting)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semanticTokens "enable" | "disable"|nil
+-- The extension can use a local typst-lsp executable instead of the one bundled with the extension. This setting controls the path to the executable.
+---@field serverPath string|nil
+---@field trace lsp.typst_lsp.Trace|nil
+
+---@class lsp.typst_lsp
+---@field typst-lsp lsp.typst_lsp.Typst-lsp|nil
+
+---@class lsp.volar.AutoInsert
+-- %configuration.autoInsert.bracketSpacing%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field bracketSpacing boolean|nil
+-- %configuration.autoInsert.dotValue%
+---@field dotValue boolean|nil
+
+---@class lsp.volar.CodeActions
+-- %configuration.codeActions.askNewComponentName%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field askNewComponentName boolean|nil
+
+---@class lsp.volar.Editor
+-- %configuration.editor.focusMode%
+---@field focusMode boolean|nil
+-- %configuration.editor.reactivityVisualization%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reactivityVisualization boolean|nil
+-- %configuration.editor.templateInterpolationDecorators%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field templateInterpolationDecorators boolean|nil
+
+---@class lsp.volar.Script
+-- %configuration.format.script.initialIndent%
+---@field initialIndent boolean|nil
+
+---@class lsp.volar.Style
+-- %configuration.format.style.initialIndent%
+---@field initialIndent boolean|nil
+
+---@class lsp.volar.Template
+-- %configuration.format.template.initialIndent%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field initialIndent boolean|nil
+
+---@class lsp.volar.Format
+---@field script lsp.volar.Script|nil
+---@field style lsp.volar.Style|nil
+---@field template lsp.volar.Template|nil
+-- %configuration.format.wrapAttributes%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field wrapAttributes "auto" | "force" | "force-aligned" | "force-expand-multiline" | "aligned-multiple" | "preserve" | "preserve-aligned"|nil
+
+---@class lsp.volar.InlayHints
+-- %configuration.inlayHints.destructuredProps%
+---@field destructuredProps boolean|nil
+-- %configuration.inlayHints.inlineHandlerLeading%
+---@field inlineHandlerLeading boolean|nil
+-- %configuration.inlayHints.missingProps%
+---@field missingProps boolean|nil
+-- %configuration.inlayHints.optionsWrapper%
+---@field optionsWrapper boolean|nil
+-- %configuration.inlayHints.vBindShorthand%
+---@field vBindShorthand boolean|nil
+
+---@class lsp.volar.Server
+-- %configuration.server.includeLanguages%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeLanguages string[]|nil
+-- %configuration.server.path%
+---@field path string|nil
+
+---@class lsp.volar.Suggest
+-- %configuration.suggest.componentNameCasing%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field componentNameCasing "preferKebabCase" | "preferPascalCase" | "alwaysKebabCase" | "alwaysPascalCase"|nil
+-- %configuration.suggest.defineAssignment%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field defineAssignment boolean|nil
+-- %configuration.suggest.propNameCasing%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field propNameCasing "preferKebabCase" | "preferCamelCase" | "alwaysKebabCase" | "alwaysCamelCase"|nil
+
+---@class lsp.volar.Trace
+-- %configuration.trace.server%
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.volar.Vue
+---@field autoInsert lsp.volar.AutoInsert|nil
+---@field codeActions lsp.volar.CodeActions|nil
+---@field editor lsp.volar.Editor|nil
+---@field format lsp.volar.Format|nil
+---@field inlayHints lsp.volar.InlayHints|nil
+---@field server lsp.volar.Server|nil
+---@field suggest lsp.volar.Suggest|nil
+---@field trace lsp.volar.Trace|nil
+
+---@class lsp.volar
+---@field vue lsp.volar.Vue|nil
+
+---@class lsp.vtsls.Format
+-- Enable/disable default JavaScript formatter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Indent case clauses in switch statements. Requires using TypeScript 5.1+ in the workspace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field indentSwitchCase boolean|nil
+-- Defines space handling after a comma delimiter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterCommaDelimiter boolean|nil
+-- Defines space handling after the constructor keyword.
+---@field insertSpaceAfterConstructor boolean|nil
+-- Defines space handling after function keyword for anonymous functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean|nil
+-- Defines space handling after keywords in a control flow statement.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterKeywordsInControlFlowStatements boolean|nil
+-- Defines space handling after opening and before closing empty braces.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean|nil
+-- Defines space handling after opening and before closing JSX expression braces.
+---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean|nil
+-- Defines space handling after opening and before closing non-empty braces.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean|nil
+-- Defines space handling after opening and before closing non-empty brackets.
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean|nil
+-- Defines space handling after opening and before closing non-empty parenthesis.
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean|nil
+-- Defines space handling after opening and before closing template string braces.
+---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean|nil
+-- Defines space handling after a semicolon in a for statement.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterSemicolonInForStatements boolean|nil
+-- Defines space handling after a binary operator.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceBeforeAndAfterBinaryOperators boolean|nil
+-- Defines space handling before function argument parentheses.
+---@field insertSpaceBeforeFunctionParenthesis boolean|nil
+-- Defines whether an open brace is put onto a new line for control blocks or not.
+---@field placeOpenBraceOnNewLineForControlBlocks boolean|nil
+-- Defines whether an open brace is put onto a new line for functions or not.
+---@field placeOpenBraceOnNewLineForFunctions boolean|nil
+-- Defines handling of optional semicolons.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semicolons "ignore" | "insert" | "remove"|nil
+
+---@class lsp.vtsls.FunctionLikeReturnTypes
+-- Enable/disable inlay hints for implicit return types on function signatures:
+-- ```typescript
+-- 
+-- function foo() /* :number */ {
+-- 	return Date.now();
+-- } 
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.ParameterNames
+-- Enable/disable inlay hints for parameter names:
+-- ```typescript
+-- 
+-- parseInt(/* str: */ '123', /* radix: */ 8)
+--  
+-- ```
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "none" | "literals" | "all"|nil
+-- Suppress parameter name hints on arguments whose text is identical to the parameter name.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenArgumentMatchesName boolean|nil
+
+---@class lsp.vtsls.ParameterTypes
+-- Enable/disable inlay hints for implicit parameter types:
+-- ```typescript
+-- 
+-- el.addEventListener('click', e /* :MouseEvent */ => ...)
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.PropertyDeclarationTypes
+-- Enable/disable inlay hints for implicit types on property declarations:
+-- ```typescript
+-- 
+-- class Foo {
+-- 	prop /* :number */ = Date.now();
+-- }
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.VariableTypes
+-- Enable/disable inlay hints for implicit variable types:
+-- ```typescript
+-- 
+-- const foo /* :number */ = Date.now();
+--  
+-- ```
+---@field enabled boolean|nil
+-- Suppress type hints on variables whose name is identical to the type name.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenTypeMatchesName boolean|nil
+
+---@class lsp.vtsls.InlayHints
+---@field functionLikeReturnTypes lsp.vtsls.FunctionLikeReturnTypes|nil
+---@field parameterNames lsp.vtsls.ParameterNames|nil
+---@field parameterTypes lsp.vtsls.ParameterTypes|nil
+---@field propertyDeclarationTypes lsp.vtsls.PropertyDeclarationTypes|nil
+---@field variableTypes lsp.vtsls.VariableTypes|nil
+
+-- Advanced preferences that control how imports are ordered.
+---@class lsp.vtsls.OrganizeImports
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Compare characters with diacritical marks as unequal to base character.
+---@field accentCollation boolean|nil
+-- Requires `organizeImports.unicodeCollation: 'unicode'`, and `organizeImports.caseSensitivity` is not `caseInsensitive`. Indicates whether upper-case will sort before lower-case.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseFirst "default" | "upper" | "lower"|nil
+-- Specifies how imports should be sorted with regards to case-sensitivity. If `auto` or unspecified, we will detect the case-sensitivity per file
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"|nil
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Overrides the locale used for collation. Specify `auto` to use the UI locale.
+---@field locale string|nil
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Sort numeric strings by integer value.
+---@field numericCollation boolean|nil
+-- Specify how type-only named imports should be sorted.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeOrder "auto" | "last" | "inline" | "first"|nil
+-- Specify whether to sort imports using Unicode or Ordinal collation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unicodeCollation "ordinal" | "unicode"|nil
+
+---@class lsp.vtsls.Preferences
+-- Specify glob patterns of files to exclude from auto imports. Relative paths are resolved relative to the workspace root. Patterns are evaluated using tsconfig.json [`exclude`](https://www.typescriptlang.org/tsconfig#exclude) semantics.
+---@field autoImportFileExcludePatterns string[]|nil
+-- Specify regular expressions to exclude auto imports with matching import specifiers. Examples:
+-- 
+-- - `^node:`
+-- - `lib/internal` (slashes don't need to be escaped...)
+-- - `/lib\/internal/i` (...unless including surrounding slashes for `i` or `u` flags)
+-- - `^lodash$` (only allow subpath imports from lodash)
+---@field autoImportSpecifierExcludeRegexes string[]|nil
+-- Preferred path style for auto imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"|nil
+-- Preferred path ending for auto imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"|nil
+-- Preferred style for JSX attribute completions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"|nil
+-- Advanced preferences that control how imports are ordered.
+---@field organizeImports lsp.vtsls.OrganizeImports|nil
+-- Preferred quote style to use for Quick Fixes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field quoteStyle "auto" | "single" | "double"|nil
+-- When on a JSX tag, try to rename the matching tag instead of renaming the symbol. Requires using TypeScript 5.1+ in the workspace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renameMatchingJsxTags boolean|nil
+-- Enable/disable introducing aliases for object shorthand properties during renames.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useAliasesForRenames boolean|nil
+
+---@class lsp.vtsls.ReferencesCodeLens
+-- Enable/disable references CodeLens in JavaScript files.
+---@field enabled boolean|nil
+-- Enable/disable references CodeLens on all functions in JavaScript files.
+---@field showOnAllFunctions boolean|nil
+
+---@class lsp.vtsls.ClassMemberSnippets
+-- Enable/disable snippet completions for class members.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.Jsdoc
+-- Enable/disable generating `@returns` annotations for JSDoc templates.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field generateReturns boolean|nil
+
+---@class lsp.vtsls.Suggest
+-- Enable/disable auto import suggestions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImports boolean|nil
+---@field classMemberSnippets lsp.vtsls.ClassMemberSnippets|nil
+-- Complete functions with their parameter signature.
+---@field completeFunctionCalls boolean|nil
+-- Enable/disable suggestion to complete JSDoc comments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completeJSDocs boolean|nil
+-- Enable/disable autocomplete suggestions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Enable/disable showing completions on potentially undefined values that insert an optional chain call. Requires strict null checks to be enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeAutomaticOptionalChainCompletions boolean|nil
+-- Enable/disable auto-import-style completions on partially-typed import statements.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeCompletionsForImportStatements boolean|nil
+---@field jsdoc lsp.vtsls.Jsdoc|nil
+-- Enable/disable including unique names from the file in JavaScript suggestions. Note that name suggestions are always disabled in JavaScript code that is semantically checked using `@ts-check` or `checkJs`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field names boolean|nil
+-- Enable/disable suggestions for paths in import statements and require calls.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field paths boolean|nil
+
+---@class lsp.vtsls.SuggestionActions
+-- Enable/disable suggestion diagnostics for JavaScript files in the editor.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.UpdateImportsOnFileMove
+-- Enable/disable automatic updating of import paths when you rename or move a file in VS Code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "prompt" | "always" | "never"|nil
+
+---@class lsp.vtsls.Validate
+-- Enable/disable JavaScript validation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.vtsls.Javascript
+---@field format lsp.vtsls.Format|nil
+---@field inlayHints lsp.vtsls.InlayHints|nil
+-- Makes `Go to Definition` avoid type declaration files when possible by triggering `Go to Source Definition` instead. This allows `Go to Source Definition` to be triggered with the mouse gesture.
+---@field preferGoToSourceDefinition boolean|nil
+---@field preferences lsp.vtsls.Preferences|nil
+---@field referencesCodeLens lsp.vtsls.ReferencesCodeLens|nil
+---@field suggest lsp.vtsls.Suggest|nil
+---@field suggestionActions lsp.vtsls.SuggestionActions|nil
+---@field updateImportsOnFileMove lsp.vtsls.UpdateImportsOnFileMove|nil
+---@field validate lsp.vtsls.Validate|nil
+
+---@class lsp.vtsls.Hover
+-- The maximum number of characters in a hover. If the hover is longer than this, it will be truncated. Requires TypeScript 5.9+.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maximumLength number|nil
+
+---@class lsp.vtsls.ImplicitProjectConfig
+-- Enable/disable semantic checking of JavaScript files. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
+---@field checkJs boolean|nil
+-- Enable/disable `experimentalDecorators` in JavaScript files that are not part of a project. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
+---@field experimentalDecorators boolean|nil
+-- Sets the module system for the program. See more: https://www.typescriptlang.org/tsconfig#module.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field module "CommonJS" | "AMD" | "System" | "UMD" | "ES6" | "ES2015" | "ES2020" | "ESNext" | "None" | "ES2022" | "Node12" | "NodeNext"|nil
+-- Enable/disable [strict function types](https://www.typescriptlang.org/tsconfig#strictFunctionTypes) in JavaScript and TypeScript files that are not part of a project. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strictFunctionTypes boolean|nil
+-- Enable/disable [strict null checks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in JavaScript and TypeScript files that are not part of a project. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field strictNullChecks boolean|nil
+-- Set target JavaScript language version for emitted JavaScript and include library declarations. See more: https://www.typescriptlang.org/tsconfig#target.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field target "ES3" | "ES5" | "ES6" | "ES2015" | "ES2016" | "ES2017" | "ES2018" | "ES2019" | "ES2020" | "ES2021" | "ES2022" | "ES2023" | "ES2024" | "ESNext"|nil
+
+---@class lsp.vtsls.Js/ts
+---@field hover lsp.vtsls.Hover|nil
+---@field implicitProjectConfig lsp.vtsls.ImplicitProjectConfig|nil
+
+---@class lsp.vtsls.Check
+-- Check if npm is installed for [Automatic Type Acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field npmIsInstalled boolean|nil
+
+---@class lsp.vtsls.Format
+-- Enable/disable default TypeScript formatter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Indent case clauses in switch statements. Requires using TypeScript 5.1+ in the workspace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field indentSwitchCase boolean|nil
+-- Defines space handling after a comma delimiter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterCommaDelimiter boolean|nil
+-- Defines space handling after the constructor keyword.
+---@field insertSpaceAfterConstructor boolean|nil
+-- Defines space handling after function keyword for anonymous functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean|nil
+-- Defines space handling after keywords in a control flow statement.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterKeywordsInControlFlowStatements boolean|nil
+-- Defines space handling after opening and before closing empty braces.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean|nil
+-- Defines space handling after opening and before closing JSX expression braces.
+---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean|nil
+-- Defines space handling after opening and before closing non-empty braces.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean|nil
+-- Defines space handling after opening and before closing non-empty brackets.
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean|nil
+-- Defines space handling after opening and before closing non-empty parenthesis.
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean|nil
+-- Defines space handling after opening and before closing template string braces.
+---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean|nil
+-- Defines space handling after a semicolon in a for statement.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceAfterSemicolonInForStatements boolean|nil
+-- Defines space handling after type assertions in TypeScript.
+---@field insertSpaceAfterTypeAssertion boolean|nil
+-- Defines space handling after a binary operator.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field insertSpaceBeforeAndAfterBinaryOperators boolean|nil
+-- Defines space handling before function argument parentheses.
+---@field insertSpaceBeforeFunctionParenthesis boolean|nil
+-- Defines whether an open brace is put onto a new line for control blocks or not.
+---@field placeOpenBraceOnNewLineForControlBlocks boolean|nil
+-- Defines whether an open brace is put onto a new line for functions or not.
+---@field placeOpenBraceOnNewLineForFunctions boolean|nil
+-- Defines handling of optional semicolons.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semicolons "ignore" | "insert" | "remove"|nil
+
+---@class lsp.vtsls.ImplementationsCodeLens
+-- Enable/disable implementations CodeLens. This CodeLens shows the implementers of an interface.
+---@field enabled boolean|nil
+-- Enable/disable implementations CodeLens on interface methods.
+---@field showOnInterfaceMethods boolean|nil
+
+---@class lsp.vtsls.EnumMemberValues
+-- Enable/disable inlay hints for member values in enum declarations:
+-- ```typescript
+-- 
+-- enum MyValue {
+-- 	A /* = 0 */;
+-- 	B /* = 1 */;
+-- }
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.FunctionLikeReturnTypes
+-- Enable/disable inlay hints for implicit return types on function signatures:
+-- ```typescript
+-- 
+-- function foo() /* :number */ {
+-- 	return Date.now();
+-- } 
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.ParameterNames
+-- Enable/disable inlay hints for parameter names:
+-- ```typescript
+-- 
+-- parseInt(/* str: */ '123', /* radix: */ 8)
+--  
+-- ```
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "none" | "literals" | "all"|nil
+-- Suppress parameter name hints on arguments whose text is identical to the parameter name.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenArgumentMatchesName boolean|nil
+
+---@class lsp.vtsls.ParameterTypes
+-- Enable/disable inlay hints for implicit parameter types:
+-- ```typescript
+-- 
+-- el.addEventListener('click', e /* :MouseEvent */ => ...)
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.PropertyDeclarationTypes
+-- Enable/disable inlay hints for implicit types on property declarations:
+-- ```typescript
+-- 
+-- class Foo {
+-- 	prop /* :number */ = Date.now();
+-- }
+--  
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.VariableTypes
+-- Enable/disable inlay hints for implicit variable types:
+-- ```typescript
+-- 
+-- const foo /* :number */ = Date.now();
+--  
+-- ```
+---@field enabled boolean|nil
+-- Suppress type hints on variables whose name is identical to the type name.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field suppressWhenTypeMatchesName boolean|nil
+
+---@class lsp.vtsls.InlayHints
+---@field enumMemberValues lsp.vtsls.EnumMemberValues|nil
+---@field functionLikeReturnTypes lsp.vtsls.FunctionLikeReturnTypes|nil
+---@field parameterNames lsp.vtsls.ParameterNames|nil
+---@field parameterTypes lsp.vtsls.ParameterTypes|nil
+---@field propertyDeclarationTypes lsp.vtsls.PropertyDeclarationTypes|nil
+---@field variableTypes lsp.vtsls.VariableTypes|nil
+
+-- Advanced preferences that control how imports are ordered.
+---@class lsp.vtsls.OrganizeImports
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Compare characters with diacritical marks as unequal to base character.
+---@field accentCollation boolean|nil
+-- Requires `organizeImports.unicodeCollation: 'unicode'`, and `organizeImports.caseSensitivity` is not `caseInsensitive`. Indicates whether upper-case will sort before lower-case.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseFirst "default" | "upper" | "lower"|nil
+-- Specifies how imports should be sorted with regards to case-sensitivity. If `auto` or unspecified, we will detect the case-sensitivity per file
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"|nil
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Overrides the locale used for collation. Specify `auto` to use the UI locale.
+---@field locale string|nil
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Sort numeric strings by integer value.
+---@field numericCollation boolean|nil
+-- Specify how type-only named imports should be sorted.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeOrder "auto" | "last" | "inline" | "first"|nil
+-- Specify whether to sort imports using Unicode or Ordinal collation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unicodeCollation "ordinal" | "unicode"|nil
+
+---@class lsp.vtsls.Preferences
+-- Specify glob patterns of files to exclude from auto imports. Relative paths are resolved relative to the workspace root. Patterns are evaluated using tsconfig.json [`exclude`](https://www.typescriptlang.org/tsconfig#exclude) semantics.
+---@field autoImportFileExcludePatterns string[]|nil
+-- Specify regular expressions to exclude auto imports with matching import specifiers. Examples:
+-- 
+-- - `^node:`
+-- - `lib/internal` (slashes don't need to be escaped...)
+-- - `/lib\/internal/i` (...unless including surrounding slashes for `i` or `u` flags)
+-- - `^lodash$` (only allow subpath imports from lodash)
+---@field autoImportSpecifierExcludeRegexes string[]|nil
+-- Preferred path style for auto imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"|nil
+-- Preferred path ending for auto imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"|nil
+-- Enable/disable searching `package.json` dependencies for available auto imports.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includePackageJsonAutoImports "auto" | "on" | "off"|nil
+-- Preferred style for JSX attribute completions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"|nil
+-- Advanced preferences that control how imports are ordered.
+---@field organizeImports lsp.vtsls.OrganizeImports|nil
+-- Include the `type` keyword in auto-imports whenever possible. Requires using TypeScript 5.3+ in the workspace.
+---@field preferTypeOnlyAutoImports boolean|nil
+-- Preferred quote style to use for Quick Fixes.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field quoteStyle "auto" | "single" | "double"|nil
+-- When on a JSX tag, try to rename the matching tag instead of renaming the symbol. Requires using TypeScript 5.1+ in the workspace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renameMatchingJsxTags boolean|nil
+-- Enable/disable introducing aliases for object shorthand properties during renames.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useAliasesForRenames boolean|nil
+
+---@class lsp.vtsls.ReferencesCodeLens
+-- Enable/disable references CodeLens in TypeScript files.
+---@field enabled boolean|nil
+-- Enable/disable references CodeLens on all functions in TypeScript files.
+---@field showOnAllFunctions boolean|nil
+
+---@class lsp.vtsls.ClassMemberSnippets
+-- Enable/disable snippet completions for class members.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.Jsdoc
+-- Enable/disable generating `@returns` annotations for JSDoc templates.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field generateReturns boolean|nil
+
+---@class lsp.vtsls.ObjectLiteralMethodSnippets
+-- Enable/disable snippet completions for methods in object literals.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.Suggest
+-- Enable/disable auto import suggestions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImports boolean|nil
+---@field classMemberSnippets lsp.vtsls.ClassMemberSnippets|nil
+-- Complete functions with their parameter signature.
+---@field completeFunctionCalls boolean|nil
+-- Enable/disable suggestion to complete JSDoc comments.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completeJSDocs boolean|nil
+-- Enable/disable autocomplete suggestions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Enable/disable showing completions on potentially undefined values that insert an optional chain call. Requires strict null checks to be enabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeAutomaticOptionalChainCompletions boolean|nil
+-- Enable/disable auto-import-style completions on partially-typed import statements.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field includeCompletionsForImportStatements boolean|nil
+---@field jsdoc lsp.vtsls.Jsdoc|nil
+---@field objectLiteralMethodSnippets lsp.vtsls.ObjectLiteralMethodSnippets|nil
+-- Enable/disable suggestions for paths in import statements and require calls.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field paths boolean|nil
+
+---@class lsp.vtsls.SuggestionActions
+-- Enable/disable suggestion diagnostics for TypeScript files in the editor.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.Experimental
+-- Enables project wide error reporting.
+---@field enableProjectDiagnostics boolean|nil
+
+---@class lsp.vtsls.ProjectWideIntellisense
+-- Enable/disable project-wide IntelliSense on web. Requires that VS Code is running in a trusted context.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+-- Suppresses semantic errors on web even when project wide IntelliSense is enabled. This is always on when project wide IntelliSense is not enabled or available. See `#typescript.tsserver.web.projectWideIntellisense.enabled#`
+---@field suppressSemanticErrors boolean|nil
+
+---@class lsp.vtsls.TypeAcquisition
+-- Enable/disable package acquisition on the web. This enables IntelliSense for imported packages. Requires `#typescript.tsserver.web.projectWideIntellisense.enabled#`. Currently not supported for Safari.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+
+---@class lsp.vtsls.Web
+---@field projectWideIntellisense lsp.vtsls.ProjectWideIntellisense|nil
+---@field typeAcquisition lsp.vtsls.TypeAcquisition|nil
+
+---@class lsp.vtsls.Tsserver
+-- Enables tracing TS server performance to a directory. These trace files can be used to diagnose TS Server performance issues. The log may contain file paths, source code, and other potentially sensitive information from your project.
+---@field enableTracing boolean|nil
+---@field experimental lsp.vtsls.Experimental|nil
+-- Enables logging of the TS server to a file. This log can be used to diagnose TS Server issues. The log may contain file paths, source code, and other potentially sensitive information from your project.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field log "off" | "terse" | "normal" | "verbose"|nil
+-- The maximum amount of memory (in MB) to allocate to the TypeScript server process. To use a memory limit greater than 4 GB, use `#typescript.tsserver.nodePath#` to run TS Server with a custom Node installation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxTsServerMemory number|nil
+-- Run TS Server on a custom Node installation. This can be a path to a Node executable, or 'node' if you want VS Code to detect a Node installation.
+---@field nodePath string|nil
+-- Additional paths to discover TypeScript Language Service plugins.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pluginPaths string[]|nil
+-- Controls if TypeScript launches a dedicated server to more quickly handle syntax related operations, such as computing code folding.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field useSyntaxServer "always" | "never" | "auto"|nil
+-- Configure which watching strategies should be used to keep track of files and directories.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field watchOptions any|nil
+---@field web lsp.vtsls.Web|nil
+
+---@class lsp.vtsls.UpdateImportsOnFileMove
+-- Enable/disable automatic updating of import paths when you rename or move a file in VS Code.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled "prompt" | "always" | "never"|nil
+
+---@class lsp.vtsls.Validate
+-- Enable/disable TypeScript validation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.vtsls.WorkspaceSymbols
+-- Exclude symbols that come from library files in `Go to Symbol in Workspace` results. Requires using TypeScript 5.3+ in the workspace.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field excludeLibrarySymbols boolean|nil
+-- Controls which files are searched by [Go to Symbol in Workspace](https://code.visualstudio.com/docs/editor/editingevolved#_open-symbol-by-name).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scope "allOpenProjects" | "currentProject"|nil
+
+---@class lsp.vtsls.Typescript
+---@field check lsp.vtsls.Check|nil
+-- Disables [automatic type acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition). Automatic type acquisition fetches `@types` packages from npm to improve IntelliSense for external libraries.
+---@field disableAutomaticTypeAcquisition boolean|nil
+---@field format lsp.vtsls.Format|nil
+---@field implementationsCodeLens lsp.vtsls.ImplementationsCodeLens|nil
+---@field inlayHints lsp.vtsls.InlayHints|nil
+-- Sets the locale used to report JavaScript and TypeScript errors. Defaults to use VS Code's locale.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field locale "auto" | "de" | "es" | "en" | "fr" | "it" | "ja" | "ko" | "ru" | "zh-CN" | "zh-TW"|nil
+-- Specifies the path to the npm executable used for [Automatic Type Acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition).
+---@field npm string|nil
+-- Makes `Go to Definition` avoid type declaration files when possible by triggering `Go to Source Definition` instead. This allows `Go to Source Definition` to be triggered with the mouse gesture.
+---@field preferGoToSourceDefinition boolean|nil
+---@field preferences lsp.vtsls.Preferences|nil
+---@field referencesCodeLens lsp.vtsls.ReferencesCodeLens|nil
+-- Report style checks as warnings.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field reportStyleChecksAsWarnings boolean|nil
+---@field suggest lsp.vtsls.Suggest|nil
+---@field suggestionActions lsp.vtsls.SuggestionActions|nil
+-- Specifies the folder path to the tsserver and `lib*.d.ts` files under a TypeScript install to use for IntelliSense, for example: `./node_modules/typescript/lib`.
+-- 
+-- - When specified as a user setting, the TypeScript version from `typescript.tsdk` automatically replaces the built-in TypeScript version.
+-- - When specified as a workspace setting, `typescript.tsdk` allows you to switch to use that workspace version of TypeScript for IntelliSense with the `TypeScript: Select TypeScript version` command.
+-- 
+-- See the [TypeScript documentation](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-newer-typescript-versions) for more detail about managing TypeScript versions.
+---@field tsdk string|nil
+---@field tsserver lsp.vtsls.Tsserver|nil
+---@field updateImportsOnFileMove lsp.vtsls.UpdateImportsOnFileMove|nil
+---@field validate lsp.vtsls.Validate|nil
+---@field workspaceSymbols lsp.vtsls.WorkspaceSymbols|nil
+
+---@class lsp.vtsls.Completion
+-- Execute fuzzy match of completion items on server side. Enable this will help filter out useless completion items from tsserver.
+---@field enableServerSideFuzzyMatch boolean|nil
+-- Maximum number of completion entries to return. Recommend to also toggle `enableServerSideFuzzyMatch` to preserve items with higher accuracy.
+---@field entriesLimit number|nil
+
+---@class lsp.vtsls.Experimental
+---@field completion lsp.vtsls.Completion|nil
+-- Maximum length of single inlay hint. Note that hint is simply truncated if the limit is exceeded. Do not set this if your client already handles overly long hints gracefully.
+---@field maxInlayHintLength number|nil
+
+---@class lsp.vtsls.Format
+---@field baseIndentSize number|nil
+---@field convertTabsToSpaces boolean|nil
+---@field indentSize number|nil
+-- 0: None 1: Block 2: Smart
+---@field indentStyle number|nil
+---@field newLineCharacter string|nil
+---@field tabSize number|nil
+---@field trimTrailingWhitespace boolean|nil
+
+---@class lsp.vtsls.Javascript
+---@field format lsp.vtsls.Format|nil
+
+---@class lsp.vtsls.Tsserver
+-- TypeScript plugins that are not locally avaiable in the workspace. Usually the plugin configuration can be found in the `contributes.typescriptServerPlugins` field of `package.json` of the corresponding VSCode extension.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field globalPlugins object[]|nil
+
+---@class lsp.vtsls.Format
+---@field baseIndentSize number|nil
+---@field convertTabsToSpaces boolean|nil
+---@field indentSize number|nil
+-- 0: None 1: Block 2: Smart
+---@field indentStyle number|nil
+---@field newLineCharacter string|nil
+---@field tabSize number|nil
+---@field trimTrailingWhitespace boolean|nil
+
+---@class lsp.vtsls.Typescript
+---@field format lsp.vtsls.Format|nil
+---@field globalTsdk string|nil
+
+---@class lsp.vtsls.Vtsls
+-- Automatically use workspace version of TypeScript lib on startup. By default, the bundled version is used for intelliSense.
+---@field autoUseWorkspaceTsdk boolean|nil
+-- Enable 'Move to file' code action. This action enables user to move code to existing file, but requires corresponding handling on the client side.
+---@field enableMoveToFileCodeAction boolean|nil
+---@field experimental lsp.vtsls.Experimental|nil
+---@field javascript lsp.vtsls.Javascript|nil
+---@field tsserver lsp.vtsls.Tsserver|nil
+---@field typescript lsp.vtsls.Typescript|nil
+
+---@class lsp.vtsls
+---@field javascript lsp.vtsls.Javascript|nil
+---@field js/ts lsp.vtsls.Js/ts|nil
+---@field typescript lsp.vtsls.Typescript|nil
+---@field vtsls lsp.vtsls.Vtsls|nil
+
+-- Where Vetur source Scaffold Snippets from and how to indicate them. Set a source to "" to disable it.
+-- 
+-- - workspace: `<WORKSPACE>/.vscode/vetur/snippets`.
+-- - user: `<USER-DATA-DIR>/User/snippets/vetur`.
+-- - vetur: Bundled in Vetur.
+-- 
+-- The default is:
+-- ```
+-- "vetur.completion.scaffoldSnippetSources": {
+--   "workspace": "💼",
+--   "user": "🗒️",
+--   "vetur": "✌"
+-- }
+-- ```
+-- 
+-- Alternatively, you can do:
+-- 
+-- ```
+-- "vetur.completion.scaffoldSnippetSources": {
+--   "workspace": "(W)",
+--   "user": "(U)",
+--   "vetur": "(V)"
+-- }
+-- ```
+-- 
+-- Read more: https://vuejs.github.io/vetur/snippet.html.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.vuels.ScaffoldSnippetSources
+-- Show Scaffold Snippets from `<USER-DATA-DIR>/User/snippets/vetur`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field user string|nil
+-- Show Scaffold Snippets bundled in Vetur.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vetur string|nil
+-- Show Scaffold Snippets from `<WORKSPACE>/.vscode/vetur/snippets`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field workspace string|nil
+
+---@class lsp.vuels.Completion
+-- Include completion for module export and auto import them
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field autoImport boolean|nil
+-- Where Vetur source Scaffold Snippets from and how to indicate them. Set a source to "" to disable it.
+-- 
+-- - workspace: `<WORKSPACE>/.vscode/vetur/snippets`.
+-- - user: `<USER-DATA-DIR>/User/snippets/vetur`.
+-- - vetur: Bundled in Vetur.
+-- 
+-- The default is:
+-- ```
+-- "vetur.completion.scaffoldSnippetSources": {
+--   "workspace": "💼",
+--   "user": "🗒️",
+--   "vetur": "✌"
+-- }
+-- ```
+-- 
+-- Alternatively, you can do:
+-- 
+-- ```
+-- "vetur.completion.scaffoldSnippetSources": {
+--   "workspace": "(W)",
+--   "user": "(U)",
+--   "vetur": "(V)"
+-- }
+-- ```
+-- 
+-- Read more: https://vuejs.github.io/vetur/snippet.html.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scaffoldSnippetSources lsp.vuels.ScaffoldSnippetSources|nil
+-- Casing conversion for tag completion
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field tagCasing "initial" | "kebab"|nil
+
+---@class lsp.vuels.Dev
+-- Log level for VLS
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field logLevel "INFO" | "DEBUG"|nil
+-- Path to vls for Vetur developers. There are two ways of using it. 
+-- 
+-- 1. Clone vuejs/vetur from GitHub, build it and point it to the ABSOLUTE path of `/server`.
+-- 2. `yarn global add vls` and point Vetur to the installed location (`yarn global dir` + node_modules/vls)
+---@field vlsPath string|nil
+-- The port that VLS listens to. Can be used for attaching to the VLS Node process for debugging / profiling.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field vlsPort number|nil
+
+---@class lsp.vuels.Experimental
+-- Enable template interpolation service that offers hover / definition / references in Vue interpolations.
+---@field templateInterpolationService boolean|nil
+
+---@class lsp.vuels.DefaultFormatter
+-- Default formatter for <style> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field css "none" | "prettier"|nil
+-- Default formatter for <template> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field html "none" | "prettyhtml" | "js-beautify-html" | "prettier"|nil
+-- Default formatter for <script> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field js "none" | "prettier" | "prettier-eslint" | "vscode-typescript"|nil
+-- Default formatter for <style lang='less'> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field less "none" | "prettier"|nil
+-- Default formatter for <style lang='postcss'> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field postcss "none" | "prettier"|nil
+-- Default formatter for <template lang='pug'> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field pug "none" | "prettier"|nil
+-- Default formatter for <style lang='sass'> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field sass "none" | "sass-formatter"|nil
+-- Default formatter for <style lang='scss'> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scss "none" | "prettier"|nil
+-- Default formatter for <style lang='stylus'> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field stylus "none" | "stylus-supremacy"|nil
+-- Default formatter for <script> region
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field ts "none" | "prettier" | "prettier-tslint" | "vscode-typescript"|nil
+
+-- Global prettier config used by prettier formatter. Used by `prettier` and `prettier-eslint`.
+-- 
+-- Vetur will prefer a prettier config file at home directory if one exists.
+---@class lsp.vuels.Prettier
+
+-- Options for prettyhtml
+---@class lsp.vuels.Prettyhtml
+-- Maximum amount of characters allowed per line
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field printWidth number|nil
+-- Whether to use single quotes by default
+---@field singleQuote boolean|nil
+-- Whether to sort attributes
+---@field sortAttributes boolean|nil
+-- Whether to wrap attributes
+---@field wrapAttributes boolean|nil
+
+-- Options for all default formatters
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@class lsp.vuels.DefaultFormatterOptions
+-- Options for js-beautify
+---@field js-beautify-html table|nil
+-- Global prettier config used by prettier formatter. Used by `prettier` and `prettier-eslint`.
+-- 
+-- Vetur will prefer a prettier config file at home directory if one exists.
+---@field prettier lsp.vuels.Prettier|nil
+-- Options for prettyhtml
+---@field prettyhtml lsp.vuels.Prettyhtml|nil
+
+---@class lsp.vuels.Options
+-- Number of spaces per indentation level. Inherited by all formatters.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field tabSize number|nil
+-- Use tabs for indentation. Inherited by all formatters.
+---@field useTabs boolean|nil
+
+---@class lsp.vuels.Format
+---@field defaultFormatter lsp.vuels.DefaultFormatter|nil
+-- Options for all default formatters
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field defaultFormatterOptions lsp.vuels.DefaultFormatterOptions|nil
+-- Enable/disable the Vetur document formatter.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field options lsp.vuels.Options|nil
+-- Whether to have initial indent for <script> region
+---@field scriptInitialIndent boolean|nil
+-- Whether to have initial indent for <style> region
+---@field styleInitialIndent boolean|nil
+
+---@class lsp.vuels.Grammar
+-- Mapping from custom block tag name to language name. Used for generating grammar to support syntax highlighting for custom blocks.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field customBlocks table|nil
+
+---@class lsp.vuels.LanguageFeatures
+-- Whether to enable codeActions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field codeActions boolean|nil
+-- Whether to enable semantic highlighting. Currently only works for typescript
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field semanticTokens boolean|nil
+-- Whether to automatic updating import path when rename or move a file
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field updateImportOnFileMove boolean|nil
+
+---@class lsp.vuels.Trace
+-- Traces the communication between VS Code and Vue Language Server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.vuels.Underline
+-- Enable underline `.value` when using composition API.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field refValue boolean|nil
+
+---@class lsp.vuels.Validation
+-- Validate interpolations in <template> region using TypeScript language service
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field interpolation boolean|nil
+-- Validate js/ts in <script>
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field script boolean|nil
+-- Validate css/scss/less/postcss in <style>
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field style boolean|nil
+-- Validate vue-html in <template> using eslint-plugin-vue
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field template boolean|nil
+-- Validate props usage in <template> region. Show error/warning for not passing declared props to child components and show error for passing wrongly typed interpolation expressions
+---@field templateProps boolean|nil
+
+---@class lsp.vuels.Vetur
+---@field completion lsp.vuels.Completion|nil
+---@field dev lsp.vuels.Dev|nil
+---@field experimental lsp.vuels.Experimental|nil
+---@field format lsp.vuels.Format|nil
+---@field grammar lsp.vuels.Grammar|nil
+-- Vetur will warn about not setup correctly for the project. You can disable it.
+---@field ignoreProjectWarning boolean|nil
+---@field languageFeatures lsp.vuels.LanguageFeatures|nil
+---@field trace lsp.vuels.Trace|nil
+---@field underline lsp.vuels.Underline|nil
+-- Use dependencies from workspace. Support for TypeScript, Prettier, @starptech/prettyhtml, prettier-eslint, prettier-tslint, stylus-supremacy, @prettier/plugin-pug.
+---@field useWorkspaceDependencies boolean|nil
+---@field validation lsp.vuels.Validation|nil
+
+---@class lsp.vuels
+---@field vetur lsp.vuels.Vetur|nil
+
+---@class lsp.wgls_analyzer.TermSearch
+-- Term search fuel in "units of work" for assists (Defaults to 1800).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fuel integer|nil
+
+---@class lsp.wgls_analyzer.Assist
+-- Placeholder expression to use for missing expressions in assists.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field expressionFillDefault "todo" | "default"|nil
+---@field termSearch lsp.wgls_analyzer.TermSearch|nil
+
+---@class lsp.wgls_analyzer.CachePriming
+-- Warm up caches on project load.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- How many worker threads to handle priming caches. The default `0` means to pick automatically.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field numThreads number|"physical" | "logical"|nil
+
+---@class lsp.wgls_analyzer.Callable
+-- Whether to add parenthesis and argument snippets when completing function.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field snippets "fill_arguments" | "add_parentheses" | "none"|nil
+
+---@class lsp.wgls_analyzer.FullFunctionSignatures
+-- Whether to show full function/method signatures in completion docs.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Postfix
+-- Whether to show postfix snippets like `if` and `not`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Snippets
+-- Custom completion snippets.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field custom table|nil
+
+---@class lsp.wgls_analyzer.TermSearch
+-- Whether to enable term search based snippets.
+---@field enable boolean|nil
+-- Term search fuel in "units of work" for autocompletion (Defaults to 1000).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fuel integer|nil
+
+---@class lsp.wgls_analyzer.Completion
+-- Whether to automatically add a semicolon when completing unit-returning functions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field addSemicolonToUnit boolean|nil
+---@field callable lsp.wgls_analyzer.Callable|nil
+---@field fullFunctionSignatures lsp.wgls_analyzer.FullFunctionSignatures|nil
+-- Maximum number of completions to return. If `null`, then there is no limit.
+---@field limit integer|nil
+---@field postfix lsp.wgls_analyzer.Postfix|nil
+---@field snippets lsp.wgls_analyzer.Snippets|nil
+---@field termSearch lsp.wgls_analyzer.TermSearch|nil
+
+---@class lsp.wgls_analyzer.Experimental
+-- Whether to show experimental wgsl-analyzer diagnostics that might have more false positives than usual.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.StyleLints
+-- Whether to run additional style lints.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Diagnostics
+-- List of wgsl-analyzer diagnostics to disable.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field disabled string[]|nil
+-- Whether to show native wgsl-analyzer diagnostics.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field experimental lsp.wgls_analyzer.Experimental|nil
+-- Controls whether to show naga's parsing errors.
+---@field nagaParsingErrors boolean|nil
+-- Controls whether to show naga's validation errors.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nagaValidationErrors boolean|nil
+-- Which version of naga to use for its diagnostics
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nagaVersion "0.14" | "0.19" | "0.22" | "main"|nil
+-- Whether to show the main part of the rendered Naga output of a diagnostic message.
+---@field previewNagaOutput boolean|nil
+---@field styleLints lsp.wgls_analyzer.StyleLints|nil
+-- Controls whether to show type errors.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeErrors boolean|nil
+-- Whether to show diagnostics using the original Naga error code. If this is false, all Naga diagnostics will have the code 'Naga(Click for full compiler diagnostics)'
+---@field useNagaErrorCode boolean|nil
+-- List of warnings that should be displayed with hint severity.
+-- 
+-- The warnings will be indicated by faded text or three dots in code and will not show up in the `Problems Panel`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warningsAsHint string[]|nil
+-- List of warnings that should be displayed with info severity.
+-- 
+-- The warnings will be indicated by a blue squiggly underline in code and a blue icon in the `Problems Panel`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field warningsAsInfo string[]|nil
+
+---@class lsp.wgls_analyzer.Files
+-- These paths (file/directories) will be ignored by wgsl-analyzer. They are relative to the workspace root, and globs are not supported. You may also need to add the folders to Code's `files.watcherExclude`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field exclude string[]|nil
+-- Controls file watching implementation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field watcher "client" | "server"|nil
+
+---@class lsp.wgls_analyzer.BreakPoints
+-- Enables highlighting of related references while the cursor is on `break`, `loop`, `while`, or `for` keywords.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.ExitPoints
+-- Enables highlighting of all exit points while the cursor is on any `return`, `fn`, or return type arrow (`->`).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.References
+-- Enables highlighting of related references while the cursor is on any identifier.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.HighlightRelated
+---@field breakPoints lsp.wgls_analyzer.BreakPoints|nil
+---@field exitPoints lsp.wgls_analyzer.ExitPoints|nil
+---@field references lsp.wgls_analyzer.References|nil
+
+---@class lsp.wgls_analyzer.GotoTypeDef
+-- Whether to show `Go to Type Definition` action. Only applies when `#wgsl-analyzer.hover.actions.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Implementations
+-- Whether to show `Implementations` action. Only applies when `#wgsl-analyzer.hover.actions.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.References
+-- Whether to show `References` action. Only applies when `#wgsl-analyzer.hover.actions.enable#` is set.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Actions
+-- Whether to show hover actions.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field gotoTypeDef lsp.wgls_analyzer.GotoTypeDef|nil
+---@field implementations lsp.wgls_analyzer.Implementations|nil
+---@field references lsp.wgls_analyzer.References|nil
+
+---@class lsp.wgls_analyzer.Keywords
+-- Whether to show keyword hover popups. Only applies when `#wgsl-analyzer.hover.documentation.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Documentation
+-- Whether to show documentation on hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field keywords lsp.wgls_analyzer.Keywords|nil
+
+---@class lsp.wgls_analyzer.Links
+-- Use markdown syntax for links on hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.MemoryLayout
+-- How to render the align information in a memory layout hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field alignment any|"both" | "decimal" | "hexadecimal"|nil
+-- Whether to show memory layout data on hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- How to render the niche information in a memory layout hover.
+---@field niches boolean|nil
+-- How to render the offset information in a memory layout hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field offset any|"both" | "decimal" | "hexadecimal"|nil
+-- How to render the size information in a memory layout hover.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field size any|"both" | "decimal" | "hexadecimal"|nil
+
+---@class lsp.wgls_analyzer.Show
+-- How many fields of a struct to display when hovering thereover. Show none if empty.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field fields integer|nil
+
+---@class lsp.wgls_analyzer.Hover
+---@field actions lsp.wgls_analyzer.Actions|nil
+---@field documentation lsp.wgls_analyzer.Documentation|nil
+---@field links lsp.wgls_analyzer.Links|nil
+---@field memoryLayout lsp.wgls_analyzer.MemoryLayout|nil
+---@field show lsp.wgls_analyzer.Show|nil
+
+---@class lsp.wgls_analyzer.Granularity
+-- Whether to enforce the import granularity setting for all files. If set to false wgsl-analyzer will try to keep import styles consistent per file.
+---@field enforce boolean|nil
+-- How imports should be grouped into import statements.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field group "preserve" | "package" | "module" | "item" | "one"|nil
+
+---@class lsp.wgls_analyzer.Group
+-- Group inserted imports by the [following order](https://wgsl-analyzer.github.io/manual.html#auto-import). Groups are separated by newlines.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Merge
+-- Whether to allow import insertion to merge new imports into single path glob imports like `import x::y::*;`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field glob boolean|nil
+
+---@class lsp.wgls_analyzer.Imports
+---@field granularity lsp.wgls_analyzer.Granularity|nil
+---@field group lsp.wgls_analyzer.Group|nil
+---@field merge lsp.wgls_analyzer.Merge|nil
+
+---@class lsp.wgls_analyzer.BindingModeHints
+-- Whether to show inlay type hints for binding modes.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.ClosingBraceHints
+-- Whether to show inlay hints after a closing `}` to indicate what item it belongs to.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Minimum number of lines required before the `}` until the hint is shown (set to 0 or 1 to always show them).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field minLines integer|nil
+
+---@class lsp.wgls_analyzer.ExpressionAdjustmentHints
+-- Whether to show inlay hints as postfix ops (`.*` instead of `*`, etc).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field mode "prefix" | "postfix" | "prefer_prefix" | "prefer_postfix"|nil
+
+---@class lsp.wgls_analyzer.Const
+-- Whether to show const generic parameter name inlay hints.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Lifetime
+-- Whether to show generic lifetime parameter name inlay hints.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Type
+-- Whether to show generic type parameter name inlay hints.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.GenericParameterHints
+---@field const lsp.wgls_analyzer.Const|nil
+---@field lifetime lsp.wgls_analyzer.Lifetime|nil
+---@field type lsp.wgls_analyzer.Type|nil
+
+---@class lsp.wgls_analyzer.ImplicitDrops
+-- Whether to show implicit drop hints.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.ImplicitSizedBoundHints
+-- Whether to show inlay hints for the implied type parameter `Sized` bound.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.LifetimeElisionHints
+-- Whether to show inlay type hints for elided lifetimes in function signatures.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable "always" | "never" | "skip_trivial"|nil
+-- Whether to prefer using parameter names as the name for elided lifetime hints if possible.
+---@field useParameterNames boolean|nil
+
+---@class lsp.wgls_analyzer.RangeExclusiveHints
+-- Whether to show exclusive range inlay hints.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.InlayHints
+---@field bindingModeHints lsp.wgls_analyzer.BindingModeHints|nil
+---@field closingBraceHints lsp.wgls_analyzer.ClosingBraceHints|nil
+-- Whether to show inlay hints
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enabled boolean|nil
+---@field expressionAdjustmentHints lsp.wgls_analyzer.ExpressionAdjustmentHints|nil
+---@field genericParameterHints lsp.wgls_analyzer.GenericParameterHints|nil
+---@field implicitDrops lsp.wgls_analyzer.ImplicitDrops|nil
+---@field implicitSizedBoundHints lsp.wgls_analyzer.ImplicitSizedBoundHints|nil
+---@field lifetimeElisionHints lsp.wgls_analyzer.LifetimeElisionHints|nil
+-- Maximum length for inlay hints. Set to null to have an unlimited length.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxLength integer|nil
+-- Whether to show inlay hints for the names of function parameters
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field parameterHints boolean|nil
+---@field rangeExclusiveHints lsp.wgls_analyzer.RangeExclusiveHints|nil
+-- Whether to render leading colons for type hints, and trailing colons for parameter hints.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field renderColons boolean|nil
+-- Whether to show inlay hints for the layout of struct fields
+---@field structLayoutHints boolean|nil
+-- Whether to show inlay hints for types of variable declarations
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeHints boolean|nil
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field typeVerbosity "full" | "compact" | "inner"|nil
+
+---@class lsp.wgls_analyzer.JoinLines
+-- Join lines merges consecutive declaration and initialization of an assignment.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field joinAssignments boolean|nil
+-- Join lines inserts else between consecutive ifs.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field joinElseIf boolean|nil
+-- Join lines removes trailing commas.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field removeTrailingComma boolean|nil
+-- Join lines unwraps trivial blocks.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field unwrapTrivialBlock boolean|nil
+
+---@class lsp.wgls_analyzer.Implementations
+-- Whether to show `Implementations` lens. Only applies when `#wgsl-analyzer.lens.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Adt
+-- Whether to show `References` lens for Struct declarations.
+-- Only applies when `#wgsl-analyzer.lens.enable#` is set.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Method
+-- Whether to show `Method References` lens. Only applies when `#wgsl-analyzer.lens.enable#` is set.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.References
+---@field adt lsp.wgls_analyzer.Adt|nil
+---@field method lsp.wgls_analyzer.Method|nil
+
+---@class lsp.wgls_analyzer.Run
+-- Whether to show `Run` lens. Only applies when `#wgsl-analyzer.lens.enable#` is set.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Lens
+-- Whether to show CodeLens.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field implementations lsp.wgls_analyzer.Implementations|nil
+-- Where to render annotations.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field location "above_name" | "above_whole_item"|nil
+---@field references lsp.wgls_analyzer.References|nil
+---@field run lsp.wgls_analyzer.Run|nil
+
+---@class lsp.wgls_analyzer.Query
+-- Sets the LRU capacity of the specified queries.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field capacities table|nil
+
+---@class lsp.wgls_analyzer.Lru
+-- Number of syntax trees wgsl-analyzer keeps in memory. Defaults to 128.
+---@field capacity integer|nil
+---@field query lsp.wgls_analyzer.Query|nil
+
+---@class lsp.wgls_analyzer.Preprocessor
+-- Shader defines used in `#ifdef` directives in the flavor of [Bevy Engine](https://bevyengine.org)'s [shader preprocessor](https://bevyengine.org/news/bevy-0-6/#shader-imports).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field shaderDefs string[]|nil
+
+---@class lsp.wgls_analyzer.References
+-- Exclude imports from find-all-references.
+---@field excludeImports boolean|nil
+
+---@class lsp.wgls_analyzer.Inject
+-- Inject additional highlighting into doc comments.
+-- 
+-- When enabled, wgsl-analyzer will highlight WGSL/WESL source in doc comments as well as intra-doc links.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Comment
+---@field inject lsp.wgls_analyzer.Inject|nil
+
+---@class lsp.wgls_analyzer.Doc
+---@field comment lsp.wgls_analyzer.Comment|nil
+
+---@class lsp.wgls_analyzer.Specialization
+-- Use specialized semantic tokens for operators.
+-- 
+-- When enabled, wgsl-analyzer will emit special token types for operator tokens instead of the generic `operator` token type.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Operator
+-- Use semantic tokens for operators.
+-- 
+-- When disabled, wgsl-analyzer will emit semantic tokens only for operator tokens when they are tagged with modifiers.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+---@field specialization lsp.wgls_analyzer.Specialization|nil
+
+---@class lsp.wgls_analyzer.Specialization
+-- Use specialized semantic tokens for punctuation.
+-- 
+-- When enabled, wgsl-analyzer will emit special token types for punctuation tokens instead of the generic `punctuation` token type.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Punctuation
+-- Use semantic tokens for punctuation.
+-- 
+-- When disabled, wgsl-analyzer will emit semantic tokens only for punctuation tokens when they are tagged with modifiers or have a special role.
+---@field enable boolean|nil
+---@field specialization lsp.wgls_analyzer.Specialization|nil
+
+---@class lsp.wgls_analyzer.Strings
+-- Use semantic tokens for strings.
+-- 
+-- In some editors (e.g. VS Code) semantic tokens override other highlighting grammars.
+-- By disabling semantic tokens for strings, other grammars can be used to highlight their contents.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.SemanticHighlighting
+---@field doc lsp.wgls_analyzer.Doc|nil
+-- Whether the server is allowed to emit non-standard tokens and modifiers.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field nonStandardTokens boolean|nil
+---@field operator lsp.wgls_analyzer.Operator|nil
+---@field punctuation lsp.wgls_analyzer.Punctuation|nil
+---@field strings lsp.wgls_analyzer.Strings|nil
+
+---@class lsp.wgls_analyzer.Server
+-- Extra environment variables that will be passed to the wgsl-analyzer executable. Useful for passing e.g. `WA_LOG` for debugging.
+---@field extraEnv table|nil
+-- Path to wgsl-analyzer executable (points to bundled binary by default).
+---@field path string|nil
+
+---@class lsp.wgls_analyzer.Documentation
+-- Show documentation.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.SignatureInfo
+-- Show full signature of the callable. Only shows parameters if disabled.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field detail "full" | "parameters"|nil
+---@field documentation lsp.wgls_analyzer.Documentation|nil
+
+---@class lsp.wgls_analyzer.StatusBar
+-- Action to run when clicking the extension status bar item.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field clickAction "stopServer" | "openLogs"|nil
+-- When to show the extension status bar.
+-- 
+-- `"always"` Always show the status bar.
+-- 
+-- `"never"` Never show the status bar.
+-- 
+-- `{ documentSelector: <DocumentSelector>[] }` Show the status bar if the open file matches any of the given document selectors.
+-- 
+-- See [VS Code -- DocumentSelector](https://code.visualstudio.com/api/references/document-selector) for more information.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showStatusBar "always" | "never"|table|nil
+
+---@class lsp.wgls_analyzer.Trace
+-- Enable logging of VS Code extensions itself.
+---@field extension boolean|nil
+-- Trace requests to the wgsl-analyzer (this is usually overly verbose and not recommended for regular users).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.wgls_analyzer.Typing
+-- Whether to prefix newlines after comments with the corresponding comment prefix.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field continueCommentsOnNewline boolean|nil
+-- Specify the characters allowed to invoke special on typing triggers.
+-- - typing `=` after `let` tries to smartly add `;` if `=` is followed by an existing expression
+-- - typing `=` between two expressions adds `;` when in statement position
+-- - typing `=` to turn an assignment into an equality comparison removes `;` when in expression position
+-- - typing `{` or `(` in front of an expression inserts a closing `}` or `)` after the expression
+-- - typing `{` in a use item adds a closing `}` in the right place
+-- - typing `>` to complete a return type `->` will insert a whitespace after it.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field triggerChars string|nil
+
+---@class lsp.wgls_analyzer.Vfs
+-- Additional paths to include in the virtual file system.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraIncludes string[]|nil
+
+---@class lsp.wgls_analyzer.RangeFormatting
+-- Enables the use of wgslfmt's unstable range formatting command for the `textDocument/rangeFormatting` request. The wgslfmt option is unstable.
+---@field enable boolean|nil
+
+---@class lsp.wgls_analyzer.Wgslfmt
+-- Additional arguments to `wgslfmt`.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field extraArgs string[]|nil
+-- Advanced option, fully override the command wgsl-analyzer uses for formatting. This should be the equivalent of `wgslfmt` here, and not that of `wesl fmt`. The file contents will be passed on the standard input and the formatted result will be read from the standard output.
+---@field overrideCommand string[]|nil
+---@field rangeFormatting lsp.wgls_analyzer.RangeFormatting|nil
+
+---@class lsp.wgls_analyzer.Search
+-- Workspace symbol search kind.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field kind "only_types" | "all_symbols"|nil
+-- Limits the number of items returned from a workspace symbol search (Defaults to 128).
+-- Some clients like vs-code issue new searches on result filtering and don't require all results to be returned in the initial search.
+-- Other clients requires all results upfront and might require a higher limit.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field limit integer|nil
+-- Workspace symbol search scope.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field scope "workspace" | "workspace_and_dependencies"|nil
+
+---@class lsp.wgls_analyzer.Symbol
+---@field search lsp.wgls_analyzer.Search|nil
+
+---@class lsp.wgls_analyzer.Workspace
+---@field symbol lsp.wgls_analyzer.Symbol|nil
+
+---@class lsp.wgls_analyzer.Wgsl-analyzer
+---@field assist lsp.wgls_analyzer.Assist|nil
+---@field cachePriming lsp.wgls_analyzer.CachePriming|nil
+---@field completion lsp.wgls_analyzer.Completion|nil
+-- `#import` directives in the flavor of [Bevy Engine](https://bevyengine.org)'s [shader preprocessor](https://bevyengine.org/news/bevy-0-6/#shader-imports). To use objects from an import, add `#import <name>` to your WGSL.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field customImports table|nil
+---@field diagnostics lsp.wgls_analyzer.Diagnostics|nil
+---@field files lsp.wgls_analyzer.Files|nil
+---@field highlightRelated lsp.wgls_analyzer.HighlightRelated|nil
+---@field hover lsp.wgls_analyzer.Hover|nil
+---@field imports lsp.wgls_analyzer.Imports|nil
+-- Do not start wgsl-analyzer server when the extension is activated.
+---@field initializeStopped boolean|nil
+---@field inlayHints lsp.wgls_analyzer.InlayHints|nil
+---@field joinLines lsp.wgls_analyzer.JoinLines|nil
+---@field lens lsp.wgls_analyzer.Lens|nil
+-- Disable project auto-discovery in favor of explicitly specified set of projects.
+-- 
+-- Elements must be paths pointing to `wesl.toml`, `.wgsl` files, or `.wesl` files (which will be treated as standalone files).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field linkedProjects any[]|nil
+---@field lru lsp.wgls_analyzer.Lru|nil
+-- How many worker threads in the main loop. The default `null` means to pick automatically.
+---@field numThreads any|number|"physical" | "logical"|nil
+---@field preprocessor lsp.wgls_analyzer.Preprocessor|nil
+---@field references lsp.wgls_analyzer.References|nil
+-- Whether to restart the server automatically when certain settings that require a restart are changed.
+---@field restartServerOnConfigChange boolean|nil
+---@field semanticHighlighting lsp.wgls_analyzer.SemanticHighlighting|nil
+---@field server lsp.wgls_analyzer.Server|nil
+-- Whether to show the dependencies view.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showDependenciesExplorer boolean|nil
+-- Whether to show error notifications for failing requests.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showRequestFailedErrorNotification boolean|nil
+-- Whether to show the syntax tree view.
+---@field showSyntaxTree boolean|nil
+-- Whether to show a notification for unlinked files asking the user to add the corresponding `wesl.toml` to the linked projects setting.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field showUnlinkedFileNotification boolean|nil
+---@field signatureInfo lsp.wgls_analyzer.SignatureInfo|nil
+---@field statusBar lsp.wgls_analyzer.StatusBar|nil
+---@field trace lsp.wgls_analyzer.Trace|nil
+---@field typing lsp.wgls_analyzer.Typing|nil
+---@field vfs lsp.wgls_analyzer.Vfs|nil
+---@field wgslfmt lsp.wgls_analyzer.Wgslfmt|nil
+---@field workspace lsp.wgls_analyzer.Workspace|nil
+
+---@class lsp.wgls_analyzer
+---@field wgsl-analyzer lsp.wgls_analyzer.Wgsl-analyzer|nil
+
+---@class lsp.yamlls.Telemetry
+-- Enable usage data and errors to be sent to Red Hat servers. Read our [privacy statement](https://developers.redhat.com/article/tool-data-collection).
+---@field enabled boolean|nil
+
+---@class lsp.yamlls.Redhat
+---@field telemetry lsp.yamlls.Telemetry|nil
+
+---@class lsp.yamlls.Format
+-- Print spaces between brackets in objects
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field bracketSpacing boolean|nil
+-- Enable/disable default YAML formatter
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- Specify the line length that the printer will wrap on
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field printWidth integer|nil
+-- Always: wrap prose if it exeeds the print width, Never: never wrap the prose, Preserve: wrap prose as-is
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field proseWrap "preserve" | "never" | "always"|nil
+-- Use single quotes instead of double quotes
+---@field singleQuote boolean|nil
+
+---@class lsp.yamlls.SchemaStore
+-- Automatically pull available YAML schemas from JSON Schema Store
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable boolean|nil
+-- URL of schema store catalog to use
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field url string|nil
+
+---@class lsp.yamlls.Trace
+-- Traces the communication between VSCode and the YAML language service.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.yamlls.Yaml
+-- Enable/disable completion feature
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field completion boolean|nil
+-- Custom tags for the parser to use
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field customTags any[]|nil
+-- Globally set additionalProperties to false for all objects. So if its true, no extra properties are allowed inside yaml.
+---@field disableAdditionalProperties boolean|nil
+---@field format lsp.yamlls.Format|nil
+-- Enable/disable hover feature
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field hover boolean|nil
+-- The maximum number of outline symbols and folding regions computed (limited for performance reasons).
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field maxItemsComputed integer|nil
+---@field schemaStore lsp.yamlls.SchemaStore|nil
+-- Associate schemas to YAML files in the current workspace
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field schemas table|nil
+---@field trace lsp.yamlls.Trace|nil
+-- Enable/disable validation feature
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field validate boolean|nil
+
+---@class lsp.yamlls
+---@field redhat lsp.yamlls.Redhat|nil
+---@field yaml lsp.yamlls.Yaml|nil
+
+---@class lsp.zeta_note.Trace
+-- Level of verbosity in communicating with the server
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.zeta_note.Marksman
+-- When set use this command to run the language server.
+-- The command is split on spaces: first part is the command name, the rest is the arguments.
+---@field customCommand string|nil
+-- When set run the `#marksman.customCommand#` from this dir rather than workspace root.
+---@field customCommandDir string|nil
+---@field trace lsp.zeta_note.Trace|nil
+
+---@class lsp.zeta_note
+---@field marksman lsp.zeta_note.Marksman|nil
+
+---@class lsp.zls.Trace
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field server "off" | "messages" | "verbose"|nil
+
+---@class lsp.zls.Zls
+-- Path to the `build_runner.zig` file provided by zls. null is equivalent to `${executable_directory}/build_runner.zig`
+---@field build_runner_path string|nil
+-- Path to 'builtin;' useful for debugging, automatically set if let null
+---@field builtin_path string|nil
+-- Whether to automatically check for new updates
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field check_for_update boolean|nil
+-- Enable debug logging in release builds of zls.
+---@field debugLog boolean|nil
+-- Whether to enable ast-check diagnostics
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable_ast_check_diagnostics boolean|nil
+-- Whether to automatically fix errors on save. Currently supports adding and removing discards.
+---@field enable_autofix boolean|nil
+-- Whether to enable import/embedFile argument completions
+---@field enable_import_embedfile_argument_completions boolean|nil
+-- Enables inlay hint support when the client also supports it
+---@field enable_inlay_hints boolean|nil
+-- Enables semantic token support when the client also supports it
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field enable_semantic_tokens boolean|nil
+-- Enables snippet completions when the client also supports them
+---@field enable_snippets boolean|nil
+-- Path to a directroy that will be used as zig's cache. null is equivalent to `${KnownFloders.Cache}/zls`
+---@field global_cache_path string|nil
+-- Whether to highlight global var declarations
+---@field highlight_global_var_declarations boolean|nil
+-- Whether the @ sign should be part of the completion of builtins
+---@field include_at_in_builtins boolean|nil
+-- Don't show inlay hints for single argument calls
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inlay_hints_exclude_single_argument boolean|nil
+-- Hides inlay hints when parameter name matches the identifier (e.g. foo: foo)
+---@field inlay_hints_hide_redundant_param_names boolean|nil
+-- Hides inlay hints when parameter name matches the last token of a parameter node (e.g. foo: bar.foo, foo: &foo)
+---@field inlay_hints_hide_redundant_param_names_last_token boolean|nil
+-- Enable inlay hints for builtin functions
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field inlay_hints_show_builtin boolean|nil
+-- The detail field of completions is truncated to be no longer than this (in bytes)
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field max_detail_length integer|nil
+-- Enables `*` and `?` operators in completion lists
+-- 
+-- ```lua
+-- default = &#x27; .. vim.inspect(prop.default) .. &#x27;
+-- ```
+---@field operator_completions boolean|nil
+-- Path to `zls` executable. Example: `C:/zls/zig-cache/bin/zls.exe`.
+---@field path string|nil
+-- When true, skips searching for references in std. Improves lookup speed for functions in user's code. Renaming and go-to-definition will continue to work as is
+---@field skip_std_references boolean|nil
+---@field trace lsp.zls.Trace|nil
+-- Whether to use the comptime interpreter
+---@field use_comptime_interpreter boolean|nil
+-- Enables warnings for style guideline mismatches
+---@field warn_style boolean|nil
+-- Zig executable path, e.g. `/path/to/zig/zig`, used to run the custom build runner. If `null`, zig is looked up in `PATH`. Will be used to infer the zig standard library path if none is provided
+---@field zig_exe_path string|nil
+-- Zig library path, e.g. `/path/to/zig/lib/zig`, used to analyze std library imports
+---@field zig_lib_path string|nil
+
+---@class lsp.zls
+---@field zls lsp.zls.Zls|nil
