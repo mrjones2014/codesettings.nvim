@@ -133,7 +133,7 @@ return {
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
   ![jsonls integration](https://github.com/user-attachments/assets/0f1cd386-d05c-4352-984f-6bac77d4434e)
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua
-  ![lua type annotations](https://github.com/user-attachments/assets/647e25cf-9059-433a-bbbf-2069b61df47f)
+  ![lua type annotations](https://github.com/user-attachments/assets/f57d938f-3f9b-4c9c-9acd-1fb5996fb8d1)
 - Supports custom config file names/locations
 - Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
 
