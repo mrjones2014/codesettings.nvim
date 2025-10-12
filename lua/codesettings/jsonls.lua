@@ -42,6 +42,20 @@ local function expand_schema(schema)
     return container.properties
   end
 
+  local function ensure_path(props, parts)
+    -- Wrap props in a synthetic container to mutate in-place and return the final node
+    local container = { type = 'object', properties = props }
+    local node = container
+    for i = 1, #parts do
+      local p = parts[i]
+      local next = node.properties[p]
+      next = ensure_obj(next)
+      node.properties[p] = next
+      node = next
+    end
+    return container.properties, node
+  end
+
   local function recurse(def)
     if type(def) ~= 'table' then
       return def
@@ -51,20 +65,43 @@ local function expand_schema(schema)
       return def
     end
 
-    -- Copy and recurse children first
+    -- Preserve original properties and add nested and mixed-form equivalents for dotted property keys
     local new_props = {}
+    -- First, keep all original properties (recursing into them)
     for k, v in pairs(props) do
       new_props[k] = recurse(v)
     end
 
-    -- Add nested equivalents for dotted property keys
-    for k, v in pairs(props) do
+    -- Then, for each dotted property, generate all combinations
+    for k, _ in pairs(props) do
       if type(k) == 'string' and k:find('%.') then
         local parts = {}
         for part in k:gmatch('[^.]+') do
           parts[#parts + 1] = part
         end
-        new_props = insert_nested_prop(new_props, parts, recurse(v))
+
+        -- Recurse into the leaf once (already processed above)
+        local leaf = new_props[k]
+
+        -- Fully nested form (e.g. "a.b.c" -> a -> b -> c)
+        new_props = insert_nested_prop(new_props, parts, leaf)
+
+        -- Mixed forms: for each split point, create an intermediate object
+        -- and add a dotted suffix property at that level (e.g. a -> "b.c")
+        for i = 1, #parts - 1 do
+          local prefix = {}
+          for j = 1, i do
+            prefix[j] = parts[j]
+          end
+          local _, node = ensure_path(new_props, prefix)
+          local suffix = table.concat(parts, '.', i + 1) -- no leading dot
+          local existing = type(node.properties) == 'table' and node.properties[suffix] or nil
+          if type(leaf) == 'table' then
+            node.properties[suffix] = Util.merge(existing or {}, leaf)
+          else
+            node.properties[suffix] = leaf
+          end
+        end
       end
     end
 
