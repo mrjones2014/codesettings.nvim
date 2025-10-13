@@ -9760,6 +9760,38 @@
 ---@field luau lsp.luau_lsp.Luau?
 ---@field luau-lsp lsp.luau_lsp.Luau-lsp?
 
+-- The evaluation section, provide auto completion for dynamic bindings.
+---@class lsp.nixd.Eval
+-- Extra depth for evaluation
+-- 
+-- ```lua
+-- default = 0
+-- ```
+---@field depth integer?
+---@field target any?
+-- The number of workers for evaluation task. defaults to std::thread::hardware_concurrency
+---@field workers integer?
+
+-- Tell the language server your desired option set, for completion. This is lazily evaluated.
+---@class lsp.nixd.Options
+-- Enable option completion task. If you are writing a package, disable this
+-- 
+-- ```lua
+-- default = "false"
+-- ```
+---@field enable boolean?
+---@field target any?
+
+---@class lsp.nixd.Nixd
+-- The evaluation section, provide auto completion for dynamic bindings.
+---@field eval lsp.nixd.Eval?
+---@field formatting any?
+-- Tell the language server your desired option set, for completion. This is lazily evaluated.
+---@field options lsp.nixd.Options?
+
+---@class lsp.nixd
+---@field nixd lsp.nixd.Nixd?
+
 ---@class lsp.omnisharp.ExpressionEvaluationOptions
 -- %generateOptionsSchema.expressionEvaluationOptions.allowFastEvaluate.description%
 -- 

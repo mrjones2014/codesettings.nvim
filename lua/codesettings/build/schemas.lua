@@ -33,6 +33,7 @@ M.index = {
   ltex = 'https://raw.githubusercontent.com/valentjn/vscode-ltex/develop/package.json',
   lua_ls = 'https://raw.githubusercontent.com/LuaLS/vscode-lua/master/package.json',
   luau_lsp = 'https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/editors/code/package.json',
+  nixd = 'https://raw.githubusercontent.com/nix-community/nixd/refs/heads/main/nixd/docs/nixd-schema.json',
   omnisharp = 'https://raw.githubusercontent.com/OmniSharp/omnisharp-vscode/master/package.json',
   perlls = 'https://raw.githubusercontent.com/richterger/Perl-LanguageServer/master/clients/vscode/perl/package.json',
   perlnavigator = 'https://raw.githubusercontent.com/bscan/PerlNavigator/main/package.json',
@@ -73,6 +74,7 @@ M.index = {
 }
 
 ---@class CodesettingsLspSchema
+---@field name string the name of the LSP server
 ---@field package_url string url of the package.json of the LSP server
 ---@field settings_file string file of the settings json schema of the LSP server
 
@@ -83,6 +85,7 @@ function M.get_schemas()
 
   for server, package_json in pairs(M.index) do
     ret[server] = {
+      name = server,
       package_url = package_json,
       settings_file = Util.path('schemas/' .. server .. '.json'),
     }
@@ -108,6 +111,12 @@ function M.fetch_schema(schema)
     end
   elseif config.properties then
     properties = config.properties
+  end
+
+  -- special cases:
+  -- nixd should be nested under "nixd"
+  if schema.name == 'nixd' then
+    properties = { nixd = { type = 'object', properties = properties } }
   end
 
   local ret = {
