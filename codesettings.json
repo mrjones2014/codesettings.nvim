@@ -1,6 +1,16 @@
 {
   "Lua": {
-    "runtime.version": "LuaJIT",
+    "runtime": {
+      "version": "LuaJIT",
+      "path": [
+        "lua/?.lua",
+        "lua/?/init.lua",
+        "lua/?/?.lua",
+        "plugin/?.lua",
+        "ftplugin/?.lua",
+        "spec/?.lua"
+      ]
+    },
     "workspace": {
       "library": [
         "${3rd}/luassert/library",
