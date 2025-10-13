@@ -1,12 +1,24 @@
 local Settings = require('codesettings.settings')
 
----@type table<string, string>
 ---A mapping of LSP names to the subtable that should be passed to the vim.lsp.config() schema.
 ---In a few cases this varies slightly from the VS Code extension schema, e.g. for `eslint`,
 ---the VS Code properties all start with `eslint.*` but the LSP expects to be passed only the subtable.
+---The function **is expected** to apply the LSP server schema.
+---@type table<string, fun(settings: CodesettingsSettings): CodesettingsSettings>
 local SpecialCases = {
-  -- see https://github.com/mrjones2014/codesettings.nvim/issues/7
-  eslint = 'eslint',
+  eslint = function(settings)
+    -- vscode schema has all properties under `eslint.*`, but the LSP expects just the subtable
+    return settings:schema('eslint'):get_subtable('eslint') or settings
+  end,
+  nixd = function(settings)
+    -- nixd vscode plugin nests the settings under `nix.serverSettings`, but the LSP expects just the subtable
+    local vscode_table = settings:get_subtable('nix.serverSettings')
+    if vscode_table then
+      settings:merge(vscode_table)
+      settings:set('nix.serverSettings', nil)
+    end
+    return settings:schema('nixd')
+  end,
 }
 
 local M = {}
@@ -37,9 +49,13 @@ end
 ---@param merge_opts CodesettingsMergeOpts? options for merging; if nil, uses the default from config
 ---@return table config the merged config
 function M.with_local_settings(lsp_name, config, merge_opts)
-  return Settings.new(config)
-    :merge(M.local_settings():schema(lsp_name):get_subtable(SpecialCases[lsp_name]), 'settings', merge_opts)
-    :totable()
+  local local_settings = M.local_settings()
+  if SpecialCases[lsp_name] then
+    local_settings = SpecialCases[lsp_name](local_settings)
+  else
+    local_settings = local_settings:schema(lsp_name)
+  end
+  return Settings.new(config):merge(local_settings, 'settings', merge_opts):totable()
 end
 
 function M.setup(opts)

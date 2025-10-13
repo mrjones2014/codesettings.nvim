@@ -187,7 +187,7 @@ vim.lsp.config('lua_ls', {
     - `Settings:schema(lsp_name)` - Filter the settings down to only the keys that match the relevant schema e.g. `settings:schema('eslint')`
     - `Settings:merge(settings, key, merge_opts)` - merge another `Settings` object into this one, optionally specify a sub-key to merge, and control merge behavior with the 2nd and 3rd parameter, respectively
     - `Settings:get(key)` - returns the value at the specified key; supports dot-separated key paths like `Settings:get('some.sub.property')`
-    - `Settings:get_subtable(key)` - like `Settings:get(key)`, but returns a `Settings` object if the path is a table, otherwise an empty `Settings` object
+    - `Settings:get_subtable(key)` - like `Settings:get(key)`, but returns a `Settings` object if the path is a table, otherwise `nil`
     - `Settings:clear()` - remove all values
     - `Settings:set(key, value)` - supports dot-separated key paths like `some.sub.property`
 
@@ -317,4 +317,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
