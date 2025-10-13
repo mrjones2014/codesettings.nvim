@@ -16,6 +16,8 @@ function M.new(settings)
   return ret
 end
 
+---Load all local settings files
+---@return CodesettingsSettings
 function M.load_all()
   local settings = M.new()
   vim.iter(Util.get_local_configs()):each(function(fname)
@@ -130,15 +132,15 @@ function Settings:get(key)
   return node
 end
 
----Like Settings:get(), but returns an empty `Settings` object if the value is not a table,
+---Like Settings:get(), but returns nil if the value is not a table,
 ---and it returns a `Settings` object wrapping that table if it is, instead
 ---of a raw table.
 ---@param key string the key to get, like 'rust-analyzer.cargo'
----@return CodesettingsSettings settings the subtable wrapped in a Settings object, or nil if the
+---@return CodesettingsSettings? settings the subtable wrapped in a Settings object, or nil if the
 function Settings:get_subtable(key)
   local value = self:get(key)
   if type(value) ~= 'table' then
-    return M.new()
+    return nil
   end
   return M.new(value)
 end

@@ -46,9 +46,9 @@ describe('integration tests', function()
     })
   end)
 
+  -- test eslint specifically since its a special case (see codesettings/init.lua)
   it('should load and merge eslint settings properly by default', function()
     local Codesettings = require('codesettings')
-    -- test eslint specifically since its a special case (see codesettings/init.lua)
     vim.lsp.config(
       'eslint',
       Codesettings.with_local_settings('eslint', {
@@ -67,6 +67,43 @@ describe('integration tests', function()
           location = 'separateLine',
         },
         showDocumentation = { enable = true },
+      },
+    })
+  end)
+
+  -- test nixd specifically since its a special case (see codesettings/init.lua)
+  it('should load and merge nixd settings properly by default', function()
+    local Codesettings = require('codesettings')
+    vim.lsp.config(
+      'nixd',
+      Codesettings.with_local_settings('nixd', {
+        settings = {
+          nixd = {
+            options = {
+              nix_darwin = {
+                expr = 'test darwin expr',
+              },
+            },
+          },
+        },
+      })
+    )
+    local resolved_nixd = vim.lsp.config['nixd']
+    assert.same(resolved_nixd.settings, {
+      nixd = {
+        options = {
+          nix_darwin = {
+            expr = 'test darwin expr',
+          },
+          nixos = {
+            -- comes from ./lspsettings.json
+            expr = 'test nixos expr',
+          },
+        },
+        -- comes from ./vscode/settings.json
+        formatting = {
+          command = { 'nixfmt' },
+        },
       },
     })
   end)
