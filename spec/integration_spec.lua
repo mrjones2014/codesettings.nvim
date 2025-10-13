@@ -2,12 +2,12 @@
 
 describe('integration tests', function()
   setup(function()
-    -- configure the plugin to look in the spec/ directory
+    -- configure the plugin to look in the directory with the test files
     local Config = require('codesettings.config')
     local cfg_file_paths = vim
       .iter(Config.config_file_paths)
       :map(function(p)
-        return ('spec/%s'):format(p)
+        return ('spec/test-config-files/%s'):format(p)
       end)
       :totable()
     local Codesettings = require('codesettings')
