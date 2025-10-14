@@ -212,7 +212,7 @@ local eslint_settings = c.local_settings()
 
 ## How it finds your settings
 
-- Root discovery uses `vim.fs.root` to search upwards with markers based on your configured config file paths, as well as `.git`
+- Root discovery uses `vim.fs.root` to search upwards with markers based on your configured config file paths, as well as `.git` and `.jj` (for [Jujutsu](https://github.com/jj-vcs/jj) repos)
 - The plugin checks each path in `config_file_paths` under your project root and uses any that exist
 
 ## How merging works
@@ -317,4 +317,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
