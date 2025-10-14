@@ -1,4 +1,4 @@
-local View = require('codesettings.ui.view')
+local View = require('codesettings.commands.view')
 
 return function()
   local config = require('codesettings').local_settings():totable()
