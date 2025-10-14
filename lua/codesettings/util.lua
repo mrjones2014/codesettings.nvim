@@ -39,6 +39,7 @@ function M.get_root(fname)
     end)
     :totable()
   table.insert(root_patterns, '.git')
+  table.insert(root_patterns, '.jj')
   return vim.fs.root(fname or vim.env.PWD or vim.uv.cwd(), root_patterns)
 end
 
