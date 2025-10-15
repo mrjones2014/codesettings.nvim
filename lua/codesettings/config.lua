@@ -3,12 +3,14 @@
 ---@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
 ---@field jsonc_filetype boolean Set filetype to jsonc for config files
 ---@field default_merge_opts CodesettingsMergeOpts Default options for merging settings
+---@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
 
 local options = {
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
   jsonls_integration = true,
   jsonc_filetype = true,
+  root_dir = nil, -- use the default root finder
   default_merge_opts = {
     list_behavior = 'append',
   },
