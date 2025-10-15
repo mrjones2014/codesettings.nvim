@@ -31,6 +31,13 @@ end
 ---@param fname string?
 ---@return string?
 function M.get_root(fname)
+  local user_root = Config.root_dir
+  if type(user_root) == 'string' then
+    return user_root
+  elseif type(user_root) == 'function' then
+    return user_root()
+  end
+
   local file_paths = Config.config_file_paths
   local root_patterns = vim
     .iter(file_paths)
