@@ -165,7 +165,10 @@ function M.get_json_schemas()
     end
   end
 
-  _cache = json_schemas
+  -- make sure we don't clobber any already configured schemas
+  local configured_schemas = vim.tbl_get(vim.lsp.config, 'jsonls', 'settings', 'json', 'schemas') or {}
+
+  _cache = vim.list_extend(vim.deepcopy(configured_schemas), json_schemas)
   return _cache
 end
 
