@@ -28,9 +28,8 @@ function M.fqn(fname)
 end
 
 ---Get root directory based on root markers
----@param fname string?
 ---@return string?
-function M.get_root(fname)
+function M.get_root()
   local user_root = Config.root_dir
   if type(user_root) == 'string' then
     return user_root
@@ -47,7 +46,7 @@ function M.get_root(fname)
     :totable()
   table.insert(root_patterns, '.git')
   table.insert(root_patterns, '.jj')
-  return vim.fs.root(fname or vim.env.PWD or vim.uv.cwd(), root_patterns)
+  return vim.fs.root(0, root_patterns)
 end
 
 ---@class GetlocalConfigsOpts
