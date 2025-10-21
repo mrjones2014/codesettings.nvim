@@ -240,9 +240,10 @@ Follows the semantics of `vim.tbl_deep_extend('force', your_config, local_config
 | `setup()` required                         | Only for some editor integration features                | Yes                                      |
 | Loading settings                           | API call                                                 | Automatic through `nvim-lspconfig` hooks |
 
-The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more automatic but provides fewer features, and seems to be unmaintained.
-If you want to get rid of `nvim-lspconfig` and just use `vim.lsp.config()` APIs, then `codesettings.nvim` provides an API to load local project settings for you,
-as well as better autocomplete in configuration files, and autocomplete in Lua files not using `nvim-lspconfig` based on Lua type annotations.
+The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more automatic but provides fewer features, supports fewer LSP servers,
+and seems to be unmaintained. If you want to get rid of `nvim-lspconfig` and just use `vim.lsp.config()` APIs, then `codesettings.nvim` provides
+an API to load local project settings for you, as well as better autocomplete in configuration files, and autocomplete in Lua files not using
+`nvim-lspconfig` based on Lua type annotations.
 
 ## Acknowledgements
 
@@ -322,4 +323,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
