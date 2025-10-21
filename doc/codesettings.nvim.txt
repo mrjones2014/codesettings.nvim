@@ -295,11 +295,12 @@ local_config)`, essentially:
                                                      nvim-lspconfig hooks
   -----------------------------------------------------------------------
 The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more
-automatic but provides fewer features, and seems to be unmaintained. If you
-want to get rid of `nvim-lspconfig` and just use `vim.lsp.config()` APIs, then
-`codesettings.nvim` provides an API to load local project settings for you, as
-well as better autocomplete in configuration files, and autocomplete in Lua
-files not using `nvim-lspconfig` based on Lua type annotations.
+automatic but provides fewer features, supports fewer LSP servers, and seems to
+be unmaintained. If you want to get rid of `nvim-lspconfig` and just use
+`vim.lsp.config()` APIs, then `codesettings.nvim` provides an API to load local
+project settings for you, as well as better autocomplete in configuration
+files, and autocomplete in Lua files not using `nvim-lspconfig` based on Lua
+type annotations.
 
 
 ==============================================================================
