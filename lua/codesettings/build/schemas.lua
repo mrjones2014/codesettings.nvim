@@ -19,6 +19,7 @@ M.index = {
   eslint = 'https://raw.githubusercontent.com/microsoft/vscode-eslint/main/package.json',
   flow = 'https://raw.githubusercontent.com/flowtype/flow-for-vscode/master/package.json',
   fsautocomplete = 'https://raw.githubusercontent.com/ionide/ionide-vscode-fsharp/main/release/package.json',
+  gopls = 'https://raw.githubusercontent.com/golang/vscode-go/master/extension/package.json',
   grammarly = 'https://raw.githubusercontent.com/znck/grammarly/main/extension/package.json',
   haxe_language_server = 'https://raw.githubusercontent.com/vshaxe/vshaxe/master/package.json',
   hhvm = 'https://raw.githubusercontent.com/slackhq/vscode-hack/master/package.json',
@@ -94,29 +95,49 @@ function M.get_schemas()
   return ret
 end
 
+--- A map of LSP server schemas that require special handling for non-common configuration layouts.
+local SpecialCases = {
+  nixd = function(json)
+    -- nixd should be nested under "nixd"
+    return { nixd = { type = 'object', properties = json.properties } }
+  end,
+  gopls = function(json)
+    local config = json.contributes.configuration.properties.gopls
+    json.description = config.markdownDescription
+
+    local properties = vim.empty_dict()
+    for k, v in pairs(config.properties) do
+      -- The official gopls documentation generally uses these options without prefixes and recommends doing so.
+      -- - https://github.com/golang/tools/blob/master/gopls/doc/editor/vim.md#neovim-config
+      -- - https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+      local last = k:match('[^%.]+$')
+      properties['gopls.' .. last] = v
+    end
+    return properties
+  end,
+}
+
 ---@param schema CodesettingsLspSchema
 function M.fetch_schema(schema)
   local json = vim.json.decode(Util.fetch(schema.package_url)) or {}
-  local config = json.contributes and json.contributes.configuration or json.properties and json
 
   local properties = vim.empty_dict()
+  if SpecialCases[schema.name] then
+    properties = SpecialCases[schema.name](json)
+  else
+    local config = json.contributes and json.contributes.configuration or json.properties and json
 
-  if vim.islist(config) then
-    for _, c in pairs(config) do
-      if c.properties then
-        for k, v in pairs(c.properties) do
-          properties[k] = v
+    if vim.islist(config) then
+      for _, c in pairs(config) do
+        if c.properties then
+          for k, v in pairs(c.properties) do
+            properties[k] = v
+          end
         end
       end
+    elseif config.properties then
+      properties = config.properties
     end
-  elseif config.properties then
-    properties = config.properties
-  end
-
-  -- special cases:
-  -- nixd should be nested under "nixd"
-  if schema.name == 'nixd' then
-    properties = { nixd = { type = 'object', properties = properties } }
   end
 
   local ret = {

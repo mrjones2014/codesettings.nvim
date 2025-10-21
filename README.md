@@ -269,6 +269,7 @@ This project would not exist without the hard work of some other open source pro
 - [x] [eslint](https://github.com/microsoft/vscode-eslint/tree/main/package.json)
 - [x] [flow](https://github.com/flowtype/flow-for-vscode/tree/master/package.json)
 - [x] [fsautocomplete](https://github.com/ionide/ionide-vscode-fsharp/tree/main/release/package.json)
+- [x] [gopls](https://github.com/golang/vscode-go/tree/master/extension/package.json)
 - [x] [grammarly](https://github.com/znck/grammarly/tree/main/extension/package.json)
 - [x] [haxe_language_server](https://github.com/vshaxe/vshaxe/tree/master/package.json)
 - [x] [hhvm](https://github.com/slackhq/vscode-hack/tree/master/package.json)
