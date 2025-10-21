@@ -126,8 +126,8 @@ function M.clear_cache()
   _cache = nil
 end
 
----Retrieve JSON schemas as tables.
----You can use this is the automatic configuration doesn't work.
+---Retrieve JSON schemas as tables and merge them with already configured jsonls schemas.
+---You can use this if the automatic configuration doesn't work.
 ---```lua
 ---vim.lsp.config('jsonls', {
 ---  settings = {
