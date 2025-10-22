@@ -168,6 +168,14 @@
 ---@field e3-testsuite lsp.als.E3-testsuite?
 ---@field gpr lsp.als.Gpr?
 
+---@class lsp.astro.Auto-import-cache
+-- Enable the auto import cache. Yields a faster intellisense when automatically importing a file, but can cause issues with new files not being detected. Change is applied on restart. See [#1035](https://github.com/withastro/language-tools/issues/1035).
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
 ---@class lsp.astro.Language-server
 -- Path to the language server executable. You won't need this in most cases, set this only when needing a specific version of the language server
 ---@field ls-path string?
@@ -187,6 +195,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.astro.Astro
+---@field auto-import-cache lsp.astro.Auto-import-cache?
 -- Enable experimental support for content collection intellisense inside Markdown, MDX and Markdoc. Note that this require also enabling the feature in your Astro config (experimental.contentCollectionIntellisense) (Astro 4.14+)
 ---@field content-intellisense boolean?
 ---@field language-server lsp.astro.Language-server?
@@ -9613,6 +9622,8 @@
 ---@field references boolean?
 
 ---@class lsp.html.Suggest
+-- %html.suggest.hideEndTagSuggestions.desc%
+---@field hideEndTagSuggestions boolean?
 -- %html.suggest.html5.desc%
 -- 
 -- ```lua
