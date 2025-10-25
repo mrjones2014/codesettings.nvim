@@ -14144,6 +14144,55 @@
 ---@field luau lsp.luau_lsp.Luau?
 ---@field luau-lsp lsp.luau_lsp.Luau-lsp?
 
+---@class lsp.nil_ls.Diagnostics
+-- File globs to exclude from showing diagnostics
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field excludedFiles string?
+-- Ignored diagnostic kinds
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field ignored string?
+
+---@class lsp.nil_ls.Formatting
+-- External formatter command with arguments
+---@field command string[]?
+
+---@class lsp.nil_ls.Nix
+-- The path to the `nix` binary
+-- 
+-- ```lua
+-- default = "nix"
+-- ```
+---@field binary string?
+
+---@class lsp.nil_ls.Server
+-- Path to the `nil` LSP server
+-- 
+-- ```lua
+-- default = "nil"
+-- ```
+---@field path string?
+
+---@class lsp.nil_ls.Nil
+---@field diagnostics lsp.nil_ls.Diagnostics?
+-- Enable `coc-nil` extension
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+---@field formatting lsp.nil_ls.Formatting?
+---@field nix lsp.nil_ls.Nix?
+---@field server lsp.nil_ls.Server?
+
+---@class lsp.nil_ls
+---@field nil lsp.nil_ls.Nil?
+
 -- The evaluation section, provide auto completion for dynamic bindings.
 ---@class lsp.nixd.Eval
 -- Extra depth for evaluation

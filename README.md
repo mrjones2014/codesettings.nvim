@@ -285,6 +285,7 @@ This project would not exist without the hard work of some other open source pro
 - [x] [ltex](https://github.com/valentjn/vscode-ltex/tree/develop/package.json)
 - [x] [lua_ls](https://github.com/LuaLS/vscode-lua/tree/master/package.json)
 - [x] [luau_lsp](https://github.com/JohnnyMorganz/luau-lsp/tree/main/editors/code/package.json)
+- [x] [nil_ls](https://github.com/oxalica/nil/refs/heads/tree/main/editors/coc-nil/package.json)
 - [x] [nixd](https://github.com/nix-community/nixd/refs/heads/tree/main/nixd/docs/nixd-schema.json)
 - [x] [omnisharp](https://github.com/OmniSharp/omnisharp-vscode/tree/master/package.json)
 - [x] [perlls](https://github.com/richterger/Perl-LanguageServer/tree/master/clients/vscode/perl/package.json)
