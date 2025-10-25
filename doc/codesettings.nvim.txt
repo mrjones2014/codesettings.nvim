@@ -62,7 +62,7 @@ you must call `setup()`.
         root_dir = nil,
         ---Choose the default merge behavior
         default_merge_opts = {
-          --- How to merge lists; 'replace' (default), 'append', or 'prepend'
+          --- How to merge lists; 'append' (default), 'prepend' or 'replace'
           list_behavior = 'append',
         },
       },
