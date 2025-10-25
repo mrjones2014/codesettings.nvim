@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Nix extension using nil LSP for coc.nvim",
+  "properties": {
+    "nil.diagnostics.excludedFiles": {
+      "default": [],
+      "description": "File globs to exclude from showing diagnostics",
+      "items": {
+        "type": "string"
+      },
+      "type": "string"
+    },
+    "nil.diagnostics.ignored": {
+      "default": [],
+      "description": "Ignored diagnostic kinds",
+      "items": {
+        "type": "string"
+      },
+      "type": "string"
+    },
+    "nil.enable": {
+      "default": true,
+      "description": "Enable `coc-nil` extension",
+      "type": "boolean"
+    },
+    "nil.formatting.command": {
+      "default": null,
+      "description": "External formatter command with arguments",
+      "items": {
+        "type": "string"
+      },
+      "type": [
+        "null",
+        "array"
+      ]
+    },
+    "nil.nix.binary": {
+      "default": "nix",
+      "description": "The path to the `nix` binary",
+      "type": "string"
+    },
+    "nil.server.path": {
+      "default": "nil",
+      "description": "Path to the `nil` LSP server",
+      "type": "string"
+    }
+  }
+}
