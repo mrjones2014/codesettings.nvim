@@ -39,7 +39,7 @@ return {
     root_dir = nil,
     ---Choose the default merge behavior
     default_merge_opts = {
-      --- How to merge lists; 'replace' (default), 'append', or 'prepend'
+      --- How to merge lists; 'append' (default), 'prepend' or 'replace'
       list_behavior = 'append',
     },
   },
@@ -324,4 +324,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
