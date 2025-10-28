@@ -132,7 +132,7 @@ return {
 
 ## Features
 
-- Minimal API: one function you call per server setup, or with a global hook (see example below)
+- Minimal API: one function you call per server setup, or with a global hook (see example above)
 - `jsonc` filetype for local config files
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
   ![jsonls integration](https://github.com/user-attachments/assets/5d37f0bb-0e07-4c22-bc6b-16cf3e65e201)
@@ -324,4 +324,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
