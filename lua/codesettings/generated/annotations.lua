@@ -18297,6 +18297,10 @@
 -- ```
 ---@field watcher "client" | "server"?
 
+---@class lsp.rust_analyzer.GotoImplementations
+-- If this is `true`, when "Goto Implementations" and in "Implementations" lens, are triggered on a `struct` or `enum` or `union`, we filter out trait implementations that originate from `derive`s above the type.
+---@field filterAdjacentDerives boolean?
+
 ---@class lsp.rust_analyzer.BranchExitPoints
 -- Highlight related return values while the cursor is on any `match`, `if`, or match arm
 -- arrow (`=>`).
@@ -19336,6 +19340,7 @@
 ---@field diagnostics lsp.rust_analyzer.Diagnostics?
 ---@field document lsp.rust_analyzer.Document?
 ---@field files lsp.rust_analyzer.Files?
+---@field gotoImplementations lsp.rust_analyzer.GotoImplementations?
 ---@field highlightRelated lsp.rust_analyzer.HighlightRelated?
 ---@field hover lsp.rust_analyzer.Hover?
 ---@field imports lsp.rust_analyzer.Imports?
