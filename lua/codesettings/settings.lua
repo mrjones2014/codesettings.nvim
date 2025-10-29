@@ -3,8 +3,8 @@ local Util = require('codesettings.util')
 local M = {}
 
 ---@class CodesettingsSettings
----@field _settings table
----@field file string
+---@field private _settings table
+---@field private file string
 local Settings = {}
 Settings.__index = Settings
 

@@ -90,8 +90,10 @@ function M.get_local_configs(opts)
   return _config_files
 end
 
+---@alias CodesettingsMergeListsBheavior 'replace'|'append'|'prepend'
+
 ---@class CodesettingsMergeOpts
----@field list_behavior? 'replace'|'append'|'prepend' how to merge lists; defaults to 'append'
+---@field list_behavior? CodesettingsMergeListsBheavior how to merge lists; defaults to 'append'
 
 --- Deep merge two values, with `b` taking precedence over `a`.
 --- Tables are merged recursively; lists are merged based on `opts.list_behavior`.
@@ -101,7 +103,7 @@ end
 ---@param opts CodesettingsMergeOpts? options for merging
 ---@return T merged value
 function M.merge(a, b, opts)
-  opts = vim.tbl_deep_extend('force', Config.default_merge_opts, opts or {})
+  opts = vim.tbl_deep_extend('force', Config.merge_opts, opts or {})
   local function can_merge(v)
     if type(v) ~= 'table' then
       return false
