@@ -1,10 +1,12 @@
----@class CodesettingsConfig
+---@class CodesettingsOverridableConfig Options which can be passed on a per-load basis (i.e. can override global config)
 ---@field config_file_paths string[] List of config file paths to look for
+---@field merge_opts CodesettingsMergeOpts Default options for merging settings
+---@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
+
+---@class CodesettingsConfig: CodesettingsOverridableConfig
 ---@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
 ---@field lua_ls_integration boolean|fun():boolean Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config
 ---@field jsonc_filetype boolean Set filetype to jsonc for config files
----@field default_merge_opts CodesettingsMergeOpts Default options for merging settings
----@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
 
 local options = {
@@ -13,17 +15,27 @@ local options = {
   lua_ls_integration = true,
   jsonc_filetype = true,
   root_dir = nil, -- use the default root finder
-  default_merge_opts = {
+  merge_opts = {
     list_behavior = 'append',
   },
 }
 
 local Config = {}
 
+---@class (partial) CodesettingsConfigInput: CodesettingsConfig
+
 ---Merge user-supplied options into the defaults.
----@param opts table|nil
+---@param opts CodesettingsConfigInput|nil
 function Config.setup(opts)
   opts = opts or {}
+
+  if opts.default_merge_opts then ---@diagnostic disable-line: undefined-field
+    vim.notify(
+      '[codesettings.nvim] Config.default_merge_opts has been reanmed to Config.merge_opts. For now the option is migrated to the new setting, please update your config, this will be removed in a future release.',
+      vim.log.levels.WARN
+    )
+    opts.merge_opts = opts.default_merge_opts ---@diagnostic disable-line: undefined-field
+  end
 
   options = vim.tbl_deep_extend('force', {}, options, opts)
 

@@ -68,7 +68,7 @@ you must call `setup()`.
         ---If not set, defaults to `require('codesettings.util').get_root()`
         root_dir = nil,
         ---Choose the default merge behavior
-        default_merge_opts = {
+        merge_opts = {
           --- How to merge lists; 'append' (default), 'prepend' or 'replace'
           list_behavior = 'append',
         },
