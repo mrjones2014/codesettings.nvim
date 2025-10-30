@@ -28,16 +28,18 @@ function M.fqn(fname)
 end
 
 ---Get root directory based on root markers
+---@param opts CodesettingsConfigOverrides? optional config overrides for this load
 ---@return string?
-function M.get_root()
-  local user_root = Config.root_dir
+function M.get_root(opts)
+  opts = opts or {}
+  local user_root = opts.root_dir or Config.root_dir
   if type(user_root) == 'string' then
     return user_root
   elseif type(user_root) == 'function' then
     return user_root()
   end
 
-  local file_paths = Config.config_file_paths
+  local file_paths = opts.config_file_paths or Config.config_file_paths
   local root_patterns = vim
     .iter(file_paths)
     :map(function(path)
@@ -49,34 +51,24 @@ function M.get_root()
   return vim.fs.root(0, root_patterns)
 end
 
----@class GetlocalConfigsOpts
+---@class (partial) CodesettingsGetlocalConfigsOpts: CodesettingsConfigOverrides
 ---@field only_exists boolean? if true, only return files that exist; true by default
----@field reload boolean? if true, invalidate the cached file list
-
-local _config_files = {}
 
 ---Get all the local config files found in the current project based on configured paths;
 ---returns fully qualified filepaths of files that exist.
----@param opts GetlocalConfigsOpts? options for getting local configs
+---@param opts CodesettingsGetlocalConfigsOpts? options for getting local configs
 ---@return string[] configs list of fully qualified filenames
 function M.get_local_configs(opts)
   opts = opts or {}
 
-  if opts.reload then
-    _config_files = {}
-  end
-
-  if not vim.tbl_isempty(_config_files) then
-    return _config_files
-  end
-
-  local root = M.get_root()
+  local root = M.get_root(opts)
   if not root then
     return {}
   end
 
-  _config_files = vim
-    .iter(Config.config_file_paths)
+  local file_paths = opts.config_file_paths or Config.config_file_paths
+  return vim
+    .iter(file_paths)
     :map(function(path)
       return M.fqn(root .. '/' .. path)
     end)
@@ -87,7 +79,6 @@ function M.get_local_configs(opts)
       return M.exists(path)
     end)
     :totable()
-  return _config_files
 end
 
 ---@alias CodesettingsMergeListsBheavior 'replace'|'append'|'prepend'

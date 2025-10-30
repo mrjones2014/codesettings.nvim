@@ -38,24 +38,27 @@ local M = {}
 ---  }
 ---}):get('eslint') -- return only the `eslint` subtable
 ---```
+---@param opts CodesettingsConfigOverrides? optional config overrides for this load
 ---@return CodesettingsSettings config settings object, if any local config files were found, empty Settings object otherwise
-function M.local_settings()
-  return Settings.load_all()
+function M.local_settings(opts)
+  opts = opts or {}
+  return Settings.load_all(opts)
 end
 
 ---Load settings from VS Code settings.json file
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer' or 'tsserver'
 ---@param config table the LSP config to merge the vscode settings into
----@param merge_opts CodesettingsMergeOpts? options for merging; if nil, uses the default from config
+---@param opts CodesettingsConfigOverrides? optional config overrides for this load
 ---@return table config the merged config
-function M.with_local_settings(lsp_name, config, merge_opts)
-  local local_settings = M.local_settings()
+function M.with_local_settings(lsp_name, config, opts)
+  opts = opts or {}
+  local local_settings = M.local_settings(opts)
   if SpecialCases[lsp_name] then
     local_settings = SpecialCases[lsp_name](local_settings)
   else
     local_settings = local_settings:schema(lsp_name)
   end
-  return Settings.new(config):merge(local_settings, 'settings', merge_opts):totable()
+  return Settings.new(config):merge(local_settings, 'settings', opts.merge_opts):totable()
 end
 
 function M.setup(opts)

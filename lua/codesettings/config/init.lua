@@ -1,3 +1,6 @@
+---Input type for config options that can be overridden per-load
+---@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig
+
 ---@class CodesettingsOverridableConfig Options which can be passed on a per-load basis (i.e. can override global config)
 ---@field config_file_paths string[] List of config file paths to look for
 ---@field merge_opts CodesettingsMergeOpts Default options for merging settings
@@ -28,15 +31,6 @@ local Config = {}
 ---@param opts CodesettingsConfigInput|nil
 function Config.setup(opts)
   opts = opts or {}
-
-  if opts.default_merge_opts then ---@diagnostic disable-line: undefined-field
-    vim.notify(
-      '[codesettings.nvim] Config.default_merge_opts has been reanmed to Config.merge_opts. For now the option is migrated to the new setting, please update your config, this will be removed in a future release.',
-      vim.log.levels.WARN
-    )
-    opts.merge_opts = opts.default_merge_opts ---@diagnostic disable-line: undefined-field
-  end
-
   options = vim.tbl_deep_extend('force', {}, options, opts)
 
   if options.jsonls_integration then
