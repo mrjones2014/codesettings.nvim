@@ -61,7 +61,32 @@ function M.with_local_settings(lsp_name, config, opts)
   return Settings.new(config):merge(local_settings, 'settings', opts.merge_opts):totable()
 end
 
+---Start building a new custom configuration for loading local settings.
+---You can override any options in `CodesettingsConfigOverrides` through the builder API,
+---then load local config files according to that configuration in a one-shot fluent API,
+---without modifying the global plugin configuration. This is useful for supporting multi-root
+---projects. For example, a hook relying on the LSP configs root directory:
+---```lua
+---vim.lsp.config('rust_analyzer', {
+---  before_init = function(_, config)
+---   local c = require('codesettings')
+---   config.settings = c.loader()
+---     :root_dir(config.root_dir)
+---     :merge_list_behavior('prepend')
+---     :config_file_paths({ '.vscode/settings.json', '.myprojectsettings.json' })
+---     :with_local_settings(config.name, config.settings)
+---  end
+---})
+---```
+---@return CodesettingsConfigBuilder
+function M.loader()
+  return require('codesettings.config.builder').new()
+end
+
+---Setup the plugin with the given options.
+---@param opts CodesettingsConfigOverrides? optional config overrides for the global plugin configuration
 function M.setup(opts)
+  opts = opts or {}
   require('codesettings.config').setup(opts)
 end
 
