@@ -145,6 +145,7 @@ function M.fetch_schema(schema)
     ['$schema'] = 'http://json-schema.org/draft-07/schema#',
     description = json.description,
     properties = properties,
+    definitions = json.definitions,
   }
 
   return ret
