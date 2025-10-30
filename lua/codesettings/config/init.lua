@@ -11,6 +11,7 @@
 ---@field lua_ls_integration boolean|fun():boolean Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config
 ---@field jsonc_filetype boolean Set filetype to jsonc for config files
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
+---@field private reset fun() Resets the configuration to defaults, useful for tests
 
 local options = {
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
@@ -22,6 +23,8 @@ local options = {
     list_behavior = 'append',
   },
 }
+
+local defaults = vim.deepcopy(options)
 
 local Config = {}
 
@@ -45,6 +48,12 @@ function Config.setup(opts)
   if lua_ls_integration == true or (type(lua_ls_integration) == 'function' and lua_ls_integration()) then
     require('codesettings.integrations.lua_ls').setup()
   end
+end
+
+---Reset the configuration to defaults.
+---Useful for testing.
+function Config.reset()
+  options = vim.deepcopy(defaults)
 end
 
 setmetatable(Config, {
