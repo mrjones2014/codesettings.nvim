@@ -1,5 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "target": {
+      "description": "Nix installables that will be used for root translation unit.",
+      "properties": {
+        "args": {
+          "description": "Accept args as \"nix eval\"",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "installable": {
+          "description": "\"nix eval\"",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
   "properties": {
     "nixd": {
       "properties": {
