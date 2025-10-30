@@ -10,6 +10,7 @@
 ---@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
 ---@field jsonc_filetype boolean Set filetype to jsonc for config files
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
+---@field private reset fun() Resets the configuration to defaults, useful for tests
 
 local options = {
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
@@ -20,6 +21,8 @@ local options = {
     list_behavior = 'append',
   },
 }
+
+local defaults = vim.deepcopy(options)
 
 local Config = {}
 
@@ -38,6 +41,12 @@ function Config.setup(opts)
   if options.jsonc_filetype then
     require('codesettings.integrations.jsonc-filetype').setup()
   end
+end
+
+---Reset the configuration to defaults.
+---Useful for testing.
+function Config.reset()
+  options = vim.deepcopy(defaults)
 end
 
 setmetatable(Config, {

@@ -20,27 +20,42 @@ function M.new()
 end
 
 ---Set the config file paths to look for
----@param paths string[]
+---@param config_file_paths string[]
 ---@return CodesettingsConfigBuilder
-function ConfigBuilder:config_file_paths(paths)
-  self._config.config_file_paths = paths
+function ConfigBuilder:config_file_paths(config_file_paths)
+  vim.validate('config_file_paths', config_file_paths, function()
+    if
+      not vim.islist(config_file_paths)
+      or vim.iter(config_file_paths):any(function(v)
+        return type(v) ~= 'string'
+      end)
+    then
+      return false
+    end
+    return true
+  end, 'string[]')
+  self._config.config_file_paths = config_file_paths
   return self
 end
 
 ---Set the merge behavior for list fields
----@param behavior CodesettingsMergeListsBheavior
+---@param behavior CodesettingsMergeListsBehavior
 ---@return CodesettingsConfigBuilder
 function ConfigBuilder:merge_list_behavior(behavior)
+  vim.validate('behavior', behavior, function(v)
+    return v == 'replace' or v == 'append' or v == 'prepend'
+  end, "'replace' | 'append' | 'prepend'")
   self._config.merge_opts = self._config.merge_opts or {}
   self._config.merge_opts.list_behavior = behavior
   return self
 end
 
----Set the root directory path or function to determine it
----@param root? string|fun():string Root directory path or function to determine it; if nill, uses global setting
+---Set the root directory path or function to determine it. If nil, uses global setting.
+---@param root_dir? string|fun():string Root directory path or function to determine it; if nill, uses global setting
 ---@return CodesettingsConfigBuilder
-function ConfigBuilder:root_dir(root)
-  self._config.root_dir = root or self._config.root_dir
+function ConfigBuilder:root_dir(root_dir)
+  vim.validate('root_dir', root_dir, { 'nil', 'string', 'function' })
+  self._config.root_dir = root_dir or self._config.root_dir
   return self
 end
 
