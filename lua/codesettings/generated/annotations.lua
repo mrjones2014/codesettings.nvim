@@ -1,3 +1,4 @@
+-- vim: ft=bigfile
 -- stylua: ignore
 ---@meta
 
