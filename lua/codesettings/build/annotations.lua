@@ -140,7 +140,7 @@ end
 
 function M.build()
   print('Generating Lua type annotations based on all schemas...')
-  M.lines = { '-- stylua: ignore', '---@meta\n' }
+  M.lines = { '-- vim: ft=bigfile', '-- stylua: ignore', '---@meta', '' }
 
   local index = vim.tbl_keys(require('codesettings.build.schemas').get_schemas())
   table.sort(index)
