@@ -191,12 +191,11 @@ vim.lsp.config('lua_ls', {
 - `require('codesettings').setup(opts?: CodesettingsConfig)`
   - Initialize the plugin. You only need to call this for `jsonls_integration` and `jsonc_filetype` to work, or to customize the local filepaths to look for. It is _not_ required for your local configs to take effect, unless you wish to use non-default plugin configuration.
 
-- `require('codesettings').with_local_settings(lsp_name: string, config: table): table`
+- `require('codesettings').with_local_settings(lsp_name: string, config: table, opts: CodesettingsConfigOverrides?): table`
   - Loads settings from the configured files, extracts relevant settings for the given LSP based on its schema, and deep-merges into `config.settings`. Returns the merged config.
 
-- `require('codesettings').local_settings(lsp_name: string|nil): Settings`
+- `require('codesettings').local_settings(opts: CodesettingsConfigOverrides?): Settings`
   - Loads and parses the settings file(s) for the current project. Returns a `Settings` object.
-  - If `lsp_name` is specified, filters down to only the relevant properties according to the LSP's schema.
   - `Settings` object provides some methods like:
     - `Settings:schema(lsp_name)` - Filter the settings down to only the keys that match the relevant schema e.g. `settings:schema('eslint')`
     - `Settings:merge(settings, key, merge_opts)` - merge another `Settings` object into this one, optionally specify a sub-key to merge, and control merge behavior with the 2nd and 3rd parameter, respectively
