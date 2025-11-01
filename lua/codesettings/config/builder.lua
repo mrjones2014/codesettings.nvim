@@ -15,6 +15,7 @@ function M.new()
     config_file_paths = Config.config_file_paths,
     root_dir = Config.root_dir,
     merge_opts = Config.merge_opts,
+    loader_extensions = Config.loader_extensions,
   }
   return setmetatable({ _config = opts }, ConfigBuilder)
 end
@@ -56,6 +57,18 @@ end
 function ConfigBuilder:root_dir(root_dir)
   vim.validate('root_dir', root_dir, { 'nil', 'string', 'function' })
   self._config.root_dir = root_dir or self._config.root_dir
+  return self
+end
+
+---Set the loader extensions to use when loading settings; `string` values will be `require`d
+---@param extensions (string|CodesettingsLoaderExtension)[]
+---@return CodesettingsConfigBuilder
+function ConfigBuilder:extensions(extensions)
+  vim.validate('extensions', extensions, 'table')
+  for _, ext in ipairs(extensions) do
+    vim.validate('extension', ext, { 'string', 'table' })
+  end
+  self._config.loader_extensions = extensions
   return self
 end
 
