@@ -1,28 +1,37 @@
----@class CodesettingsConfig
+---Input type for config options that can be overridden per-load
+---@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig
+
+---@class CodesettingsOverridableConfig Options which can be passed on a per-load basis (i.e. can override global config)
 ---@field config_file_paths string[] List of config file paths to look for
+---@field merge_opts CodesettingsMergeOpts Default options for merging settings
+---@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
+
+---@class CodesettingsConfig: CodesettingsOverridableConfig
 ---@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
 ---@field jsonc_filetype boolean Set filetype to jsonc for config files
----@field default_merge_opts CodesettingsMergeOpts Default options for merging settings
----@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
+---@field private reset fun() Resets the configuration to defaults, useful for tests
 
 local options = {
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
   jsonls_integration = true,
   jsonc_filetype = true,
   root_dir = nil, -- use the default root finder
-  default_merge_opts = {
+  merge_opts = {
     list_behavior = 'append',
   },
 }
 
+local defaults = vim.deepcopy(options)
+
 local Config = {}
 
+---@class (partial) CodesettingsConfigInput: CodesettingsConfig
+
 ---Merge user-supplied options into the defaults.
----@param opts table|nil
+---@param opts CodesettingsConfigInput|nil
 function Config.setup(opts)
   opts = opts or {}
-
   options = vim.tbl_deep_extend('force', {}, options, opts)
 
   if options.jsonls_integration then
@@ -32,6 +41,12 @@ function Config.setup(opts)
   if options.jsonc_filetype then
     require('codesettings.integrations.jsonc-filetype').setup()
   end
+end
+
+---Reset the configuration to defaults.
+---Useful for testing.
+function Config.reset()
+  options = vim.deepcopy(defaults)
 end
 
 setmetatable(Config, {
