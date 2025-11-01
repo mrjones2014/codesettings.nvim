@@ -169,4 +169,24 @@ describe('integration tests', function()
       assert.same(Config.config_file_paths, original_paths)
     end)
   end)
+
+  describe('extension pipeline', function()
+    local Codesettings = require('codesettings')
+    local merged = Codesettings.loader()
+      :root_dir(vim.fn.getcwd() .. '/spec/test-config-files/')
+      :config_file_paths({ 'env_extension.json' })
+      :merge_list_behavior('prepend')
+      :loader_extensions({ 'codesettings.extensions.env' })
+      :with_local_settings('rust-analyzer', {
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              features = { 'base-feature' },
+            },
+          },
+        },
+      })
+    -- see ./test-config-files/env_extension.json
+    assert.same({ vim.env.HOME .. '/some-feature', 'base-feature' }, merged.settings['rust-analyzer'].cargo.features)
+  end)
 end)
