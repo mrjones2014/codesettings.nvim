@@ -5,13 +5,17 @@
 ---@field config_file_paths string[] List of config file paths to look for
 ---@field merge_opts CodesettingsMergeOpts Default options for merging settings
 ---@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
+---@field loader_extensions (string|CodesettingsLoaderExtension)[] List of loader extensions to use when loading settings; `string` values will be `require`d
 
 ---@class CodesettingsConfig: CodesettingsOverridableConfig
 ---@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
 ---@field jsonc_filetype boolean Set filetype to jsonc for config files
+
+---@class CodesettingsConfigModule: CodesettingsConfig
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
 ---@field private reset fun() Resets the configuration to defaults, useful for tests
 
+---@type CodesettingsConfig
 local options = {
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
   jsonls_integration = true,
@@ -20,6 +24,7 @@ local options = {
   merge_opts = {
     list_behavior = 'append',
   },
+  loader_extensions = {},
 }
 
 local defaults = vim.deepcopy(options)
@@ -64,5 +69,5 @@ setmetatable(Config, {
 -- it implements the type through the metatable above,
 -- set the type information so that consuming modules get
 -- the right info through the LSP
----@cast Config CodesettingsConfig
+---@cast Config CodesettingsConfigModule
 return Config
