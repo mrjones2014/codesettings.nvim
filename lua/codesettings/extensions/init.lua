@@ -2,7 +2,7 @@
 ---@field parent table? The immediate parent table/list of this node
 ---@field path string[] Full path from the root to this node
 ---@field key string|integer The key/index of this node in the parent
----@field list_idx integer? Index if parent is an list
+---@field list_idx integer? Index if parent is a list
 
 ---@class CodesettingsLoaderExtension
 ---Optional visitor for non-leaf nodes (tables or lists). Return a control code and optional replacement value.
