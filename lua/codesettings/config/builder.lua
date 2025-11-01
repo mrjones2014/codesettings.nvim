@@ -63,7 +63,7 @@ end
 ---Set the loader extensions to use when loading settings; `string` values will be `require`d
 ---@param extensions (string|CodesettingsLoaderExtension)[]
 ---@return CodesettingsConfigBuilder
-function ConfigBuilder:extensions(extensions)
+function ConfigBuilder:loader_extensions(extensions)
   vim.validate('extensions', extensions, 'table')
   for _, ext in ipairs(extensions) do
     vim.validate('extension', ext, { 'string', 'table' })

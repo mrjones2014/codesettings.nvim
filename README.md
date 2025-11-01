@@ -263,8 +263,71 @@ vim.lsp.config('rust_analyzer', {
 })
 ```
 
-See [codesettings.config.builder](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/builder.lua) for the full available API
-and which settings can be overridden.
+See [codesettings.config.builder](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/builder.lua)
+for the full available API and which settings can be overridden.
+
+### Loader Extensions
+
+`codesettings.nvim` allows for custom post-processing of your local config files. Extensions can be registered globally,
+or through the `ConfigBuilder` for one-shot loaders. Extensions can be registered directly, or via a string which will be
+`require`d. **_No extensions are registered by default._**
+
+```lua
+local SomeExtension = require('some-3rdparty-extension')
+require('codesettings').setup({
+  loader_extensions = { SomeExtension, 'another-3rdparty-extension' },
+})
+
+-- or for one-shot loaders
+require('codesettings')
+  .loader()
+  :loader_extensions({ SomeExtension, 'another-3rdparty-extension' })
+  :with_local_settings('lua_ls', {
+    -- ...
+  })
+```
+
+`codesettings.nvim` supplies one built-in extension that can expand environment variables in your config files.
+It supports `$ENV_VAR`, `${ENV_VAR}`, and even `${ENV_VAR:-/some/default/path}` syntax. It can be registered via
+the `codesettings.extensions.env` module path.
+
+#### Extension API
+
+The extension API expects extensions to be modules that provide at least one of two API functions. The
+types that describe an extension are:
+
+```lua
+---@class CodesettingsLoaderExtensionContext
+---@field parent table? The immediate parent table/list of this node
+---@field path string[] Full path from the root to this node
+---@field key string|integer The key/index of this node in the parent
+---@field list_idx integer? Index if parent is a list
+
+---@class CodesettingsLoaderExtension
+---Optional visitor for non-leaf nodes (tables or lists). Return a control code and optional replacement value.
+---Note that the replacement value is only used if the control code is `REPLACE`.
+---@field object (fun(node:any, ctx:CodesettingsLoaderExtensionContext): CodesettingsLoaderExtensionControl, any?)?
+---Optional visitor for leaf nodes. Return a control code and optional replacement value.
+---Note that the replacement value is only used if the control code is `REPLACE`.
+---@field leaf (fun(value:any, ctx:CodesettingsLoaderExtensionContext): CodesettingsLoaderExtensionControl, any?)?
+
+---@enum CodesettingsLoaderExtensionControl
+M.Control = {
+  ---Continue recursion (for objects) or leave leaf unchanged
+  CONTINUE = 'continue',
+  ---Skip recursion (objects only)
+  SKIP = 'skip',
+  ---Replace this node/leaf with provided replacement value (can be nil)
+  REPLACE = 'replace',
+}
+```
+
+Extensions support both simple table style extensions, as well as stateful method style extensions;
+they will work whether your functions need to be called like `extension.leaf(value, ctx)` or
+`extension:leaf(value, ctx)`.
+
+See [codesettings.extensions.env](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/extensions/env.lua)
+for a simple example extension.
 
 ## Comparison with neoconf.nvim
 
