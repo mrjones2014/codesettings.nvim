@@ -1,4 +1,5 @@
 local Util = require('codesettings.util')
+local Extensions = require('codesettings.extensions')
 
 local M = {}
 
@@ -23,7 +24,7 @@ function M.load_all(opts)
   opts = opts or {} --[[@as CodesettingsGetlocalConfigsOpts]]
   local settings = M.new()
   vim.iter(Util.get_local_configs(opts)):each(function(fname)
-    settings:merge(M.new():load(fname))
+    settings:merge(M.new():load(fname, opts))
   end)
   return settings
 end
@@ -169,12 +170,16 @@ function Settings:totable()
   return self._settings
 end
 
-function Settings:load(file)
+---@param file string the file to load settings from
+---@param opts CodesettingsConfigOverrides? options for loading settings
+---@return CodesettingsSettings
+function Settings:load(file, opts)
   self:clear()
   if Util.exists(file) then
     local data = Util.read_file(file)
     local ok, json = pcall(Util.json_decode, data)
     if ok then
+      json = Extensions.apply(json, opts and opts.loader_extensions or {})
       for k, v in pairs(M.expand(json)) do
         self:set(k, v)
       end
@@ -209,14 +214,6 @@ M._cache = {}
 
 function M.clear(fname)
   M._cache[fname] = nil
-end
-
-function M.get(fname)
-  fname = Util.fqn(fname)
-  if not M._cache[fname] and Util.exists(fname) then
-    M._cache[fname] = M.new():load(fname)
-  end
-  return M._cache[fname]
 end
 
 return M
