@@ -18922,6 +18922,13 @@
 -- Internal config, path to proc-macro server executable.
 ---@field server string?
 
+---@class lsp.rust_analyzer.Profiling
+-- The path where to save memory profiling output.
+-- 
+-- **Note:** Memory profiling is not enabled by default in rust-analyzer builds, you need to build
+-- from source for it.
+---@field memoryProfile string?
+
 ---@class lsp.rust_analyzer.References
 -- Exclude imports from find-all-references.
 ---@field excludeImports boolean?
@@ -19370,6 +19377,7 @@
 -- automatically.
 ---@field numThreads any|number|"physical" | "logical"?
 ---@field procMacro lsp.rust_analyzer.ProcMacro?
+---@field profiling lsp.rust_analyzer.Profiling?
 ---@field references lsp.rust_analyzer.References?
 -- Restart the server automatically when settings that require a restart are changed.
 ---@field restartServerOnConfigChange boolean?
