@@ -1,6 +1,7 @@
 ---@class CodesettingsConfig
 ---@field config_file_paths string[] List of config file paths to look for
 ---@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
+---@field lua_ls_integration boolean|fun():boolean Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config
 ---@field jsonc_filetype boolean Set filetype to jsonc for config files
 ---@field default_merge_opts CodesettingsMergeOpts Default options for merging settings
 ---@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
@@ -9,6 +10,7 @@
 local options = {
   config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
   jsonls_integration = true,
+  lua_ls_integration = true,
   jsonc_filetype = true,
   root_dir = nil, -- use the default root finder
   default_merge_opts = {
@@ -31,6 +33,11 @@ function Config.setup(opts)
 
   if options.jsonc_filetype then
     require('codesettings.integrations.jsonc-filetype').setup()
+  end
+
+  local lua_ls_integration = options.lua_ls_integration
+  if lua_ls_integration == true or (type(lua_ls_integration) == 'function' and lua_ls_integration()) then
+    require('codesettings.integrations.lua_ls').setup()
   end
 end
 
