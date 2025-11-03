@@ -3,8 +3,8 @@ local Util = require('codesettings.util')
 local M = {}
 
 ---@class CodesettingsSettings
----@field _settings table
----@field file string
+---@field private _settings table
+---@field private file string
 local Settings = {}
 Settings.__index = Settings
 
@@ -17,10 +17,12 @@ function M.new(settings)
 end
 
 ---Load all local settings files
+---@param opts CodesettingsConfigOverrides? optional config overrides for this load
 ---@return CodesettingsSettings
-function M.load_all()
+function M.load_all(opts)
+  opts = opts or {} --[[@as CodesettingsGetlocalConfigsOpts]]
   local settings = M.new()
-  vim.iter(Util.get_local_configs()):each(function(fname)
+  vim.iter(Util.get_local_configs(opts)):each(function(fname)
     settings:merge(M.new():load(fname))
   end)
   return settings

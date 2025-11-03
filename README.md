@@ -45,7 +45,7 @@ return {
     ---If not set, defaults to `require('codesettings.util').get_root()`
     root_dir = nil,
     ---Choose the default merge behavior
-    default_merge_opts = {
+    merge_opts = {
       --- How to merge lists; 'append' (default), 'prepend' or 'replace'
       list_behavior = 'append',
     },
@@ -146,6 +146,7 @@ return {
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua, with optional `lua_ls` integration
   ![lua type annotations](https://github.com/user-attachments/assets/86d85ff3-1467-4c0b-9542-02cc831951dc)
 - Supports custom config file names/locations
+- Custom one-shot loaders with configuration that differs from the plugin's global config (see [Advanced Usage](#advanced-usage))
 - Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
 
 ```jsonc
@@ -235,6 +236,35 @@ Follows the semantics of `vim.tbl_deep_extend('force', your_config, local_config
 - The plugin deep-merges plain tables (non-list tables)
 - List/array values are appended by default; you can change this behavior in configuration or through the API
 - Your provided `config` is the base; values from the settings file override or extend it within `config.settings`
+
+## Advanced Usage
+
+### One-shot Loaders
+
+`codesettings.nvim` provides a fluent `ConfigBuilder` API that lets you override plugin options for a single load of local settings, without affecting the
+global configuration. This is useful, for example, for multi-root projects where you might have a separate instance of the LSP server per-root.
+
+```lua
+vim.lsp.config('rust_analyzer', {
+  before_init = function(_, config)
+    local c = require('codesettings')
+    c
+      -- starts from the plugin's global config as a base
+      .loader()
+      -- override the root directory from the LSP config, which might be a sub-root
+      :root_dir(config.root_dir)
+      -- merge local settings according to the configuration specified
+      -- by this `ConfigBuilder`
+      :with_local_settings(
+        config.name,
+        config
+      )
+  end,
+})
+```
+
+See [codesettings.config.builder](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/builder.lua) for the full available API
+and which settings can be overridden.
 
 ## Comparison with neoconf.nvim
 
