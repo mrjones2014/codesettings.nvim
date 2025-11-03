@@ -212,4 +212,15 @@ function M.error(msg, ...)
   vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.ERROR)
 end
 
+function M.restart_lsp(name)
+  vim.defer_fn(function()
+    if #vim.lsp.get_clients({ name = name }) > 0 then
+      vim.lsp.enable(name, false)
+      vim.defer_fn(function()
+        vim.lsp.enable(name)
+      end, 500)
+    end
+  end, 500)
+end
+
 return M

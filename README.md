@@ -30,6 +30,13 @@ return {
     config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
     ---Integrate with jsonls to provide LSP completion for LSP settings based on schemas
     jsonls_integration = true,
+    ---Set up library paths for lua_ls automatically to pick up the generated type
+    ---annotations provided by codesettings.nvim; to enable for only your nvim config,
+    ---you can also do something like:
+    ---lua_ls_integration = function()
+    ---  return vim.uv.cwd() == ('%s/.config/nvim'):format(vim.env.HOME)
+    ---end,
+    lua_ls_integration = true,
     ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
     ---make sure you have the jsonc tree-sitter parser installed for highlighting
     jsonc_filetype = true,
@@ -44,8 +51,8 @@ return {
     },
   },
   -- I recommend loading on these filetype so that the
-  -- jsonls integration and jsonc filetype setup works
-  ft = { 'json', 'jsonc' },
+  -- jsonls integration, lua_ls integration, and jsonc filetype setup works
+  ft = { 'json', 'jsonc', 'lua' },
 }
 ```
 
@@ -136,8 +143,8 @@ return {
 - `jsonc` filetype for local config files
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
   ![jsonls integration](https://github.com/user-attachments/assets/5d37f0bb-0e07-4c22-bc6b-16cf3e65e201)
-- Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua
-  ![lua type annotations](https://github.com/user-attachments/assets/f57d938f-3f9b-4c9c-9acd-1fb5996fb8d1)
+- Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua, with optional `lua_ls` integration
+  ![lua type annotations](https://github.com/user-attachments/assets/86d85ff3-1467-4c0b-9542-02cc831951dc)
 - Supports custom config file names/locations
 - Supports mixed nested and dotted key paths, for example, this project's `codesettings.json` looks like:
 
@@ -154,13 +161,15 @@ return {
 }
 ```
 
-To get autocomplete in Lua files:
+To get autocomplete in Lua files, either set `config.lua_ls_integration = true`, or use `---@module 'codesettings'` which will tell `lua_ls` as though `codesettings`
+has been `require`d, then you will have access to `---@type lsp.server_name` generated type annotations.
 
 ```lua
 -- for example, for lua_ls
 vim.lsp.config('lua_ls', {
   -- this '@module' annotation makes lua_ls import the library from codesettings,
-  -- where the annotations come from
+  -- where the annotations come from; this isn't needed if you use `lua_ls_integration = true`
+  -- and `codesettings.nvim` is loaded
   ---@module 'codesettings'
   -- then you will have access to the generated type annotations
   ---@type lsp.lua_ls
@@ -324,4 +333,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-

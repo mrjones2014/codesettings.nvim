@@ -68,14 +68,7 @@ function M.setup()
   })
 
   -- lazy loading; if jsonls is already active, restart it
-  vim.defer_fn(function()
-    if #vim.lsp.get_clients({ name = 'jsonls' }) > 0 then
-      vim.lsp.enable('jsonls', false)
-      vim.defer_fn(function()
-        vim.lsp.enable('jsonls')
-      end, 500)
-    end
-  end, 500)
+  Util.restart_lsp('jsonls')
 end
 
 return M
