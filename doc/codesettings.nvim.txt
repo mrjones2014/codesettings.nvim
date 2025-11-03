@@ -12,10 +12,12 @@ Table of Contents                        *codesettings.nvim-table-of-contents*
 6. API                                                 |codesettings.nvim-api|
 7. How it finds your settings   |codesettings.nvim-how-it-finds-your-settings|
 8. How merging works                     |codesettings.nvim-how-merging-works|
-9. Comparison with neoconf.nvim|codesettings.nvim-comparison-with-neoconf.nvim|
-10. Acknowledgements                      |codesettings.nvim-acknowledgements|
-11. Supported LSP Servers            |codesettings.nvim-supported-lsp-servers|
-12. Links                                            |codesettings.nvim-links|
+9. Advanced Usage                           |codesettings.nvim-advanced-usage|
+  - One-shot Loaders       |codesettings.nvim-advanced-usage-one-shot-loaders|
+10. Comparison with neoconf.nvim|codesettings.nvim-comparison-with-neoconf.nvim|
+11. Acknowledgements                      |codesettings.nvim-acknowledgements|
+12. Supported LSP Servers            |codesettings.nvim-supported-lsp-servers|
+13. Links                                            |codesettings.nvim-links|
 Easily read your project’s local settings files and merge them into your
 Neovim 0.11+ native LSP configuration.
 
@@ -174,6 +176,7 @@ configure `rustaceanvim` in my own setup:
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua, with optional `lua_ls` integration
 - Supports custom config file names/locations
+- Custom one-shot loaders with configuration that differs from the plugin’s global config (see |codesettings.nvim-advanced-usage|)
 - Supports mixed nested and dotted key paths, for example, this project’s `codesettings.json` looks like:
 
 >jsonc
@@ -275,7 +278,42 @@ local_config)`, essentially:
 
 
 ==============================================================================
-9. Comparison with neoconf.nvim*codesettings.nvim-comparison-with-neoconf.nvim*
+9. Advanced Usage                           *codesettings.nvim-advanced-usage*
+
+
+ONE-SHOT LOADERS           *codesettings.nvim-advanced-usage-one-shot-loaders*
+
+`codesettings.nvim` provides a fluent `ConfigBuilder` API that lets you
+override plugin options for a single load of local settings, without affecting
+the global configuration. This is useful, for example, for multi-root projects
+where you might have a separate instance of the LSP server per-root.
+
+>lua
+    vim.lsp.config('rust_analyzer', {
+      before_init = function(_, config)
+        local c = require('codesettings')
+        c
+          -- starts from the plugin's global config as a base
+          .loader()
+          -- override the root directory from the LSP config, which might be a sub-root
+          :root_dir(config.root_dir)
+          -- merge local settings according to the configuration specified
+          -- by this `ConfigBuilder`
+          :with_local_settings(
+            config.name,
+            config
+          )
+      end,
+    })
+<
+
+See codesettings.config.builder
+<https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/builder.lua>
+for the full available API and which settings can be overridden.
+
+
+==============================================================================
+10. Comparison with neoconf.nvim*codesettings.nvim-comparison-with-neoconf.nvim*
 
   -----------------------------------------------------------------------
                         codesettings.nvim            neoconf.nvim
@@ -315,7 +353,7 @@ type annotations.
 
 
 ==============================================================================
-10. Acknowledgements                      *codesettings.nvim-acknowledgements*
+11. Acknowledgements                      *codesettings.nvim-acknowledgements*
 
 This project would not exist without the hard work of some other open source
 projects!
@@ -325,7 +363,7 @@ projects!
 
 
 ==============================================================================
-11. Supported LSP Servers            *codesettings.nvim-supported-lsp-servers*
+12. Supported LSP Servers            *codesettings.nvim-supported-lsp-servers*
 
 - als <https://github.com/AdaCore/ada_language_server/tree/master/integration/vscode/ada/package.json>
 - astro <https://github.com/withastro/language-tools/tree/main/packages/vscode/package.json>
@@ -397,7 +435,7 @@ projects!
 - zls <https://github.com/zigtools/zls-vscode/tree/master/package.json>
 
 ==============================================================================
-12. Links                                            *codesettings.nvim-links*
+13. Links                                            *codesettings.nvim-links*
 
 1. *jsonls integration*: https://github.com/user-attachments/assets/5d37f0bb-0e07-4c22-bc6b-16cf3e65e201
 2. *lua type annotations*: https://github.com/user-attachments/assets/86d85ff3-1467-4c0b-9542-02cc831951dc
