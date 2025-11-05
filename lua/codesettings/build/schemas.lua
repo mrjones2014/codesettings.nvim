@@ -159,6 +159,8 @@ function M.clean()
   end
 end
 
+---THIS WILL CALL `os.exit(1)` IF A SCHEMA CANNOT BE FETCHED.
+---This is only meant to be called from a build script!
 function M.update_schemas()
   local schemas = M.get_schemas()
   local names = vim.tbl_keys(schemas)
@@ -171,6 +173,8 @@ function M.update_schemas()
       local ok, schema = pcall(M.fetch_schema, s)
       if ok then
         Util.write_file(s.settings_file, Util.json_format(schema))
+      else
+        os.exit(1)
       end
     end
   end

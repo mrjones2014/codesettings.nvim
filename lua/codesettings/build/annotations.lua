@@ -138,6 +138,8 @@ function M.build_annotations(name)
   M.process_object(M.class_name, M.fix_props(schema:get()))
 end
 
+---THIS WILL CALL `os.exit(1)` IF A SCHEMA CANNOT BE FETCHED.
+---This is only meant to be called from a build script!
 function M.build()
   print('Generating Lua type annotations based on all schemas...')
   M.lines = { '-- vim: ft=bigfile', '-- stylua: ignore', '---@meta', '' }
@@ -149,6 +151,7 @@ function M.build()
     local ok, err = pcall(M.build_annotations, name)
     if not ok then
       print('error building ' .. name .. ': ' .. err)
+      os.exit(1)
     end
   end
 
