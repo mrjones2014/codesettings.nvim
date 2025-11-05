@@ -34,6 +34,7 @@ M.index = {
   ltex = 'https://raw.githubusercontent.com/valentjn/vscode-ltex/develop/package.json',
   lua_ls = 'https://raw.githubusercontent.com/LuaLS/vscode-lua/master/package.json',
   luau_lsp = 'https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/editors/code/package.json',
+  nickel_ls = 'https://raw.githubusercontent.com/tweag/nickel/refs/heads/master/lsp/vscode-extension/package.json',
   nil_ls = 'https://raw.githubusercontent.com/oxalica/nil/refs/heads/main/editors/coc-nil/package.json',
   nixd = 'https://raw.githubusercontent.com/nix-community/nixd/refs/heads/main/nixd/docs/nixd-schema.json',
   omnisharp = 'https://raw.githubusercontent.com/OmniSharp/omnisharp-vscode/master/package.json',
