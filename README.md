@@ -376,6 +376,7 @@ This project would not exist without the hard work of some other open source pro
 - [x] [haxe_language_server](https://github.com/vshaxe/vshaxe/tree/master/package.json)
 - [x] [hhvm](https://github.com/slackhq/vscode-hack/tree/master/package.json)
 - [x] [hie](https://github.com/alanz/vscode-hie-server/tree/master/package.json)
+- [x] [hls](https://github.com/haskell/vscode-haskell/refs/heads/tree/master/package.json)
 - [x] [html](https://github.com/microsoft/vscode/tree/main/extensions/html-language-features/package.json)
 - [x] [intelephense](https://github.com/bmewburn/vscode-intelephense/tree/master/package.json)
 - [x] [java_language_server](https://github.com/georgewfraser/java-language-server/tree/master/package.json)

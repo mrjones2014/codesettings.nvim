@@ -9550,6 +9550,653 @@
 ---@class lsp.hie
 ---@field haskell lsp.hie.Haskell?
 
+---@class lsp.hls.AlternateNumberFormat
+-- Enables alternateNumberFormat plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Cabal
+-- Enables cabal code actions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeActionsOn boolean?
+-- Enables cabal completions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field completionOn boolean?
+-- Enables cabal diagnostics
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field diagnosticsOn boolean?
+-- Enables cabal hover
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field hoverOn boolean?
+-- Enables cabal symbols
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field symbolsOn boolean?
+
+---@class lsp.hls.Config
+-- Set path to 'cabal-fmt' executable
+-- 
+-- ```lua
+-- default = "cabal-fmt"
+-- ```
+---@field path string?
+
+---@class lsp.hls.Cabal-fmt
+---@field config lsp.hls.Config?
+
+---@class lsp.hls.Config
+-- Set path to 'cabal-gild' executable
+-- 
+-- ```lua
+-- default = "cabal-gild"
+-- ```
+---@field path string?
+
+---@class lsp.hls.Cabal-gild
+---@field config lsp.hls.Config?
+
+---@class lsp.hls.CabalHaskellIntegration
+-- Enables cabalHaskellIntegration plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.CallHierarchy
+-- Enables callHierarchy plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.ChangeTypeSignature
+-- Enables changeTypeSignature plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Class
+-- Enables class code actions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeActionsOn boolean?
+-- Enables class code lenses
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeLensOn boolean?
+
+---@class lsp.hls.Config
+-- Enable the diff output (WAS/NOW) of eval lenses
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field diff boolean?
+-- Enable marking exceptions with `*** Exception:` similarly to doctest and GHCi.
+---@field exception boolean?
+
+---@class lsp.hls.Eval
+-- Enables eval code actions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeActionsOn boolean?
+-- Enables eval code lenses
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeLensOn boolean?
+---@field config lsp.hls.Config?
+
+---@class lsp.hls.Explicit-fields
+-- Enables explicit-fields code actions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeActionsOn boolean?
+-- Enables explicit-fields inlay hints
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field inlayHintsOn boolean?
+
+---@class lsp.hls.Explicit-fixity
+-- Enables explicit-fixity plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Config
+-- Call out to an external "fourmolu" executable, rather than using the bundled library.
+---@field external boolean?
+-- Set path to executable (for "external" mode).
+-- 
+-- ```lua
+-- default = "fourmolu"
+-- ```
+---@field path string?
+
+---@class lsp.hls.Fourmolu
+---@field config lsp.hls.Config?
+
+---@class lsp.hls.Gadt
+-- Enables gadt plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Ghcide-code-actions-bindings
+-- Enables ghcide-code-actions-bindings plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Ghcide-code-actions-fill-holes
+-- Enables ghcide-code-actions-fill-holes plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Ghcide-code-actions-imports-exports
+-- Enables ghcide-code-actions-imports-exports plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Ghcide-code-actions-type-signatures
+-- Enables ghcide-code-actions-type-signatures plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Config
+-- Extends the import list automatically when completing a out-of-scope identifier
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field autoExtendOn boolean?
+-- Inserts snippets when using code completions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field snippetsOn boolean?
+
+---@class lsp.hls.Ghcide-completions
+---@field config lsp.hls.Config?
+-- Enables ghcide-completions plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Ghcide-hover-and-symbols
+-- Enables ghcide-hover-and-symbols hover
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field hoverOn boolean?
+-- Enables ghcide-hover-and-symbols symbols
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field symbolsOn boolean?
+
+---@class lsp.hls.Config
+-- Control how type lenses are shown
+-- 
+-- ```lua
+-- default = "always"
+-- ```
+---@field mode "always" | "exported" | "diagnostics"?
+
+---@class lsp.hls.Ghcide-type-lenses
+---@field config lsp.hls.Config?
+-- Enables ghcide-type-lenses plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Config
+-- Flags used by hlint
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field flags any[]?
+
+---@class lsp.hls.Hlint
+-- Enables hlint code actions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeActionsOn boolean?
+---@field config lsp.hls.Config?
+-- Enables hlint diagnostics
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field diagnosticsOn boolean?
+
+---@class lsp.hls.ImportLens
+-- Enables importLens code actions
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeActionsOn boolean?
+-- Enables importLens code lenses
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field codeLensOn boolean?
+-- Enables importLens inlay hints
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field inlayHintsOn boolean?
+
+---@class lsp.hls.ModuleName
+-- Enables moduleName plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Config
+-- Call out to an external "ormolu" executable, rather than using the bundled library
+---@field external boolean?
+
+---@class lsp.hls.Ormolu
+---@field config lsp.hls.Config?
+
+---@class lsp.hls.Overloaded-record-dot
+-- Enables overloaded-record-dot plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Pragmas-completion
+-- Enables pragmas-completion plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Pragmas-disable
+-- Enables pragmas-disable plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Pragmas-suggest
+-- Enables pragmas-suggest plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.QualifyImportedNames
+-- Enables qualifyImportedNames plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Config
+-- Enable experimental cross-module renaming
+---@field crossModule boolean?
+
+---@class lsp.hls.Rename
+---@field config lsp.hls.Config?
+-- Enables rename plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Retrie
+-- Enables retrie plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Config
+-- LSP semantic token type to use for typeclass methods
+-- 
+-- ```lua
+-- default = "method"
+-- ```
+---@field classMethodToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for typeclasses
+-- 
+-- ```lua
+-- default = "class"
+-- ```
+---@field classToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for data constructors
+-- 
+-- ```lua
+-- default = "enumMember"
+-- ```
+---@field dataConstructorToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for functions
+-- 
+-- ```lua
+-- default = "function"
+-- ```
+---@field functionToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for modules
+-- 
+-- ```lua
+-- default = "namespace"
+-- ```
+---@field moduleToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for operators
+-- 
+-- ```lua
+-- default = "operator"
+-- ```
+---@field operatorToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for pattern synonyms
+-- 
+-- ```lua
+-- default = "macro"
+-- ```
+---@field patternSynonymToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for record fields
+-- 
+-- ```lua
+-- default = "property"
+-- ```
+---@field recordFieldToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for type constructors
+-- 
+-- ```lua
+-- default = "enum"
+-- ```
+---@field typeConstructorToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for type families
+-- 
+-- ```lua
+-- default = "interface"
+-- ```
+---@field typeFamilyToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for type synonyms
+-- 
+-- ```lua
+-- default = "type"
+-- ```
+---@field typeSynonymToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for type variables
+-- 
+-- ```lua
+-- default = "typeParameter"
+-- ```
+---@field typeVariableToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+-- LSP semantic token type to use for variables
+-- 
+-- ```lua
+-- default = "variable"
+-- ```
+---@field variableToken "namespace" | "type" | "class" | "enum" | "interface" | "struct" | "typeParameter" | "parameter" | "variable" | "property" | "enumMember" | "event" | "function" | "method" | "macro" | "keyword" | "modifier" | "comment" | "string" | "number" | "regexp" | "operator" | "decorator"?
+
+---@class lsp.hls.SemanticTokens
+---@field config lsp.hls.Config?
+-- Enables semanticTokens plugin
+---@field globalOn boolean?
+
+---@class lsp.hls.Splice
+-- Enables splice plugin
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field globalOn boolean?
+
+---@class lsp.hls.Stan
+-- Enables stan plugin
+---@field globalOn boolean?
+
+---@class lsp.hls.Plugin
+---@field alternateNumberFormat lsp.hls.AlternateNumberFormat?
+---@field cabal lsp.hls.Cabal?
+---@field cabal-fmt lsp.hls.Cabal-fmt?
+---@field cabal-gild lsp.hls.Cabal-gild?
+---@field cabalHaskellIntegration lsp.hls.CabalHaskellIntegration?
+---@field callHierarchy lsp.hls.CallHierarchy?
+---@field changeTypeSignature lsp.hls.ChangeTypeSignature?
+---@field class lsp.hls.Class?
+---@field eval lsp.hls.Eval?
+---@field explicit-fields lsp.hls.Explicit-fields?
+---@field explicit-fixity lsp.hls.Explicit-fixity?
+---@field fourmolu lsp.hls.Fourmolu?
+---@field gadt lsp.hls.Gadt?
+---@field ghcide-code-actions-bindings lsp.hls.Ghcide-code-actions-bindings?
+---@field ghcide-code-actions-fill-holes lsp.hls.Ghcide-code-actions-fill-holes?
+---@field ghcide-code-actions-imports-exports lsp.hls.Ghcide-code-actions-imports-exports?
+---@field ghcide-code-actions-type-signatures lsp.hls.Ghcide-code-actions-type-signatures?
+---@field ghcide-completions lsp.hls.Ghcide-completions?
+---@field ghcide-hover-and-symbols lsp.hls.Ghcide-hover-and-symbols?
+---@field ghcide-type-lenses lsp.hls.Ghcide-type-lenses?
+---@field hlint lsp.hls.Hlint?
+---@field importLens lsp.hls.ImportLens?
+---@field moduleName lsp.hls.ModuleName?
+---@field ormolu lsp.hls.Ormolu?
+---@field overloaded-record-dot lsp.hls.Overloaded-record-dot?
+---@field pragmas-completion lsp.hls.Pragmas-completion?
+---@field pragmas-disable lsp.hls.Pragmas-disable?
+---@field pragmas-suggest lsp.hls.Pragmas-suggest?
+---@field qualifyImportedNames lsp.hls.QualifyImportedNames?
+---@field rename lsp.hls.Rename?
+---@field retrie lsp.hls.Retrie?
+---@field semanticTokens lsp.hls.SemanticTokens?
+---@field splice lsp.hls.Splice?
+---@field stan lsp.hls.Stan?
+
+---@class lsp.hls.Trace
+-- Sets the log level in the client side.
+-- 
+-- ```lua
+-- default = "info"
+-- ```
+---@field client "off" | "error" | "info" | "debug"?
+-- Traces the communication between VS Code and the language server.
+-- 
+-- ```lua
+-- default = "off"
+-- ```
+---@field server "off" | "messages" | "verbose"?
+
+---@class lsp.hls.Haskell
+-- The formatter to use when formatting a document or range of a cabal formatter. Ensure the plugin is enabled.
+-- 
+-- ```lua
+-- default = "cabal-gild"
+-- ```
+---@field cabalFormattingProvider "cabal-gild" | "cabal-fmt" | "none"?
+-- Whether to typecheck the entire project on load. It could drive to bad performance in large projects.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field checkProject boolean?
+-- The formatter to use when formatting a document or range. Ensure the plugin is enabled.
+-- 
+-- ```lua
+-- default = "ormolu"
+-- ```
+---@field formattingProvider "brittany" | "floskell" | "fourmolu" | "ormolu" | "stylish-haskell" | "none"?
+-- Manually set a ghcup executable path.
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field ghcupExecutablePath string?
+-- If set, redirects the logs to a file.
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field logFile string?
+-- How to manage/find HLS installations.
+-- 
+-- ```lua
+-- default = "PATH"
+-- ```
+---@field manageHLS "GHCup" | "PATH"?
+-- Maximum number of completions sent to the editor.
+-- 
+-- ```lua
+-- default = 40
+-- ```
+---@field maxCompletions integer?
+-- An optional URL to override where ghcup checks for tool download info (usually at: https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml)
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field metadataURL string?
+-- When opening 'Documentation' for external libraries, open in hackage by default. Set to false to instead open in vscode.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field openDocumentationInHackage boolean?
+-- When opening 'Source' for external libraries, open in hackage by default. Set to false to instead open in vscode.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field openSourceInHackage boolean?
+---@field plugin lsp.hls.Plugin?
+-- Prompt before performing any downloads.
+-- 
+-- ```lua
+-- default = "true"
+-- ```
+---@field promptBeforeDownloads boolean?
+-- An optional path where downloaded metadata will be stored. Check the default value [here](https://github.com/haskell/vscode-haskell#downloaded-binaries)
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field releasesDownloadStoragePath string?
+-- An optional URL to override where ghcup checks for HLS-GHC compatibility list (usually at: https://raw.githubusercontent.com/haskell/ghcup-metadata/master/hls-metadata-0.0.1.json)
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field releasesURL string?
+-- Define environment variables for the language server.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field serverEnvironment table?
+-- Manually set a language server executable. Can be something on the $PATH or the full path to the executable itself. Works with `~,` `${HOME}` and `${workspaceFolder}`.
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field serverExecutablePath string?
+-- Pass additional arguments to the language server.
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field serverExtraArgs string?
+-- Preferred approach for loading package components. Setting this to 'multiple components' (EXPERIMENTAL) allows the build tool (such as `cabal` or `stack`) to [load multiple components at once](https://github.com/haskell/cabal/pull/8726), which is a significant improvement.
+-- 
+-- ```lua
+-- default = "singleComponent"
+-- ```
+---@field sessionLoading "singleComponent" | "multipleComponents"?
+-- Enable Language Server support for `.cabal` files. Requires Haskell Language Server version >= 1.9.0.0.
+-- 
+-- ```lua
+-- default = "automatic"
+-- ```
+---@field supportCabalFiles "enable" | "disable" | "automatic"?
+-- When manageHLS is set to GHCup, this can overwrite the automatic toolchain configuration with a more specific one. When a tool is omitted, the extension will manage the version (for 'ghc' we try to figure out the version the project requires). The format is '{"tool": "version", ...}'. 'version' accepts all identifiers that 'ghcup' accepts.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field toolchain table?
+---@field trace lsp.hls.Trace?
+-- Whether to upgrade GHCup automatically when 'manageHLS' is set to 'GHCup'.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field upgradeGHCup boolean?
+
+---@class lsp.hls
+---@field haskell lsp.hls.Haskell?
+
 ---@class lsp.html.Completion
 -- %html.completion.attributeDefaultValue%
 -- 
@@ -19693,13 +20340,13 @@
 ---@field solidity lsp.solidity_ls.Solidity?
 
 ---@class lsp.sonarlint.Connections
--- Connect SonarQube for IDE to SonarQube Cloud to apply the same code quality and security standards as your team. Analyze more languages, detect more issues **on the whole project**, receive notifications about the quality gate status, and more. Quality Profiles and file exclusion settings defined on the server are shared between all connected users. Please find the documentation [here](https://docs.sonarsource.com/sonarqube-for-vs-code/team-features/connected-mode/)
+-- Connect SonarQube for IDE to SonarQube Cloud to apply the same code quality and security standards as your team. Analyze more languages, detect more issues **on the whole project**, receive notifications about the quality gate status, and more. Quality Profiles and file exclusion settings defined on the server are shared between all connected users. Please find the documentation [here](https://docs.sonarsource.com/sonarqube-for-vs-code/connect-your-ide/connected-mode/)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field sonarcloud object[]?
--- Connect SonarQube for IDE to SonarQube Server to apply the same code quality and security standards as your team. Analyze more languages, detect more issues **on the whole project**, receive notifications about the quality gate status, and more. Quality Profiles and file exclusion settings defined on the server are shared between all connected users. Please find the documentation [here](https://docs.sonarsource.com/sonarqube-for-vs-code/team-features/connected-mode/)
+-- Connect SonarQube for IDE to SonarQube Server to apply the same code quality and security standards as your team. Analyze more languages, detect more issues **on the whole project**, receive notifications about the quality gate status, and more. Quality Profiles and file exclusion settings defined on the server are shared between all connected users. Please find the documentation [here](https://docs.sonarsource.com/sonarqube-for-vs-code/connect-your-ide/connected-mode/)
 -- 
 -- ```lua
 -- default = {}
@@ -19798,7 +20445,7 @@
 ---@field earlyAccess lsp.sonarlint.EarlyAccess?
 -- If enabled, by default, [focusing on new code](https://docs.sonarsource.com/sonarqube-for-vs-code/using/investigating-issues/#focusing-on-new-code) shows issues introduced in the last 30 days.
 -- 
--- For the most accurate and customizable new code definition, use [Connected Mode](https://docs.sonarsource.com/sonarqube-for-vs-code/team-features/connected-mode) with SonarQube (Server, Cloud).
+-- For the most accurate and customizable new code definition, use [Connected Mode](https://docs.sonarsource.com/sonarqube-for-vs-code/connect-your-ide/connected-mode) with SonarQube (Server, Cloud).
 ---@field focusOnNewCode boolean?
 ---@field ls lsp.sonarlint.Ls?
 ---@field output lsp.sonarlint.Output?
@@ -23611,113 +24258,21 @@
 ---@class lsp.vuels
 ---@field vetur lsp.vuels.Vetur?
 
----@class lsp.wgls_analyzer.TermSearch
--- Term search fuel in "units of work" for assists (Defaults to 1800).
--- 
--- ```lua
--- default = 1800
--- ```
----@field fuel integer?
-
----@class lsp.wgls_analyzer.Assist
--- Placeholder expression to use for missing expressions in assists.
--- 
--- ```lua
--- default = "todo"
--- ```
----@field expressionFillDefault "todo" | "default"?
----@field termSearch lsp.wgls_analyzer.TermSearch?
-
 ---@class lsp.wgls_analyzer.CachePriming
--- Warm up caches on project load.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
--- How many worker threads to handle priming caches. The default `0` means to pick automatically.
+-- Number of worker threads used to warm caches when a project opens.
+-- Use `0` to let the server choose automatically based on the machine.
 -- 
 -- ```lua
 -- default = "physical"
 -- ```
 ---@field numThreads number|"physical" | "logical"?
 
----@class lsp.wgls_analyzer.Callable
--- Whether to add parenthesis and argument snippets when completing function.
--- 
--- ```lua
--- default = "fill_arguments"
--- ```
----@field snippets "fill_arguments" | "add_parentheses" | "none"?
-
----@class lsp.wgls_analyzer.FullFunctionSignatures
--- Whether to show full function/method signatures in completion docs.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Postfix
--- Whether to show postfix snippets like `if` and `not`.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Snippets
--- Custom completion snippets.
--- 
--- ```lua
--- default = {}
--- ```
----@field custom table?
-
----@class lsp.wgls_analyzer.TermSearch
--- Whether to enable term search based snippets.
----@field enable boolean?
--- Term search fuel in "units of work" for autocompletion (Defaults to 1000).
--- 
--- ```lua
--- default = 1000
--- ```
----@field fuel integer?
-
----@class lsp.wgls_analyzer.Completion
--- Whether to automatically add a semicolon when completing unit-returning functions.
--- 
--- ```lua
--- default = true
--- ```
----@field addSemicolonToUnit boolean?
----@field callable lsp.wgls_analyzer.Callable?
----@field fullFunctionSignatures lsp.wgls_analyzer.FullFunctionSignatures?
--- Maximum number of completions to return. If `null`, then there is no limit.
----@field limit integer?
----@field postfix lsp.wgls_analyzer.Postfix?
----@field snippets lsp.wgls_analyzer.Snippets?
----@field termSearch lsp.wgls_analyzer.TermSearch?
-
----@class lsp.wgls_analyzer.Experimental
--- Whether to show experimental wgsl-analyzer diagnostics that might have more false positives than usual.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.StyleLints
--- Whether to run additional style lints.
----@field enable boolean?
-
 ---@class lsp.wgls_analyzer.Diagnostics
--- List of wgsl-analyzer diagnostics to disable.
--- 
--- ```lua
--- default = {}
--- ```
----@field disabled string[]?
--- Whether to show native wgsl-analyzer diagnostics.
+-- Controls whether to show naga's parsing errors.
 -- 
 -- ```lua
 -- default = true
 -- ```
----@field enable boolean?
----@field experimental lsp.wgls_analyzer.Experimental?
--- Controls whether to show naga's parsing errors.
 ---@field nagaParsingErrors boolean?
 -- Controls whether to show naga's validation errors.
 -- 
@@ -23725,516 +24280,58 @@
 -- default = true
 -- ```
 ---@field nagaValidationErrors boolean?
--- Which version of naga to use for its diagnostics
+-- Naga version used for validation.
 -- 
 -- ```lua
--- default = "0.22"
+-- default = "0.27"
 -- ```
----@field nagaVersion "0.14" | "0.19" | "0.22" | "main"?
--- Whether to show the main part of the rendered Naga output of a diagnostic message.
----@field previewNagaOutput boolean?
----@field styleLints lsp.wgls_analyzer.StyleLints?
+---@field nagaVersion "0.22" | "0.27" | "main"?
 -- Controls whether to show type errors.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field typeErrors boolean?
--- Whether to show diagnostics using the original Naga error code. If this is false, all Naga diagnostics will have the code 'Naga(Click for full compiler diagnostics)'
----@field useNagaErrorCode boolean?
--- List of warnings that should be displayed with hint severity.
--- 
--- The warnings will be indicated by faded text or three dots in code and will not show up in the `Problems Panel`.
--- 
--- ```lua
--- default = {}
--- ```
----@field warningsAsHint string[]?
--- List of warnings that should be displayed with info severity.
--- 
--- The warnings will be indicated by a blue squiggly underline in code and a blue icon in the `Problems Panel`.
--- 
--- ```lua
--- default = {}
--- ```
----@field warningsAsInfo string[]?
-
----@class lsp.wgls_analyzer.Files
--- These paths (file/directories) will be ignored by wgsl-analyzer. They are relative to the workspace root, and globs are not supported. You may also need to add the folders to Code's `files.watcherExclude`.
--- 
--- ```lua
--- default = {}
--- ```
----@field exclude string[]?
--- Controls file watching implementation.
--- 
--- ```lua
--- default = "client"
--- ```
----@field watcher "client" | "server"?
-
----@class lsp.wgls_analyzer.BreakPoints
--- Enables highlighting of related references while the cursor is on `break`, `loop`, `while`, or `for` keywords.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.ExitPoints
--- Enables highlighting of all exit points while the cursor is on any `return`, `fn`, or return type arrow (`->`).
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.References
--- Enables highlighting of related references while the cursor is on any identifier.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.HighlightRelated
----@field breakPoints lsp.wgls_analyzer.BreakPoints?
----@field exitPoints lsp.wgls_analyzer.ExitPoints?
----@field references lsp.wgls_analyzer.References?
-
----@class lsp.wgls_analyzer.GotoTypeDef
--- Whether to show `Go to Type Definition` action. Only applies when `#wgsl-analyzer.hover.actions.enable#` is set.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Implementations
--- Whether to show `Implementations` action. Only applies when `#wgsl-analyzer.hover.actions.enable#` is set.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.References
--- Whether to show `References` action. Only applies when `#wgsl-analyzer.hover.actions.enable#` is set.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Actions
--- Whether to show hover actions.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
----@field gotoTypeDef lsp.wgls_analyzer.GotoTypeDef?
----@field implementations lsp.wgls_analyzer.Implementations?
----@field references lsp.wgls_analyzer.References?
-
----@class lsp.wgls_analyzer.Keywords
--- Whether to show keyword hover popups. Only applies when `#wgsl-analyzer.hover.documentation.enable#` is set.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Documentation
--- Whether to show documentation on hover.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
----@field keywords lsp.wgls_analyzer.Keywords?
-
----@class lsp.wgls_analyzer.Links
--- Use markdown syntax for links on hover.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.MemoryLayout
--- How to render the align information in a memory layout hover.
--- 
--- ```lua
--- default = "hexadecimal"
--- ```
----@field alignment any|"both" | "decimal" | "hexadecimal"?
--- Whether to show memory layout data on hover.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
--- How to render the niche information in a memory layout hover.
----@field niches boolean?
--- How to render the offset information in a memory layout hover.
--- 
--- ```lua
--- default = "hexadecimal"
--- ```
----@field offset any|"both" | "decimal" | "hexadecimal"?
--- How to render the size information in a memory layout hover.
--- 
--- ```lua
--- default = "both"
--- ```
----@field size any|"both" | "decimal" | "hexadecimal"?
-
----@class lsp.wgls_analyzer.Show
--- How many fields of a struct to display when hovering thereover. Show none if empty.
--- 
--- ```lua
--- default = 5
--- ```
----@field fields integer?
-
----@class lsp.wgls_analyzer.Hover
----@field actions lsp.wgls_analyzer.Actions?
----@field documentation lsp.wgls_analyzer.Documentation?
----@field links lsp.wgls_analyzer.Links?
----@field memoryLayout lsp.wgls_analyzer.MemoryLayout?
----@field show lsp.wgls_analyzer.Show?
-
----@class lsp.wgls_analyzer.Granularity
--- Whether to enforce the import granularity setting for all files. If set to false wgsl-analyzer will try to keep import styles consistent per file.
----@field enforce boolean?
--- How imports should be grouped into import statements.
--- 
--- ```lua
--- default = "package"
--- ```
----@field group "preserve" | "package" | "module" | "item" | "one"?
-
----@class lsp.wgls_analyzer.Group
--- Group inserted imports by the [following order](https://wgsl-analyzer.github.io/manual.html#auto-import). Groups are separated by newlines.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Merge
--- Whether to allow import insertion to merge new imports into single path glob imports like `import x::y::*;`.
--- 
--- ```lua
--- default = true
--- ```
----@field glob boolean?
-
----@class lsp.wgls_analyzer.Imports
----@field granularity lsp.wgls_analyzer.Granularity?
----@field group lsp.wgls_analyzer.Group?
----@field merge lsp.wgls_analyzer.Merge?
-
----@class lsp.wgls_analyzer.BindingModeHints
--- Whether to show inlay type hints for binding modes.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.ClosingBraceHints
--- Whether to show inlay hints after a closing `}` to indicate what item it belongs to.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
--- Minimum number of lines required before the `}` until the hint is shown (set to 0 or 1 to always show them).
--- 
--- ```lua
--- default = 25
--- ```
----@field minLines integer?
-
----@class lsp.wgls_analyzer.ExpressionAdjustmentHints
--- Whether to show inlay hints as postfix ops (`.*` instead of `*`, etc).
--- 
--- ```lua
--- default = "prefix"
--- ```
----@field mode "prefix" | "postfix" | "prefer_prefix" | "prefer_postfix"?
-
----@class lsp.wgls_analyzer.Const
--- Whether to show const generic parameter name inlay hints.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Lifetime
--- Whether to show generic lifetime parameter name inlay hints.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Type
--- Whether to show generic type parameter name inlay hints.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.GenericParameterHints
----@field const lsp.wgls_analyzer.Const?
----@field lifetime lsp.wgls_analyzer.Lifetime?
----@field type lsp.wgls_analyzer.Type?
-
----@class lsp.wgls_analyzer.ImplicitDrops
--- Whether to show implicit drop hints.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.ImplicitSizedBoundHints
--- Whether to show inlay hints for the implied type parameter `Sized` bound.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.LifetimeElisionHints
--- Whether to show inlay type hints for elided lifetimes in function signatures.
--- 
--- ```lua
--- default = "never"
--- ```
----@field enable "always" | "never" | "skip_trivial"?
--- Whether to prefer using parameter names as the name for elided lifetime hints if possible.
----@field useParameterNames boolean?
-
----@class lsp.wgls_analyzer.RangeExclusiveHints
--- Whether to show exclusive range inlay hints.
----@field enable boolean?
 
 ---@class lsp.wgls_analyzer.InlayHints
----@field bindingModeHints lsp.wgls_analyzer.BindingModeHints?
----@field closingBraceHints lsp.wgls_analyzer.ClosingBraceHints?
--- Whether to show inlay hints
+-- Whether to show inlay hints.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
----@field expressionAdjustmentHints lsp.wgls_analyzer.ExpressionAdjustmentHints?
----@field genericParameterHints lsp.wgls_analyzer.GenericParameterHints?
----@field implicitDrops lsp.wgls_analyzer.ImplicitDrops?
----@field implicitSizedBoundHints lsp.wgls_analyzer.ImplicitSizedBoundHints?
----@field lifetimeElisionHints lsp.wgls_analyzer.LifetimeElisionHints?
--- Maximum length for inlay hints. Set to null to have an unlimited length.
--- 
--- ```lua
--- default = 25
--- ```
----@field maxLength integer?
--- Whether to show inlay hints for the names of function parameters
+-- Whether to show inlay hints for the names of function parameters.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field parameterHints boolean?
----@field rangeExclusiveHints lsp.wgls_analyzer.RangeExclusiveHints?
 -- Whether to render leading colons for type hints, and trailing colons for parameter hints.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field renderColons boolean?
--- Whether to show inlay hints for the layout of struct fields
+-- Whether to show inlay hints for the layout of struct fields.
 ---@field structLayoutHints boolean?
--- Whether to show inlay hints for types of variable declarations
+-- Whether to show inlay hints for types of variable declarations.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field typeHints boolean?
+-- Verbosity of type hints: `"full"`, `"compact"`, or `"inner"`.
+-- 
 -- ```lua
 -- default = "compact"
 -- ```
 ---@field typeVerbosity "full" | "compact" | "inner"?
-
----@class lsp.wgls_analyzer.JoinLines
--- Join lines merges consecutive declaration and initialization of an assignment.
--- 
--- ```lua
--- default = true
--- ```
----@field joinAssignments boolean?
--- Join lines inserts else between consecutive ifs.
--- 
--- ```lua
--- default = true
--- ```
----@field joinElseIf boolean?
--- Join lines removes trailing commas.
--- 
--- ```lua
--- default = true
--- ```
----@field removeTrailingComma boolean?
--- Join lines unwraps trivial blocks.
--- 
--- ```lua
--- default = true
--- ```
----@field unwrapTrivialBlock boolean?
-
----@class lsp.wgls_analyzer.Implementations
--- Whether to show `Implementations` lens. Only applies when `#wgsl-analyzer.lens.enable#` is set.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Adt
--- Whether to show `References` lens for Struct declarations.
--- Only applies when `#wgsl-analyzer.lens.enable#` is set.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Method
--- Whether to show `Method References` lens. Only applies when `#wgsl-analyzer.lens.enable#` is set.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.References
----@field adt lsp.wgls_analyzer.Adt?
----@field method lsp.wgls_analyzer.Method?
-
----@class lsp.wgls_analyzer.Run
--- Whether to show `Run` lens. Only applies when `#wgsl-analyzer.lens.enable#` is set.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Lens
--- Whether to show CodeLens.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
----@field implementations lsp.wgls_analyzer.Implementations?
--- Where to render annotations.
--- 
--- ```lua
--- default = "above_name"
--- ```
----@field location "above_name" | "above_whole_item"?
----@field references lsp.wgls_analyzer.References?
----@field run lsp.wgls_analyzer.Run?
-
----@class lsp.wgls_analyzer.Query
--- Sets the LRU capacity of the specified queries.
--- 
--- ```lua
--- default = {}
--- ```
----@field capacities table?
-
----@class lsp.wgls_analyzer.Lru
--- Number of syntax trees wgsl-analyzer keeps in memory. Defaults to 128.
----@field capacity integer?
----@field query lsp.wgls_analyzer.Query?
-
----@class lsp.wgls_analyzer.Preprocessor
--- Shader defines used in `#ifdef` directives in the flavor of [Bevy Engine](https://bevyengine.org)'s [shader preprocessor](https://bevyengine.org/news/bevy-0-6/#shader-imports).
--- 
--- ```lua
--- default = {}
--- ```
----@field shaderDefs string[]?
-
----@class lsp.wgls_analyzer.References
--- Exclude imports from find-all-references.
----@field excludeImports boolean?
-
----@class lsp.wgls_analyzer.Inject
--- Inject additional highlighting into doc comments.
--- 
--- When enabled, wgsl-analyzer will highlight WGSL/WESL source in doc comments as well as intra-doc links.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Comment
----@field inject lsp.wgls_analyzer.Inject?
-
----@class lsp.wgls_analyzer.Doc
----@field comment lsp.wgls_analyzer.Comment?
-
----@class lsp.wgls_analyzer.Specialization
--- Use specialized semantic tokens for operators.
--- 
--- When enabled, wgsl-analyzer will emit special token types for operator tokens instead of the generic `operator` token type.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Operator
--- Use semantic tokens for operators.
--- 
--- When disabled, wgsl-analyzer will emit semantic tokens only for operator tokens when they are tagged with modifiers.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
----@field specialization lsp.wgls_analyzer.Specialization?
-
----@class lsp.wgls_analyzer.Specialization
--- Use specialized semantic tokens for punctuation.
--- 
--- When enabled, wgsl-analyzer will emit special token types for punctuation tokens instead of the generic `punctuation` token type.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Punctuation
--- Use semantic tokens for punctuation.
--- 
--- When disabled, wgsl-analyzer will emit semantic tokens only for punctuation tokens when they are tagged with modifiers or have a special role.
----@field enable boolean?
----@field specialization lsp.wgls_analyzer.Specialization?
-
----@class lsp.wgls_analyzer.Strings
--- Use semantic tokens for strings.
--- 
--- In some editors (e.g. VS Code) semantic tokens override other highlighting grammars.
--- By disabling semantic tokens for strings, other grammars can be used to highlight their contents.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.SemanticHighlighting
----@field doc lsp.wgls_analyzer.Doc?
--- Whether the server is allowed to emit non-standard tokens and modifiers.
--- 
--- ```lua
--- default = true
--- ```
----@field nonStandardTokens boolean?
----@field operator lsp.wgls_analyzer.Operator?
----@field punctuation lsp.wgls_analyzer.Punctuation?
----@field strings lsp.wgls_analyzer.Strings?
 
 ---@class lsp.wgls_analyzer.Server
 -- Extra environment variables that will be passed to the wgsl-analyzer executable. Useful for passing e.g. `WA_LOG` for debugging.
 ---@field extraEnv table?
 -- Path to wgsl-analyzer executable (points to bundled binary by default).
 ---@field path string?
-
----@class lsp.wgls_analyzer.Documentation
--- Show documentation.
--- 
--- ```lua
--- default = true
--- ```
----@field enable boolean?
-
----@class lsp.wgls_analyzer.SignatureInfo
--- Show full signature of the callable. Only shows parameters if disabled.
--- 
--- ```lua
--- default = "full"
--- ```
----@field detail "full" | "parameters"?
----@field documentation lsp.wgls_analyzer.Documentation?
 
 ---@class lsp.wgls_analyzer.StatusBar
 -- Action to run when clicking the extension status bar item.
@@ -24271,8 +24368,11 @@
 
 ---@class lsp.wgls_analyzer.Trace
 -- Enable logging of VS Code extensions itself.
+-- This settings is now deprecated.
+-- Log level is now controlled by the [Developer: Set Log Level...](command:workbench.action.setLogLevel) command. You can set the log level for the current session and also the default log level from there. This is also available by clicking the gear icon on the OUTPUT tab when wgsl-analyzer Client is visible or by passing the --log wgsl-analyzer.wgsl-analyzer:debug parameter to VS Code.
 ---@field extension boolean?
--- Trace requests to the wgsl-analyzer (this is usually overly verbose and not recommended for regular users).
+-- Server trace verbosity.
+-- One of: `"off"`, `"messages"`, or `"verbose"`.
 -- 
 -- ```lua
 -- default = "off"
@@ -24286,106 +24386,18 @@
 -- default = true
 -- ```
 ---@field continueCommentsOnNewline boolean?
--- Specify the characters allowed to invoke special on typing triggers.
--- - typing `=` after `let` tries to smartly add `;` if `=` is followed by an existing expression
--- - typing `=` between two expressions adds `;` when in statement position
--- - typing `=` to turn an assignment into an equality comparison removes `;` when in expression position
--- - typing `{` or `(` in front of an expression inserts a closing `}` or `)` after the expression
--- - typing `{` in a use item adds a closing `}` in the right place
--- - typing `>` to complete a return type `->` will insert a whitespace after it.
--- 
--- ```lua
--- default = "=."
--- ```
----@field triggerChars string?
-
----@class lsp.wgls_analyzer.Vfs
--- Additional paths to include in the virtual file system.
--- 
--- ```lua
--- default = {}
--- ```
----@field extraIncludes string[]?
-
----@class lsp.wgls_analyzer.RangeFormatting
--- Enables the use of wgslfmt's unstable range formatting command for the `textDocument/rangeFormatting` request. The wgslfmt option is unstable.
----@field enable boolean?
-
----@class lsp.wgls_analyzer.Wgslfmt
--- Additional arguments to `wgslfmt`.
--- 
--- ```lua
--- default = {}
--- ```
----@field extraArgs string[]?
--- Advanced option, fully override the command wgsl-analyzer uses for formatting. This should be the equivalent of `wgslfmt` here, and not that of `wesl fmt`. The file contents will be passed on the standard input and the formatted result will be read from the standard output.
----@field overrideCommand string[]?
----@field rangeFormatting lsp.wgls_analyzer.RangeFormatting?
-
----@class lsp.wgls_analyzer.Search
--- Workspace symbol search kind.
--- 
--- ```lua
--- default = "only_types"
--- ```
----@field kind "only_types" | "all_symbols"?
--- Limits the number of items returned from a workspace symbol search (Defaults to 128).
--- Some clients like vs-code issue new searches on result filtering and don't require all results to be returned in the initial search.
--- Other clients requires all results upfront and might require a higher limit.
--- 
--- ```lua
--- default = 128
--- ```
----@field limit integer?
--- Workspace symbol search scope.
--- 
--- ```lua
--- default = "workspace"
--- ```
----@field scope "workspace" | "workspace_and_dependencies"?
-
----@class lsp.wgls_analyzer.Symbol
----@field search lsp.wgls_analyzer.Search?
-
----@class lsp.wgls_analyzer.Workspace
----@field symbol lsp.wgls_analyzer.Symbol?
 
 ---@class lsp.wgls_analyzer.Wgsl-analyzer
----@field assist lsp.wgls_analyzer.Assist?
 ---@field cachePriming lsp.wgls_analyzer.CachePriming?
----@field completion lsp.wgls_analyzer.Completion?
--- `#import` directives in the flavor of [Bevy Engine](https://bevyengine.org)'s [shader preprocessor](https://bevyengine.org/news/bevy-0-6/#shader-imports). To use objects from an import, add `#import <name>` to your WGSL.
--- 
--- ```lua
--- default = {}
--- ```
----@field customImports table?
 ---@field diagnostics lsp.wgls_analyzer.Diagnostics?
----@field files lsp.wgls_analyzer.Files?
----@field highlightRelated lsp.wgls_analyzer.HighlightRelated?
----@field hover lsp.wgls_analyzer.Hover?
----@field imports lsp.wgls_analyzer.Imports?
 -- Do not start wgsl-analyzer server when the extension is activated.
 ---@field initializeStopped boolean?
 ---@field inlayHints lsp.wgls_analyzer.InlayHints?
----@field joinLines lsp.wgls_analyzer.JoinLines?
----@field lens lsp.wgls_analyzer.Lens?
--- Disable project auto-discovery in favor of explicitly specified set of projects.
--- 
--- Elements must be paths pointing to `wesl.toml`, `.wgsl` files, or `.wesl` files (which will be treated as standalone files).
--- 
--- ```lua
--- default = {}
--- ```
----@field linkedProjects any[]?
----@field lru lsp.wgls_analyzer.Lru?
--- How many worker threads in the main loop. The default `null` means to pick automatically.
----@field numThreads any|number|"physical" | "logical"?
----@field preprocessor lsp.wgls_analyzer.Preprocessor?
----@field references lsp.wgls_analyzer.References?
+-- Number of worker threads for the main analysis loop.
+-- `null` lets the server choose automatically.
+---@field numThreads any|"physical" | "logical"?
 -- Whether to restart the server automatically when certain settings that require a restart are changed.
 ---@field restartServerOnConfigChange boolean?
----@field semanticHighlighting lsp.wgls_analyzer.SemanticHighlighting?
 ---@field server lsp.wgls_analyzer.Server?
 -- Whether to show the dependencies view.
 -- 
@@ -24407,13 +24419,9 @@
 -- default = true
 -- ```
 ---@field showUnlinkedFileNotification boolean?
----@field signatureInfo lsp.wgls_analyzer.SignatureInfo?
 ---@field statusBar lsp.wgls_analyzer.StatusBar?
 ---@field trace lsp.wgls_analyzer.Trace?
 ---@field typing lsp.wgls_analyzer.Typing?
----@field vfs lsp.wgls_analyzer.Vfs?
----@field wgslfmt lsp.wgls_analyzer.Wgslfmt?
----@field workspace lsp.wgls_analyzer.Workspace?
 
 ---@class lsp.wgls_analyzer
 ---@field wgsl-analyzer lsp.wgls_analyzer.Wgsl-analyzer?
