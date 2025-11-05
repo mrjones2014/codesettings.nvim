@@ -14885,6 +14885,24 @@
 ---@field luau lsp.luau_lsp.Luau?
 ---@field luau-lsp lsp.luau_lsp.Luau-lsp?
 
+---@class lsp.nickel_ls.Server
+-- Logs the communication between VS Code and the language server.
+---@field debugLog boolean?
+-- Path to nickel language server
+-- 
+-- ```lua
+-- default = "nls"
+-- ```
+---@field path string?
+-- Enables performance tracing to the given file
+---@field trace string?
+
+---@class lsp.nickel_ls.Nls
+---@field server lsp.nickel_ls.Server?
+
+---@class lsp.nickel_ls
+---@field nls lsp.nickel_ls.Nls?
+
 ---@class lsp.nil_ls.Diagnostics
 -- File globs to exclude from showing diagnostics
 -- 
