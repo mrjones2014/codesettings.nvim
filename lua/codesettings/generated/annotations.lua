@@ -18265,7 +18265,7 @@
 --   enable = true
 -- }
 -- ```
----@class lsp.ruff_lsp.DisableRuleComment
+---@class lsp.ruff.DisableRuleComment
 -- Enable the Quick Fix.
 -- 
 -- ```lua
@@ -18280,7 +18280,7 @@
 --   enable = true
 -- }
 -- ```
----@class lsp.ruff_lsp.FixViolation
+---@class lsp.ruff.FixViolation
 -- Enable the Quick Fix.
 -- 
 -- ```lua
@@ -18288,7 +18288,7 @@
 -- ```
 ---@field enable boolean?
 
----@class lsp.ruff_lsp.CodeAction
+---@class lsp.ruff.CodeAction
 -- Whether to display Quick Fix actions to disable rules via `noqa` suppression comments.
 -- 
 -- ```lua
@@ -18296,7 +18296,7 @@
 --   enable = true
 -- }
 -- ```
----@field disableRuleComment lsp.ruff_lsp.DisableRuleComment?
+---@field disableRuleComment lsp.ruff.DisableRuleComment?
 -- Whether to display Quick Fix actions to autofix violations.
 -- 
 -- ```lua
@@ -18304,9 +18304,9 @@
 --   enable = true
 -- }
 -- ```
----@field fixViolation lsp.ruff_lsp.FixViolation?
+---@field fixViolation lsp.ruff.FixViolation?
 
----@class lsp.ruff_lsp.Format
+---@class lsp.ruff.Format
 -- Additional command-line arguments to pass to `ruff format`, e.g., `"args": ["--config=/path/to/pyproject.toml"]`. Supports a subset of Ruff's command-line arguments, ignoring those that are required to operate the LSP, like `--force-exclude` and `--verbose`.
 -- 
 -- **This setting is not supported by the native server.**
@@ -18326,7 +18326,7 @@
 -- **This setting is used only by the native server.**
 ---@field preview boolean?
 
----@class lsp.ruff_lsp.Lint
+---@class lsp.ruff.Lint
 -- Additional command-line arguments to pass to `ruff check`, e.g., `"args": ["--config=/path/to/pyproject.toml"]`. Supports a subset of Ruff's command-line arguments, ignoring those that are required to operate the LSP, like `--force-exclude` and `--verbose`.
 -- 
 -- **This setting is not supported by the native server.**
@@ -18366,7 +18366,7 @@
 -- **This setting is used only by the native server.**
 ---@field select string[]?
 
----@class lsp.ruff_lsp.Trace
+---@class lsp.ruff.Trace
 -- Traces the communication between VSCode and the ruff-lsp.
 -- 
 -- ```lua
@@ -18374,7 +18374,7 @@
 -- ```
 ---@field server "off" | "messages" | "verbose"?
 
----@class lsp.ruff_lsp.Ruff
+---@class lsp.ruff.Ruff
 -- Additional command-line arguments to pass to `ruff check`, e.g., `"args": ["--config=/path/to/pyproject.toml"]`. Supports a subset of Ruff's command-line arguments, ignoring those that are required to operate the LSP, like `--force-exclude` and `--verbose`.
 -- 
 -- **This setting is not supported by the native server.**
@@ -18383,7 +18383,7 @@
 -- default = {}
 -- ```
 ---@field args string[]?
----@field codeAction lsp.ruff_lsp.CodeAction?
+---@field codeAction lsp.ruff.CodeAction?
 -- Configuration overrides for Ruff. See [the documentation](https://docs.astral.sh/ruff/editors/settings/#configuration) for more details.
 -- 
 -- **This setting is used only by the native server.**
@@ -18414,7 +18414,7 @@
 -- default = true
 -- ```
 ---@field fixAll boolean?
----@field format lsp.ruff_lsp.Format?
+---@field format lsp.ruff.Format?
 -- Whether to ignore files that are inferred to be part of the Python standard library.
 -- 
 -- ```lua
@@ -18437,7 +18437,7 @@
 -- 
 -- **This setting is used only by the native server.**
 ---@field lineLength integer?
----@field lint lsp.ruff_lsp.Lint?
+---@field lint lsp.ruff.Lint?
 -- Path to the log file for the language server.
 -- 
 -- **This setting is used only by the native server.**
@@ -18484,10 +18484,10 @@
 -- default = true
 -- ```
 ---@field showSyntaxErrors boolean?
----@field trace lsp.ruff_lsp.Trace?
+---@field trace lsp.ruff.Trace?
 
----@class lsp.ruff_lsp
----@field ruff lsp.ruff_lsp.Ruff?
+---@class lsp.ruff
+---@field ruff lsp.ruff.Ruff?
 
 ---@class lsp.rust_analyzer.TermSearch
 -- Enable borrow checking for term search code assists. If set to false, also there will be
