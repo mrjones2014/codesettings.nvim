@@ -2,10 +2,9 @@ local Util = require('codesettings.util')
 
 local M = {}
 
--- modified from https://gist.githubusercontent.com/williamboman/a01c3ce1884d4b57cc93422e7eae7702/raw/lsp-packages.json
 M.index = {
-  -- nickel_ls = "https://raw.githubusercontent.com/tweag/nickel/master/lsp/client-extension/package.json",
   als = 'https://raw.githubusercontent.com/AdaCore/ada_language_server/master/integration/vscode/ada/package.json',
+  angularls = 'https://raw.githubusercontent.com/angular/vscode-ng-language-service/refs/heads/main/package.json',
   astro = 'https://raw.githubusercontent.com/withastro/language-tools/main/packages/vscode/package.json',
   awkls = 'https://raw.githubusercontent.com/Beaglefoot/awk-language-server/master/client/package.json',
   basedpyright = 'https://raw.githubusercontent.com/DetachHead/basedpyright/main/packages/vscode-pyright/package.json',

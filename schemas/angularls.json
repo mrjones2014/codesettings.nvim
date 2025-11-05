@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Editor services for Angular templates",
+  "properties": {
+    "angular.enable-strict-mode-prompt": {
+      "default": true,
+      "markdownDescription": "Prompt to enable the [strictTemplates](https://angular.dev/reference/configs/angular-compiler-options#stricttemplates) flag in [angularCompilerOptions](https://angular.dev/reference/configs/angular-compiler-options). Note that strict mode is only available when using Ivy.",
+      "type": "boolean"
+    },
+    "angular.forceStrictTemplates": {
+      "default": false,
+      "markdownDescription": "Enabling this option will force the language service to use [strictTemplates](https://angular.dev/reference/configs/angular-compiler-options#stricttemplates) and ignore the user settings in the `tsconfig.json`.",
+      "type": "boolean"
+    },
+    "angular.log": {
+      "default": "off",
+      "description": "Enables logging of the Angular server to a file. This log can be used to diagnose Angular Server issues. The log may contain file paths, source code, and other potentially sensitive information from your project.",
+      "enum": [
+        "off",
+        "terse",
+        "normal",
+        "verbose"
+      ],
+      "type": "string"
+    },
+    "angular.suggest.autoImports": {
+      "default": true,
+      "markdownDescription": "Enable/disable auto import suggestions for the exported Angular components from the current project.",
+      "type": "boolean"
+    },
+    "angular.suggest.includeAutomaticOptionalChainCompletions": {
+      "default": true,
+      "markdownDescription": "Enable showing completions on potentially undefined values that insert an optional chain call. Requires TS 3.7+ and strict null checks to be enabled.",
+      "type": "boolean"
+    },
+    "angular.suggest.includeCompletionsWithSnippetText": {
+      "default": true,
+      "markdownDescription": "Enable snippet completions from Angular language server. Requires using TypeScript 4.3+ in the workspace.",
+      "type": "boolean"
+    },
+    "angular.suppressAngularDiagnosticCodes": {
+      "default": "",
+      "markdownDescription": "A comma-separated list of error codes in templates whose diagnostics should be ignored.",
+      "type": "string"
+    },
+    "angular.trace.server": {
+      "default": "off",
+      "description": "Traces the communication between VS Code and the Angular language server.",
+      "enum": [
+        "off",
+        "messages",
+        "verbose"
+      ],
+      "scope": "window",
+      "type": "string"
+    }
+  }
+}

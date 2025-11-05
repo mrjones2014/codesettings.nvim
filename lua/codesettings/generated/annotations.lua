@@ -169,6 +169,61 @@
 ---@field e3-testsuite lsp.als.E3-testsuite?
 ---@field gpr lsp.als.Gpr?
 
+---@class lsp.angularls.Suggest
+-- Enable/disable auto import suggestions for the exported Angular components from the current project.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field autoImports boolean?
+-- Enable showing completions on potentially undefined values that insert an optional chain call. Requires TS 3.7+ and strict null checks to be enabled.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field includeAutomaticOptionalChainCompletions boolean?
+-- Enable snippet completions from Angular language server. Requires using TypeScript 4.3+ in the workspace.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field includeCompletionsWithSnippetText boolean?
+
+---@class lsp.angularls.Trace
+-- Traces the communication between VS Code and the Angular language server.
+-- 
+-- ```lua
+-- default = "off"
+-- ```
+---@field server "off" | "messages" | "verbose"?
+
+---@class lsp.angularls.Angular
+-- Prompt to enable the [strictTemplates](https://angular.dev/reference/configs/angular-compiler-options#stricttemplates) flag in [angularCompilerOptions](https://angular.dev/reference/configs/angular-compiler-options). Note that strict mode is only available when using Ivy.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable-strict-mode-prompt boolean?
+-- Enabling this option will force the language service to use [strictTemplates](https://angular.dev/reference/configs/angular-compiler-options#stricttemplates) and ignore the user settings in the `tsconfig.json`.
+---@field forceStrictTemplates boolean?
+-- Enables logging of the Angular server to a file. This log can be used to diagnose Angular Server issues. The log may contain file paths, source code, and other potentially sensitive information from your project.
+-- 
+-- ```lua
+-- default = "off"
+-- ```
+---@field log "off" | "terse" | "normal" | "verbose"?
+---@field suggest lsp.angularls.Suggest?
+-- A comma-separated list of error codes in templates whose diagnostics should be ignored.
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field suppressAngularDiagnosticCodes string?
+---@field trace lsp.angularls.Trace?
+
+---@class lsp.angularls
+---@field angular lsp.angularls.Angular?
+
 ---@class lsp.astro.Auto-import-cache
 -- Enable the auto import cache. Yields a faster intellisense when automatically importing a file, but can cause issues with new files not being detected. Change is applied on restart. See [#1035](https://github.com/withastro/language-tools/issues/1035).
 -- 
