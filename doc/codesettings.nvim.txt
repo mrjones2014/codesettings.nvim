@@ -464,6 +464,7 @@ projects!
 - ltex <https://github.com/valentjn/vscode-ltex/tree/develop/package.json>
 - lua_ls <https://github.com/LuaLS/vscode-lua/tree/master/package.json>
 - luau_lsp <https://github.com/JohnnyMorganz/luau-lsp/tree/main/editors/code/package.json>
+- nickel_ls <https://github.com/tweag/nickel/refs/heads/tree/master/lsp/vscode-extension/package.json>
 - nil_ls <https://github.com/oxalica/nil/refs/heads/tree/main/editors/coc-nil/package.json>
 - nixd <https://github.com/nix-community/nixd/refs/heads/tree/main/nixd/docs/nixd-schema.json>
 - omnisharp <https://github.com/OmniSharp/omnisharp-vscode/tree/master/package.json>
