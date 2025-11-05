@@ -358,6 +358,7 @@ This project would not exist without the hard work of some other open source pro
 <!-- GENERATED -->
 
 - [x] [als](https://github.com/AdaCore/ada_language_server/tree/master/integration/vscode/ada/package.json)
+- [x] [angularls](https://github.com/angular/vscode-ng-language-service/refs/heads/tree/main/package.json)
 - [x] [astro](https://github.com/withastro/language-tools/tree/main/packages/vscode/package.json)
 - [x] [awkls](https://github.com/Beaglefoot/awk-language-server/tree/master/client/package.json)
 - [x] [basedpyright](https://github.com/DetachHead/basedpyright/tree/main/packages/vscode-pyright/package.json)
