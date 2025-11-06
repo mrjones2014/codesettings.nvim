@@ -387,7 +387,8 @@ Some very basic performance benchmarks are available at ./bench/report.md
 <https://github.com/mrjones2014/codesettings.nvim/tree/master/bench/report.md>.
 They are quite minimal, but are useful as a baseline to flag and issues when
 implementing new functionality. They are updated by CI after every merge to
-`master` so they are run on GitHub Actions runners.
+`master` so they are run on GitHub Actions runners and will likely have much
+better performance on the machine you actually run Neovim on.
 
 
 ==============================================================================
