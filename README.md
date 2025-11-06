@@ -328,23 +328,11 @@ they will work whether your functions need to be called like `extension.leaf(val
 See [codesettings.extensions.env](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/extensions/env.lua)
 for a simple example extension.
 
-## Comparison with neoconf.nvim
+## Performance
 
-|                                            | `codesettings.nvim`                                      | `neoconf.nvim`                           |
-| ------------------------------------------ | -------------------------------------------------------- | ---------------------------------------- |
-| Minimum Neovim version                     | Neovim >= 0.11.0                                         | Neovim >= 0.7.2                          |
-| Depends on `nvim-lspconfig`                | No (but will still work with it if you choose to use it) | Yes                                      |
-| Supports mixed nested and dotted key paths | Yes                                                      | No                                       |
-| Customizable list value merging behavior   | Yes                                                      | No                                       |
-| `jsonls` integration                       | Yes, including mixed nested and dotted key paths         | Yes                                      |
-| `jsonc` filetype support                   | Yes                                                      | Yes                                      |
-| `setup()` required                         | Only for some editor integration features                | Yes                                      |
-| Loading settings                           | API call                                                 | Automatic through `nvim-lspconfig` hooks |
-
-The tl;dr: is if you wish to use `nvim-lspconfig`, then `neoconf.nvim` is more automatic but provides fewer features, supports fewer LSP servers,
-and seems to be unmaintained. If you want to get rid of `nvim-lspconfig` and just use `vim.lsp.config()` APIs, then `codesettings.nvim` provides
-an API to load local project settings for you, as well as better autocomplete in configuration files, and autocomplete in Lua files not using
-`nvim-lspconfig` based on Lua type annotations.
+Some very basic performance benchmarks are available at [./bench/report.md](https://github.com/mrjones2014/codesettings.nvim/tree/master/bench/report.md).
+They are quite minimal, but are useful as a baseline to flag and issues when implementing new functionality. They are updated by CI
+after every merge to `master` so they are run on GitHub Actions runners.
 
 ## Acknowledgements
 
@@ -428,4 +416,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-

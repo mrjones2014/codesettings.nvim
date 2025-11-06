@@ -116,3 +116,29 @@ describe('util.merge - option propagation', function()
     assert.same({ a = { list = { 3 } } }, merged)
   end)
 end)
+
+describe('util.json_decode - composite key expansion', function()
+  it('expands bracketed language selectors into individual tables', function()
+    local json = [[
+{
+  "[json][typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "json": {
+    "other": true
+  }
+}
+    ]]
+    local decoded = Util.json_decode(json)
+    local expected = {
+      json = {
+        other = true,
+        ['editor.defaultFormatter'] = 'esbenp.prettier-vscode',
+      },
+      typescript = {
+        ['editor.defaultFormatter'] = 'esbenp.prettier-vscode',
+      },
+    }
+    assert.same(expected, decoded)
+  end)
+end)
