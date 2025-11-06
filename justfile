@@ -16,7 +16,14 @@ check: && test
   @selene ./lua/ ./spec/
   @echo
 
-# Run all tests, or a subset matching a pattern
+# Run all tests
 test:
   @echo "Running unit tests..."
+  @echo
   @nvim --headless --noplugin --clean -l ./spec/runner.lua
+
+# Run benchmarks and regenerate report
+bench:
+  @echo "Running benchmarks..."
+  @nvim --noplugin --clean --cmd "set rtp^=." -l ./bench/run.lua
+  @echo "Generated report at ./bench/report.md"

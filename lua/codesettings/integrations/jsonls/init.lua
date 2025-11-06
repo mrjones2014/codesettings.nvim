@@ -29,26 +29,29 @@ function M.get_json_schemas()
     return _cache
   end
 
-  local schemas = require('codesettings.build.schemas').get_schemas()
-  local json_schemas = {}
   local configs = Util.get_local_configs()
 
-  for _, schema in pairs(schemas) do
+  -- Merge all schemas into one before expanding (much faster)
+  local Settings = require('codesettings.settings')
+  local merged = Settings.new()
+
+  vim.iter(pairs(require('codesettings.build.schemas').get_schemas())):each(function(_, schema)
     local ok, json = pcall(Util.read_file, schema.settings_file)
     if not ok then
-      Util.error('Failed to read JSON schema file: ' .. schema.settings_file)
+      error('Failed to read JSON schema file: ' .. schema.settings_file)
     end
-    if json then
-      local parsed_schema = require('codesettings.util').json_decode(json)
-      if parsed_schema then
-        parsed_schema = Transformer.expand_schema(parsed_schema)
-        json_schemas[#json_schemas + 1] = {
-          fileMatch = configs,
-          schema = parsed_schema,
-        }
-      end
-    end
-  end
+    merged:merge(Util.json_decode(json))
+  end)
+
+  -- Single expansion pass on the merged schema
+  local expanded_schema = Transformer.expand_schema(merged:totable())
+
+  local json_schemas = {
+    {
+      fileMatch = configs,
+      schema = expanded_schema,
+    },
+  }
 
   -- make sure we don't clobber any already configured schemas
   local configured_schemas = vim.tbl_get(vim.lsp.config, 'jsonls', 'settings', 'json', 'schemas') or {}

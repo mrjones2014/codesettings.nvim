@@ -3,6 +3,9 @@ local Config = require('codesettings.config')
 ---@class CodesettingsUtil
 local M = {}
 
+---Read entire contents of a file
+---@param file string filepath
+---@return string contents of the file
 function M.read_file(file)
   local fd = io.open(file, 'r')
   if not fd then
@@ -13,6 +16,9 @@ function M.read_file(file)
   return data
 end
 
+---Write all contents to file
+---@param file string file path to write to
+---@param data string data to write
 function M.write_file(file, data)
   local fd = io.open(file, 'w+')
   if not fd then
@@ -22,6 +28,9 @@ function M.write_file(file, data)
   fd:close()
 end
 
+---Get fully qualified normalized path
+---@param fname string file path to normalize
+---@return string
 function M.fqn(fname)
   fname = vim.fn.fnamemodify(fname, ':p')
   return vim.uv.fs_realpath(fname) or fname
@@ -136,6 +145,7 @@ function M.merge(a, b, opts)
   return ret
 end
 
+---Check if a file exists
 ---@return boolean
 function M.exists(fname)
   local stat = vim.uv.fs_stat(fname)
@@ -143,12 +153,110 @@ function M.exists(fname)
   return (not not (stat and stat.type)) or false
 end
 
+local function parse_composite_key(key)
+  if type(key) ~= 'string' or key:sub(1, 1) ~= '[' then
+    return nil
+  end
+  local segments = {}
+  local idx = 1
+  while idx <= #key do
+    local start_pos, end_pos, segment = key:find('%[([^%]]+)%]', idx)
+    if not start_pos or start_pos ~= idx then
+      return nil
+    end
+    segment = vim.trim(segment)
+    if segment == '' then
+      return nil
+    end
+    segments[#segments + 1] = segment
+    idx = end_pos + 1
+  end
+  if idx <= #key or #segments == 0 then
+    return nil
+  end
+  return segments
+end
+
+---Expand vs code style bracketed keys
+---e.g.
+---```json
+---{
+---  "[json][jsonc][javascript][typescript][typescriptreact]": {
+---    "editor.defaultFormatter": "esbenp.prettier-vscode"
+---  }
+---}
+---```
+---is equivalent to
+---```json
+---{
+---  "json": {
+---    "editor.defaultFormatter": "esbenp.prettier-vscode"
+---  },
+---  "jsonc": {
+---    "editor.defaultFormatter": "esbenp.prettier-vscode"
+---  },
+---  "javascript": {
+---    "editor.defaultFormatter": "esbenp.prettier-vscode"
+---  },
+---  "typescript": {
+---    "editor.defaultFormatter": "esbenp.prettier-vscode"
+---  },
+---  "typescriptreact": {
+---    "editor.defaultFormatter": "esbenp.prettier-vscode"
+---  }
+---}
+---```
+---@param node table
+local function normalize_json_settings(node)
+  if type(node) ~= 'table' then
+    return
+  end
+  if vim.islist(node) then
+    for _, item in ipairs(node) do
+      normalize_json_settings(item)
+    end
+    return
+  end
+
+  local composites = {}
+  for key, value in pairs(node) do
+    normalize_json_settings(value)
+    local segments = parse_composite_key(key)
+    if segments then
+      composites[#composites + 1] = { key = key, segments = segments, value = value }
+    end
+  end
+
+  for _, composite in ipairs(composites) do
+    node[composite.key] = nil
+    for _, target_key in ipairs(composite.segments) do
+      local new_value = vim.deepcopy(composite.value)
+      local existing = node[target_key]
+      if existing ~= nil then
+        if type(existing) == 'table' and type(new_value) == 'table' then
+          node[target_key] = M.merge(existing, new_value)
+        else
+          node[target_key] = new_value
+        end
+      else
+        node[target_key] = new_value
+      end
+      normalize_json_settings(node[target_key])
+    end
+  end
+end
+
+---Decode JSON or JSONC string
+---@param json string json string
+---@return table
 function M.json_decode(json)
   json = vim.trim(json)
   if json == '' then
     json = '{}'
   end
-  return require('codesettings.json.jsonc').decode_jsonc(json)
+  local data = require('codesettings.json.jsonc').decode_jsonc(json)
+  normalize_json_settings(data)
+  return data
 end
 
 function M.path(str)
@@ -180,6 +288,10 @@ function M.flatten(t, ret)
   return ret
 end
 
+---Format JSON using jq;
+---requires `jq` to be installed and available in PATH
+---@param obj table
+---@return string formatted json string
 function M.json_format(obj)
   local tmp = os.tmpname()
   M.write_file(tmp, vim.json.encode(obj))
@@ -197,14 +309,20 @@ end
 
 local msg_prefix = '[codesettings] '
 
+---@param msg string
+---@param ... any
 function M.warn(msg, ...)
   vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.WARN)
 end
 
+---@param msg string
+---@param ... any
 function M.error(msg, ...)
   vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.ERROR)
 end
 
+---Restart LSP client by name, if active
+---@param name string
 function M.restart_lsp(name)
   vim.defer_fn(function()
     if #vim.lsp.get_clients({ name = name }) > 0 then

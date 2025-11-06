@@ -29,33 +29,29 @@ function M.expand_schema(schema)
     return schema
   end
 
+  -- Single deep copy at the start instead of multiple copies
+  local result = vim.deepcopy(schema)
+
   ---Recursively merge two schema tables without overwriting existing fields.
-  ---@param a table|nil Base table (takes precedence where overlapping)
-  ---@param b table|nil Table to merge into `a`
-  ---@return table merged A deep copy of `a` merged with `b`
+  ---@param a table Base table (takes precedence where overlapping)
+  ---@param b table Table to merge into `a`
   local function merge(a, b)
-    a = a or {}
-    b = b or {}
     if type(a) ~= 'table' then
-      if type(b) == 'table' then
-        return vim.deepcopy(b)
-      else
-        return a -- keep original a, don’t replace it with {}
-      end
+      return type(b) == 'table' and b or a
     end
-    local res = vim.deepcopy(a)
+    -- Modify in place instead of deep copying
     for k, v in pairs(b) do
-      if type(v) == 'table' and type(res[k]) == 'table' then
-        res[k] = merge(res[k], v)
-      else
-        res[k] = vim.deepcopy(v)
+      if type(v) == 'table' and type(a[k]) == 'table' then
+        merge(a[k], v)
+      elseif a[k] == nil then
+        a[k] = v
       end
     end
-    return res
+    return a
   end
 
   ---Insert a property definition into a nested object structure.
-  ---If intermediate objects don’t exist, they are created automatically.
+  ---If intermediate objects don't exist, they are created automatically.
   ---
   ---Example:
   ---```lua
@@ -72,8 +68,9 @@ function M.expand_schema(schema)
     local node = props
     for i = 1, #parts - 1 do
       local key = parts[i]
-      node[key] = node[key] or { type = 'object', properties = {} }
-      if node[key].properties == nil then
+      if not node[key] then
+        node[key] = { type = 'object', properties = {} }
+      elseif not node[key].properties then
         node[key].properties = {}
       end
       node = node[key].properties
@@ -85,33 +82,35 @@ function M.expand_schema(schema)
   ---Recursively walk a schema definition, expanding any dotted keys in
   ---`properties` into nested object definitions.
   ---@param def table The schema definition node
-  ---@return table def The processed schema node with nested properties added
   local function recurse(def)
-    if type(def) ~= 'table' then
-      return def
-    end
-    if type(def.properties) ~= 'table' then
-      return def
+    if type(def) ~= 'table' or type(def.properties) ~= 'table' then
+      return
     end
 
-    -- Recurse first on child properties
-    local props = {}
+    -- Recurse first on child properties (in place)
+    for _, v in pairs(def.properties) do
+      recurse(v)
+    end
+
+    -- Collect dotted keys (avoid table allocation for non-dotted schemas)
+    local dotted
     for k, v in pairs(def.properties) do
-      props[k] = recurse(v)
+      if type(k) == 'string' and k:find('.', 1, true) then
+        if not dotted then
+          dotted = {}
+        end
+        -- Cache the split result instead of recalculating
+        table.insert(dotted, { parts = vim.split(k, '.', { plain = true }), leaf = v })
+      end
     end
 
-    -- Identify dotted keys like "Lua.workspace.library"
-    local dotted = {}
-    for k, v in pairs(props) do
-      if type(k) == 'string' and k:find('.', 1, true) then
-        local parts = vim.split(k, '.', { plain = true, trimempty = true })
-        table.insert(dotted, { parts = parts, leaf = v })
-      end
+    if not dotted then
+      return
     end
 
     -- Expand each dotted key into nested structures
     for _, entry in ipairs(dotted) do
-      insert_nested(props, entry.parts, entry.leaf)
+      insert_nested(def.properties, entry.parts, entry.leaf)
 
       -- Mixed form expansion:
       -- Also define intermediate dotted forms for partial prefixes.
@@ -119,23 +118,31 @@ function M.expand_schema(schema)
       --   a.b.c (original)
       --   a["b.c"]
       --   a.b["c"]
-      for i = 1, #entry.parts - 1 do
-        local prefix = vim.list_slice(entry.parts, 1, i)
-        local suffix = table.concat(vim.list_slice(entry.parts, i + 1), '.')
-        local node = props
-        for _, p in ipairs(prefix) do
-          node[p] = node[p] or { type = 'object', properties = {} }
+      local parts_len = #entry.parts
+      for i = 1, parts_len - 1 do
+        local node = def.properties
+        for j = 1, i do
+          local p = entry.parts[j]
+          if not node[p] then
+            node[p] = { type = 'object', properties = {} }
+          elseif not node[p].properties then
+            node[p].properties = {}
+          end
           node = node[p].properties
         end
+        -- Build suffix string without creating intermediate arrays
+        local suffix_parts = {}
+        for j = i + 1, parts_len do
+          suffix_parts[#suffix_parts + 1] = entry.parts[j]
+        end
+        local suffix = table.concat(suffix_parts, '.')
         node[suffix] = merge(node[suffix] or {}, entry.leaf)
       end
     end
-
-    def.properties = props
-    return def
   end
 
-  return recurse(vim.deepcopy(schema))
+  recurse(result)
+  return result
 end
 
 return M
