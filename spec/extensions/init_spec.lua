@@ -1,4 +1,4 @@
----@module 'luassert'
+---@module 'busted'
 
 local Extensions = require('codesettings.extensions')
 

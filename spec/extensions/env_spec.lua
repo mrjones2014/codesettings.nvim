@@ -1,4 +1,4 @@
----@module 'luassert'
+---@module 'busted'
 
 local EnvExt = require('codesettings.extensions.env')
 

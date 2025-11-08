@@ -43,6 +43,8 @@ function M.get_json_schemas()
     merged:merge(Util.json_decode(json))
   end)
 
+  merged:merge(require('codesettings.config').jsonschema():totable())
+
   -- Single expansion pass on the merged schema
   local expanded_schema = Transformer.expand_schema(merged:totable())
 

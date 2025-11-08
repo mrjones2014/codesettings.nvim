@@ -17,7 +17,9 @@ to `vim.lsp.config()` (or any way you configure LSP).
 
 ## Installation
 
-For some features (namely, `jsonls` integration and `jsonc` filetype handling), you must call `setup()`.
+If you are only using the API, you do not need to call `.setup()` unless you with to use non-default config.
+You must call `.setup()` for some features like `jsonls`, `lua_ls`, and `jsonc` filetype integrations to work,
+or to configure `codesettings.nvim` itself with local files.
 
 - lazy.nvim (recommended)
 
@@ -53,6 +55,15 @@ return {
   -- I recommend loading on these filetype so that the
   -- jsonls integration, lua_ls integration, and jsonc filetype setup works
   ft = { 'json', 'jsonc', 'lua' },
+}
+```
+
+`codesettings.nvim` can also be specified in the local JSON configuration files by using a top-level `codesettings`
+object key, and these _override the global plugin configuration._ For example:
+
+```jsonc
+{
+  "codesettings.merge_opts.list_behavior": "replace",
 }
 ```
 
@@ -141,6 +152,7 @@ return {
 
 - Minimal API: one function you call per server setup, or with a global hook (see example above)
 - `jsonc` filetype for local config files
+- Configure the `codesettings.nvim` plugin itself in local config JSON files
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
   ![jsonls integration](https://github.com/user-attachments/assets/5d37f0bb-0e07-4c22-bc6b-16cf3e65e201)
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua, with optional `lua_ls` integration
@@ -189,7 +201,7 @@ vim.lsp.config('lua_ls', {
 ## API
 
 - `require('codesettings').setup(opts?: CodesettingsConfig)`
-  - Initialize the plugin. You only need to call this for `jsonls_integration` and `jsonc_filetype` to work, or to customize the local filepaths to look for. It is _not_ required for your local configs to take effect, unless you wish to use non-default plugin configuration.
+  - Initialize the plugin. Not needed if you are only using the API, but must be called to set up additonal functionality or to configure `codesettings.nvim` itself with local files.
 
 - `require('codesettings').with_local_settings(lsp_name: string, config: table, opts: CodesettingsConfigOverrides?): table`
   - Loads settings from the configured files, extracts relevant settings for the given LSP based on its schema, and deep-merges into `config.settings`. Returns the merged config.
@@ -417,4 +429,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-

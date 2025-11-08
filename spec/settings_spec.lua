@@ -1,4 +1,4 @@
----@module 'luassert'
+---@module 'busted'
 
 local Settings = require('codesettings.settings')
 

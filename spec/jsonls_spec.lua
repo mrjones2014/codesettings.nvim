@@ -1,4 +1,4 @@
----@module 'luassert'
+---@module 'busted'
 
 describe('jsonls integration', function()
   local Jsonls = require('codesettings.integrations.jsonls')
@@ -30,8 +30,8 @@ describe('jsonls integration', function()
       local schemas = Jsonls.get_json_schemas()
 
       local codesettings_schemas = require('codesettings.build.schemas').get_schemas()
-      assert.is.True(#schemas > #codesettings_schemas)
-      assert.are.same(existing_schema, schemas[1])
+      assert.True(#schemas > #codesettings_schemas)
+      assert.same(existing_schema, schemas[1])
     end)
   end)
 end)

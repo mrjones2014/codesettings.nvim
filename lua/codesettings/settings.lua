@@ -150,12 +150,22 @@ end
 
 ---Return a new Settings object containing only the keys defined in the given schema.
 ---Does *not* modify this Settings object, returns a new instance.
----@param lsp_name string the name of lsp for which to load the schema (e.g. 'rust-analyzer' or 'tsserver')
+---@param lsp_name_or_schema string|CodesettingsSchema the name of lsp for which to load the schema (e.g. 'rust-analyzer' or 'tsserver'), or a pre-loaded CodesettingsSchema object
 ---@return CodesettingsSettings settings a new Settings object containing only the keys defined in the schema
-function Settings:schema(lsp_name)
+function Settings:schema(lsp_name_or_schema)
   -- NB: inline require to avoid circular dependency
   local Schema = require('codesettings.schema')
-  local schema = Schema.load(lsp_name)
+  local schema
+  if type(lsp_name_or_schema) == 'string' then
+    schema = Schema.load(lsp_name_or_schema)
+  else
+    schema = lsp_name_or_schema
+    -- quick smoke test to make sure this is actually
+    -- a CodesettingsSchema object
+    if schema.properties == nil or type(schema.properties) ~= 'function' then
+      error('expected CodesettingsSchema object')
+    end
+  end
   local settings = M.new()
   for _, property in ipairs(schema:properties()) do
     local subtable = self:get(property)

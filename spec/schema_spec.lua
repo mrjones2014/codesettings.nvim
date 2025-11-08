@@ -1,4 +1,4 @@
----@module 'luassert'
+---@module 'busted'
 
 local Schema = require('codesettings.schema')
 local Schemas = require('codesettings.build.schemas')

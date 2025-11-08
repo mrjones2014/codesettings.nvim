@@ -1,4 +1,4 @@
----@module 'luassert'
+---@module 'busted'
 
 describe('integration tests', function()
   describe('basic usage', function()

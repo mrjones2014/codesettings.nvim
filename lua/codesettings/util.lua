@@ -274,20 +274,6 @@ function M.fetch(url)
   return ret
 end
 
----@param t table
----@param ret? table
-function M.flatten(t, ret)
-  ret = ret or {}
-  for _, v in pairs(t) do
-    if type(v) == 'table' then
-      M.flatten(v, ret)
-    else
-      ret[#ret + 1] = v
-    end
-  end
-  return ret
-end
-
 ---Format JSON using jq;
 ---requires `jq` to be installed and available in PATH
 ---@param obj table

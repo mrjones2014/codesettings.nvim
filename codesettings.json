@@ -14,14 +14,12 @@
     "workspace": {
       "library": [
         "${3rd}/luassert/library",
-        "${addons}/busted/library"
+        "${3rd}/busted/library"
       ],
       "checkThirdParty": false
     },
     "diagnostics.globals": [
-      "vim",
-      "setup",
-      "teardown"
+      "vim"
     ]
   }
 }

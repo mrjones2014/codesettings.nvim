@@ -1,0 +1,11 @@
+{
+  // set some non-default options for tests
+  "codesettings": {
+    "merge_opts": {
+      "list_behavior": "replace"
+    },
+    "jsonc_filetype": false,
+    "jsonls_integration": false,
+    "lua_ls_integration": false,
+  }
+}

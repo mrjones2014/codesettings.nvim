@@ -1,5 +1,3 @@
-local Settings = require('codesettings.settings')
-
 local M = {}
 
 ---map lsp_name to schema file metadata
@@ -11,15 +9,23 @@ local _schema_metadata
 local _cache = {}
 
 ---@class CodesettingsSchema
----@field _schema CodesettingsSettings
+---@field _schema table
 local Schema = {}
 Schema.__index = Schema
 
----Create a new Schema object from a Settings object
----@param schema CodesettingsSettings|nil
+---Create a new Schema object from a raw table
+---@param schema table|nil
 ---@return CodesettingsSchema
 function M.new(schema)
-  return setmetatable({ _schema = schema or Settings.new() }, Schema)
+  local schema_obj = type(schema) == 'table' and schema or {}
+  return setmetatable({ _schema = schema_obj }, Schema)
+end
+
+---Create a new Schema object from a JSON-schema-like table
+---@param schema_table table
+---@return CodesettingsSchema
+function M.from_table(schema_table)
+  return M.new(schema_table)
 end
 
 ---Load the schema for the given LSP name, or return an empty schema if none is found
@@ -42,9 +48,81 @@ function M.load(lsp_name)
       return M.new()
     end
   end
-  local settings = Settings.new():load(schema.settings_file)
-  _cache[lsp_name] = M.new(settings)
+  local settings_tbl = {}
+  if schema.settings_file then
+    local ok, data = pcall(vim.fn.readfile, schema.settings_file)
+    if ok and type(data) == 'table' then
+      local json_str = table.concat(data, '\n')
+      local ok2, json = pcall(vim.fn.json_decode, json_str)
+      if ok2 and type(json) == 'table' then
+        settings_tbl = json
+      end
+    end
+  end
+  _cache[lsp_name] = M.new(settings_tbl)
   return _cache[lsp_name]
+end
+
+---Return the schema descriptor as a raw table
+function Schema:totable()
+  return self._schema
+end
+
+---Return a table of default settings according to the schema.
+---@return table
+function Schema:defaults_table()
+  local function extract(node)
+    if type(node) ~= 'table' then
+      return nil
+    end
+    if node.type == 'object' and node.properties then
+      local t = {}
+      for k, v in pairs(node.properties) do
+        t[k] = extract(v)
+      end
+      return t
+    elseif node.type == 'array' and node.default ~= nil then
+      return vim.deepcopy(node.default)
+    elseif node.default ~= nil then
+      return vim.deepcopy(node.default)
+    else
+      return nil
+    end
+  end
+  return extract(self._schema) or {}
+end
+
+---Flatten the schema to a single-level table with dot-separated keys.
+---@return CodesettingsSchema schema flattened schema
+function Schema:flatten()
+  local function flatten_properties(node, prefix, out)
+    if type(node) ~= 'table' then
+      return
+    end
+    local props = node.properties
+    if type(props) ~= 'table' then
+      return
+    end
+    for name, def in pairs(props) do
+      local key = prefix and (prefix .. '.' .. name) or name
+      if def.type == 'object' and def.properties then
+        flatten_properties(def, key, out)
+      else
+        out[key] = vim.deepcopy(def)
+      end
+    end
+  end
+  local ret = vim.deepcopy(self._schema)
+  local flat = {}
+  flatten_properties(self._schema, nil, flat)
+  -- check if properly formed JSON schema
+  if ret.properties then
+    ret.properties = flat
+  else
+    -- schema is just the properties
+    ret = flat
+  end
+  return M.new(ret)
 end
 
 ---Enumerate all property paths in the schema;
@@ -68,7 +146,7 @@ function Schema:properties()
       end
     end
   end
-  collect(nil, self._schema:totable())
+  collect(nil, self._schema)
   return vim.tbl_keys(properties)
 end
 
