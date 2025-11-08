@@ -36,6 +36,14 @@ function M.fqn(fname)
   return vim.uv.fs_realpath(fname) or fname
 end
 
+---strip off trailing slash, if any
+local function normalize_root(path)
+  if vim.endswith(path, '/') and path ~= '/' then
+    return path:sub(1, -2)
+  end
+  return path
+end
+
 ---Get root directory based on root markers
 ---@param opts CodesettingsConfigOverrides? optional config overrides for this load
 ---@return string?
@@ -43,9 +51,9 @@ function M.get_root(opts)
   opts = opts or {}
   local user_root = opts.root_dir or Config.root_dir
   if type(user_root) == 'string' then
-    return user_root
+    return normalize_root(user_root)
   elseif type(user_root) == 'function' then
-    return user_root()
+    return normalize_root(user_root())
   end
 
   local file_paths = opts.config_file_paths or Config.config_file_paths

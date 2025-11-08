@@ -128,9 +128,6 @@ setmetatable(Config, {
   __newindex = function(_, k, v)
     options[k] = v
   end,
-  __pairs = function()
-    return next, options, nil
-  end,
 })
 
 ---@cast Config CodesettingsConfigModule
