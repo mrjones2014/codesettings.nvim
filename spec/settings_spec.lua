@@ -148,6 +148,13 @@ describe('Settings:load()', function()
     local S = Settings.new():load(tmpfile)
     assert.same({}, S:get())
   end)
+
+  it('combines with existing settings', function()
+    write_tmp('{"x.y":true}')
+    local settings = Settings.new({ x = { z = false } })
+    settings:load(tmpfile)
+    assert.same({ x = { y = true, z = false } }, settings:totable())
+  end)
 end)
 
 describe('Settings:schema()', function()

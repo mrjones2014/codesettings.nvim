@@ -1,6 +1,7 @@
 ---@module 'busted'
 
-local EnvExt = require('codesettings.extensions.env')
+local EnvExtension = require('codesettings.extensions.env')
+local Extensions = require('codesettings.extensions')
 
 describe('CodesettingsEnvExtension', function()
   describe('expand_env', function()
@@ -17,58 +18,56 @@ describe('CodesettingsEnvExtension', function()
 
     it('expands normal variables', function()
       vim.env.USER = 'username'
-      assert.are.equal('username', EnvExt.expand_env('${USER}'))
-      assert.are.equal('username', EnvExt.expand_env('$USER'))
+      assert.are.equal('username', EnvExtension.expand_env('${USER}'))
+      assert.are.equal('username', EnvExtension.expand_env('$USER'))
     end)
 
     it('uses default if variable is nil', function()
       vim.env.UNDEF = nil
-      assert.are.equal('default', EnvExt.expand_env('${UNDEF:-default}'))
-      assert.are.equal('', EnvExt.expand_env('${UNDEF}'))
+      assert.are.equal('default', EnvExtension.expand_env('${UNDEF:-default}'))
+      assert.are.equal('', EnvExtension.expand_env('${UNDEF}'))
     end)
 
     it('does not override empty string with default', function()
       vim.env.EMPTY = ''
-      assert.are.equal('', EnvExt.expand_env('${EMPTY:-default}'))
+      assert.are.equal('', EnvExtension.expand_env('${EMPTY:-default}'))
     end)
 
     it('handles multiple variables in one string', function()
       vim.env.USER = 'username'
       vim.env.HOME = '/home/username'
-      assert.are.equal('username:/home/username', EnvExt.expand_env('${USER}:${HOME}'))
+      assert.are.equal('username:/home/username', EnvExtension.expand_env('${USER}:${HOME}'))
     end)
 
     it('handles special characters in paths', function()
       vim.env.PATH = '/usr/bin:/bin'
-      assert.are.equal('/usr/bin:/bin/file.txt', EnvExt.expand_env('${PATH}/file.txt'))
+      assert.are.equal('/usr/bin:/bin/file.txt', EnvExtension.expand_env('${PATH}/file.txt'))
     end)
 
     it('handles nested defaults gracefully', function()
       vim.env.HOME = nil
       vim.env.USER = 'username'
-      assert.are.equal('username', EnvExt.expand_env('${HOME:-${USER}}'))
-      assert.are.equal('', EnvExt.expand_env('${HOME:-}'))
+      assert.are.equal('username', EnvExtension.expand_env('${HOME:-${USER}}'))
+      assert.are.equal('', EnvExtension.expand_env('${HOME:-}'))
     end)
 
     it('handles trailing dash defaults', function()
       vim.env.VAR = nil
-      assert.are.equal('', EnvExt.expand_env('${VAR:-}'))
+      assert.are.equal('', EnvExtension.expand_env('${VAR:-}'))
     end)
 
     it('does not expand invalid patterns', function()
-      assert.are.equal('${}', EnvExt.expand_env('${}'))
+      assert.are.equal('${}', EnvExtension.expand_env('${}'))
     end)
 
     it('does not incorrectly expand variables when adjacent to text', function()
       vim.env.FOO = 'foo'
-      assert.are.equal('foobar', EnvExt.expand_env('${FOO}bar'))
-      assert.are.equal('foo-bar', EnvExt.expand_env('${FOO}-bar'))
+      assert.are.equal('foobar', EnvExtension.expand_env('${FOO}bar'))
+      assert.are.equal('foo-bar', EnvExtension.expand_env('${FOO}-bar'))
     end)
   end)
 
   describe('leaf', function()
-    local Extensions = require('codesettings.extensions')
-
     it('expands string leaves in a flat table', function()
       local input = {
         path = '${HOME}/projects',
@@ -76,7 +75,7 @@ describe('CodesettingsEnvExtension', function()
         unused = 'static',
       }
 
-      local ext = EnvExt
+      local ext = EnvExtension
       local result = Extensions.apply(input, { ext })
 
       assert.same({
@@ -98,7 +97,7 @@ describe('CodesettingsEnvExtension', function()
         },
       }
 
-      local ext = EnvExt
+      local ext = EnvExtension
       local result = Extensions.apply(input, { ext })
 
       assert.same({
@@ -118,7 +117,7 @@ describe('CodesettingsEnvExtension', function()
         list = { '${USER}', '${HOME}/docs', 123, false },
       }
 
-      local ext = EnvExt
+      local ext = EnvExtension
       local result = Extensions.apply(input, { ext })
 
       assert.same({
@@ -132,13 +131,31 @@ describe('CodesettingsEnvExtension', function()
         nested = { value = '${ANOTHER:-fallback}' },
       }
 
-      local ext = EnvExt
+      local ext = EnvExtension
       local result = Extensions.apply(input, { ext })
 
       assert.same({
         path = '/default/path',
         nested = { value = 'fallback' },
       }, result)
+    end)
+  end)
+  describe('running the extension', function()
+    it('should expand environment variables in a sample config', function()
+      local input = {
+        codesettings = {
+          config_file_paths = { '${HOME}/.config/codesettings.json' },
+          lua_ls_integration = false,
+        },
+        somePath = '${HOME}/some/path',
+      }
+
+      local result = Extensions.apply(input, { 'codesettings.extensions.env' })
+
+      assert.is_table(result.codesettings)
+      assert.same({ vim.env.HOME .. '/.config/codesettings.json' }, result.codesettings.config_file_paths)
+      assert.is_false(result.codesettings.lua_ls_integration)
+      assert.equal(vim.env.HOME .. '/some/path', result.somePath)
     end)
   end)
 end)

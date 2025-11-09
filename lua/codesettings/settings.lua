@@ -9,6 +9,9 @@ local M = {}
 local Settings = {}
 Settings.__index = Settings
 
+---Create a new Settings object
+---@param settings table? optional initial settings to populate
+---@return CodesettingsSettings
 function M.new(settings)
   local ret = setmetatable({ _settings = {} }, Settings)
   for k, v in pairs(settings or {}) do
@@ -54,6 +57,9 @@ local function set_by_path(t, parts, value)
   merge_set(node, parts[#parts], value)
 end
 
+---Expand a table with dotted keys into a nested table structure
+---@param tbl table the table to expand
+---@return table expanded the expanded table
 function M.expand(tbl)
   if type(tbl) ~= 'table' then
     return tbl
@@ -81,6 +87,9 @@ function M.expand(tbl)
   return out
 end
 
+---Split a dotted key into its parts
+---@param key string the key to split, like 'rust-analyzer.cargo.loadOutDirsFromCheck'
+---@return string[] parts the parts of the key
 function M.path(key)
   if not key or key == '' then
     return {}
@@ -95,14 +104,22 @@ function M.path(key)
   return parts
 end
 
+---Clear all settings and reset to an empty Settings object
 function Settings:clear()
   self._settings = {}
 end
 
+---Set a setting by key; if the key is dotted,
+---it will internally create a well-formed nested table structure.
+---@param key string the key to set, like 'rust-analyzer.cargo.loadOutDirsFromCheck'
+---@param value table|string|boolean|number|nil the value to set at that key
 function Settings:set(key, value)
   local parts = M.path(key)
 
   if #parts == 0 then
+    if type(value) ~= 'table' then
+      error('cannot set root settings to non-table value')
+    end
     self._settings = value
     return
   end
@@ -119,12 +136,12 @@ function Settings:set(key, value)
 end
 
 ---@param key string|nil the key to get, like 'rust-analyzer.cargo.loadOutDirsFromCheck'; if `key` is nil, acts like `:totable()`
----@return table|string|boolean|number|nil setting the subtable value at that key; if the value is a table, it returns a table, not a Settings object
+---@return table|string|boolean|number|nil setting the sub-value at that key
 function Settings:get(key)
   ---@type table|string|boolean|number|nil
   local node = self._settings
 
-  for _, part in ipairs(M.path(key)) do
+  for _, part in ipairs(M.path(key or '')) do
     if type(node) ~= 'table' then
       node = nil
       break
@@ -184,19 +201,18 @@ end
 ---@param opts CodesettingsConfigOverrides? options for loading settings
 ---@return CodesettingsSettings
 function Settings:load(file, opts)
-  self:clear()
-  if Util.exists(file) then
-    local data = Util.read_file(file)
-    local ok, json = pcall(Util.json_decode, data)
-    if ok then
-      json = Extensions.apply(json, opts and opts.loader_extensions or {})
-      for k, v in pairs(M.expand(json)) do
-        self:set(k, v)
-      end
-    else
-      Util.error('failed to load json settings from %s', file)
-    end
+  if not Util.exists(file) then
+    Util.error('file does not exist: ' .. tostring(file))
+    return self
   end
+  local data = Util.read_file(file)
+  local ok, json = pcall(Util.json_decode, data)
+  if not ok then
+    Util.error('failed to parse json settings from %s: %s', file, json)
+    return self
+  end
+  json = Extensions.apply(M.expand(json), opts and opts.loader_extensions or {})
+  self:merge(M.new(json))
   return self
 end
 
@@ -218,12 +234,6 @@ function Settings:merge(settings, key, opts)
     self._settings = Util.merge(self._settings, settings._settings, opts)
   end
   return self
-end
-
-M._cache = {}
-
-function M.clear(fname)
-  M._cache[fname] = nil
 end
 
 return M
