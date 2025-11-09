@@ -47,6 +47,8 @@ function M.get_json_schemas()
 
   -- Single expansion pass on the merged schema
   local expanded_schema = Transformer.expand_schema(merged:totable())
+  -- also allow trailing commas
+  expanded_schema.allowTrailingCommas = true
 
   local json_schemas = {
     {

@@ -1,18 +1,4 @@
-local Schema = require('codesettings.schema')
-
----Input type for config options that can be overridden per-load
----@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig
-
----@class CodesettingsOverridableConfig Options which can be passed on a per-load basis (i.e. can override global config)
----@field config_file_paths string[] List of config file paths to look for
----@field merge_opts CodesettingsMergeOpts Default options for merging settings
----@field root_dir (string|fun():string)? Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
----@field loader_extensions (string|CodesettingsLoaderExtension)[] List of loader extensions to use when loading settings; `string` values will be `require`d
-
----@class CodesettingsConfig: CodesettingsOverridableConfig
----@field jsonls_integration boolean Integrate with jsonls for LSP settings completion
----@field lua_ls_integration boolean|fun():boolean Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config
----@field jsonc_filetype boolean Set filetype to jsonc for config files
+local ConfigSchema = require('codesettings.config.schema')
 
 ---@class CodesettingsConfigModule: CodesettingsConfig
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
@@ -21,56 +7,7 @@ local Schema = require('codesettings.schema')
 
 ---@class (partial) CodesettingsConfigInput: CodesettingsConfig
 
-local config_schema = Schema.new({
-  type = 'object',
-  properties = {
-    config_file_paths = {
-      type = 'array',
-      items = { type = 'string' },
-      description = 'List of config file paths to look for',
-      default = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
-    },
-    merge_opts = {
-      type = 'object',
-      properties = {
-        list_behavior = {
-          type = 'string',
-          description = 'How to merge lists',
-          default = 'append',
-        },
-      },
-      default = { list_behavior = 'append' },
-    },
-    root_dir = {
-      type = { 'string', 'function', 'nil' },
-      description = 'Function or string to determine the project root directory',
-      default = nil,
-    },
-    loader_extensions = {
-      type = 'array',
-      items = { type = { 'string', 'object' } },
-      description = 'List of loader extensions to use when loading settings',
-      default = {},
-    },
-    jsonls_integration = {
-      type = 'boolean',
-      description = 'Integrate with jsonls for LSP settings completion',
-      default = true,
-    },
-    lua_ls_integration = {
-      type = { 'boolean', 'function' },
-      description = 'Integrate with lua_ls for LSP settings completion',
-      default = true,
-    },
-    jsonc_filetype = {
-      type = 'boolean',
-      description = 'Set filetype to jsonc for config files',
-      default = true,
-    },
-  },
-})
-
-local options = config_schema:defaults_table()
+local options = ConfigSchema.defaults()
 
 local Config = {}
 
@@ -104,21 +41,13 @@ end
 ---Reset the configuration to defaults.
 ---Useful for testing.
 function Config.reset()
-  options = vim.deepcopy(config_schema:defaults_table())
+  options = ConfigSchema.defaults()
 end
 
----Get the cacnonical JSON schema for codesettings configuration.
+---Get the canonical JSON schema for codesettings configuration.
 ---@return CodesettingsSchema
 function Config.jsonschema()
-  -- NB: here we want to return the canconical schema,
-  -- which means we should look for a top-level `codesettings` property
-  return Schema.from_table({
-    ['$schema'] = 'http://json-schema.org/draft-07/schema#',
-    type = 'object',
-    properties = {
-      codesettings = config_schema:totable(),
-    },
-  }):flatten()
+  return ConfigSchema.jsonschema()
 end
 
 setmetatable(Config, {

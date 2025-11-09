@@ -4,6 +4,7 @@ describe('codesettings.config', function()
   before_each(function()
     require('codesettings.config').reset() ---@diagnostic disable-line: invisible
   end)
+
   describe('schema for local config files', function()
     it('loads config for the plugin itself from local config files based on config schema', function()
       local Codesettings = require('codesettings')
@@ -35,6 +36,44 @@ describe('codesettings.config', function()
       assert.spy(jsonc_filetype_mod.setup --[[@as luassert.spy]]).called(0)
     end)
   end)
+
+  describe('config json schema', function()
+    local schema = require('codesettings.config').jsonschema()
+    local schema_table = schema:totable()
+
+    it('returns a CodesettingsSchema instance', function()
+      assert.is_not_nil(schema)
+      assert.is_table(schema)
+      assert.is_function(schema.totable)
+      assert.is_function(schema.flatten)
+      assert.is_function(schema.properties)
+    end)
+
+    it('has the correct flattened structure', function()
+      assert.is_table(schema_table.properties)
+      assert.equal('http://json-schema.org/draft-07/schema#', schema_table['$schema'])
+      assert.is_not_nil(schema_table.properties['codesettings.config_file_paths'])
+      assert.is_not_nil(schema_table.properties['codesettings.merge_opts.list_behavior'])
+      assert.is_not_nil(schema_table.properties['codesettings.root_dir'])
+    end)
+
+    it('filters out function types because they are not valid in json schema', function()
+      local root_dir_prop = schema_table.properties['codesettings.root_dir']
+      assert.is_not_nil(root_dir_prop)
+
+      -- Original type is { 'string', { args = {}, ret = 'string' }, 'null' }
+      -- Should be filtered to { 'string', 'null' } or similar
+      local prop_type = root_dir_prop.type
+
+      if type(prop_type) == 'table' then
+        -- Ensure no function type objects remain
+        for _, t in ipairs(prop_type) do
+          assert.is_not_table(t)
+        end
+      end
+    end)
+  end)
+
   describe('ConfigBuilder', function()
     local ConfigBuilder = require('codesettings.config.builder')
     local Config = require('codesettings.config')
