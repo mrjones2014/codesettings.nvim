@@ -59,6 +59,20 @@ function M.get_class(name)
   return table.concat(ret, '.')
 end
 
+---@param t table
+---@param ret? table
+function M.flatten(t, ret)
+  ret = ret or {}
+  for _, v in pairs(t) do
+    if type(v) == 'table' then
+      M.flatten(v, ret)
+    else
+      ret[#ret + 1] = v
+    end
+  end
+  return ret
+end
+
 function M.get_type(prop)
   if prop.enum then
     return table.concat(
@@ -98,7 +112,7 @@ function M.get_type(prop)
   if vim.tbl_isempty(types) then
     types = { 'any' }
   end
-  return table.concat(Util.flatten(types), '|')
+  return table.concat(M.flatten(types), '|')
 end
 
 function M.process_object(name, prop)

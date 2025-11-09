@@ -3,17 +3,29 @@ name: vim
 globals:
   vim:
     any: true
+  describe:
+    args:
+      - type: string
+      - type: function
+  it:
+    args:
+      - type: string
+      - type: function
+  setup:
+    args:
+      - type: function
+  teardown:
+    args:
+      - type: function
+  before_each:
+    args:
+      - type: function
+  after_each:
+    args:
+      - type: function
   assert:
     any: true
-  describe:
-    any: true
-  it:
-    any: true
-  before_each:
-    any: true
-  after_each:
-    any: true
-  setup:
-    any: true
-  teardown:
-    any: true
+  spy.on:
+    args:
+      - type: table
+      - type: string

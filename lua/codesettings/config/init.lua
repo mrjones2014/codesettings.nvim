@@ -1,3 +1,5 @@
+local Schema = require('codesettings.schema')
+
 ---Input type for config options that can be overridden per-load
 ---@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig
 
@@ -14,32 +16,76 @@
 
 ---@class CodesettingsConfigModule: CodesettingsConfig
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
+---@field jsonschema fun(): CodesettingsSchema Returns a canonical JSON schema for codesettings configuration
 ---@field private reset fun() Resets the configuration to defaults, useful for tests
 
----@type CodesettingsConfig
-local options = {
-  config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
-  jsonls_integration = true,
-  lua_ls_integration = true,
-  jsonc_filetype = true,
-  root_dir = nil, -- use the default root finder
-  merge_opts = {
-    list_behavior = 'append',
-  },
-  loader_extensions = {},
-}
+---@class (partial) CodesettingsConfigInput: CodesettingsConfig
 
-local defaults = vim.deepcopy(options)
+local config_schema = Schema.new({
+  type = 'object',
+  properties = {
+    config_file_paths = {
+      type = 'array',
+      items = { type = 'string' },
+      description = 'List of config file paths to look for',
+      default = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
+    },
+    merge_opts = {
+      type = 'object',
+      properties = {
+        list_behavior = {
+          type = 'string',
+          description = 'How to merge lists',
+          default = 'append',
+        },
+      },
+      default = { list_behavior = 'append' },
+    },
+    root_dir = {
+      type = { 'string', 'function', 'nil' },
+      description = 'Function or string to determine the project root directory',
+      default = nil,
+    },
+    loader_extensions = {
+      type = 'array',
+      items = { type = { 'string', 'object' } },
+      description = 'List of loader extensions to use when loading settings',
+      default = {},
+    },
+    jsonls_integration = {
+      type = 'boolean',
+      description = 'Integrate with jsonls for LSP settings completion',
+      default = true,
+    },
+    lua_ls_integration = {
+      type = { 'boolean', 'function' },
+      description = 'Integrate with lua_ls for LSP settings completion',
+      default = true,
+    },
+    jsonc_filetype = {
+      type = 'boolean',
+      description = 'Set filetype to jsonc for config files',
+      default = true,
+    },
+  },
+})
+
+local options = config_schema:defaults_table()
 
 local Config = {}
-
----@class (partial) CodesettingsConfigInput: CodesettingsConfig
 
 ---Merge user-supplied options into the defaults.
 ---@param opts CodesettingsConfigInput|nil
 function Config.setup(opts)
   opts = opts or {}
   options = vim.tbl_deep_extend('force', {}, options, opts)
+
+  -- configure the plugin itself with local files
+  -- NB: do this first in case local files turn off integrations
+  local Settings = require('codesettings.settings')
+  local settings = Settings.load_all()
+  local plugin_config = settings:schema(Config.jsonschema()):get('codesettings') or {}
+  options = vim.tbl_deep_extend('force', {}, options, plugin_config)
 
   if options.jsonls_integration then
     require('codesettings.integrations.jsonls').setup()
@@ -58,7 +104,21 @@ end
 ---Reset the configuration to defaults.
 ---Useful for testing.
 function Config.reset()
-  options = vim.deepcopy(defaults)
+  options = vim.deepcopy(config_schema:defaults_table())
+end
+
+---Get the cacnonical JSON schema for codesettings configuration.
+---@return CodesettingsSchema
+function Config.jsonschema()
+  -- NB: here we want to return the canconical schema,
+  -- which means we should look for a top-level `codesettings` property
+  return Schema.from_table({
+    ['$schema'] = 'http://json-schema.org/draft-07/schema#',
+    type = 'object',
+    properties = {
+      codesettings = config_schema:totable(),
+    },
+  }):flatten()
 end
 
 setmetatable(Config, {
@@ -73,8 +133,5 @@ setmetatable(Config, {
   end,
 })
 
--- it implements the type through the metatable above,
--- set the type information so that consuming modules get
--- the right info through the LSP
 ---@cast Config CodesettingsConfigModule
 return Config
