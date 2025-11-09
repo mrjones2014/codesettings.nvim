@@ -1,0 +1,72 @@
+-- stylua: ignore
+---@meta
+
+---Codesettings plugin configuration types
+
+---Input type for config options that can be overridden per-load
+---@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig
+
+---Options which can be passed on a per-load basis (i.e. can override global config)
+---@class CodesettingsOverridableConfig
+---List of config file paths to look for
+---
+---```lua
+---default = { ".vscode/settings.json", "codesettings.json", "lspsettings.json" }
+---```
+---@field config_file_paths string[]?
+---List of loader extensions to use when loading settings; `string` values will be `require`d
+---
+---```lua
+---default = {}
+---```
+---@field loader_extensions (string|CodesettingsLoaderExtension)[]?
+---Default options for merging settings
+---
+---```lua
+---default = {
+---  list_behavior = "append"
+---}
+---```
+---@field merge_opts CodesettingsMergeOpts?
+---Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
+---
+---```lua
+---default = nil
+---```
+---@field root_dir string|fun():string|nil?
+
+---Main configuration class
+---@class CodesettingsConfig: CodesettingsOverridableConfig
+---Set filetype to jsonc for config files
+---
+---```lua
+---default = true
+---```
+---@field jsonc_filetype boolean
+---Integrate with jsonls for LSP settings completion
+---
+---```lua
+---default = true
+---```
+---@field jsonls_integration boolean
+---Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config
+---
+---```lua
+---default = true
+---```
+---@field lua_ls_integration boolean|fun():boolean
+
+---Default options for merging settings
+---
+---```lua
+---default = {
+---  list_behavior = "append"
+---}
+---```
+---@class CodesettingsMergeOpts
+---How to merge lists
+---
+---```lua
+---default = "append"
+---```
+---@field list_behavior CodesettingsMergeListsBehavior?

@@ -98,11 +98,6 @@ function M.get_local_configs(opts)
     :totable()
 end
 
----@alias CodesettingsMergeListsBehavior 'replace'|'append'|'prepend'
-
----@class CodesettingsMergeOpts
----@field list_behavior? CodesettingsMergeListsBehavior how to merge lists; defaults to 'append'
-
 --- Deep merge two values, with `b` taking precedence over `a`.
 --- Tables are merged recursively; lists are merged based on `opts.list_behavior`.
 ---@generic T

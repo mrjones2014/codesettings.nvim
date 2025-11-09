@@ -10467,6 +10467,12 @@
 -- default = "snake"
 -- ```
 ---@field propertyCase "camel" | "snake"?
+-- Controls whether suggestions will include a `sortText` property that may influence sort order.
+-- 
+-- ```lua
+-- default = "multi-factor"
+-- ```
+---@field sortText "none" | "multi-factor"?
 -- PHP permits the calling of static methods using the object operator eg `$obj->myStaticMethod();`. If you would prefer not to have static methods suggested in this context then set this value to `false`. Defaults to `true`.
 -- 
 -- ```lua
