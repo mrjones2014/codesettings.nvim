@@ -347,10 +347,15 @@ which will be `require`d. **No extensions are registered by default.**
       })
 <
 
-`codesettings.nvim` supplies one built-in extension that can expand environment
-variables in your config files. It supports `$ENV_VAR`, `${ENV_VAR}`, and even
-`${ENV_VAR:-/some/default/path}` syntax. It can be registered via the
-`codesettings.extensions.env` module path.
+`codesettings.nvim` provides the following built-in loader extensions that can
+be enabled in your plugin config using their module path:
+
+- `codesettings.extensions.env`
+    - Expand environment variables in JSON config files.
+    - Supports `$ENV_VAR`, `${ENV_VAR}`, and even `${ENV_VAR:-/some/default/path}` syntax.
+- `codesettings.extensions.neoconf`
+    - Enables compatibility on a best-effort basis with existing `.neoconf.json` files.
+    - You will need to configure the plugin to look for those files via the `config_file_paths` option.
 
 
 EXTENSION API ~
