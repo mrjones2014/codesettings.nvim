@@ -20,14 +20,12 @@
 ---default = {}
 ---```
 ---@field loader_extensions (string|CodesettingsLoaderExtension)[]?
----Default options for merging settings
+---How to merge list fields when combining settings from multiple sources
 ---
 ---```lua
----default = {
----  list_behavior = "append"
----}
+---default = "append"
 ---```
----@field merge_opts CodesettingsMergeOpts?
+---@field merge_lists CodesettingsMergeListsBehavior?
 ---Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
 ---
 ---```lua
@@ -56,17 +54,39 @@
 ---```
 ---@field lua_ls_integration boolean|fun():boolean
 
----Default options for merging settings
+---Builder class for constructing Codesettings configuration
+---
+---Methods are dynamically generated at runtime via metatables based on schema properties.
+---Each overridable config property gets a corresponding setter method.
+---@class CodesettingsConfigBuilder
+---@field private _config CodesettingsOverridableConfig
+---List of config file paths to look for
 ---
 ---```lua
----default = {
----  list_behavior = "append"
----}
+---default = { ".vscode/settings.json", "codesettings.json", "lspsettings.json" }
 ---```
----@class CodesettingsMergeOpts
----How to merge lists
+---@field config_file_paths fun(self: CodesettingsConfigBuilder, value: string[]): CodesettingsConfigBuilder
+---List of loader extensions to use when loading settings; `string` values will be `require`d
+---
+---```lua
+---default = {}
+---```
+---@field loader_extensions fun(self: CodesettingsConfigBuilder, value: (string|CodesettingsLoaderExtension)[]): CodesettingsConfigBuilder
+---How to merge list fields when combining settings from multiple sources
 ---
 ---```lua
 ---default = "append"
 ---```
----@field list_behavior CodesettingsMergeListsBehavior?
+---@field merge_lists fun(self: CodesettingsConfigBuilder, value: CodesettingsMergeListsBehavior): CodesettingsConfigBuilder
+---Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
+---
+---```lua
+---default = nil
+---```
+---@field root_dir fun(self: CodesettingsConfigBuilder, value: string|fun():string|nil): CodesettingsConfigBuilder
+---Return the resulting configuration table
+---@field build fun(self: CodesettingsConfigBuilder): CodesettingsConfigOverrides
+---Load the local settings using the configuration built by this builder
+---@field local_settings fun(self: CodesettingsConfigBuilder): CodesettingsSettings
+---Load and merge local settings into the given LSP config
+---@field with_local_settings fun(self: CodesettingsConfigBuilder, lsp_name: string, config: table): table

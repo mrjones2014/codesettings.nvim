@@ -105,14 +105,15 @@ function M.get_local_configs(opts)
 end
 
 --- Deep merge two values, with `b` taking precedence over `a`.
---- Tables are merged recursively; lists are merged based on `opts.list_behavior`.
+--- Tables are merged recursively; lists are merged based on config.
 ---@generic T
 ---@param a T first value
 ---@param b T second value
----@param opts CodesettingsMergeOpts? options for merging
+---@param config CodesettingsConfigOverrides? config options (uses Config.merge_lists if not provided)
 ---@return T merged value
-function M.merge(a, b, opts)
-  opts = vim.tbl_deep_extend('force', Config.merge_opts, opts or {})
+function M.merge(a, b, config)
+  config = config or {}
+  local merge_lists = config.merge_lists or 'append'
   local function can_merge(v)
     if type(v) ~= 'table' then
       return false
@@ -129,17 +130,16 @@ function M.merge(a, b, opts)
     local value = values[i]
     if can_merge(ret) and can_merge(value) then
       for k, v in pairs(value) do
-        ret[k] = M.merge(ret[k], v, opts)
+        ret[k] = M.merge(ret[k], v, config)
       end
     else
-      opts = opts or {}
       if (ret == nil or vim.islist(ret)) and (value == nil or vim.islist(value)) then
-        if opts.list_behavior == 'append' then
+        if merge_lists == 'append' then
           local out = {}
           vim.list_extend(out, ret or {})
           vim.list_extend(out, value or {})
           ret = out
-        elseif opts.list_behavior == 'prepend' then
+        elseif merge_lists == 'prepend' then
           local out = {}
           vim.list_extend(out, value or {})
           vim.list_extend(out, ret or {})

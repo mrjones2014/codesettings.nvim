@@ -58,7 +58,7 @@ function M.with_local_settings(lsp_name, config, opts)
   else
     local_settings = local_settings:schema(lsp_name)
   end
-  return Settings.new(config):merge(local_settings, 'settings', opts.merge_opts):totable()
+  return Settings.new(config):merge(local_settings, 'settings', opts):totable()
 end
 
 ---Start building a new custom configuration for loading local settings.
@@ -72,7 +72,7 @@ end
 ---   local c = require('codesettings')
 ---   config.settings = c.loader()
 ---     :root_dir(config.root_dir)
----     :merge_list_behavior('prepend')
+---     :merge_lists('prepend')
 ---     :config_file_paths({ '.vscode/settings.json', '.myprojectsettings.json' })
 ---     :with_local_settings(config.name, config.settings)
 ---  end

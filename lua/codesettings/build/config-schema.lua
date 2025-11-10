@@ -1,4 +1,5 @@
 local Util = require('codesettings.util')
+local ConfigSchema = require('codesettings.config.schema')
 
 local relpath = 'lua/codesettings/generated/codesettings-config-schema.lua'
 
@@ -14,13 +15,6 @@ local function add_comment(desc, prefix)
     prefix = (prefix or '') .. '---'
     table.insert(Build.lines, prefix .. desc:gsub('\n', '\n' .. prefix))
   end
-end
-
----Check if a type definition is a function type table
----@param t any
----@return boolean
-local function is_function_type(t)
-  return type(t) == 'table' and t.args ~= nil and t.ret ~= nil
 end
 
 ---Convert a function type table to Lua type annotation
@@ -41,7 +35,7 @@ local function get_lua_type(prop)
   local types = type(prop.type) == 'table' and prop.type or { prop.type }
 
   -- Handle if types is actually a single type table (not an array of types)
-  if is_function_type(types) then
+  if ConfigSchema.is_function_type(types) then
     types = { types }
   end
 
@@ -50,7 +44,7 @@ local function get_lua_type(prop)
   for _, t in
     ipairs(types --[[@as table<CodesettingsSchemaType>]])
   do
-    if is_function_type(t) then
+    if ConfigSchema.is_function_type(t) then
       table.insert(lua_types, function_type_to_lua(t))
     elseif t == 'null' then
       table.insert(lua_types, 'nil')
@@ -63,7 +57,7 @@ local function get_lua_type(prop)
         for _, item_t in
           ipairs(item_types --[[@as table<CodesettingsSchemaType>]])
         do
-          if is_function_type(item_t) then
+          if ConfigSchema.is_function_type(item_t) then
             table.insert(item_type_strs, function_type_to_lua(item_t))
           elseif item_t == 'object' then
             table.insert(item_type_strs, 'table')
@@ -155,6 +149,49 @@ local function process_property(name, prop, class_prefix)
   end
 end
 
+---Generate method annotations for the CodesettingsConfigBuilder
+---@param overridable_props string[]
+---@param schema_props table<string, CodesettingsSchemaValue>
+local function generate_builder_methods(overridable_props, schema_props)
+  table.insert(Build.lines, '---Builder class for constructing Codesettings configuration')
+  table.insert(Build.lines, '---')
+  table.insert(
+    Build.lines,
+    '---Methods are dynamically generated at runtime via metatables based on schema properties.'
+  )
+  table.insert(Build.lines, '---Each overridable config property gets a corresponding setter method.')
+  table.insert(Build.lines, '---@class CodesettingsConfigBuilder')
+  table.insert(Build.lines, '---@field private _config CodesettingsOverridableConfig')
+
+  -- Generate setter method signatures for each overridable property
+  for _, name in ipairs(overridable_props) do
+    local prop = schema_props[name]
+    local lua_type = get_lua_type(prop)
+
+    add_desc_with_default(prop)
+    table.insert(
+      Build.lines,
+      string.format(
+        '---@field %s fun(self: CodesettingsConfigBuilder, value: %s): CodesettingsConfigBuilder',
+        name,
+        lua_type
+      )
+    )
+  end
+
+  -- Add terminal methods that don't return self
+  table.insert(Build.lines, '---Return the resulting configuration table')
+  table.insert(Build.lines, '---@field build fun(self: CodesettingsConfigBuilder): CodesettingsConfigOverrides')
+  table.insert(Build.lines, '---Load the local settings using the configuration built by this builder')
+  table.insert(Build.lines, '---@field local_settings fun(self: CodesettingsConfigBuilder): CodesettingsSettings')
+  table.insert(Build.lines, '---Load and merge local settings into the given LSP config')
+  table.insert(
+    Build.lines,
+    '---@field with_local_settings fun(self: CodesettingsConfigBuilder, lsp_name: string, config: table): table'
+  )
+  table.insert(Build.lines, '')
+end
+
 local M = {}
 
 ---Generate annotations for the config schema
@@ -172,8 +209,6 @@ function M.build()
     '',
   }
 
-  local schema = require('codesettings.config.schema')
-
   -- Generate overridable config class
   table.insert(Build.lines, '---Input type for config options that can be overridden per-load')
   table.insert(Build.lines, '---@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig')
@@ -183,7 +218,7 @@ function M.build()
   table.insert(Build.lines, '---Options which can be passed on a per-load basis (i.e. can override global config)')
   table.insert(Build.lines, '---@class CodesettingsOverridableConfig')
 
-  local props = vim.tbl_keys(schema.properties)
+  local props = vim.tbl_keys(ConfigSchema.properties)
   table.sort(props)
 
   -- First pass: collect overridable properties
@@ -191,7 +226,7 @@ function M.build()
   local non_overridable_props = {}
 
   for _, name in ipairs(props) do
-    local prop = schema.properties[name]
+    local prop = ConfigSchema.properties[name]
     if prop.overridable then
       table.insert(overridable_props, name)
     else
@@ -201,7 +236,7 @@ function M.build()
 
   -- Add overridable fields
   for _, name in ipairs(overridable_props) do
-    local prop = schema.properties[name]
+    local prop = ConfigSchema.properties[name]
     add_desc_with_default(prop)
 
     if prop.type == 'object' and prop.properties then
@@ -220,7 +255,7 @@ function M.build()
 
   -- Add non-overridable fields
   for _, name in ipairs(non_overridable_props) do
-    local prop = schema.properties[name]
+    local prop = ConfigSchema.properties[name]
     add_desc_with_default(prop)
     table.insert(Build.lines, '---@field ' .. name .. ' ' .. get_lua_type(prop))
   end
@@ -229,11 +264,14 @@ function M.build()
 
   -- Process nested objects
   for _, name in ipairs(props) do
-    local prop = schema.properties[name]
+    local prop = ConfigSchema.properties[name]
     if prop.type == 'object' and prop.properties then
       process_property(name, prop, 'Codesettings')
     end
   end
+
+  -- Generate builder method annotations
+  generate_builder_methods(overridable_props, ConfigSchema.properties)
 
   Util.write_file(Util.path(relpath), table.concat(Build.lines, '\n'))
   print('Generated ' .. relpath)
