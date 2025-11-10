@@ -218,9 +218,9 @@ end
 
 ---@param settings CodesettingsSettings settings to merge into this one
 ---@param key string|nil if given, merge only the subtable at this key
----@param opts CodesettingsMergeOpts? options for merging tables
+---@param config CodesettingsConfigOverrides? config options for merging
 ---@return CodesettingsSettings
-function Settings:merge(settings, key, opts)
+function Settings:merge(settings, key, config)
   if not settings then
     return self
   end
@@ -228,10 +228,10 @@ function Settings:merge(settings, key, opts)
     settings = M.new(settings)
   end
   if key then
-    local value = Util.merge(Util.merge({}, self:get(key) or {}, opts), settings._settings, opts)
+    local value = Util.merge(Util.merge({}, self:get(key) or {}, config), settings._settings, config)
     self:set(key, value)
   else
-    self._settings = Util.merge(self._settings, settings._settings, opts)
+    self._settings = Util.merge(self._settings, settings._settings, config)
   end
   return self
 end

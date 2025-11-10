@@ -136,7 +136,7 @@ describe('integration tests', function()
       assert.same({ 'feature-a' }, settings:schema('rust-analyzer'):get('rust-analyzer.cargo.features'))
     end)
 
-    it('should apply custom merge_list_behavior=prepend', function()
+    it('should apply custom merge_lists=prepend', function()
       local base_config = {
         settings = {
           Lua = {
@@ -151,7 +151,7 @@ describe('integration tests', function()
       local Codesettings = require('codesettings')
       local merged = Codesettings.loader()
         :root_dir(vim.fn.getcwd() .. '/spec/test-config-files/subroot')
-        :merge_list_behavior('prepend')
+        :merge_lists('prepend')
         :with_local_settings('lua_ls', base_config)
 
       -- Expect 'local' to appear before 'base' because of 'prepend'
@@ -175,7 +175,7 @@ describe('integration tests', function()
     local merged = Codesettings.loader()
       :root_dir(vim.fn.getcwd() .. '/spec/test-config-files/')
       :config_file_paths({ 'env_extension.json' })
-      :merge_list_behavior('prepend')
+      :merge_lists('prepend')
       :loader_extensions({ 'codesettings.extensions.env' })
       :with_local_settings('rust-analyzer', {
         settings = {

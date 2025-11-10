@@ -56,7 +56,7 @@ describe('util.merge - list behavior: prepend', function()
   it('prepends list values when specified', function()
     local a = { vals = { 'a', 'b' } }
     local b = { vals = { 'c', 'd' } }
-    local merged = Util.merge(a, b, { list_behavior = 'prepend' })
+    local merged = Util.merge(a, b, { merge_lists = 'prepend' })
     -- Desired: b items first
     assert.same({ vals = { 'c', 'd', 'a', 'b' } }, merged)
   end)
@@ -64,7 +64,7 @@ describe('util.merge - list behavior: prepend', function()
   it('prepends nested lists when specified', function()
     local a = { nest = { nums = { 2 } } }
     local b = { nest = { nums = { 1 } } }
-    local merged = Util.merge(a, b, { list_behavior = 'prepend' })
+    local merged = Util.merge(a, b, { merge_lists = 'prepend' })
     assert.same({ nest = { nums = { 1, 2 } } }, merged)
   end)
 end)
@@ -73,14 +73,14 @@ describe('util.merge - list behavior: replace', function()
   it('replaces list entirely', function()
     local a = { l = { 1, 2 } }
     local b = { l = { 9, 8 } }
-    local merged = Util.merge(a, b, { list_behavior = 'replace' })
+    local merged = Util.merge(a, b, { merge_lists = 'replace' })
     assert.same({ l = { 9, 8 } }, merged)
   end)
 
   it('replaces nested list entirely', function()
     local a = { x = { y = { 1 } } }
     local b = { x = { y = { 2, 3 } } }
-    local merged = Util.merge(a, b, { list_behavior = 'replace' })
+    local merged = Util.merge(a, b, { merge_lists = 'replace' })
     assert.same({ x = { y = { 2, 3 } } }, merged)
   end)
 end)
@@ -102,17 +102,17 @@ describe('util.merge - mixed list and map', function()
 end)
 
 describe('util.merge - option propagation', function()
-  it('applies list_behavior to nested lists (prepend)', function()
+  it('applies merge_lists to nested lists (prepend)', function()
     local a = { a = { list = { 1 } } }
     local b = { a = { list = { 2 } } }
-    local merged = Util.merge(a, b, { list_behavior = 'prepend' })
+    local merged = Util.merge(a, b, { merge_lists = 'prepend' })
     assert.same({ a = { list = { 2, 1 } } }, merged)
   end)
 
-  it('applies list_behavior to nested lists (replace)', function()
+  it('applies merge_lists to nested lists (replace)', function()
     local a = { a = { list = { 1, 2 } } }
     local b = { a = { list = { 3 } } }
-    local merged = Util.merge(a, b, { list_behavior = 'replace' })
+    local merged = Util.merge(a, b, { merge_lists = 'replace' })
     assert.same({ a = { list = { 3 } } }, merged)
   end)
 end)

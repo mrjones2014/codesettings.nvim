@@ -15,10 +15,18 @@ local M = {}
 ---@field description string Description of the value
 ---@field default any Default value
 ---@field overridable boolean|nil Whether the value can be overridden by workspace settings; default false
+---@field enum string[]|nil List of allowed values (for enum validation)
 ---@field items CodesettingsSchemaValue|nil Schema for items if type is array
 ---@field properties table<string, CodesettingsSchemaValue>|nil Schema for properties if type is object
 
 ---@alias CodesettingsMergeListsBehavior 'replace'|'append'|'prepend'
+
+---Check if a type definition is a function type table
+---@param t any
+---@return boolean
+function M.is_function_type(t)
+  return type(t) == 'table' and t.args ~= nil and t.ret ~= nil
+end
 
 ---@type table<string, CodesettingsSchemaValue> JSON Schema properties for codesettings configuration
 M.properties = {
@@ -29,17 +37,11 @@ M.properties = {
     default = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
     overridable = true,
   },
-  merge_opts = {
-    type = 'object',
-    description = 'Default options for merging settings',
-    properties = {
-      list_behavior = {
-        type = 'CodesettingsMergeListsBehavior',
-        description = 'How to merge lists',
-        default = 'append',
-      },
-    },
-    default = { list_behavior = 'append' },
+  merge_lists = {
+    type = 'CodesettingsMergeListsBehavior',
+    description = 'How to merge list fields when combining settings from multiple sources',
+    enum = { 'replace', 'append', 'prepend' },
+    default = 'append',
     overridable = true,
   },
   root_dir = {
@@ -87,13 +89,6 @@ function M.defaults()
   return defaults
 end
 
----Check if a type definition is a function type table
----@param t any
----@return boolean
-local function is_function_type(t)
-  return type(t) == 'table' and t.args ~= nil and t.ret ~= nil
-end
-
 ---Filter function types from a type definition for JSON schema
 ---@param types string|table
 ---@return string|table
@@ -102,7 +97,7 @@ local function filter_function_types(types)
     return types
   end
 
-  if is_function_type(types) then
+  if M.is_function_type(types) then
     -- Single function type - return nil to filter it out
     return 'null'
   end
@@ -110,7 +105,7 @@ local function filter_function_types(types)
   -- Array of types
   local filtered = {}
   for _, t in ipairs(types) do
-    if not is_function_type(t) then
+    if not M.is_function_type(t) then
       table.insert(filtered, t)
     end
   end
