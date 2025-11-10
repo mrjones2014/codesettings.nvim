@@ -4,7 +4,7 @@ local Settings = require('codesettings.settings')
 
 describe('Settings.path()', function()
   it('returns empty table for nil/empty', function()
-    assert.same({}, Settings.path(nil))
+    assert.same({}, Settings.path(nil)) ---@diagnostic disable-line: param-type-mismatch
     assert.same({}, Settings.path(''))
   end)
 
@@ -13,7 +13,7 @@ describe('Settings.path()', function()
   end)
 
   it('wraps non-string keys', function()
-    assert.same({ 123 }, Settings.path(123))
+    assert.same({ 123 }, Settings.path(123)) ---@diagnostic disable-line: param-type-mismatch
   end)
 end)
 
@@ -63,7 +63,7 @@ end)
 
 describe('Settings.expand()', function()
   it('passes non-table through', function()
-    assert.equal(5, Settings.expand(5))
+    assert.equal(5, Settings.expand(5)) ---@diagnostic disable-line: param-type-mismatch
   end)
 
   it('expands dotted keys into nested tables', function()
@@ -208,7 +208,7 @@ end)
 
 describe('Settings.expand()', function()
   it('passes non-table through', function()
-    assert.equal(5, Settings.expand(5))
+    assert.equal(5, Settings.expand(5)) ---@diagnostic disable-line: param-type-mismatch
   end)
 
   it('expands dotted keys into nested tables', function()
@@ -274,6 +274,85 @@ describe('Settings.expand()', function()
           },
         },
         merge = 4,
+      },
+    }, expanded)
+  end)
+
+  it('does not expand keys inside terminal objects (e.g., yaml.schemas)', function()
+    -- yaml.schemas is a terminal object (type=object, no properties)
+    -- Keys inside it should not be dot-expanded
+    local expanded = Settings.expand({
+      ['yaml.schemas'] = {
+        ['./some/relative/schema.json'] = 'relpath/*',
+        ['https://example.com/schema.json'] = 'config/*.yaml',
+        ['../parent/schema.json'] = 'schemas/*',
+      },
+    })
+    assert.same({
+      yaml = {
+        schemas = {
+          ['./some/relative/schema.json'] = 'relpath/*',
+          ['https://example.com/schema.json'] = 'config/*.yaml',
+          ['../parent/schema.json'] = 'schemas/*',
+        },
+      },
+    }, expanded)
+  end)
+
+  it('does not expand keys inside terminal objects when already nested', function()
+    local expanded = Settings.expand({
+      yaml = {
+        schemas = {
+          ['./some/relative/schema.json'] = 'relpath/*',
+        },
+      },
+    })
+    assert.same({
+      yaml = {
+        schemas = {
+          ['./some/relative/schema.json'] = 'relpath/*',
+        },
+      },
+    }, expanded)
+  end)
+
+  it('still expands dotted keys in non-terminal nested objects', function()
+    -- Regular nested objects should still have their dotted keys expanded
+    local expanded = Settings.expand({
+      yaml = {
+        format = {
+          ['some.nested.key'] = true,
+        },
+      },
+    })
+    assert.same({
+      yaml = {
+        format = {
+          some = {
+            nested = {
+              key = true,
+            },
+          },
+        },
+      },
+    }, expanded)
+  end)
+
+  it('handles terminal objects with multiple levels of nesting', function()
+    local expanded = Settings.expand({
+      ['yaml.schemas'] = {
+        ['file.with.dots.json'] = 'pattern',
+      },
+      ['yaml.format.enable'] = true,
+    })
+    assert.same({
+      yaml = {
+        schemas = {
+          ['file.with.dots.json'] = 'pattern',
+        },
+        format = {
+          enable = true,
+        },
       },
     }, expanded)
   end)

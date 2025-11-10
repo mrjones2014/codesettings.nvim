@@ -97,6 +97,65 @@ function M.get_schemas()
   return ret
 end
 
+--- Collect all terminal object property paths from a schema.
+--- Terminal objects are properties with type="object" but no "properties" field,
+--- meaning their keys are arbitrary user data and should not be dot-expanded.
+---@param schema table JSON schema
+---@param prefix string? current property path prefix
+---@param terminals table<string, boolean> table to collect terminal paths
+local function collect_terminal_objects(schema, prefix, terminals)
+  if type(schema) ~= 'table' then
+    return
+  end
+
+  local props = schema.properties
+  if type(props) ~= 'table' then
+    return
+  end
+
+  for name, def in pairs(props) do
+    if type(def) == 'table' then
+      local full_path = prefix and (prefix .. '.' .. name) or name
+
+      -- Check if this is a terminal object:
+      -- - type is "object"
+      -- - no "properties" field (free-form dictionary)
+      if def.type == 'object' and not def.properties then
+        terminals[full_path] = true
+      end
+
+      -- Recurse if it has nested properties
+      if def.properties then
+        collect_terminal_objects(def, full_path, terminals)
+      end
+    end
+  end
+end
+
+--- Generate a lookup table of all terminal object paths across all LSP schemas.
+--- Returns a table mapping property paths to true for paths that should not have
+--- their keys dot-expanded (e.g., "yaml.schemas").
+---@return table<string, boolean> terminal object paths
+function M.generate_terminal_objects_cache()
+  local schemas = M.get_schemas()
+  local terminals = {}
+
+  for _, schema_meta in pairs(schemas) do
+    if Util.exists(schema_meta.settings_file) then
+      local ok, data = pcall(vim.fn.readfile, schema_meta.settings_file)
+      if ok and type(data) == 'table' then
+        local json_str = table.concat(data, '\n')
+        local ok2, schema_json = pcall(vim.fn.json_decode, json_str)
+        if ok2 and type(schema_json) == 'table' then
+          collect_terminal_objects(schema_json, nil, terminals)
+        end
+      end
+    end
+  end
+
+  return terminals
+end
+
 --- A map of LSP server schemas that require special handling for non-common configuration layouts.
 local SpecialCases = {
   nixd = function(json)

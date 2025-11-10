@@ -1,5 +1,6 @@
 local Util = require('codesettings.util')
 local Extensions = require('codesettings.extensions')
+local TerminalObjects = require('codesettings.generated.terminal-objects')
 
 local M = {}
 
@@ -59,21 +60,33 @@ end
 
 ---Expand a table with dotted keys into a nested table structure
 ---@param tbl table the table to expand
+---@param current_path string? internal recursion use: current property path for tracking terminal objects
 ---@return table expanded the expanded table
-function M.expand(tbl)
+function M.expand(tbl, current_path)
   if type(tbl) ~= 'table' then
     return tbl
   end
 
+  -- Check if we're inside a terminal object (free-form dictionary)
+  -- If so, do not expand dotted keys in this table
+  local is_terminal = current_path and TerminalObjects[current_path]
+
   local out = {}
   for key, value in pairs(tbl) do
     local v = value
+
+    -- Build the path for this key
+    local key_path = current_path and (current_path .. '.' .. key) or key
+
     -- Recurse into map-like tables, but never into JSON Schema "properties" tables.
     if is_map(v) and key ~= 'properties' then
-      v = M.expand(v)
+      v = M.expand(v, key_path)
     end
 
-    if type(key) == 'string' and key:find('%.') then
+    -- Only expand dotted keys if:
+    -- 1. The key contains a dot
+    -- 2. We're NOT inside a terminal object
+    if type(key) == 'string' and key:find('%.') and not is_terminal then
       local parts = {}
       for part in key:gmatch('[^.]+') do
         parts[#parts + 1] = part
