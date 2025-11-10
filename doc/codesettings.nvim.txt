@@ -72,11 +72,8 @@ with to use non-default config. You must call `.setup()` for some features like
         ---It should be/return the full absolute path to the root directory.
         ---If not set, defaults to `require('codesettings.util').get_root()`
         root_dir = nil,
-        ---Choose the default merge behavior
-        merge_opts = {
-          --- How to merge lists; 'append' (default), 'prepend' or 'replace'
-          list_behavior = 'append',
-        },
+        --- How to merge lists; 'append' (default), 'prepend' or 'replace'
+        merge_lists = 'append',
       },
       -- I recommend loading on these filetype so that the
       -- jsonls integration, lua_ls integration, and jsonc filetype setup works
@@ -90,7 +87,7 @@ plugin configuration._ For example:
 
 >jsonc
     {
-      "codesettings.merge_opts.list_behavior": "replace",
+      "codesettings.merge_lists": "replace",
     }
 <
 
@@ -246,7 +243,7 @@ lsp.server_name` generated type annotations.
     - Loads and parses the settings file(s) for the current project. Returns a `Settings` object.
     - `Settings` object provides some methods like:
         - `Settings:schema(lsp_name)` - Filter the settings down to only the keys that match the relevant schema e.g. `settings:schema('eslint')`
-        - `Settings:merge(settings, key, merge_opts)` - merge another `Settings` object into this one, optionally specify a sub-key to merge, and control merge behavior with the 2nd and 3rd parameter, respectively
+        - `Settings:merge(settings, key, opts)` - merge another `Settings` object into this one, optionally specify a sub-key to merge, and control merge behavior with the 2nd and 3rd parameter, respectively (e.g. `{ merge_lists = 'replace' }`)
         - `Settings:get(key)` - returns the value at the specified key; supports dot-separated key paths like `Settings:get('some.sub.property')`
         - `Settings:get_subtable(key)` - like `Settings:get(key)`, but returns a `Settings` object if the path is a table, otherwise `nil`
         - `Settings:clear()` - remove all values
