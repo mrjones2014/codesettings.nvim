@@ -152,13 +152,6 @@ function M.fetch_schema(schema)
   return ret
 end
 
-function M.clean()
-  ---@diagnostic disable-next-line: param-type-mismatch
-  for _, f in pairs(vim.fn.expand('schemas/*.json', false, true)) do
-    vim.uv.fs_unlink(f)
-  end
-end
-
 ---THIS WILL CALL `os.exit(1)` IF A SCHEMA CANNOT BE FETCHED.
 ---This is only meant to be called from a build script!
 function M.update_schemas()
@@ -181,8 +174,25 @@ function M.update_schemas()
 end
 
 function M.build()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
   M.clean()
   M.update_schemas()
+end
+
+function M.clean()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
+  local files = vim.fn.expand('schemas/*.json', false, true)
+  if type(files) == 'string' then
+    files = { files }
+  end
+  for _, f in pairs(files) do
+    Util.delete_file(f)
+    print('Deleted ' .. f)
+  end
 end
 
 return M

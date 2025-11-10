@@ -28,6 +28,12 @@ function M.write_file(file, data)
   fd:close()
 end
 
+---Delete the given file
+---@param f string file path to delete
+function M.delete_file(f)
+  vim.uv.fs_unlink(f)
+end
+
 ---Get fully qualified normalized path
 ---@param fname string file path to normalize
 ---@return string
@@ -126,6 +132,7 @@ function M.merge(a, b, opts)
         ret[k] = M.merge(ret[k], v, opts)
       end
     else
+      opts = opts or {}
       if (ret == nil or vim.islist(ret)) and (value == nil or vim.islist(value)) then
         if opts.list_behavior == 'append' then
           local out = {}

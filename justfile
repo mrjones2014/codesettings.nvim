@@ -1,11 +1,13 @@
-# Fetch updated VS Code schemas
-build target="":
-  @nvim --cmd "set rtp^=." -l "lua/codesettings/build/init.lua" {{target}}
+cli_script := "lua/codesettings/build/cli.lua"
+nvim_build := "nvim --cmd 'set rtp^=.' -l " + cli_script
 
-# Delete all VS Code schemas
-clean:
-  @echo "Cleaning build artifacts..."
-  @nvim --cmd "set rtp^=." --cmd "lua require('codesettings.build.schemas').clean()" --cmd "qa!"
+# Fetch updated VS Code schemas and generate Lua type annotations
+build target="":
+  @{{nvim_build}} build {{target}}
+
+# Delete all JSON schemas and other generated files
+clean target="":
+  @{{nvim_build}} clean {{target}}
 
 ci-checks:
   #!/usr/bin/env bash
@@ -14,11 +16,11 @@ ci-checks:
   fi
   echo "Checking if config type annotations are up to date..."
   just build config >/dev/null 2>&1
-  PATH_TO_CHECK="./lua/codesettings/generated/codesettings-config-schema.lua"
-  if ! git diff --quiet $PATH_TO_CHECK; then
-    echo "Error: Generated configuration schema is out of date. Please run 'just build config' to update it."
+  path_to_check="lua/codesettings/generated/codesettings-config-schema.lua"
+  if ! git diff --quiet "$path_to_check"; then
+    echo "Error: Generated configuration schema is out of date. Please run 'just build config' to update it and commit the results to your PR."
     echo
-    git --no-pager diff $PATH_TO_CHECK
+    git --no-pager diff "$path_to_check"
     echo
     exit 1
   fi

@@ -1,8 +1,10 @@
 local Util = require('codesettings.util')
 
-local M = {}
+local relpath = 'lua/codesettings/generated/codesettings-config-schema.lua'
 
-M.lines = {}
+local Build = {}
+
+Build.lines = {}
 
 ---Add a comment block from a description
 ---@param desc string|nil
@@ -10,7 +12,7 @@ M.lines = {}
 local function add_comment(desc, prefix)
   if desc then
     prefix = (prefix or '') .. '---'
-    table.insert(M.lines, prefix .. desc:gsub('\n', '\n' .. prefix))
+    table.insert(Build.lines, prefix .. desc:gsub('\n', '\n' .. prefix))
   end
 end
 
@@ -130,7 +132,7 @@ local function process_property(name, prop, class_prefix)
     local class_name = class_prefix .. to_pascal_case(name)
 
     add_desc_with_default(prop)
-    table.insert(M.lines, '---@class ' .. class_name)
+    table.insert(Build.lines, '---@class ' .. class_name)
 
     local props = vim.tbl_keys(prop.properties)
     table.sort(props)
@@ -141,23 +143,28 @@ local function process_property(name, prop, class_prefix)
 
       if child.type == 'object' and child.properties then
         local nested_class = class_name .. to_pascal_case(field)
-        table.insert(M.lines, '---@field ' .. field .. ' ' .. nested_class .. '?')
+        table.insert(Build.lines, '---@field ' .. field .. ' ' .. nested_class .. '?')
         -- Recursively process nested object
         process_property(field, child, class_name)
       else
-        table.insert(M.lines, '---@field ' .. field .. ' ' .. get_lua_type(child) .. '?')
+        table.insert(Build.lines, '---@field ' .. field .. ' ' .. get_lua_type(child) .. '?')
       end
     end
 
-    table.insert(M.lines, '')
+    table.insert(Build.lines, '')
   end
 end
 
+local M = {}
+
 ---Generate annotations for the config schema
 function M.build()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
   print('Generating Lua type annotations for codesettings configuration...')
 
-  M.lines = {
+  Build.lines = {
     '-- stylua: ignore',
     '---@meta',
     '',
@@ -168,13 +175,13 @@ function M.build()
   local schema = require('codesettings.config.schema')
 
   -- Generate overridable config class
-  table.insert(M.lines, '---Input type for config options that can be overridden per-load')
-  table.insert(M.lines, '---@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig')
-  table.insert(M.lines, '')
+  table.insert(Build.lines, '---Input type for config options that can be overridden per-load')
+  table.insert(Build.lines, '---@class (partial) CodesettingsConfigOverrides: CodesettingsOverridableConfig')
+  table.insert(Build.lines, '')
 
   -- Generate overridable config class
-  table.insert(M.lines, '---Options which can be passed on a per-load basis (i.e. can override global config)')
-  table.insert(M.lines, '---@class CodesettingsOverridableConfig')
+  table.insert(Build.lines, '---Options which can be passed on a per-load basis (i.e. can override global config)')
+  table.insert(Build.lines, '---@class CodesettingsOverridableConfig')
 
   local props = vim.tbl_keys(schema.properties)
   table.sort(props)
@@ -199,26 +206,26 @@ function M.build()
 
     if prop.type == 'object' and prop.properties then
       local class_name = 'Codesettings' .. to_pascal_case(name)
-      table.insert(M.lines, '---@field ' .. name .. ' ' .. class_name .. '?')
+      table.insert(Build.lines, '---@field ' .. name .. ' ' .. class_name .. '?')
     else
-      table.insert(M.lines, '---@field ' .. name .. ' ' .. get_lua_type(prop) .. '?')
+      table.insert(Build.lines, '---@field ' .. name .. ' ' .. get_lua_type(prop) .. '?')
     end
   end
 
-  table.insert(M.lines, '')
+  table.insert(Build.lines, '')
 
   -- Generate main config class
-  table.insert(M.lines, '---Main configuration class')
-  table.insert(M.lines, '---@class CodesettingsConfig: CodesettingsOverridableConfig')
+  table.insert(Build.lines, '---Main configuration class')
+  table.insert(Build.lines, '---@class CodesettingsConfig: CodesettingsOverridableConfig')
 
   -- Add non-overridable fields
   for _, name in ipairs(non_overridable_props) do
     local prop = schema.properties[name]
     add_desc_with_default(prop)
-    table.insert(M.lines, '---@field ' .. name .. ' ' .. get_lua_type(prop))
+    table.insert(Build.lines, '---@field ' .. name .. ' ' .. get_lua_type(prop))
   end
 
-  table.insert(M.lines, '')
+  table.insert(Build.lines, '')
 
   -- Process nested objects
   for _, name in ipairs(props) do
@@ -228,8 +235,16 @@ function M.build()
     end
   end
 
-  Util.write_file(Util.path('lua/codesettings/generated/codesettings-config-schema.lua'), table.concat(M.lines, '\n'))
-  print('Generated lua/codesettings/generated/codesettings-config-schema.lua')
+  Util.write_file(Util.path(relpath), table.concat(Build.lines, '\n'))
+  print('Generated ' .. relpath)
+end
+
+function M.clean()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
+  Util.delete_file(Util.path(relpath))
+  print('Deleted ' .. relpath)
 end
 
 return M

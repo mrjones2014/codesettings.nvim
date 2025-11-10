@@ -4,6 +4,9 @@ local Schemas = require('codesettings.build.schemas')
 local M = {}
 
 function M.build()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
   print('Generating list of supported LSP servers in README.md...')
   local lines = {}
   local schemas = Schemas.get_schemas()
