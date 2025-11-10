@@ -3,12 +3,14 @@ local build_targets = {
   annotations = require('codesettings.build.annotations'),
   config = require('codesettings.build.config-schema'),
   doc = require('codesettings.build.doc'),
+  terminals = require('codesettings.build.terminal-objects'),
 }
 
 -- Define build order and dependencies
-local build_order = { 'schemas', 'annotations', 'config', 'doc' }
+local build_order = { 'schemas', 'terminals', 'annotations', 'config', 'doc' }
 
 local build_dependencies = {
+  terminals = { 'schemas' },
   annotations = { 'schemas' },
   doc = { 'schemas' },
 }
