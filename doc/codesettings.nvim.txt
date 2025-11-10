@@ -1,4 +1,4 @@
-*codesettings.nvim.txt*   For Neovim >= 0.11.0   Last change: 2025 November 09
+*codesettings.nvim.txt*   For Neovim >= 0.11.0   Last change: 2025 November 10
 
 ==============================================================================
 Table of Contents                        *codesettings.nvim-table-of-contents*
