@@ -19,6 +19,7 @@
             stylua
             selene
             luajitPackages.busted
+            luajitPackages.argparse
           ];
         };
       }
