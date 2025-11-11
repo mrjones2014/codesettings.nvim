@@ -64,7 +64,9 @@ function M.check()
       info('Live reload is enabled but no files are currently being watched')
     end
   else
-    info('Live reload is disabled. Enable with `live_reload = true` to automatically reload settings when config files change')
+    info(
+      'Live reload is disabled. Enable with `live_reload = true` to automatically reload settings when config files change'
+    )
   end
 end
 

@@ -1,5 +1,5 @@
-local Util = require('codesettings.util')
 local Settings = require('codesettings.settings')
+local Util = require('codesettings.util')
 local Methods = vim.lsp.protocol.Methods
 
 local M = {}

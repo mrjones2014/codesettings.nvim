@@ -1,5 +1,5 @@
-local Util = require('codesettings.util')
 local Transformer = require('codesettings.setup.jsonls.transformer')
+local Util = require('codesettings.util')
 
 local M = {}
 
