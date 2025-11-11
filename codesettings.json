@@ -22,4 +22,5 @@
       "vim"
     ]
   },
+  "codesettings.live_reload": true
 }

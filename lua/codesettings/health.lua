@@ -53,6 +53,19 @@ function M.check()
   else
     warn('**jsonc** parser for tree-sitter is not installed. Jsonc highlighting might be broken')
   end
+
+  local Config = require('codesettings.config')
+  if Config.live_reload then
+    local LiveReload = require('codesettings.setup.live-reload')
+    local watcher_count = LiveReload.count()
+    if watcher_count > 0 then
+      ok('Live reload is enabled and watching %d file(s)', watcher_count)
+    else
+      info('Live reload is enabled but no files are currently being watched')
+    end
+  else
+    info('Live reload is disabled. Enable with `live_reload = true` to automatically reload settings when config files change')
+  end
 end
 
 return M

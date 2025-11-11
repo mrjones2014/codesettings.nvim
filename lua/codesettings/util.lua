@@ -307,6 +307,12 @@ local msg_prefix = '[codesettings] '
 
 ---@param msg string
 ---@param ... any
+function M.info(msg, ...)
+  vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.INFO)
+end
+
+---@param msg string
+---@param ... any
 function M.warn(msg, ...)
   vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.WARN)
 end

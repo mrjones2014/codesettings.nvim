@@ -36,6 +36,10 @@ function Config.setup(opts)
   if lua_ls_integration == true or (type(lua_ls_integration) == 'function' and lua_ls_integration()) then
     require('codesettings.setup.lua_ls').setup()
   end
+
+  if options.live_reload then
+    require('codesettings.setup.live-reload').setup()
+  end
 end
 
 ---Reset the configuration to defaults.
