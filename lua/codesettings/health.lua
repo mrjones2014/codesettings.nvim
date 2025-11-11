@@ -1,3 +1,4 @@
+local Config = require('codesettings.config')
 local Util = require('codesettings.util')
 
 local health_start = vim.health.start or vim.health.report_start
@@ -49,12 +50,11 @@ function M.check()
   end
 
   if pcall(vim.treesitter.get_string_parser, '', 'jsonc') then
-    ok('**jsonc** parser for tree-sitter is installed')
+    ok('`jsonc` parser for tree-sitter is installed')
   else
-    warn('**jsonc** parser for tree-sitter is not installed. Jsonc highlighting might be broken')
+    warn('`jsonc` parser for tree-sitter is not installed. Jsonc highlighting might be broken')
   end
 
-  local Config = require('codesettings.config')
   if Config.live_reload then
     local LiveReload = require('codesettings.setup.live-reload')
     local watcher_count = LiveReload.count()
@@ -67,6 +67,43 @@ function M.check()
     info(
       'Live reload is disabled. Enable with `live_reload = true` to automatically reload settings when config files change'
     )
+  end
+
+  -- check if fs_event is available for live reload
+  if Config.live_reload then
+    local is_ok, has_fs_watch = pcall(function()
+      local test_watcher = vim.uv.new_fs_event()
+      if test_watcher then
+        test_watcher:stop()
+        test_watcher:close()
+        return true
+      end
+      return false
+    end)
+
+    if not is_ok or not has_fs_watch then
+      warn('File system events (`fs_event`) are not available; live reload may not work properly')
+    else
+      ok('File system events (`fs_event`) are available for live reload')
+    end
+  end
+
+  -- check LSP integration settings
+  if Config.jsonls_integration then
+    ok('`jsonls` integration is enabled')
+  else
+    info('`jsonls` integration is disabled')
+  end
+
+  if Config.lua_ls_integration then
+    ok('`lua_ls` integration is enabled')
+  else
+    info('`lua_ls` integration is disabled')
+  end
+
+  -- check loader extensions
+  if Config.loader_extensions and #Config.loader_extensions > 0 then
+    ok('Loader extensions configured: %d', #Config.loader_extensions)
   end
 end
 
