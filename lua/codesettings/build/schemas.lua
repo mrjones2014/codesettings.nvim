@@ -250,8 +250,8 @@ function M.clean()
   end
   for _, f in pairs(files) do
     Util.delete_file(f)
-    print('Deleted ' .. f)
   end
+  print('Deleted ' .. #files .. ' schema files from schemas/*')
 end
 
 return M

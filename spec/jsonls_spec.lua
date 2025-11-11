@@ -1,7 +1,7 @@
 ---@module 'busted'
 
 describe('jsonls integration', function()
-  local Jsonls = require('codesettings.integrations.jsonls')
+  local Jsonls = require('codesettings.setup.jsonls')
 
   before_each(function()
     Jsonls.clear_cache()
@@ -37,7 +37,7 @@ describe('jsonls integration', function()
 end)
 
 describe('expand_schema', function()
-  local expand_schema = require('codesettings.integrations.jsonls.transformer').expand_schema
+  local expand_schema = require('codesettings.setup.jsonls.transformer').expand_schema
 
   it('creates both dotted and nested forms for a single dotted key', function()
     local input = {

@@ -2306,6 +2306,7 @@
 -- 
 -- ```lua
 -- default = {
+--   analyze_files = false,
 --   run_tests = false
 -- }
 -- ```
@@ -3173,7 +3174,7 @@
 -- An array of language ids for which the extension should probe if support is installed.
 -- 
 -- ```lua
--- default = { "astro", "civet", "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "mdx", "vue", "markdown", "json", "jsonc", "css", "glimmer-js", "glimmer-ts" }
+-- default = { "astro", "civet", "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "mdx", "vue", "markdown", "json", "jsonc", "css", "glimmer-js", "glimmer-ts", "svelte" }
 -- ```
 ---@field probe string[]?
 ---@field problems lsp.eslint.Problems?
@@ -10678,6 +10679,26 @@
 -- ```
 ---@field enable boolean?
 
+---@class lsp.intelephense.InlayHint
+-- Will show inlay hints for call argument parameter names if named arguments are not already in use.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field parameterNames boolean?
+-- Will show inlay hints for anonymous function declaration parameter types if not already declared.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field parameterTypes boolean?
+-- Will show an inlay hint for call declaration return type if not already declared.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field returnTypes boolean?
+
 -- An object that describes the format of generated class/interface/trait phpdoc. The following snippet variables are available: SYMBOL_NAME; SYMBOL_KIND; SYMBOL_TYPE; SYMBOL_NAMESPACE.
 -- 
 -- ```lua
@@ -10809,6 +10830,7 @@
 ---@field environment lsp.intelephense.Environment?
 ---@field files lsp.intelephense.Files?
 ---@field format lsp.intelephense.Format?
+---@field inlayHint lsp.intelephense.InlayHint?
 -- DEPRECATED. Don't use this. Go to command palette and search for enter licence key.
 ---@field licenceKey string?
 -- Maximum memory (in MB) that the server should use. On some systems this may only have effect when runtime has been set. Minimum 256.
