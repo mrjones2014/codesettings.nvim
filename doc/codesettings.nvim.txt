@@ -436,6 +436,7 @@ projects!
 - denols <https://github.com/denoland/vscode_deno/tree/main/package.json>
 - elixirls <https://github.com/elixir-lsp/vscode-elixir-ls/tree/master/package.json>
 - elmls <https://github.com/elm-tooling/elm-language-client-vscode/tree/master/package.json>
+- emmylua_ls <https://github.com/EmmyLuaLs/emmylua-analyzer-rust/86ae47efba57c2d70a5af18faa6e8418b0129b22/crates/emmylua_code_analysis/resources/schema.json>
 - eslint <https://github.com/microsoft/vscode-eslint/tree/main/package.json>
 - flow <https://github.com/flowtype/flow-for-vscode/tree/master/package.json>
 - fsautocomplete <https://github.com/ionide/ionide-vscode-fsharp/tree/main/release/package.json>
