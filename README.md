@@ -38,6 +38,7 @@ return {
     ---lua_ls_integration = function()
     ---  return vim.uv.cwd() == ('%s/.config/nvim'):format(vim.env.HOME)
     ---end,
+    ---This integration also works for emmylua_ls
     lua_ls_integration = true,
     ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
     ---make sure you have the jsonc tree-sitter parser installed for highlighting
@@ -176,7 +177,7 @@ return {
 }
 ```
 
-To get autocomplete in Lua files, either set `config.lua_ls_integration = true`, or use `---@module 'codesettings'` which will tell `lua_ls` as though `codesettings`
+To get autocomplete in Lua files, either set `config.lua_ls_integration = true`, or (for `lua_ls` only, not `emmylua_ls`) use `---@module 'codesettings'` which will tell `lua_ls` as though `codesettings`
 has been `require`d, then you will have access to `---@type lsp.server_name` generated type annotations.
 
 ```lua
@@ -438,4 +439,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
