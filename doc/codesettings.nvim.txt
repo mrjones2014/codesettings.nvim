@@ -1,4 +1,4 @@
-*codesettings.nvim.txt*   For Neovim >= 0.11.0   Last change: 2025 November 11
+*codesettings.nvim.txt*   For Neovim >= 0.11.0   Last change: 2025 November 12
 
 ==============================================================================
 Table of Contents                        *codesettings.nvim-table-of-contents*
@@ -68,6 +68,10 @@ with to use non-default config. You must call `.setup()` for some features like
         ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
         ---make sure you have the jsonc tree-sitter parser installed for highlighting
         jsonc_filetype = true,
+        ---Enable live reloading of settings when config files change; for servers that support it,
+        ---this is done via the `workspace/didChangeConfiguration` notification, otherwise the
+        ---server is restarted
+        live_reload = false,
         ---Provide your own root dir; can be a string or function returning a string.
         ---It should be/return the full absolute path to the root directory.
         ---If not set, defaults to `require('codesettings.util').get_root()`
@@ -183,6 +187,7 @@ configure `rustaceanvim` in my own setup:
 
 - Minimal API: one function you call per server setup, or with a global hook (see example above)
 - `jsonc` filetype for local config files
+- Live reload: automatically reload settings when config files change (opt-in via `live_reload = true`)
 - Configure the `codesettings.nvim` plugin itself in local config JSON files
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua, with optional `lua_ls` integration
