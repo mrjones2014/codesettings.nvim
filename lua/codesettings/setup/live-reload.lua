@@ -5,7 +5,7 @@ local M = {}
 ---@type number|nil
 local augroup = nil
 
----@type {[string]: uv_timer_t}
+---@type {[string]: uv.uv_timer_t}
 local debounce_timers = {}
 
 ---Reload settings for all active LSP clients

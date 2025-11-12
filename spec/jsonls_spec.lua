@@ -27,11 +27,51 @@ describe('jsonls integration', function()
         },
       })
 
-      local schemas = Jsonls.get_json_schemas()
+      Jsonls.setup()
+      vim.lsp.enable('jsonls')
+      -- Create a mock jsonls client
+      local mock_client = {
+        id = 999,
+        name = 'jsonls',
+        config = {
+          settings = {
+            json = {
+              schemas = { existing_schema },
+            },
+          },
+        },
+      }
+      -- Temporarily override vim.lsp.get_client_by_id to return our mock
+      local original_get_client = vim.lsp.get_client_by_id
+      vim.lsp.get_client_by_id = function(id) ---@diagnostic disable-line: duplicate-set-field
+        if id == 999 then
+          return mock_client
+        end
+        return original_get_client(id)
+      end
 
-      local codesettings_schemas = require('codesettings.build.schemas').get_schemas()
-      assert.True(#schemas > #codesettings_schemas)
-      assert.same(existing_schema, schemas[1])
+      -- Fire the LspAttach autocmd
+      vim.api.nvim_exec_autocmds('LspAttach', {
+        data = { client_id = 999 },
+      })
+
+      -- Restore original function
+      vim.lsp.get_client_by_id = original_get_client
+      -- Fire the LspAttach autocmd
+      vim.api.nvim_exec_autocmds('LspAttach', {
+        data = { client_id = 999 },
+      })
+
+      -- Restore original function
+      vim.lsp.get_client_by_id = original_get_client
+
+      -- Check that existing schema is still present
+      local schemas = mock_client.config.settings.json.schemas
+      assert.truthy(vim.tbl_contains(schemas, existing_schema))
+
+      -- Check that codesettings schemas were added
+      assert.True(#schemas > 1)
+      assert.same(schemas[#schemas], Jsonls.get_json_schemas()[1])
     end)
   end)
 end)

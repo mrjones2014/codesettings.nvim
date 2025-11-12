@@ -389,4 +389,43 @@ function M.did_change_configuration(client_or_name, config, silent)
   end)
 end
 
+---Ensure these LSP settings are always applied, forcing `merge_lists = 'append'`.
+---This is useful for the built-in jsonls and lua_ls integrations, which rely on
+---adding schemas and library paths, respectively.
+---@param lsp_name string name of the LSP server
+---@param config { settings: table } settings to ensure
+function M.ensure_lsp_settings(lsp_name, config)
+  local group = vim.api.nvim_create_augroup('codesettings_' .. lsp_name, { clear = true })
+
+  -- Handler function to update a client's config
+  local function update_client(client)
+    if client.name ~= lsp_name then
+      return false
+    end
+
+    -- Deep merge the config update into the client's existing config
+    client.config.settings = M.merge(client.config.settings or {}, config.settings or {}, { merge_lists = 'append' })
+
+    -- Notify the server of the configuration change
+    M.did_change_configuration(lsp_name, client.config, true)
+    return true
+  end
+
+  -- Update any already-running clients
+  for _, client in ipairs(vim.lsp.get_clients({ name = lsp_name })) do
+    update_client(client)
+  end
+
+  -- Set up autocmd for future clients
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = group,
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client then
+        update_client(client)
+      end
+    end,
+  })
+end
+
 return M
