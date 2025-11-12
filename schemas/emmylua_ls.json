@@ -1,0 +1,1145 @@
+{
+  "$defs": {
+    "DiagnosticCode": {
+      "oneOf": [
+        {
+          "enum": [
+            "none"
+          ],
+          "type": "string"
+        },
+        {
+          "const": "syntax-error",
+          "description": "Syntax error",
+          "type": "string"
+        },
+        {
+          "const": "doc-syntax-error",
+          "description": "Doc syntax error",
+          "type": "string"
+        },
+        {
+          "const": "type-not-found",
+          "description": "Type not found",
+          "type": "string"
+        },
+        {
+          "const": "missing-return",
+          "description": "Missing return statement",
+          "type": "string"
+        },
+        {
+          "const": "param-type-mismatch",
+          "description": "Param Type not match",
+          "type": "string"
+        },
+        {
+          "const": "missing-parameter",
+          "description": "Missing parameter",
+          "type": "string"
+        },
+        {
+          "const": "redundant-parameter",
+          "description": "Redundant parameter",
+          "type": "string"
+        },
+        {
+          "const": "unreachable-code",
+          "description": "Unreachable code",
+          "type": "string"
+        },
+        {
+          "const": "unused",
+          "description": "Unused",
+          "type": "string"
+        },
+        {
+          "const": "undefined-global",
+          "description": "Undefined global",
+          "type": "string"
+        },
+        {
+          "const": "deprecated",
+          "description": "Deprecated",
+          "type": "string"
+        },
+        {
+          "const": "access-invisible",
+          "description": "Access invisible",
+          "type": "string"
+        },
+        {
+          "const": "discard-returns",
+          "description": "Discard return value",
+          "type": "string"
+        },
+        {
+          "const": "undefined-field",
+          "description": "Undefined field",
+          "type": "string"
+        },
+        {
+          "const": "local-const-reassign",
+          "description": "Local const reassign",
+          "type": "string"
+        },
+        {
+          "const": "iter-variable-reassign",
+          "description": "Iter variable reassign",
+          "type": "string"
+        },
+        {
+          "const": "duplicate-type",
+          "description": "Duplicate type",
+          "type": "string"
+        },
+        {
+          "const": "redefined-local",
+          "description": "Redefined local",
+          "type": "string"
+        },
+        {
+          "const": "redefined-label",
+          "description": "Redefined label",
+          "type": "string"
+        },
+        {
+          "const": "code-style-check",
+          "description": "Code style check",
+          "type": "string"
+        },
+        {
+          "const": "need-check-nil",
+          "description": "Need check nil",
+          "type": "string"
+        },
+        {
+          "const": "await-in-sync",
+          "description": "Await in sync",
+          "type": "string"
+        },
+        {
+          "const": "annotation-usage-error",
+          "description": "Doc tag usage error",
+          "type": "string"
+        },
+        {
+          "const": "return-type-mismatch",
+          "description": "Return type mismatch",
+          "type": "string"
+        },
+        {
+          "const": "missing-return-value",
+          "description": "Missing return value",
+          "type": "string"
+        },
+        {
+          "const": "redundant-return-value",
+          "description": "Redundant return value",
+          "type": "string"
+        },
+        {
+          "const": "undefined-doc-param",
+          "description": "Undefined Doc Param",
+          "type": "string"
+        },
+        {
+          "const": "duplicate-doc-field",
+          "description": "Duplicate doc field",
+          "type": "string"
+        },
+        {
+          "const": "unknown-doc-tag",
+          "description": "Unknown doc annotation",
+          "type": "string"
+        },
+        {
+          "const": "missing-fields",
+          "description": "Missing fields",
+          "type": "string"
+        },
+        {
+          "const": "inject-field",
+          "description": "Inject Field",
+          "type": "string"
+        },
+        {
+          "const": "circle-doc-class",
+          "description": "Circle Doc Class",
+          "type": "string"
+        },
+        {
+          "const": "incomplete-signature-doc",
+          "description": "Incomplete signature doc",
+          "type": "string"
+        },
+        {
+          "const": "missing-global-doc",
+          "description": "Missing global doc",
+          "type": "string"
+        },
+        {
+          "const": "assign-type-mismatch",
+          "description": "Assign type mismatch",
+          "type": "string"
+        },
+        {
+          "const": "duplicate-require",
+          "description": "Duplicate require",
+          "type": "string"
+        },
+        {
+          "const": "non-literal-expressions-in-assert",
+          "description": "non-literal-expressions-in-assert",
+          "type": "string"
+        },
+        {
+          "const": "unbalanced-assignments",
+          "description": "Unbalanced assignments",
+          "type": "string"
+        },
+        {
+          "const": "unnecessary-assert",
+          "description": "unnecessary-assert",
+          "type": "string"
+        },
+        {
+          "const": "unnecessary-if",
+          "description": "unnecessary-if",
+          "type": "string"
+        },
+        {
+          "const": "duplicate-set-field",
+          "description": "duplicate-set-field",
+          "type": "string"
+        },
+        {
+          "const": "duplicate-index",
+          "description": "duplicate-index",
+          "type": "string"
+        },
+        {
+          "const": "generic-constraint-mismatch",
+          "description": "generic-constraint-mismatch",
+          "type": "string"
+        },
+        {
+          "const": "cast-type-mismatch",
+          "description": "cast-type-mismatch",
+          "type": "string"
+        },
+        {
+          "const": "require-module-not-visible",
+          "description": "require-module-not-visible",
+          "type": "string"
+        },
+        {
+          "const": "enum-value-mismatch",
+          "description": "enum-value-mismatch",
+          "type": "string"
+        },
+        {
+          "const": "preferred-local-alias",
+          "description": "preferred-local-alias",
+          "type": "string"
+        },
+        {
+          "const": "read-only",
+          "description": "readonly",
+          "type": "string"
+        },
+        {
+          "const": "global-in-non-module",
+          "description": "Global variable defined in non-module scope",
+          "type": "string"
+        },
+        {
+          "const": "attribute-param-type-mismatch",
+          "description": "attribute-param-type-mismatch",
+          "type": "string"
+        },
+        {
+          "const": "attribute-missing-parameter",
+          "description": "attribute-missing-parameter",
+          "type": "string"
+        },
+        {
+          "const": "attribute-redundant-parameter",
+          "description": "attribute-redundant-parameter",
+          "type": "string"
+        }
+      ]
+    },
+    "DiagnosticSeveritySetting": {
+      "oneOf": [
+        {
+          "const": "error",
+          "description": "Represents an error diagnostic severity.",
+          "type": "string"
+        },
+        {
+          "const": "warning",
+          "description": "Represents a warning diagnostic severity.",
+          "type": "string"
+        },
+        {
+          "const": "information",
+          "description": "Represents an information diagnostic severity.",
+          "type": "string"
+        },
+        {
+          "const": "hint",
+          "description": "Represents a hint diagnostic severity.",
+          "type": "string"
+        }
+      ]
+    },
+    "DocSyntax": {
+      "enum": [
+        "none",
+        "md",
+        "myst",
+        "rst"
+      ],
+      "type": "string"
+    },
+    "EmmyrcCodeAction": {
+      "properties": {
+        "insertSpace": {
+          "default": false,
+          "description": "Add space after `---` comments when inserting `@diagnostic disable-next-line`.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcCodeLens": {
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Enable code lens.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcCompletion": {
+      "description": "Configuration for EmmyLua code completion.",
+      "properties": {
+        "autoRequire": {
+          "default": true,
+          "description": "Automatically insert call to `require` when autocompletion\ninserts objects from other modules.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "autoRequireFunction": {
+          "default": "require",
+          "description": "The function used for auto-requiring modules.",
+          "type": "string"
+        },
+        "autoRequireNamingConvention": {
+          "$ref": "#/$defs/EmmyrcFilenameConvention",
+          "default": "keep",
+          "description": "The naming convention for auto-required filenames."
+        },
+        "autoRequireSeparator": {
+          "default": ".",
+          "description": "A separator used in auto-require paths.",
+          "type": "string"
+        },
+        "baseFunctionIncludesName": {
+          "default": true,
+          "description": "Whether to include the name in the base function completion. Effect: `function () end` -> `function name() end`.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "callSnippet": {
+          "default": false,
+          "description": "Whether to use call snippets in completions.",
+          "type": "boolean"
+        },
+        "enable": {
+          "default": true,
+          "description": "Enable autocompletion.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "postfix": {
+          "default": "@",
+          "description": "Symbol that's used to trigger postfix autocompletion.",
+          "type": "string",
+          "x-vscode-setting": {
+            "default": null,
+            "enum": [
+              null,
+              "@",
+              ".",
+              ":"
+            ],
+            "enumItemLabels": [
+              "Default"
+            ],
+            "markdownEnumDescriptions": [
+              "%config.common.enum.default.description%"
+            ],
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcDiagnostic": {
+      "description": "Represents the diagnostic configuration for Emmyrc.",
+      "properties": {
+        "diagnosticInterval": {
+          "description": "Delay between opening/changing a file and scanning it for errors, in milliseconds.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "x-vscode-setting": true
+        },
+        "disable": {
+          "default": [],
+          "description": "A list of diagnostic codes that are disabled.",
+          "items": {
+            "$ref": "#/$defs/DiagnosticCode"
+          },
+          "type": "array"
+        },
+        "enable": {
+          "default": true,
+          "description": "A flag indicating whether diagnostics are enabled.",
+          "type": "boolean"
+        },
+        "enables": {
+          "default": [],
+          "description": "A list of diagnostic codes that are enabled.",
+          "items": {
+            "$ref": "#/$defs/DiagnosticCode"
+          },
+          "type": "array"
+        },
+        "globals": {
+          "default": [],
+          "description": "A list of global variables.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "globalsRegex": {
+          "default": [],
+          "description": "A list of regular expressions for global variables.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "severity": {
+          "additionalProperties": {
+            "$ref": "#/$defs/DiagnosticSeveritySetting"
+          },
+          "default": {},
+          "description": "A map of diagnostic codes to their severity settings.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcDoc": {
+      "properties": {
+        "knownTags": {
+          "default": [],
+          "description": "List of known documentation tags.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "privateName": {
+          "default": [],
+          "description": "Treat specific field names as private, e.g. `m_*` means `XXX.m_id` and `XXX.m_type` are private, witch can only be accessed in the class where the definition is located.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "rstDefaultRole": {
+          "description": "When `syntax` is `Myst` or `Rst`, specifies default role used\nwith RST processor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rstPrimaryDomain": {
+          "description": "When `syntax` is `Myst` or `Rst`, specifies primary domain used\nwith RST processor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "syntax": {
+          "$ref": "#/$defs/DocSyntax",
+          "default": "md",
+          "description": "Syntax for highlighting documentation."
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcDocumentColor": {
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Enable parsing strings for color tags and showing a color picker next to them.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcExternalTool": {
+      "properties": {
+        "args": {
+          "default": [],
+          "description": "The arguments to pass to the external tool.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "program": {
+          "default": "",
+          "description": "The command to run the external tool.",
+          "type": "string"
+        },
+        "timeout": {
+          "default": 5000,
+          "description": "The timeout for the external tool in milliseconds.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcFilenameConvention": {
+      "oneOf": [
+        {
+          "const": "keep",
+          "description": "Keep the original filename.",
+          "type": "string"
+        },
+        {
+          "const": "snake-case",
+          "description": "Convert the filename to snake_case.",
+          "type": "string"
+        },
+        {
+          "const": "pascal-case",
+          "description": "Convert the filename to PascalCase.",
+          "type": "string"
+        },
+        {
+          "const": "camel-case",
+          "description": "Convert the filename to camelCase.",
+          "type": "string"
+        },
+        {
+          "const": "keep-class",
+          "description": "When returning class definition, use class name, otherwise keep original name.",
+          "type": "string"
+        }
+      ]
+    },
+    "EmmyrcHover": {
+      "properties": {
+        "customDetail": {
+          "default": null,
+          "description": "The detail number of hover information.\nDefault is `None`, which means using the default detail level.\nYou can set it to a number between `1` and `255` to customize",
+          "format": "uint8",
+          "maximum": 255,
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "enable": {
+          "default": true,
+          "description": "Enable showing documentation on hover.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcInlayHint": {
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Enable inlay hints.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "enumParamHint": {
+          "default": false,
+          "description": "Show name of enumerator when passing a literal value to a function\nthat expects an enum.\n\nExample:\n\n```lua\n--- @enum Level\nlocal Foo = {\n   Info = 1,\n   Error = 2,\n}\n\n--- @param l Level\nfunction print_level(l) end\n\nprint_level(1 --[[ Hint: Level.Info ]])\n```",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "indexHint": {
+          "default": true,
+          "description": "Show named array indexes.\n\nExample:\n\n```lua\nlocal array = {\n   [1] = 1, -- [name]\n}\n\nprint(array[1] --[[ Hint: name ]])\n```",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "localHint": {
+          "default": true,
+          "description": "Show types of local variables.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "metaCallHint": {
+          "default": true,
+          "description": "Show hint when calling an object results in a call to\nits meta table's `__call` function.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "overrideHint": {
+          "default": true,
+          "description": "Show methods that override functions from base class.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "paramHint": {
+          "default": true,
+          "description": "Show parameter names in function calls and parameter types in function definitions.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcInlineValues": {
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Show inline values during debug.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcLuaVersion": {
+      "oneOf": [
+        {
+          "const": "Lua5.1",
+          "description": "Lua 5.1",
+          "type": "string"
+        },
+        {
+          "const": "LuaJIT",
+          "description": "LuaJIT",
+          "type": "string"
+        },
+        {
+          "const": "Lua5.2",
+          "description": "Lua 5.2",
+          "type": "string"
+        },
+        {
+          "const": "Lua5.3",
+          "description": "Lua 5.3",
+          "type": "string"
+        },
+        {
+          "const": "Lua5.4",
+          "description": "Lua 5.4",
+          "type": "string"
+        },
+        {
+          "const": "Lua5.5",
+          "description": "Lua 5.5",
+          "type": "string"
+        },
+        {
+          "const": "LuaLatest",
+          "description": "Lua Latest",
+          "type": "string"
+        }
+      ]
+    },
+    "EmmyrcNonStdSymbol": {
+      "enum": [
+        "//",
+        "/**/",
+        "`",
+        "+=",
+        "-=",
+        "*=",
+        "/=",
+        "%=",
+        "^=",
+        "//=",
+        "|=",
+        "&=",
+        "<<=",
+        ">>=",
+        "||",
+        "&&",
+        "!",
+        "!=",
+        "continue"
+      ],
+      "type": "string"
+    },
+    "EmmyrcReference": {
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Enable searching for symbol usages.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "fuzzySearch": {
+          "default": true,
+          "description": "Use fuzzy search when searching for symbol usages\nand normal search didn't find anything.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "shortStringSearch": {
+          "default": false,
+          "description": "Also search for usages in strings.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcReformat": {
+      "properties": {
+        "externalTool": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EmmyrcExternalTool"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Whether to enable external tool formatting."
+        },
+        "externalToolRangeFormat": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EmmyrcExternalTool"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Whether to enable external tool range formatting."
+        },
+        "useDiff": {
+          "default": false,
+          "description": "Whether to use the diff algorithm for formatting.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcResource": {
+      "properties": {
+        "paths": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcRuntime": {
+      "properties": {
+        "extensions": {
+          "default": [],
+          "description": "file Extensions. eg: .lua, .lua.txt",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "frameworkVersions": {
+          "default": [],
+          "description": "Framework versions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "nonstandardSymbol": {
+          "default": [],
+          "description": "Non-standard symbols.",
+          "items": {
+            "$ref": "#/$defs/EmmyrcNonStdSymbol"
+          },
+          "type": "array"
+        },
+        "requireLikeFunction": {
+          "default": [],
+          "description": "Functions that like require.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requirePattern": {
+          "default": [],
+          "description": "Require pattern. eg. \"?.lua\", \"?/init.lua\"",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "special": {
+          "additionalProperties": {
+            "$ref": "#/$defs/EmmyrcSpecialSymbol"
+          },
+          "default": {},
+          "description": "Special symbols.",
+          "type": "object"
+        },
+        "version": {
+          "$ref": "#/$defs/EmmyrcLuaVersion",
+          "default": "LuaLatest",
+          "description": "Lua version."
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcSemanticToken": {
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Enable semantic tokens.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "renderDocumentationMarkup": {
+          "default": false,
+          "description": "Render Markdown/RST in documentation. Set `doc.syntax` for this option to have effect.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcSignature": {
+      "properties": {
+        "detailSignatureHelper": {
+          "default": true,
+          "description": "Whether to enable signature help.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcSpecialSymbol": {
+      "enum": [
+        "none",
+        "require",
+        "error",
+        "assert",
+        "type",
+        "setmetatable"
+      ],
+      "type": "string"
+    },
+    "EmmyrcStrict": {
+      "properties": {
+        "arrayIndex": {
+          "default": true,
+          "description": "Whether to enable strict mode array indexing.",
+          "type": "boolean"
+        },
+        "docBaseConstMatchBaseType": {
+          "default": false,
+          "description": "Base constant types defined in doc can match base types, allowing int to match `---@alias id 1|2|3`, same for string.",
+          "type": "boolean"
+        },
+        "metaOverrideFileDefine": {
+          "default": true,
+          "description": "meta define overrides file define",
+          "type": "boolean"
+        },
+        "requirePath": {
+          "default": false,
+          "description": "Whether to enable strict mode require path.",
+          "type": "boolean"
+        },
+        "typeCall": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcWorkspace": {
+      "properties": {
+        "enableReindex": {
+          "default": false,
+          "description": "Enable full project reindex after changing a file.",
+          "type": "boolean",
+          "x-vscode-setting": true
+        },
+        "encoding": {
+          "default": "utf-8",
+          "description": "Encoding. eg: \"utf-8\"",
+          "type": "string"
+        },
+        "ignoreDir": {
+          "default": [],
+          "description": "Ignore directories.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ignoreGlobs": {
+          "default": [],
+          "description": "Ignore globs. eg: [\"**/*.lua\"]",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "library": {
+          "default": [],
+          "description": "Library paths. eg: \"/usr/local/share/lua/5.1\"",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "moduleMap": {
+          "default": [],
+          "description": "Module map. key is regex, value is new module regex\neg: {\n    \"^(.*)$\": \"module_$1\"\n    \"^lib(.*)$\": \"script$1\"\n}",
+          "items": {
+            "$ref": "#/$defs/EmmyrcWorkspaceModuleMap"
+          },
+          "type": "array"
+        },
+        "preloadFileSize": {
+          "default": 0,
+          "format": "int32",
+          "type": "integer"
+        },
+        "reindexDuration": {
+          "default": 5000,
+          "description": "Delay between changing a file and full project reindex, in milliseconds.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer",
+          "x-vscode-setting": true
+        },
+        "workspaceRoots": {
+          "default": [],
+          "description": "Workspace roots. eg: [\"src\", \"test\"]",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "EmmyrcWorkspaceModuleMap": {
+      "properties": {
+        "pattern": {
+          "type": "string"
+        },
+        "replace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pattern",
+        "replace"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "Lua": {
+      "properties": {
+        "$schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "codeAction": {
+          "$ref": "#/$defs/EmmyrcCodeAction",
+          "default": {
+            "insertSpace": false
+          }
+        },
+        "codeLens": {
+          "$ref": "#/$defs/EmmyrcCodeLens",
+          "default": {
+            "enable": true
+          }
+        },
+        "completion": {
+          "$ref": "#/$defs/EmmyrcCompletion",
+          "default": {
+            "autoRequire": true,
+            "autoRequireFunction": "require",
+            "autoRequireNamingConvention": "keep",
+            "autoRequireSeparator": ".",
+            "baseFunctionIncludesName": true,
+            "callSnippet": false,
+            "enable": true,
+            "postfix": "@"
+          }
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/EmmyrcDiagnostic",
+          "default": {
+            "diagnosticInterval": 500,
+            "disable": [],
+            "enable": true,
+            "enables": [],
+            "globals": [],
+            "globalsRegex": [],
+            "severity": {}
+          }
+        },
+        "doc": {
+          "$ref": "#/$defs/EmmyrcDoc",
+          "default": {
+            "knownTags": [],
+            "privateName": [],
+            "syntax": "md"
+          }
+        },
+        "documentColor": {
+          "$ref": "#/$defs/EmmyrcDocumentColor",
+          "default": {
+            "enable": true
+          }
+        },
+        "format": {
+          "$ref": "#/$defs/EmmyrcReformat",
+          "default": {
+            "externalTool": null,
+            "externalToolRangeFormat": null,
+            "useDiff": false
+          }
+        },
+        "hint": {
+          "$ref": "#/$defs/EmmyrcInlayHint",
+          "default": {
+            "enable": true,
+            "enumParamHint": false,
+            "indexHint": true,
+            "localHint": true,
+            "metaCallHint": true,
+            "overrideHint": true,
+            "paramHint": true
+          }
+        },
+        "hover": {
+          "$ref": "#/$defs/EmmyrcHover",
+          "default": {
+            "customDetail": null,
+            "enable": true
+          }
+        },
+        "inlineValues": {
+          "$ref": "#/$defs/EmmyrcInlineValues",
+          "default": {
+            "enable": true
+          }
+        },
+        "references": {
+          "$ref": "#/$defs/EmmyrcReference",
+          "default": {
+            "enable": true,
+            "fuzzySearch": true,
+            "shortStringSearch": false
+          }
+        },
+        "resource": {
+          "$ref": "#/$defs/EmmyrcResource",
+          "default": {
+            "paths": []
+          }
+        },
+        "runtime": {
+          "$ref": "#/$defs/EmmyrcRuntime",
+          "default": {
+            "extensions": [],
+            "frameworkVersions": [],
+            "nonstandardSymbol": [],
+            "requireLikeFunction": [],
+            "requirePattern": [],
+            "special": {},
+            "version": "LuaLatest"
+          }
+        },
+        "semanticTokens": {
+          "$ref": "#/$defs/EmmyrcSemanticToken",
+          "default": {
+            "enable": true,
+            "renderDocumentationMarkup": true
+          }
+        },
+        "signature": {
+          "$ref": "#/$defs/EmmyrcSignature",
+          "default": {
+            "detailSignatureHelper": true
+          }
+        },
+        "strict": {
+          "$ref": "#/$defs/EmmyrcStrict",
+          "default": {
+            "arrayIndex": true,
+            "docBaseConstMatchBaseType": true,
+            "metaOverrideFileDefine": true,
+            "requirePath": false,
+            "typeCall": false
+          }
+        },
+        "workspace": {
+          "$ref": "#/$defs/EmmyrcWorkspace",
+          "default": {
+            "enableReindex": false,
+            "encoding": "utf-8",
+            "ignoreDir": [],
+            "ignoreGlobs": [],
+            "library": [],
+            "moduleMap": [],
+            "preloadFileSize": 0,
+            "reindexDuration": 5000,
+            "workspaceRoots": []
+          }
+        }
+      },
+      "type": "object"
+    }
+  }
+}

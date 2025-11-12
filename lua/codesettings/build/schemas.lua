@@ -15,6 +15,7 @@ M.index = {
   denols = 'https://raw.githubusercontent.com/denoland/vscode_deno/main/package.json',
   elixirls = 'https://raw.githubusercontent.com/elixir-lsp/vscode-elixir-ls/master/package.json',
   elmls = 'https://raw.githubusercontent.com/elm-tooling/elm-language-client-vscode/master/package.json',
+  emmylua_ls = 'https://raw.githubusercontent.com/EmmyLuaLs/emmylua-analyzer-rust/86ae47efba57c2d70a5af18faa6e8418b0129b22/crates/emmylua_code_analysis/resources/schema.json',
   eslint = 'https://raw.githubusercontent.com/microsoft/vscode-eslint/main/package.json',
   flow = 'https://raw.githubusercontent.com/flowtype/flow-for-vscode/master/package.json',
   fsautocomplete = 'https://raw.githubusercontent.com/ionide/ionide-vscode-fsharp/main/release/package.json',
@@ -160,7 +161,12 @@ end
 local SpecialCases = {
   nixd = function(json)
     -- nixd should be nested under "nixd"
-    return { nixd = { type = 'object', properties = json.properties } }
+    return {
+      nixd = {
+        type = 'object',
+        properties = json.properties,
+      },
+    }
   end,
   gopls = function(json)
     local config = json.contributes.configuration.properties.gopls
@@ -175,6 +181,13 @@ local SpecialCases = {
       properties['gopls.' .. last] = v
     end
     return properties
+  end,
+  emmylua_ls = function(json)
+    -- emmylua_ls schema has a flat structure but expects all settings to be nested under "Lua" like lua_ls
+    -- when provided via lsp configuration.
+    return {
+      Lua = { type = 'object', properties = json.properties },
+    }
   end,
 }
 
@@ -206,6 +219,7 @@ function M.fetch_schema(schema)
     description = json.description,
     properties = properties,
     definitions = json.definitions,
+    ['$defs'] = json['$defs'], -- seems to be an alias for definitions in some schemas
   }
 
   return ret
