@@ -56,36 +56,11 @@ function M.check()
   end
 
   if Config.live_reload then
-    local LiveReload = require('codesettings.setup.live-reload')
-    local watcher_count = LiveReload.count()
-    if watcher_count > 0 then
-      ok('Live reload is enabled and watching %d file(s)', watcher_count)
-    else
-      info('Live reload is enabled but no files are currently being watched')
-    end
+    ok(('Live reload is enabled for paths: %s'):format(vim.inspect(Config.config_file_paths)))
   else
     info(
       'Live reload is disabled. Enable with `live_reload = true` to automatically reload settings when config files change'
     )
-  end
-
-  -- check if fs_event is available for live reload
-  if Config.live_reload then
-    local is_ok, has_fs_watch = pcall(function()
-      local test_watcher = vim.uv.new_fs_event()
-      if test_watcher then
-        test_watcher:stop()
-        test_watcher:close()
-        return true
-      end
-      return false
-    end)
-
-    if not is_ok or not has_fs_watch then
-      warn('File system events (`fs_event`) are not available; live reload may not work properly')
-    else
-      ok('File system events (`fs_event`) are available for live reload')
-    end
   end
 
   -- check LSP integration settings

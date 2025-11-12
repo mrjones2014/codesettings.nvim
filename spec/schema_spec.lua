@@ -48,7 +48,7 @@ describe('Schema loading and property enumeration', function()
   it('caches per lsp_name key', function()
     local a1 = Schema.load('lua_ls')
     local a2 = Schema.load('lua_ls')
-    assert.is_true(a1 == a2, 'Expected same cached Schema object for repeated loads with identical key')
+    assert.is_true(a1 == a2)
 
     -- Different key form (if it existed) would produce a distinct cache entry; rust analyzer has two forms.
     local r1 = Schema.load('rust_analyzer')
@@ -82,7 +82,7 @@ describe('Schema loading and property enumeration', function()
       set[p] = true
     end
     -- Lua LS schema commonly includes Lua.runtime.version & Lua.workspace.library
-    assert.is_true(set['Lua.runtime.version'], 'Expected Lua.runtime.version in enumerated properties')
-    assert.is_true(set['Lua.workspace.library'], 'Expected Lua.workspace.library in enumerated properties')
+    assert.is_true(set['Lua.runtime.version'])
+    assert.is_true(set['Lua.workspace.library'])
   end)
 end)
