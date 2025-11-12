@@ -1,5 +1,5 @@
-local Util = require('codesettings.util')
 local Schemas = require('codesettings.build.schemas')
+local Util = require('codesettings.util')
 
 local M = {}
 

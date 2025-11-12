@@ -1,5 +1,5 @@
-local Util = require('codesettings.util')
 local ConfigSchema = require('codesettings.config.schema')
+local Util = require('codesettings.util')
 
 local relpath = 'lua/codesettings/generated/codesettings-config-schema.lua'
 

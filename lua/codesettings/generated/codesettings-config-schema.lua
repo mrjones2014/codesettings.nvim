@@ -47,6 +47,8 @@
 ---default = true
 ---```
 ---@field jsonls_integration boolean
+---Enable live reloading of settings when config files change; for servers that support it, this is done via the `workspace/didChangeConfiguration` notification, otherwise the server is restarted
+---@field live_reload boolean
 ---Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config
 ---
 ---```lua

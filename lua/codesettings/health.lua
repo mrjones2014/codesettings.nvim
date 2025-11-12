@@ -1,3 +1,4 @@
+local Config = require('codesettings.config')
 local Util = require('codesettings.util')
 
 local health_start = vim.health.start or vim.health.report_start
@@ -49,9 +50,35 @@ function M.check()
   end
 
   if pcall(vim.treesitter.get_string_parser, '', 'jsonc') then
-    ok('**jsonc** parser for tree-sitter is installed')
+    ok('`jsonc` parser for tree-sitter is installed')
   else
-    warn('**jsonc** parser for tree-sitter is not installed. Jsonc highlighting might be broken')
+    warn('`jsonc` parser for tree-sitter is not installed. Jsonc highlighting might be broken')
+  end
+
+  if Config.live_reload then
+    ok(('Live reload is enabled for paths: %s'):format(vim.inspect(Config.config_file_paths)))
+  else
+    info(
+      'Live reload is disabled. Enable with `live_reload = true` to automatically reload settings when config files change'
+    )
+  end
+
+  -- check LSP integration settings
+  if Config.jsonls_integration then
+    ok('`jsonls` integration is enabled')
+  else
+    info('`jsonls` integration is disabled')
+  end
+
+  if Config.lua_ls_integration then
+    ok('`lua_ls` integration is enabled')
+  else
+    info('`lua_ls` integration is disabled')
+  end
+
+  -- check loader extensions
+  if Config.loader_extensions and #Config.loader_extensions > 0 then
+    ok('Loader extensions configured: %d', #Config.loader_extensions)
   end
 end
 

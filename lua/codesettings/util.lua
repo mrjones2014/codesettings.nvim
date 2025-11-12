@@ -307,6 +307,12 @@ local msg_prefix = '[codesettings] '
 
 ---@param msg string
 ---@param ... any
+function M.info(msg, ...)
+  vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.INFO)
+end
+
+---@param msg string
+---@param ... any
 function M.warn(msg, ...)
   vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.WARN)
 end
@@ -317,17 +323,70 @@ function M.error(msg, ...)
   vim.notify(('%s%s'):format(msg_prefix, msg:format(...)), vim.log.levels.ERROR)
 end
 
----Restart LSP client by name, if active
----@param name string
-function M.restart_lsp(name)
-  vim.defer_fn(function()
-    if #vim.lsp.get_clients({ name = name }) > 0 then
-      vim.lsp.enable(name, false)
+---Schedule a notification function call
+---@param fn function notification function (M.info, M.warn, M.error)
+---@param ... any arguments to pass to the function
+local function schedule_notify(fn, ...)
+  local args = { ... }
+  vim.schedule(function()
+    fn(unpack(args))
+  end)
+end
+
+---Tell the specified LSP server that configuration has changed.
+---For servers that support it, this is done by `workspace/didChangeConfiguration` notification,
+---otherwise the server is restarted.
+---@param client_or_name vim.lsp.Client|string LSP client or name of the client
+---@param config vim.lsp.Config|vim.lsp.ClientConfig new settings to notify the client about
+---@param silent boolean? if true, suppress info/warn messages
+function M.did_change_configuration(client_or_name, config, silent)
+  ---@type vim.lsp.Client[]
+  local clients
+  if type(client_or_name) == 'table' then
+    -- best effort: try to make sure the table is actually a `vim.lsp.Client`
+    if not client_or_name.notify or not client_or_name.supports_method then
+      schedule_notify(M.error, 'Expected vim.lsp.Client or string')
+      return
+    end
+    clients = { client_or_name }
+  elseif type(client_or_name) == 'string' then
+    local active_clients = vim.lsp.get_clients({ name = client_or_name })
+    if #active_clients == 0 then
+      if not silent then
+        schedule_notify(M.warn, 'No active LSP client named %s', client_or_name)
+      end
+      return
+    end
+    clients = active_clients
+  else
+    M.error('Expected vim.lsp.Client or string')
+    return
+  end
+  local restarted_by_name = {}
+  vim.iter(clients):each(function(client)
+    ---@cast client vim.lsp.Client
+
+    if client:supports_method(vim.lsp.protocol.Methods.workspace_didChangeConfiguration) then
+      client:notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, {
+        settings = config.settings,
+      })
+      if not silent then
+        schedule_notify(M.info, '%s configuration reloaded', client.name)
+      end
+    else
+      if restarted_by_name[client.name] then
+        return
+      end
+      vim.lsp.enable(client.name, false)
+      restarted_by_name[client.name] = true
       vim.defer_fn(function()
-        vim.lsp.enable(name)
+        vim.lsp.enable(client.name)
+        if not silent then
+          schedule_notify(M.info, '%s configuration reloaded (server restarted)', client.name)
+        end
       end, 500)
     end
-  end, 500)
+  end)
 end
 
 return M

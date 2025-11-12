@@ -1,6 +1,6 @@
-local Util = require('codesettings.util')
 local Extensions = require('codesettings.extensions')
 local TerminalObjects = require('codesettings.generated.terminal-objects')
+local Util = require('codesettings.util')
 
 local M = {}
 

@@ -42,6 +42,10 @@ return {
     ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
     ---make sure you have the jsonc tree-sitter parser installed for highlighting
     jsonc_filetype = true,
+    ---Enable live reloading of settings when config files change; for servers that support it,
+    ---this is done via the `workspace/didChangeConfiguration` notification, otherwise the
+    ---server is restarted
+    live_reload = false,
     ---Provide your own root dir; can be a string or function returning a string.
     ---It should be/return the full absolute path to the root directory.
     ---If not set, defaults to `require('codesettings.util').get_root()`
@@ -149,6 +153,7 @@ return {
 
 - Minimal API: one function you call per server setup, or with a global hook (see example above)
 - `jsonc` filetype for local config files
+- Live reload: automatically reload settings when config files change (opt-in via `live_reload = true`)
 - Configure the `codesettings.nvim` plugin itself in local config JSON files
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
   ![jsonls integration](https://github.com/user-attachments/assets/5d37f0bb-0e07-4c22-bc6b-16cf3e65e201)

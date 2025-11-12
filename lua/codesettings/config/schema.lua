@@ -75,6 +75,11 @@ M.properties = {
     description = 'Set filetype to jsonc for config files',
     default = true,
   },
+  live_reload = {
+    type = 'boolean',
+    description = 'Enable live reloading of settings when config files change; for servers that support it, this is done via the `workspace/didChangeConfiguration` notification, otherwise the server is restarted',
+    default = false,
+  },
 }
 
 ---Extract the default values from the schema

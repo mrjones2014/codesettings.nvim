@@ -18,7 +18,9 @@ function M.setup()
   })
 
   -- lazy loading; if lua_ls is already active, restart it
-  Util.restart_lsp('lua_ls')
+  vim.defer_fn(function()
+    Util.did_change_configuration('lua_ls', vim.lsp.config.lua_ls, true)
+  end, 500)
 end
 
 return M

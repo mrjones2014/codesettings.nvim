@@ -14,7 +14,8 @@
     "workspace": {
       "library": [
         "${3rd}/luassert/library",
-        "${3rd}/busted/library"
+        "${3rd}/busted/library",
+        "${3rd}/luv/library"
       ],
       "checkThirdParty": false
     },
@@ -22,4 +23,5 @@
       "vim"
     ]
   },
+  "codesettings.live_reload": true
 }

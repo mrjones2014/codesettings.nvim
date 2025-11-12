@@ -1,5 +1,5 @@
+local Transformer = require('codesettings.setup.jsonls.transformer')
 local Util = require('codesettings.util')
-local Transformer = require('codesettings.integrations.jsonls.transformer')
 
 local M = {}
 
@@ -75,7 +75,9 @@ function M.setup()
   })
 
   -- lazy loading; if jsonls is already active, restart it
-  Util.restart_lsp('jsonls')
+  vim.defer_fn(function()
+    Util.did_change_configuration('jsonls', vim.lsp.config.jsonls, true)
+  end, 500)
 end
 
 return M
