@@ -64,6 +64,7 @@ with to use non-default config. You must call `.setup()` for some features like
         ---lua_ls_integration = function()
         ---  return vim.uv.cwd() == ('%s/.config/nvim'):format(vim.env.HOME)
         ---end,
+        ---This integration also works for emmylua_ls
         lua_ls_integration = true,
         ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
         ---make sure you have the jsonc tree-sitter parser installed for highlighting
@@ -209,9 +210,9 @@ configure `rustaceanvim` in my own setup:
 <
 
 To get autocomplete in Lua files, either set `config.lua_ls_integration =
-true`, or use `---@module 'codesettings'` which will tell `lua_ls` as though
-`codesettings` has been `require`d, then you will have access to `---@type
-lsp.server_name` generated type annotations.
+true`, or (for `lua_ls` only, not `emmylua_ls`) use `---@module 'codesettings'`
+which will tell `lua_ls` as though `codesettings` has been `require`d, then you
+will have access to `---@type lsp.server_name` generated type annotations.
 
 >lua
     -- for example, for lua_ls
