@@ -378,6 +378,7 @@ This project would not exist without the hard work of some other open source pro
 - [x] [denols](https://github.com/denoland/vscode_deno/tree/main/package.json)
 - [x] [elixirls](https://github.com/elixir-lsp/vscode-elixir-ls/tree/master/package.json)
 - [x] [elmls](https://github.com/elm-tooling/elm-language-client-vscode/tree/master/package.json)
+- [x] [emmylua_ls](https://github.com/EmmyLuaLs/emmylua-analyzer-rust/86ae47efba57c2d70a5af18faa6e8418b0129b22/crates/emmylua_code_analysis/resources/schema.json)
 - [x] [eslint](https://github.com/microsoft/vscode-eslint/tree/main/package.json)
 - [x] [flow](https://github.com/flowtype/flow-for-vscode/tree/master/package.json)
 - [x] [fsautocomplete](https://github.com/ionide/ionide-vscode-fsharp/tree/main/release/package.json)

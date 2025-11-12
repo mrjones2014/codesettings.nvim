@@ -1,3 +1,4 @@
+-- vim: ft=bigfile
 -- stylua: ignore
 ---@meta
 
@@ -2320,7 +2321,7 @@
 ---@field notifyAnalyzerErrors boolean?
 -- Whether to use the --offline switch for commands like 'pub get' and 'Flutter: New Project'.
 ---@field offline boolean?
--- Whether to ignore workspace folders and perform analysis based on the open files, as if no workspace was open at all. This allows opening very large folders without causing them to be fully analyzed but will result a lot of re-analysis as files are opened/closed. This is **not** recommended for small or medium sized workspaces, only very large workspaces where you are working in only a small part.
+-- **Deprecated**: Whether to ignore workspace folders and perform analysis based on the open files. This setting can make performance significantly worse when moving around a project and is not recommended.
 ---@field onlyAnalyzeProjectsWithOpenFiles boolean?
 -- Whether to automatically open DevTools at the start of a debug session. If embedded DevTools is enabled, this will launch the Widget Inspector embedded for Flutter projects, or launch DevTools externally in a browser for Dart projects.
 -- 
@@ -2928,6 +2929,586 @@
 
 ---@class lsp.elmls
 ---@field elmLS lsp.elmls.ElmLS?
+
+---@alias lsp.emmylua_ls.DiagnosticCode "none"|"syntax-error"|"doc-syntax-error"|"type-not-found"|"missing-return"|"param-type-mismatch"|"missing-parameter"|"redundant-parameter"|"unreachable-code"|"unused"|"undefined-global"|"deprecated"|"access-invisible"|"discard-returns"|"undefined-field"|"local-const-reassign"|"iter-variable-reassign"|"duplicate-type"|"redefined-local"|"redefined-label"|"code-style-check"|"need-check-nil"|"await-in-sync"|"annotation-usage-error"|"return-type-mismatch"|"missing-return-value"|"redundant-return-value"|"undefined-doc-param"|"duplicate-doc-field"|"unknown-doc-tag"|"missing-fields"|"inject-field"|"circle-doc-class"|"incomplete-signature-doc"|"missing-global-doc"|"assign-type-mismatch"|"duplicate-require"|"non-literal-expressions-in-assert"|"unbalanced-assignments"|"unnecessary-assert"|"unnecessary-if"|"duplicate-set-field"|"duplicate-index"|"generic-constraint-mismatch"|"cast-type-mismatch"|"require-module-not-visible"|"enum-value-mismatch"|"preferred-local-alias"|"read-only"|"global-in-non-module"|"attribute-param-type-mismatch"|"attribute-missing-parameter"|"attribute-redundant-parameter"
+
+---@alias lsp.emmylua_ls.DiagnosticSeveritySetting "error"|"warning"|"information"|"hint"
+
+---@alias lsp.emmylua_ls.DocSyntax "none" | "md" | "myst" | "rst"
+
+---@class lsp.emmylua_ls.EmmyrcCodeAction
+-- Add space after `---` comments when inserting `@diagnostic disable-next-line`.
+---@field insertSpace boolean?
+
+---@class lsp.emmylua_ls.EmmyrcCodeLens
+-- Enable code lens.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+
+-- Configuration for EmmyLua code completion.
+---@class lsp.emmylua_ls.EmmyrcCompletion
+-- Automatically insert call to `require` when autocompletion
+-- inserts objects from other modules.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field autoRequire boolean?
+-- The function used for auto-requiring modules.
+-- 
+-- ```lua
+-- default = "require"
+-- ```
+---@field autoRequireFunction string?
+-- The naming convention for auto-required filenames.
+-- 
+-- ```lua
+-- default = "keep"
+-- ```
+---@field autoRequireNamingConvention lsp.emmylua_ls.EmmyrcFilenameConvention?
+-- A separator used in auto-require paths.
+-- 
+-- ```lua
+-- default = "."
+-- ```
+---@field autoRequireSeparator string?
+-- Whether to include the name in the base function completion. Effect: `function () end` -> `function name() end`.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field baseFunctionIncludesName boolean?
+-- Whether to use call snippets in completions.
+---@field callSnippet boolean?
+-- Enable autocompletion.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+-- Symbol that's used to trigger postfix autocompletion.
+-- 
+-- ```lua
+-- default = "@"
+-- ```
+---@field postfix string?
+
+-- Represents the diagnostic configuration for Emmyrc.
+---@class lsp.emmylua_ls.EmmyrcDiagnostic
+-- Delay between opening/changing a file and scanning it for errors, in milliseconds.
+---@field diagnosticInterval integer?
+-- A list of diagnostic codes that are disabled.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field disable lsp.emmylua_ls.DiagnosticCode[]?
+-- A flag indicating whether diagnostics are enabled.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+-- A list of diagnostic codes that are enabled.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field enables lsp.emmylua_ls.DiagnosticCode[]?
+-- A list of global variables.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field globals string[]?
+-- A list of regular expressions for global variables.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field globalsRegex string[]?
+-- A map of diagnostic codes to their severity settings.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field severity table?
+
+---@class lsp.emmylua_ls.EmmyrcDoc
+-- List of known documentation tags.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field knownTags string[]?
+-- Treat specific field names as private, e.g. `m_*` means `XXX.m_id` and `XXX.m_type` are private, witch can only be accessed in the class where the definition is located.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field privateName string[]?
+-- When `syntax` is `Myst` or `Rst`, specifies default role used
+-- with RST processor.
+---@field rstDefaultRole string?
+-- When `syntax` is `Myst` or `Rst`, specifies primary domain used
+-- with RST processor.
+---@field rstPrimaryDomain string?
+-- Syntax for highlighting documentation.
+-- 
+-- ```lua
+-- default = "md"
+-- ```
+---@field syntax lsp.emmylua_ls.DocSyntax?
+
+---@class lsp.emmylua_ls.EmmyrcDocumentColor
+-- Enable parsing strings for color tags and showing a color picker next to them.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+
+---@class lsp.emmylua_ls.EmmyrcExternalTool
+-- The arguments to pass to the external tool.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field args string[]?
+-- The command to run the external tool.
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field program string?
+-- The timeout for the external tool in milliseconds.
+-- 
+-- ```lua
+-- default = 5000
+-- ```
+---@field timeout integer?
+
+---@alias lsp.emmylua_ls.EmmyrcFilenameConvention "keep"|"snake-case"|"pascal-case"|"camel-case"|"keep-class"
+
+---@class lsp.emmylua_ls.EmmyrcHover
+-- The detail number of hover information.
+-- Default is `None`, which means using the default detail level.
+-- You can set it to a number between `1` and `255` to customize
+---@field customDetail integer?
+-- Enable showing documentation on hover.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+
+---@class lsp.emmylua_ls.EmmyrcInlayHint
+-- Enable inlay hints.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+-- Show name of enumerator when passing a literal value to a function
+-- that expects an enum.
+-- 
+-- Example:
+-- 
+-- ```lua
+-- --- @enum Level
+-- local Foo = {
+--    Info = 1,
+--    Error = 2,
+-- }
+-- 
+-- --- @param l Level
+-- function print_level(l) end
+-- 
+-- print_level(1 --[[ Hint: Level.Info ]])
+-- ```
+---@field enumParamHint boolean?
+-- Show named array indexes.
+-- 
+-- Example:
+-- 
+-- ```lua
+-- local array = {
+--    [1] = 1, -- [name]
+-- }
+-- 
+-- print(array[1] --[[ Hint: name ]])
+-- ```
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field indexHint boolean?
+-- Show types of local variables.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field localHint boolean?
+-- Show hint when calling an object results in a call to
+-- its meta table's `__call` function.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field metaCallHint boolean?
+-- Show methods that override functions from base class.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field overrideHint boolean?
+-- Show parameter names in function calls and parameter types in function definitions.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field paramHint boolean?
+
+---@class lsp.emmylua_ls.EmmyrcInlineValues
+-- Show inline values during debug.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+
+---@alias lsp.emmylua_ls.EmmyrcLuaVersion "Lua5.1"|"LuaJIT"|"Lua5.2"|"Lua5.3"|"Lua5.4"|"Lua5.5"|"LuaLatest"
+
+---@alias lsp.emmylua_ls.EmmyrcNonStdSymbol "//" | "/**/" | "`" | "+=" | "-=" | "*=" | "/=" | "%=" | "^=" | "//=" | "|=" | "&=" | "<<=" | ">>=" | "||" | "&&" | "!" | "!=" | "continue"
+
+---@class lsp.emmylua_ls.EmmyrcReference
+-- Enable searching for symbol usages.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+-- Use fuzzy search when searching for symbol usages
+-- and normal search didn't find anything.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field fuzzySearch boolean?
+-- Also search for usages in strings.
+---@field shortStringSearch boolean?
+
+---@class lsp.emmylua_ls.EmmyrcReformat
+-- Whether to enable external tool formatting.
+---@field externalTool lsp.emmylua_ls.EmmyrcExternalTool|any?
+-- Whether to enable external tool range formatting.
+---@field externalToolRangeFormat lsp.emmylua_ls.EmmyrcExternalTool|any?
+-- Whether to use the diff algorithm for formatting.
+---@field useDiff boolean?
+
+---@class lsp.emmylua_ls.EmmyrcResource
+-- ```lua
+-- default = {}
+-- ```
+---@field paths string[]?
+
+---@class lsp.emmylua_ls.EmmyrcRuntime
+-- file Extensions. eg: .lua, .lua.txt
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field extensions string[]?
+-- Framework versions.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field frameworkVersions string[]?
+-- Non-standard symbols.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field nonstandardSymbol lsp.emmylua_ls.EmmyrcNonStdSymbol[]?
+-- Functions that like require.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field requireLikeFunction string[]?
+-- Require pattern. eg. "?.lua", "?/init.lua"
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field requirePattern string[]?
+-- Special symbols.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field special table?
+-- Lua version.
+-- 
+-- ```lua
+-- default = "LuaLatest"
+-- ```
+---@field version lsp.emmylua_ls.EmmyrcLuaVersion?
+
+---@class lsp.emmylua_ls.EmmyrcSemanticToken
+-- Enable semantic tokens.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enable boolean?
+-- Render Markdown/RST in documentation. Set `doc.syntax` for this option to have effect.
+---@field renderDocumentationMarkup boolean?
+
+---@class lsp.emmylua_ls.EmmyrcSignature
+-- Whether to enable signature help.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field detailSignatureHelper boolean?
+
+---@alias lsp.emmylua_ls.EmmyrcSpecialSymbol "none" | "require" | "error" | "assert" | "type" | "setmetatable"
+
+---@class lsp.emmylua_ls.EmmyrcStrict
+-- Whether to enable strict mode array indexing.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field arrayIndex boolean?
+-- Base constant types defined in doc can match base types, allowing int to match `---@alias id 1|2|3`, same for string.
+---@field docBaseConstMatchBaseType boolean?
+-- meta define overrides file define
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field metaOverrideFileDefine boolean?
+-- Whether to enable strict mode require path.
+---@field requirePath boolean?
+---@field typeCall boolean?
+
+---@class lsp.emmylua_ls.EmmyrcWorkspace
+-- Enable full project reindex after changing a file.
+---@field enableReindex boolean?
+-- Encoding. eg: "utf-8"
+-- 
+-- ```lua
+-- default = "utf-8"
+-- ```
+---@field encoding string?
+-- Ignore directories.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field ignoreDir string[]?
+-- Ignore globs. eg: ["**/*.lua"]
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field ignoreGlobs string[]?
+-- Library paths. eg: "/usr/local/share/lua/5.1"
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field library string[]?
+-- Module map. key is regex, value is new module regex
+-- eg: {
+--     "^(.*)$": "module_$1"
+--     "^lib(.*)$": "script$1"
+-- }
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field moduleMap lsp.emmylua_ls.EmmyrcWorkspaceModuleMap[]?
+-- ```lua
+-- default = 0
+-- ```
+---@field preloadFileSize integer?
+-- Delay between changing a file and full project reindex, in milliseconds.
+-- 
+-- ```lua
+-- default = 5000
+-- ```
+---@field reindexDuration integer?
+-- Workspace roots. eg: ["src", "test"]
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field workspaceRoots string[]?
+
+---@class lsp.emmylua_ls.EmmyrcWorkspaceModuleMap
+---@field pattern string?
+---@field replace string?
+
+---@class lsp.emmylua_ls.Lua
+---@field $schema string?
+-- ```lua
+-- default = {
+--   insertSpace = false
+-- }
+-- ```
+---@field codeAction lsp.emmylua_ls.EmmyrcCodeAction?
+-- ```lua
+-- default = {
+--   enable = true
+-- }
+-- ```
+---@field codeLens lsp.emmylua_ls.EmmyrcCodeLens?
+-- ```lua
+-- default = {
+--   autoRequire = true,
+--   autoRequireFunction = "require",
+--   autoRequireNamingConvention = "keep",
+--   autoRequireSeparator = ".",
+--   baseFunctionIncludesName = true,
+--   callSnippet = false,
+--   enable = true,
+--   postfix = "@"
+-- }
+-- ```
+---@field completion lsp.emmylua_ls.EmmyrcCompletion?
+-- ```lua
+-- default = {
+--   diagnosticInterval = 500,
+--   disable = {},
+--   enable = true,
+--   enables = {},
+--   globals = {},
+--   globalsRegex = {},
+--   severity = {
+--     <metatable> = {}
+--   }
+-- }
+-- ```
+---@field diagnostics lsp.emmylua_ls.EmmyrcDiagnostic?
+-- ```lua
+-- default = {
+--   knownTags = {},
+--   privateName = {},
+--   syntax = "md"
+-- }
+-- ```
+---@field doc lsp.emmylua_ls.EmmyrcDoc?
+-- ```lua
+-- default = {
+--   enable = true
+-- }
+-- ```
+---@field documentColor lsp.emmylua_ls.EmmyrcDocumentColor?
+-- ```lua
+-- default = {
+--   useDiff = false
+-- }
+-- ```
+---@field format lsp.emmylua_ls.EmmyrcReformat?
+-- ```lua
+-- default = {
+--   enable = true,
+--   enumParamHint = false,
+--   indexHint = true,
+--   localHint = true,
+--   metaCallHint = true,
+--   overrideHint = true,
+--   paramHint = true
+-- }
+-- ```
+---@field hint lsp.emmylua_ls.EmmyrcInlayHint?
+-- ```lua
+-- default = {
+--   enable = true
+-- }
+-- ```
+---@field hover lsp.emmylua_ls.EmmyrcHover?
+-- ```lua
+-- default = {
+--   enable = true
+-- }
+-- ```
+---@field inlineValues lsp.emmylua_ls.EmmyrcInlineValues?
+-- ```lua
+-- default = {
+--   enable = true,
+--   fuzzySearch = true,
+--   shortStringSearch = false
+-- }
+-- ```
+---@field references lsp.emmylua_ls.EmmyrcReference?
+-- ```lua
+-- default = {
+--   paths = {}
+-- }
+-- ```
+---@field resource lsp.emmylua_ls.EmmyrcResource?
+-- ```lua
+-- default = {
+--   extensions = {},
+--   frameworkVersions = {},
+--   nonstandardSymbol = {},
+--   requireLikeFunction = {},
+--   requirePattern = {},
+--   special = {
+--     <metatable> = {}
+--   },
+--   version = "LuaLatest"
+-- }
+-- ```
+---@field runtime lsp.emmylua_ls.EmmyrcRuntime?
+-- ```lua
+-- default = {
+--   enable = true,
+--   renderDocumentationMarkup = true
+-- }
+-- ```
+---@field semanticTokens lsp.emmylua_ls.EmmyrcSemanticToken?
+-- ```lua
+-- default = {
+--   detailSignatureHelper = true
+-- }
+-- ```
+---@field signature lsp.emmylua_ls.EmmyrcSignature?
+-- ```lua
+-- default = {
+--   arrayIndex = true,
+--   docBaseConstMatchBaseType = true,
+--   metaOverrideFileDefine = true,
+--   requirePath = false,
+--   typeCall = false
+-- }
+-- ```
+---@field strict lsp.emmylua_ls.EmmyrcStrict?
+-- ```lua
+-- default = {
+--   enableReindex = false,
+--   encoding = "utf-8",
+--   ignoreDir = {},
+--   ignoreGlobs = {},
+--   library = {},
+--   moduleMap = {},
+--   preloadFileSize = 0,
+--   reindexDuration = 5000,
+--   workspaceRoots = {}
+-- }
+-- ```
+---@field workspace lsp.emmylua_ls.EmmyrcWorkspace?
+
+---@class lsp.emmylua_ls
+---@field Lua lsp.emmylua_ls.Lua?
 
 -- Show disable lint rule in the quick fix menu.
 -- 
@@ -8757,7 +9338,7 @@
 -- ```lua
 -- default = "auto"
 -- ```
----@field displayPort any?
+---@field displayPort integer|"auto"?
 -- Haxe completion server configuration
 -- 
 -- ```lua
@@ -8808,7 +9389,7 @@
 -- ```lua
 -- default = "auto"
 -- ```
----@field executable any?
+---@field executable string|table?
 -- Sort order of imports
 -- 
 -- ```lua
@@ -12861,7 +13442,7 @@
 -- ```lua
 -- default = "information"
 -- ```
----@field diagnosticSeverity any?
+---@field diagnosticSeverity "error" | "warning" | "information" | "hint"|table?
 -- %ltex.i18n.configuration.ltex.dictionary.markdownDescription%
 -- 
 -- ```lua
@@ -12879,7 +13460,7 @@
 -- ```lua
 -- default = { "bibtex", "context", "context.tex", "html", "latex", "markdown", "org", "restructuredtext", "rsweave" }
 -- ```
----@field enabled any?
+---@field enabled boolean|string[]?
 -- %ltex.i18n.configuration.ltex.enabledRules.markdownDescription%
 -- 
 -- ```lua
@@ -14991,6 +15572,13 @@
 ---@class lsp.nil_ls
 ---@field nil lsp.nil_ls.Nil?
 
+-- Nix installables that will be used for root translation unit.
+---@class lsp.nixd.Target
+-- Accept args as "nix eval"
+---@field args string[]?
+-- "nix eval"
+---@field installable string?
+
 -- The evaluation section, provide auto completion for dynamic bindings.
 ---@class lsp.nixd.Eval
 -- Extra depth for evaluation
@@ -14999,7 +15587,7 @@
 -- default = 0
 -- ```
 ---@field depth integer?
----@field target any?
+---@field target lsp.nixd.Target?
 -- The number of workers for evaluation task. defaults to std::thread::hardware_concurrency
 ---@field workers integer?
 
@@ -15011,7 +15599,7 @@
 -- default = "false"
 -- ```
 ---@field enable boolean?
----@field target any?
+---@field target lsp.nixd.Target?
 
 ---@class lsp.nixd.Nixd
 -- The evaluation section, provide auto completion for dynamic bindings.
@@ -19007,7 +19595,7 @@
 --   ["/rustc/<id>"] = "${env:USERPROFILE}/.rustup/toolchains/<toolchain-id>/lib/rustlib/src/rust"
 -- }
 -- ```
----@field sourceFileMap table|string?
+---@field sourceFileMap "auto"?
 
 ---@class lsp.rust_analyzer.Experimental
 -- Show experimental rust-analyzer diagnostics that might have more false positives than
@@ -20896,7 +21484,7 @@
 -- ```lua
 -- default = {}
 -- ```
----@field pluginArguments any?
+---@field pluginArguments string[]|table?
 -- Configures a list of permissions to be used when running a command plugins.
 -- 
 -- Permissions objects are defined in the form:
@@ -22834,7 +23422,7 @@
 -- ```lua
 -- default = "vscode"
 -- ```
----@field watchOptions any?
+---@field watchOptions "vscode"|table?
 ---@field web lsp.ts_ls.Web?
 
 ---@class lsp.ts_ls.UpdateImportsOnFileMove
@@ -23876,7 +24464,7 @@
 -- ```lua
 -- default = "vscode"
 -- ```
----@field watchOptions any?
+---@field watchOptions "vscode"|table?
 ---@field web lsp.vtsls.Web?
 
 ---@class lsp.vtsls.UpdateImportsOnFileMove

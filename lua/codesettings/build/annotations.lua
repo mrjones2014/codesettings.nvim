@@ -76,6 +76,11 @@ function Build.flatten(t, ret)
 end
 
 function Build.get_type(prop)
+  -- Handle const values (literal types)
+  if prop.const ~= nil then
+    return vim.inspect(prop.const)
+  end
+
   if prop.enum then
     return table.concat(
       vim.tbl_map(function(e)
@@ -84,12 +89,31 @@ function Build.get_type(prop)
       ' | '
     )
   end
+
+  -- Handle $ref references
+  if prop['$ref'] then
+    local ref = prop['$ref']
+    -- Extract definition name from refs like "#/definitions/MyType" or "#/$defs/MyType"
+    local def_name = ref:match('#/definitions/(.+)') or ref:match('#/%$defs/(.+)')
+    if def_name then
+      return Build.get_class(def_name)
+    end
+  end
+
   local types = type(prop.type) == 'table' and prop.type or { prop.type }
   if vim.tbl_isempty(types) and type(prop.anyOf) == 'table' then
     return table.concat(
       vim.tbl_map(function(p)
         return Build.get_type(p)
       end, prop.anyOf),
+      '|'
+    )
+  end
+  if vim.tbl_isempty(types) and type(prop.oneOf) == 'table' then
+    return table.concat(
+      vim.tbl_map(function(p)
+        return Build.get_type(p)
+      end, prop.oneOf),
       '|'
     )
   end
@@ -103,6 +127,10 @@ function Build.get_type(prop)
           prop.items.type = 'any'
         end
         return prop.items.type .. '[]'
+      elseif prop.items and prop.items['$ref'] then
+        -- Handle array items with $ref
+        local item_type = Build.get_type(prop.items)
+        return item_type .. '[]'
       end
       return 'any[]'
     end
@@ -140,10 +168,38 @@ function Build.process_object(name, prop)
   vim.list_extend(Build.lines, lines)
 end
 
+-- Process definitions from the schema
+function Build.process_definitions(definitions)
+  if not definitions or type(definitions) ~= 'table' then
+    return
+  end
+
+  local def_names = vim.tbl_keys(definitions)
+  table.sort(def_names)
+
+  for _, def_name in ipairs(def_names) do
+    local def = definitions[def_name]
+    -- Process objects with properties
+    if def.type == 'object' or def.properties then
+      Build.process_object(def_name, def)
+    -- Process enum-like definitions (oneOf with const values)
+    elseif def.oneOf or def.anyOf or def.enum then
+      local lines = {}
+      Build.add_desc(lines, def)
+      table.insert(lines, '---@alias ' .. Build.get_class(def_name) .. ' ' .. Build.get_type(def))
+      table.insert(Build.lines, '')
+      vim.list_extend(Build.lines, lines)
+    end
+  end
+end
+
 function Build.build_annotations(name)
   local file = Util.path('schemas/' .. name .. '.json')
   local json = Util.json_decode(Util.read_file(file)) or {}
   Build.class_name = 'lsp.' .. name
+
+  -- Process definitions first (they may be referenced by properties)
+  Build.process_definitions(json.definitions or json['$defs'])
 
   local schema = require('codesettings.settings').new()
   for key, prop in pairs(json.properties) do
