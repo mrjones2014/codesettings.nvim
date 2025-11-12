@@ -21,6 +21,7 @@ local SpecialCases = {
   end,
 }
 
+---@class Codesettings
 local M = {}
 
 ---For more granular control, load settings manually through this
@@ -53,7 +54,7 @@ end
 function M.with_local_settings(lsp_name, config, opts)
   opts = opts or {}
   local local_settings = M.local_settings(opts)
-  if SpecialCases[lsp_name] then
+  if SpecialCases[lsp_name] ~= nil then
     local_settings = SpecialCases[lsp_name](local_settings)
   else
     local_settings = local_settings:schema(lsp_name)
