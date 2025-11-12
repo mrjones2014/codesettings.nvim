@@ -3,13 +3,14 @@
     "runtime": {
       "version": "LuaJIT",
       "path": [
+        "?.lua",
         "lua/?.lua",
         "lua/?/init.lua",
         "lua/?/?.lua",
         "plugin/?.lua",
         "ftplugin/?.lua",
         "spec/?.lua"
-      ]
+      ],
     },
     "workspace": {
       "library": [
@@ -23,5 +24,5 @@
       "vim"
     ]
   },
-  "codesettings.live_reload": true
+  "codesettings.live_reload": true,
 }

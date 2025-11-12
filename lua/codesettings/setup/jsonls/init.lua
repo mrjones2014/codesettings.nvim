@@ -57,27 +57,21 @@ function M.get_json_schemas()
     },
   }
 
-  -- make sure we don't clobber any already configured schemas
-  local configured_schemas = vim.tbl_get(vim.lsp.config, 'jsonls', 'settings', 'json', 'schemas') or {}
-
-  _cache = vim.list_extend(vim.deepcopy(configured_schemas), json_schemas)
+  _cache = json_schemas
   return _cache
 end
 
 function M.setup()
-  vim.lsp.config('jsonls', {
+  local config_update = {
     settings = {
       json = {
         schemas = M.get_json_schemas(),
         validate = { enable = true },
       },
     },
-  })
+  }
 
-  -- lazy loading; if jsonls is already active, restart it
-  vim.defer_fn(function()
-    Util.did_change_configuration('jsonls', vim.lsp.config.jsonls, true)
-  end, 500)
+  Util.ensure_lsp_settings('jsonls', config_update)
 end
 
 return M
