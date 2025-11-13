@@ -2307,6 +2307,8 @@
 -- ```lua
 -- default = {
 --   analyze_files = false,
+--   dart_fix = false,
+--   dart_format = false,
 --   run_tests = false
 -- }
 -- ```
@@ -11563,19 +11565,19 @@
 -- Specify the Nonnull annotation types to be used for null analysis. If more than one annotation is specified, then the topmost annotation will be used first if it exists in project dependencies. This setting will be ignored if `java.compile.nullAnalysis.mode` is set to `disabled`
 -- 
 -- ```lua
--- default = { "javax.annotation.Nonnull", "org.eclipse.jdt.annotation.NonNull", "org.springframework.lang.NonNull" }
+-- default = { "javax.annotation.Nonnull", "org.eclipse.jdt.annotation.NonNull", "org.springframework.lang.NonNull", "org.jspecify.annotations.NonNull" }
 -- ```
 ---@field nonnull any[]?
 -- Specify the NonNullByDefault annotation types to be used for null analysis. If more than one annotation is specified, then the topmost annotation will be used first if it exists in project dependencies. This setting will be ignored if `java.compile.nullAnalysis.mode` is set to `disabled`
 -- 
 -- ```lua
--- default = { "javax.annotation.ParametersAreNonnullByDefault", "org.eclipse.jdt.annotation.NonNullByDefault", "org.springframework.lang.NonNullApi" }
+-- default = { "javax.annotation.ParametersAreNonnullByDefault", "org.eclipse.jdt.annotation.NonNullByDefault", "org.springframework.lang.NonNullApi", "org.jspecify.annotations.NullMarked" }
 -- ```
 ---@field nonnullbydefault any[]?
 -- Specify the Nullable annotation types to be used for null analysis. If more than one annotation is specified, then the topmost annotation will be used first if it exists in project dependencies. This setting will be ignored if `java.compile.nullAnalysis.mode` is set to `disabled`
 -- 
 -- ```lua
--- default = { "javax.annotation.Nullable", "org.eclipse.jdt.annotation.Nullable", "org.springframework.lang.Nullable" }
+-- default = { "javax.annotation.Nullable", "org.eclipse.jdt.annotation.Nullable", "org.springframework.lang.Nullable", "org.jspecify.annotations.Nullable" }
 -- ```
 ---@field nullable any[]?
 
