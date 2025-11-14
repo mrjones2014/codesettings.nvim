@@ -1,11 +1,11 @@
 # Benchmark Results
 
-*Generated: 2025-11-12 14:42:03*
+*Generated: 2025-11-14 16:17:47*
 
 ## Summary
 
 | Benchmark | Iterations | Time/Op | Ops/Sec |
 |-----------|------------|---------|---------|
-| Load and parse VS Code settings.json including bracketed keys | 10000 | 245.86 µs | 4067 |
-| Get a specific LSP schema out of the json | 10000 | 176.44 µs | 5668 |
-| Parse and expand all JSON schemas for jsonls integration | 1000 | 65.42 ms | 15 |
+| Load and parse VS Code settings.json including bracketed keys | 10000 | 245.92 µs | 4066 |
+| Get a specific LSP schema out of the json | 10000 | 186.36 µs | 5366 |
+| Parse and expand all JSON schemas for jsonls integration | 1000 | 61.24 ms | 16 |
