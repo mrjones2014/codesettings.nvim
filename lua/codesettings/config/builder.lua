@@ -32,6 +32,10 @@ local builder_mt = {
               table.insert(val_types, 'function')
             elseif t == 'null' then
               table.insert(val_types, 'nil')
+            elseif type(t) == 'string' and t:match('^%u') then
+              -- Custom type name (starts with uppercase) - map to 'table'
+              -- Examples: 'CodesettingsLoaderExtension', 'CodesettingsMergeListsBehavior'
+              table.insert(val_types, 'table')
             else
               table.insert(val_types, t)
             end

@@ -132,5 +132,16 @@ describe('codesettings.config', function()
         builder:root_dir(123) ---@diagnostic disable-line: param-type-mismatch
       end)
     end)
+
+    it('sets loader_extensions correctly', function()
+      -- test loading by module path
+      local exts = { 'my.extension', 'another.extension' }
+      local config = ConfigBuilder.new():loader_extensions(exts):build()
+      assert.same(exts, config.loader_extensions)
+
+      -- test loading  by inline extension instances
+      local config2 = ConfigBuilder.new():loader_extensions({ require('codesettings.extensions.env') }):build()
+      assert.is_table(config2.loader_extensions)
+    end)
   end)
 end)
