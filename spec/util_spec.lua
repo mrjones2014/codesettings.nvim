@@ -10,12 +10,12 @@ describe('util.merge - scalar merge', function()
     assert.equal(2, merged)
   end)
 
-  it('nil right side keeps left if right nil (expected: becomes nil because b takes precedence)', function()
+  it('empty table on right side preserves left values', function()
     local a = { value = 5 }
-    local b = { value = nil }
+    local b = {} -- { value = nil } is essentially equivalent to {}
     local merged = Util.merge(a, b)
-    -- Current contract: b takes precedence even if nil
-    assert.is_nil(merged.value)
+    -- Empty tables are now treated as maps and merged, so left side is preserved
+    assert.equal(5, merged.value)
   end)
 end)
 

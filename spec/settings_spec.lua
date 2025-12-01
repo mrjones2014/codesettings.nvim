@@ -109,6 +109,24 @@ describe('Settings:merge()', function()
     A:merge(B)
     assert.equal(2, A:get('opt.value'))
   end)
+
+  it('works with an empty settings = {} table', function()
+    local config = {
+      settings = {},
+    }
+
+    local A = Settings.new(config)
+    local B = Settings.new()
+    B:set('settings.gopls.buildFlags', { '-tags=bsd' })
+    A:merge(B)
+    assert.same({
+      settings = {
+        gopls = {
+          buildFlags = { '-tags=bsd' },
+        },
+      },
+    }, config)
+  end)
 end)
 
 describe('Settings:clear()', function()

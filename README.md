@@ -78,7 +78,7 @@ to look for local config files for all LSPs:
 vim.lsp.config('*', {
   before_init = function(_, config)
     local codesettings = require('codesettings')
-    config = codesettings.with_local_settings(config.name, config)
+    codesettings.with_local_settings(config.name, config)
   end,
 })
 ```
@@ -208,6 +208,7 @@ vim.lsp.config('lua_ls', {
 
 - `require('codesettings').with_local_settings(lsp_name: string, config: table, opts: CodesettingsConfigOverrides?): table`
   - Loads settings from the configured files, extracts relevant settings for the given LSP based on its schema, and deep-merges into `config.settings`. Returns the merged config.
+  - This **mutates the input `config` table.** This is necessary for some workflows to ensure the `vim.lsp` module sees the updated settings.
 
 - `require('codesettings').local_settings(opts: CodesettingsConfigOverrides?): Settings`
   - Loads and parses the settings file(s) for the current project. Returns a `Settings` object.
@@ -439,4 +440,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-

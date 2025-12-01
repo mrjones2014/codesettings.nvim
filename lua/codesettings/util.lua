@@ -118,7 +118,10 @@ function M.merge(a, b, config)
     if type(v) ~= 'table' then
       return false
     end
-    if vim.islist(v) then
+    -- NB: vim.islist({}) returns true for empty tables, but we want to treat
+    -- empty tables as mergeable maps, not lists so that an empty settings table
+    -- gets mutated rather than replaced.
+    if vim.islist(v) and #v > 0 then
       return false
     end
     return true

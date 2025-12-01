@@ -46,9 +46,9 @@ function M.local_settings(opts)
   return Settings.load_all(opts)
 end
 
----Load settings from VS Code settings.json file
+---Load settings from VS Code settings.json file. This mutates the given LSP config.
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer' or 'tsserver'
----@param config table the LSP config to merge the vscode settings into
+---@param config vim.lsp.Config|vim.lsp.ClientConfig the LSP config to merge the vscode settings into
 ---@param opts CodesettingsConfigOverrides? optional config overrides for this load
 ---@return table config the merged config
 function M.with_local_settings(lsp_name, config, opts)
