@@ -15636,6 +15636,12 @@
 -- ```
 ---@field fillCallArguments boolean?
 ---@field imports lsp.luau_lsp.Imports?
+-- Whether to show keywords (`if` / `then` / `and` / etc.) during autocomplete
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field showKeywords boolean?
 -- Whether to show non-function properties when performing a method call with a colon (e.g., `foo:bar`)
 ---@field showPropertiesOnMethodCall boolean?
 -- Suggest automatic imports in completion items
@@ -15801,6 +15807,8 @@
 ---@field enabled boolean?
 
 ---@class lsp.luau_lsp.Server
+-- Path to a `.luaurc` file which acts as the default baseline Luau configuration
+---@field baseLuaurc string?
 -- Type of communication channel to use for communicating with the server. Only useful for debug purposes
 -- 
 -- ```lua
@@ -24001,14 +24009,32 @@
 ---@field templateInterpolationDecorators boolean?
 
 ---@class lsp.volar.Script
+-- %configuration.format.script.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
 -- %configuration.format.script.initialIndent%
 ---@field initialIndent boolean?
 
 ---@class lsp.volar.Style
+-- %configuration.format.style.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
 -- %configuration.format.style.initialIndent%
 ---@field initialIndent boolean?
 
 ---@class lsp.volar.Template
+-- %configuration.format.template.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
 -- %configuration.format.template.initialIndent%
 -- 
 -- ```lua
