@@ -107,7 +107,7 @@ can use it as a global hook to look for local config files for all LSPs:
     vim.lsp.config('*', {
       before_init = function(_, config)
         local codesettings = require('codesettings')
-        config = codesettings.with_local_settings(config.name, config)
+        codesettings.with_local_settings(config.name, config)
       end,
     })
 <
@@ -245,6 +245,7 @@ will have access to `---@type lsp.server_name` generated type annotations.
     - Initialize the plugin. Not needed if you are only using the API, but must be called to set up additonal functionality or to configure `codesettings.nvim` itself with local files.
 - `require('codesettings').with_local_settings(lsp_name: string, config: table, opts: CodesettingsConfigOverrides?): table`
     - Loads settings from the configured files, extracts relevant settings for the given LSP based on its schema, and deep-merges into `config.settings`. Returns the merged config.
+    - This **mutates the input config table.** This is necessary for some workflows to ensure the `vim.lsp` module sees the updated settings.
 - `require('codesettings').local_settings(opts: CodesettingsConfigOverrides?): Settings`
     - Loads and parses the settings file(s) for the current project. Returns a `Settings` object.
     - `Settings` object provides some methods like:
