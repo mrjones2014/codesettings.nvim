@@ -241,8 +241,17 @@ function Settings:merge(settings, key, config)
     settings = M.new(settings)
   end
   if key then
-    local value = Util.merge(Util.merge({}, self:get(key) or {}, config), settings._settings, config)
-    self:set(key, value)
+    local existing = self:get(key)
+    if existing then
+      -- Mutate the existing table in place to preserve references
+      local value = Util.merge(existing, settings._settings, config)
+      -- technically `Util.merge` will mutate the value,
+      -- but set here to be explicit
+      self:set(key, value)
+    else
+      -- No existing value, safe to set directly
+      self:set(key, settings._settings)
+    end
   else
     self._settings = Util.merge(self._settings, settings._settings, config)
   end
