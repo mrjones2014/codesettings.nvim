@@ -21566,6 +21566,8 @@
 -- 
 -- For the most accurate and customizable new code definition, use [Connected Mode](https://docs.sonarsource.com/sonarqube-for-vs-code/connect-your-ide/connected-mode) with SonarQube (Server, Cloud).
 ---@field focusOnNewCode boolean?
+-- Enable or disable [**SonarQube for IDE Labs**](command:SonarQube.Labs.focus) experimental features. Only takes effect after joining SonarQube for IDE Labs.
+---@field ideLabsEnabled boolean?
 ---@field ls lsp.sonarlint.Ls?
 ---@field output lsp.sonarlint.Output?
 -- Path to the active compilation database, e.g. `C:\\Repos\\MyProject\\compile_commands.json`
