@@ -14927,18 +14927,18 @@
 -- default = {}
 -- ```
 ---@field disable string[]?
--- %config.diagnostics.disableScheme%
--- 
--- ```lua
--- default = { "git" }
--- ```
----@field disableScheme string[]?
 -- %config.diagnostics.enable%
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
+-- %config.diagnostics.enableScheme%
+-- 
+-- ```lua
+-- default = { "file" }
+-- ```
+---@field enableScheme string[]?
 -- %config.diagnostics.globals%
 -- 
 -- ```lua
