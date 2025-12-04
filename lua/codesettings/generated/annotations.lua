@@ -16418,6 +16418,12 @@
 -- default = true
 -- ```
 ---@field enableFileBasedPrograms boolean?
+-- %configuration.dotnet.projects.enableFileBasedProgramsWhenAmbiguous%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enableFileBasedProgramsWhenAmbiguous boolean?
 
 ---@class lsp.omnisharp.QuickInfo
 -- %configuration.dotnet.quickInfo.showRemarksInQuickInfo%
@@ -21894,7 +21900,7 @@
 -- default = {}
 -- ```
 ---@field packageArguments string[]?
--- Override the default path of the folder containing the Swift executables. The default is to look in the `PATH` environment variable. This path is also used to search for other executables used by the extension like `sourcekit-lsp` and `lldb`.
+-- Override the default path of the folder containing the Swift executables. The default is to look in the `PATH` environment variable.
 -- 
 -- ```lua
 -- default = ""
