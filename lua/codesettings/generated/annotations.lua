@@ -12770,6 +12770,12 @@
 ---@field codeInREPL boolean?
 -- Show separate inline results for all code blocks in a cell
 ---@field inlineResultsForCellEvaluation boolean?
+-- Global override for the code execution module. Leave empty to automatically choose a context module.
+-- 
+-- ```lua
+-- default = ""
+-- ```
+---@field module string?
 -- Specifies how to show inline execution results
 -- 
 -- ```lua
@@ -20532,6 +20538,8 @@
 ---@field hideClosureInitialization boolean?
 -- Hide inlay parameter type hints for closures.
 ---@field hideClosureParameter boolean?
+-- Hide inlay type hints for inferred types.
+---@field hideInferredTypes boolean?
 -- Hide inlay type hints for constructors.
 ---@field hideNamedConstructor boolean?
 
