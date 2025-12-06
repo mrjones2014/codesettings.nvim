@@ -7666,11 +7666,18 @@
 ---@field noresultvalues boolean?
 -- suggest replacing omitempty with omitzero for struct fields
 -- 
--- The omitzero analyzer identifies uses of the `omitempty` JSON struct tag on
--- fields that are themselves structs. The `omitempty` tag has no effect on
--- struct-typed fields. The analyzer offers two suggestions: either remove the
+-- The omitzero analyzer identifies uses of the `omitempty` JSON struct
+-- tag on fields that are themselves structs. For struct-typed fields,
+-- the `omitempty` tag has no effect on the behavior of json.Marshal and
+-- json.Unmarshal. The analyzer offers two suggestions: either remove the
 -- tag, or replace it with `omitzero` (added in Go 1.24), which correctly
 -- omits the field if the struct value is zero.
+-- 
+-- However, some other serialization packages (notably kubebuilder, see
+-- https://book.kubebuilder.io/reference/markers.html) may have their own
+-- interpretation of the `json:",omitzero"` tag, so removing it may affect
+-- program behavior. For this reason, the omitzero modernizer will not
+-- make changes in any package that contains +kubebuilder annotations.
 -- 
 -- Replacing `omitempty` with `omitzero` is a change in behavior. The
 -- original code would always encode the struct field, whereas the
@@ -8333,6 +8340,24 @@
 -- default = true
 -- ```
 ---@field unreachable boolean?
+-- replace unsafe pointer arithmetic with function calls
+-- 
+-- The unsafefuncs analyzer simplifies pointer arithmetic expressions by
+-- replacing them with calls to helper functions such as unsafe.Add,
+-- added in Go 1.17.
+-- 
+-- Example:
+-- 
+-- 	unsafe.Pointer(uintptr(ptr) + uintptr(n))
+-- 
+-- where ptr is an unsafe.Pointer, is replaced by:
+-- 
+-- 	unsafe.Add(ptr, n)
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field unsafefuncs boolean?
 -- check for invalid conversions of uintptr to unsafe.Pointer
 -- 
 -- The unsafeptr analyzer reports likely incorrect uses of unsafe.Pointer
