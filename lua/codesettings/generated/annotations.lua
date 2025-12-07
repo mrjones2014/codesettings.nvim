@@ -18401,6 +18401,12 @@
 -- default = "black"
 -- ```
 ---@field formatter "black" | "ruff"?
+-- Include signature docstring.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field include_docstring boolean?
 -- Maximum line length in signatures.
 -- 
 -- ```lua
