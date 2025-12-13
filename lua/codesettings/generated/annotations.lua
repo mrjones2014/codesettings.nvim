@@ -12866,6 +12866,8 @@
 
 ---@class lsp.julials.Juliaup
 ---@field install lsp.julials.Install?
+-- Juliaup mirror. Defaults to the official sources.
+---@field server string?
 
 ---@class lsp.julials.Lint
 -- This compares call signatures against all known methods for the called function. Calls with too many or too few arguments, or unknown keyword parameters are highlighted.
