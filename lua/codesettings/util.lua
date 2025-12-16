@@ -43,7 +43,13 @@ function M.fqn(fname)
 end
 
 ---strip off trailing slash, if any
+---@param path string?
 local function normalize_root(path)
+  -- if nil  then return nil
+  if not path then
+    return path
+  end
+
   if vim.endswith(path, '/') and path ~= '/' then
     return path:sub(1, -2)
   end
