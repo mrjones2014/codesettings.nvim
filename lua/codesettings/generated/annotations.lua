@@ -13015,7 +13015,7 @@
 -- Cell delimiter regular expressions for Julia files.
 -- 
 -- ```lua
--- default = { "^\\s?#\\s#+", "^##(?!#)", "^#(\\s?)%%", "^#-" }
+-- default = { "^\\s?#\\s#+", "^##(?!#)", "^#(\\s?)%%", "^#-", "^#+" }
 -- ```
 ---@field cellDelimiters any[]?
 -- Sets the mode for completions.
@@ -13048,7 +13048,7 @@
 ---@field enableTelemetry boolean?
 -- Path to a julia environment. VS Code needs to be reloaded for changes to take effect. Explicitly supports substitution for the `${userHome}`, `${workspaceFolder}`, `${workspaceFolderBasename}`, `${workspaceFolder:<FOLDER_NAME>}`, `${pathSeparator}`, `${env:<ENVIRONMENT_VARIABLE>}`, `${config:<CONFIG_VARIABLE>} tokens.
 ---@field environmentPath string?
--- Points to the julia executable.
+-- Points to the Julia executable. This can either be an absolute path, an executable on your PATH, or a juliaup channel (valid formats `julia +$channel`, `+$channel`).
 -- 
 -- ```lua
 -- default = ""
@@ -20540,6 +20540,10 @@
 -- Prefer using parameter names as the name for elided lifetime hints if possible.
 ---@field useParameterNames boolean?
 
+---@class lsp.rust_analyzer.MissingArguments
+-- Show parameter name inlay hints for missing arguments at the call site.
+---@field enable boolean?
+
 ---@class lsp.rust_analyzer.ParameterHints
 -- Show function parameter name inlay hints at the call site.
 -- 
@@ -20547,6 +20551,7 @@
 -- default = true
 -- ```
 ---@field enable boolean?
+---@field missingArguments lsp.rust_analyzer.MissingArguments?
 
 ---@class lsp.rust_analyzer.RangeExclusiveHints
 -- Show exclusive range inlay hints.
