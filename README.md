@@ -138,9 +138,10 @@ return {
       load_vscode_settings = false,
       -- the global hook doesn't work when configuring rust-analyzer with rustaceanvim
       settings = function(_, settings)
-        -- Note: you have to wrap the `settings` table because of how `rustaceanvim`
-        -- passes just the `settings` table in here, not the full `vim.lsp.Config` object.
-        return require('codesettings').with_local_settings('rust-analyzer', { settings = settings })
+        -- Note the exact way this is invoked to work with rustaceanvim:
+        -- - passed in settings are wrapped like `{ settings = settings }`
+        -- - the returned value is the `.settings` subtable
+        return require('codesettings').with_local_settings('rust-analyzer', { settings = settings }).settings
       end,
       default_settings = {
         ['rust-analyzer'] = {
@@ -442,4 +443,3 @@ This project would not exist without the hard work of some other open source pro
 - [x] [yamlls](https://github.com/redhat-developer/vscode-yaml/tree/master/package.json)
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
-
