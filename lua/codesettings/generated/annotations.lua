@@ -14016,6 +14016,12 @@
 -- default = "Replace"
 -- ```
 ---@field keywordSnippet "Disable" | "Both" | "Replace"?
+-- %config.completion.maxSuggestCount%
+-- 
+-- ```lua
+-- default = 100
+-- ```
+---@field maxSuggestCount integer?
 -- %config.completion.postfix%
 -- 
 -- ```lua
