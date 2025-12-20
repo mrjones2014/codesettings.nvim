@@ -12984,7 +12984,11 @@
 ---@field path string?
 
 ---@class lsp.julials.Repl
--- Experimental: Keeps the terminal window around even if the underlying Julia process is terminated to help debugging of fatal errors.
+-- Experimental: Keeps the terminal window around even if the underlying Julia process is terminated to help debugging of fatal errors. Try disabling this if you see rendering issues in the integrated Julia REPL.
+-- 
+-- ```lua
+-- default = true
+-- ```
 ---@field keepAlive boolean?
 
 ---@class lsp.julials.Trace
@@ -24123,6 +24127,10 @@
 -- ```
 ---@field wrapAttributes "auto" | "force" | "force-aligned" | "force-expand-multiline" | "aligned-multiple" | "preserve" | "preserve-aligned"?
 
+---@class lsp.volar.Hover
+-- %configuration.hover.rich%
+---@field rich boolean?
+
 ---@class lsp.volar.InlayHints
 -- %configuration.inlayHints.destructuredProps%
 ---@field destructuredProps boolean?
@@ -24178,6 +24186,7 @@
 ---@field codeActions lsp.volar.CodeActions?
 ---@field editor lsp.volar.Editor?
 ---@field format lsp.volar.Format?
+---@field hover lsp.volar.Hover?
 ---@field inlayHints lsp.volar.InlayHints?
 ---@field server lsp.volar.Server?
 ---@field suggest lsp.volar.Suggest?
