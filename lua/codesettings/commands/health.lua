@@ -1,3 +1,3 @@
 return function()
-  require('codesettings.health').check()
+  vim.cmd('checkhealth codesettings')
 end
