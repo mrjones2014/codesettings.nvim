@@ -30,7 +30,7 @@ function M.show(str)
   opts.col = (vim.o.columns - opts.width) / 2
 
   local buf_scope = { buf = buf }
-  vim.api.nvim_set_option_value('filetype', 'markdown', buf_scope)
+  vim.api.nvim_set_option_value('filetype', 'codesettings-output', buf_scope)
   vim.api.nvim_set_option_value('bufhidden', 'wipe', buf_scope)
   vim.api.nvim_set_option_value('modifiable', false, buf_scope)
 

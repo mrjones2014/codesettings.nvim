@@ -87,6 +87,8 @@ end
 ---Setup the plugin with the given options.
 ---@param opts CodesettingsConfigOverrides? optional config overrides for the global plugin configuration
 function M.setup(opts)
+  vim.treesitter.language.register('markdown', 'codesettings-output')
+
   opts = opts or {}
   require('codesettings.config').setup(opts)
 end
