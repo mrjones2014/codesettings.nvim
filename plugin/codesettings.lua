@@ -17,6 +17,8 @@ vim.api.nvim_create_user_command('Codesettings', function(args)
     cmd = 'files'
   end
   if subcommands[cmd] then
+    -- work around the fact that nvim treats all health.lua files as healthchecks
+    cmd = cmd == 'health' and 'healthcheck' or cmd
     require('codesettings.commands.' .. cmd)()
   else
     require('codesettings.util').error('Unknown subcommand: %s', cmd)
