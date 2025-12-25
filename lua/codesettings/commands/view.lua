@@ -3,7 +3,7 @@ local M = {}
 ---Show given string in a centered floating window, with q and esc bound to close
 ---@param str string|string[]
 function M.show(str)
-  local buf = vim.api.nvim_create_buf(false, false)
+  local buf = vim.api.nvim_create_buf(false, true)
   local vpad = 6
   local hpad = 20
 
@@ -29,13 +29,12 @@ function M.show(str)
   opts.row = (vim.o.lines - opts.height) / 2
   opts.col = (vim.o.columns - opts.width) / 2
 
-  local win = vim.api.nvim_open_win(buf, true, opts)
-
   local buf_scope = { buf = buf }
-  vim.api.nvim_set_option_value('filetype', 'markdown', buf_scope)
-  vim.api.nvim_set_option_value('buftype', 'nofile', buf_scope)
+  vim.api.nvim_set_option_value('filetype', 'codesettings-output', buf_scope)
   vim.api.nvim_set_option_value('bufhidden', 'wipe', buf_scope)
   vim.api.nvim_set_option_value('modifiable', false, buf_scope)
+
+  local win = vim.api.nvim_open_win(buf, true, opts)
 
   local win_scope = { win = win }
   vim.api.nvim_set_option_value('conceallevel', 3, win_scope)
