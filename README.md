@@ -41,7 +41,7 @@ return {
     ---This integration also works for emmylua_ls
     lua_ls_integration = true,
     ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
-    ---make sure you have the jsonc tree-sitter parser installed for highlighting
+    ---make sure you have the json tree-sitter parser installed for highlighting
     jsonc_filetype = true,
     ---Enable live reloading of settings when config files change; for servers that support it,
     ---this is done via the `workspace/didChangeConfiguration` notification, otherwise the
