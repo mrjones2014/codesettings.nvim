@@ -12985,10 +12985,6 @@
 
 ---@class lsp.julials.Repl
 -- Experimental: Keeps the terminal window around even if the underlying Julia process is terminated to help debugging of fatal errors. Try disabling this if you see rendering issues in the integrated Julia REPL.
--- 
--- ```lua
--- default = true
--- ```
 ---@field keepAlive boolean?
 
 ---@class lsp.julials.Trace
