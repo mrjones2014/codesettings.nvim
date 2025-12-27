@@ -23,16 +23,27 @@ or to configure `codesettings.nvim` itself with local files.
 
 - lazy.nvim (recommended)
 
+<!-- GENERATED:CONFIG:START -->
+
 ```lua
 return {
   'mrjones2014/codesettings.nvim',
   -- these are the default settings just set `opts = {}` to use defaults
   opts = {
     ---Look for these config files
-    config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
+    config_file_paths = { ".vscode/settings.json", "codesettings.json", "lspsettings.json" },
+    ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
+    ---make sure you have the json tree-sitter parser installed for highlighting
+    jsonc_filetype = true,
     ---Integrate with jsonls to provide LSP completion for LSP settings based on schemas
     jsonls_integration = true,
-    ---Set up library paths for lua_ls automatically to pick up the generated type
+    ---Enable live reloading of settings when config files change; for servers that support it,
+    ---this is done via the `workspace/didChangeConfiguration` notification, otherwise the
+    ---server is restarted
+    live_reload = false,
+    ---List of loader extensions to use when loading settings; `string` values will be `require`d
+    loader_extensions = {},
+    ---Set up library paths for `lua_ls` automatically to pick up the generated type
     ---annotations provided by codesettings.nvim; to enable for only your nvim config,
     ---you can also do something like:
     ---lua_ls_integration = function()
@@ -40,25 +51,20 @@ return {
     ---end,
     ---This integration also works for emmylua_ls
     lua_ls_integration = true,
-    ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
-    ---make sure you have the json tree-sitter parser installed for highlighting
-    jsonc_filetype = true,
-    ---Enable live reloading of settings when config files change; for servers that support it,
-    ---this is done via the `workspace/didChangeConfiguration` notification, otherwise the
-    ---server is restarted
-    live_reload = false,
+    ---How to merge lists; 'append' (default), 'prepend' or 'replace'
+    merge_lists = "append",
     ---Provide your own root dir; can be a string or function returning a string.
     ---It should be/return the full absolute path to the root directory.
     ---If not set, defaults to `require('codesettings.util').get_root()`
     root_dir = nil,
-    --- How to merge lists; 'append' (default), 'prepend' or 'replace'
-    merge_lists = 'append',
   },
   -- I recommend loading on these filetype so that the
   -- jsonls integration, lua_ls integration, and jsonc filetype setup works
   ft = { 'json', 'jsonc', 'lua' },
 }
 ```
+
+<!-- GENERATED:CONFIG:END -->
 
 `codesettings.nvim` can also be specified in the local JSON configuration files by using a top-level `codesettings`
 object key, and these _override the global plugin configuration._ For example:
@@ -369,7 +375,7 @@ This project would not exist without the hard work of some other open source pro
 
 ## Supported LSP Servers
 
-<!-- GENERATED -->
+<!-- GENERATED:SERVERS:START -->
 
 - [x] [als](https://github.com/AdaCore/ada_language_server/tree/master/integration/vscode/ada/package.json)
 - [x] [angularls](https://github.com/angular/vscode-ng-language-service/refs/heads/tree/main/package.json)
@@ -444,3 +450,4 @@ This project would not exist without the hard work of some other open source pro
 - [x] [zeta_note](https://github.com/artempyanykh/zeta-note-vscode/tree/main/package.json)
 - [x] [zls](https://github.com/zigtools/zls-vscode/tree/master/package.json)
 
+<!-- GENERATED:SERVERS:END -->
