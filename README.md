@@ -281,7 +281,7 @@ vim.lsp.config('rust_analyzer', {
 })
 ```
 
-See [codesettings.config.builder](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/builder.lua)
+See [codesettings.config.schema](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/schema.lua)
 for the full available API and which settings can be overridden.
 
 ### Loader Extensions
