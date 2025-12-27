@@ -15735,6 +15735,10 @@
 -- ```
 ---@field sync boolean?
 
+---@class lsp.luau_lsp.Format
+-- Whether to automatically convert single/double quotes to backticks when typing `{` inside strings
+---@field convertQuotes boolean?
+
 ---@class lsp.luau_lsp.Hover
 -- Enable hover
 -- 
@@ -15956,6 +15960,7 @@
 ---@field completion lsp.luau_lsp.Completion?
 ---@field diagnostics lsp.luau_lsp.Diagnostics?
 ---@field fflags lsp.luau_lsp.Fflags?
+---@field format lsp.luau_lsp.Format?
 ---@field hover lsp.luau_lsp.Hover?
 -- Diagnostics will not be reported for any file matching these globs unless the file is currently open
 -- 
@@ -20815,6 +20820,14 @@
 -- Exclude tests from find-all-references and call-hierarchy.
 ---@field excludeTests boolean?
 
+---@class lsp.rust_analyzer.Rename
+-- Whether to warn when a rename will cause conflicts (change the meaning of the code).
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field showConflicts boolean?
+
 ---@class lsp.rust_analyzer.Runnables
 -- Ask before updating the test when running it.
 -- 
@@ -21260,6 +21273,7 @@
 ---@field procMacro lsp.rust_analyzer.ProcMacro?
 ---@field profiling lsp.rust_analyzer.Profiling?
 ---@field references lsp.rust_analyzer.References?
+---@field rename lsp.rust_analyzer.Rename?
 -- Restart the server automatically when settings that require a restart are changed.
 ---@field restartServerOnConfigChange boolean?
 ---@field runnables lsp.rust_analyzer.Runnables?
