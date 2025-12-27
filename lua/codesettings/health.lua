@@ -49,10 +49,10 @@ function M.check()
     )
   end
 
-  if pcall(vim.treesitter.get_string_parser, '', 'jsonc') then
-    ok('`jsonc` parser for tree-sitter is installed')
+  if pcall(vim.treesitter.get_string_parser, '', 'json') then
+    ok('`json` parser for tree-sitter is installed')
   else
-    warn('`jsonc` parser for tree-sitter is not installed. Jsonc highlighting might be broken')
+    warn('`json` parser for tree-sitter is not installed. Json highlighting might be broken')
   end
 
   if Config.live_reload then
