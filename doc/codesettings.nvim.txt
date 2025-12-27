@@ -327,8 +327,8 @@ where you might have a separate instance of the LSP server per-root.
     })
 <
 
-See codesettings.config.builder
-<https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/builder.lua>
+See codesettings.config.schema
+<https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/config/schema.lua>
 for the full available API and which settings can be overridden.
 
 
