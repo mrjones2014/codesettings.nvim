@@ -8,7 +8,7 @@
 
 ---Options which can be passed on a per-load basis (i.e. can override global config)
 ---@class CodesettingsOverridableConfig
----List of config file paths to look for
+---Look for these config files
 ---
 ---```lua
 ---default = { ".vscode/settings.json", "codesettings.json", "lspsettings.json" }
@@ -20,13 +20,15 @@
 ---default = {}
 ---```
 ---@field loader_extensions (string|CodesettingsLoaderExtension)[]?
----How to merge list fields when combining settings from multiple sources
+---How to merge lists; 'append' (default), 'prepend' or 'replace'
 ---
 ---```lua
 ---default = "append"
 ---```
 ---@field merge_lists CodesettingsMergeListsBehavior?
----Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
+---Provide your own root dir; can be a string or function returning a string.
+---It should be/return the full absolute path to the root directory.
+---If not set, defaults to `require('codesettings.util').get_root()`
 ---
 ---```lua
 ---default = nil
@@ -35,21 +37,30 @@
 
 ---Main configuration class
 ---@class CodesettingsConfig: CodesettingsOverridableConfig
----Set filetype to jsonc for config files
+---Set filetype to jsonc when opening a file specified by `config_file_paths`,
+---make sure you have the json tree-sitter parser installed for highlighting
 ---
 ---```lua
 ---default = true
 ---```
 ---@field jsonc_filetype boolean
----Integrate with jsonls for LSP settings completion
+---Integrate with jsonls to provide LSP completion for LSP settings based on schemas
 ---
 ---```lua
 ---default = true
 ---```
 ---@field jsonls_integration boolean
----Enable live reloading of settings when config files change; for servers that support it, this is done via the `workspace/didChangeConfiguration` notification, otherwise the server is restarted
+---Enable live reloading of settings when config files change; for servers that support it,
+---this is done via the `workspace/didChangeConfiguration` notification, otherwise the
+---server is restarted
 ---@field live_reload boolean
----Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config
+---Set up library paths for `lua_ls` automatically to pick up the generated type
+---annotations provided by codesettings.nvim; to enable for only your nvim config,
+---you can also do something like:
+---lua_ls_integration = function()
+---  return vim.uv.cwd() == ('%%s/.config/nvim'):format(vim.env.HOME)
+---end,
+---This integration also works for emmylua_ls
 ---
 ---```lua
 ---default = true
@@ -62,7 +73,7 @@
 ---Each overridable config property gets a corresponding setter method.
 ---@class CodesettingsConfigBuilder
 ---@field private _config CodesettingsOverridableConfig
----List of config file paths to look for
+---Look for these config files
 ---
 ---```lua
 ---default = { ".vscode/settings.json", "codesettings.json", "lspsettings.json" }
@@ -74,13 +85,15 @@
 ---default = {}
 ---```
 ---@field loader_extensions fun(self: CodesettingsConfigBuilder, value: (string|CodesettingsLoaderExtension)[]): CodesettingsConfigBuilder
----How to merge list fields when combining settings from multiple sources
+---How to merge lists; 'append' (default), 'prepend' or 'replace'
 ---
 ---```lua
 ---default = "append"
 ---```
 ---@field merge_lists fun(self: CodesettingsConfigBuilder, value: CodesettingsMergeListsBehavior): CodesettingsConfigBuilder
----Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`
+---Provide your own root dir; can be a string or function returning a string.
+---It should be/return the full absolute path to the root directory.
+---If not set, defaults to `require('codesettings.util').get_root()`
 ---
 ---```lua
 ---default = nil

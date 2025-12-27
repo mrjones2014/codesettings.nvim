@@ -33,20 +33,22 @@ M.properties = {
   config_file_paths = {
     type = 'array',
     items = { type = 'string', description = 'List of relative config file paths to look for' },
-    description = 'List of config file paths to look for',
+    description = 'Look for these config files',
     default = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
     overridable = true,
   },
   merge_lists = {
     type = 'CodesettingsMergeListsBehavior',
-    description = 'How to merge list fields when combining settings from multiple sources',
+    description = [[How to merge lists; 'append' (default), 'prepend' or 'replace']],
     enum = { 'replace', 'append', 'prepend' },
     default = 'append',
     overridable = true,
   },
   root_dir = {
     type = { 'string', { args = {}, ret = 'string' }, 'null' },
-    description = "Function or string to determine the project root directory; defaults to `require('codesettings.util').get_root()`",
+    description = [[Provide your own root dir; can be a string or function returning a string.
+It should be/return the full absolute path to the root directory.
+If not set, defaults to `require('codesettings.util').get_root()`]],
     default = vim.NIL,
     overridable = true,
   },
@@ -62,22 +64,31 @@ M.properties = {
   },
   jsonls_integration = {
     type = 'boolean',
-    description = 'Integrate with jsonls for LSP settings completion',
+    description = 'Integrate with jsonls to provide LSP completion for LSP settings based on schemas',
     default = true,
   },
   lua_ls_integration = {
     type = { 'boolean', { args = {}, ret = 'boolean' } },
-    description = 'Integrate with lua_ls for LSP settings completion; can be a function so that, for example, you can enable it only if editing your nvim config',
+    description = [[Set up library paths for `lua_ls` automatically to pick up the generated type
+annotations provided by codesettings.nvim; to enable for only your nvim config,
+you can also do something like:
+lua_ls_integration = function()
+  return vim.uv.cwd() == ('%%s/.config/nvim'):format(vim.env.HOME)
+end,
+This integration also works for emmylua_ls]],
     default = true,
   },
   jsonc_filetype = {
     type = 'boolean',
-    description = 'Set filetype to jsonc for config files',
+    description = [[Set filetype to jsonc when opening a file specified by `config_file_paths`,
+make sure you have the json tree-sitter parser installed for highlighting]],
     default = true,
   },
   live_reload = {
     type = 'boolean',
-    description = 'Enable live reloading of settings when config files change; for servers that support it, this is done via the `workspace/didChangeConfiguration` notification, otherwise the server is restarted',
+    description = [[Enable live reloading of settings when config files change; for servers that support it,
+this is done via the `workspace/didChangeConfiguration` notification, otherwise the
+server is restarted]],
     default = false,
   },
 }

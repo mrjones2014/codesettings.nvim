@@ -1,13 +1,17 @@
+local ConfigSchema = require('codesettings.config.schema')
 local Schemas = require('codesettings.build.schemas')
 local Util = require('codesettings.util')
 
 local M = {}
 
-function M.build()
-  if #arg == 0 then
-    error('This function is part of a build tool and should not be called directly!')
-  end
-  print('Generating list of supported LSP servers in README.md...')
+---@class DocSection
+---@field start_marker string The start marker to find in the README (without <!-- -->)
+---@field end_marker string The end marker to find in the README (without <!-- -->)
+---@field generator fun(): string Function that generates the content for this section
+
+---Generate the LSP servers list section
+---@return string
+local function generate_lsp_servers()
   local lines = {}
   local schemas = Schemas.get_schemas()
   local lsp_names = vim.tbl_keys(schemas)
@@ -24,10 +28,112 @@ function M.build()
     end
     table.insert(lines, ('- [x] [%s](%s)'):format(name, url))
   end
-  local generated_doc = '<!-- GENERATED -->\n\n' .. table.concat(lines, '\n') .. '\n'
+  return table.concat(lines, '\n')
+end
+
+---Format a value for Lua code
+---@param value any
+---@return string
+local function format_value(value)
+  if value == nil or value == vim.NIL then
+    return 'nil'
+  elseif type(value) == 'string' then
+    return vim.inspect(value)
+  elseif type(value) == 'table' and vim.tbl_isempty(value) then
+    return '{}'
+  else
+    return vim.inspect(value)
+  end
+end
+
+---Generate the default config section
+---@return string
+local function generate_default_config()
+  local lines = {}
+  table.insert(lines, '```lua')
+  table.insert(lines, 'return {')
+  table.insert(lines, "  'mrjones2014/codesettings.nvim',")
+  table.insert(lines, '  -- these are the default settings just set `opts = {}` to use defaults')
+  table.insert(lines, '  opts = {')
+
+  -- Get sorted property names
+  local props = vim.tbl_keys(ConfigSchema.properties)
+  table.sort(props)
+
+  for _, name in ipairs(props) do
+    local prop = ConfigSchema.properties[name]
+
+    -- Add description as comment
+    if prop.description then
+      -- Handle multi-line descriptions
+      for line in prop.description:gmatch('[^\n]+') do
+        table.insert(lines, '    ---' .. line)
+      end
+    end
+
+    -- Add the field with default value
+    local default_val = prop.default
+    if default_val == vim.NIL then
+      default_val = nil
+    end
+
+    local formatted_value = format_value(default_val)
+    table.insert(lines, '    ' .. name .. ' = ' .. formatted_value .. ',')
+  end
+
+  table.insert(lines, '  },')
+  table.insert(lines, '  -- I recommend loading on these filetype so that the')
+  table.insert(lines, '  -- jsonls integration, lua_ls integration, and jsonc filetype setup works')
+  table.insert(lines, "  ft = { 'json', 'jsonc', 'lua' },")
+  table.insert(lines, '}')
+  table.insert(lines, '```')
+
+  return table.concat(lines, '\n')
+end
+
+---@type DocSection[]
+local sections = {
+  {
+    start_marker = 'GENERATED:CONFIG:START',
+    end_marker = 'GENERATED:CONFIG:END',
+    generator = generate_default_config,
+  },
+  {
+    start_marker = 'GENERATED:SERVERS:START',
+    end_marker = 'GENERATED:SERVERS:END',
+    generator = generate_lsp_servers,
+  },
+}
+
+function M.build()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
+
+  print('Generating documentation sections in README.md...')
   local readme = Util.read_file('README.md')
-  readme = readme:gsub('<!%-%- GENERATED %-%->.*', generated_doc) .. '\n'
+
+  -- Process each section
+  for _, section in ipairs(sections) do
+    local content = section.generator()
+    local start_pattern = '<!%-%- ' .. section.start_marker:gsub('%-', '%%-') .. ' %-%->'
+    local end_pattern = '<!%-%- ' .. section.end_marker:gsub('%-', '%%-') .. ' %-%->'
+
+    -- Replace content between start and end markers
+    local pattern = '(' .. start_pattern .. ').-(' .. end_pattern .. ')'
+    local replacement = '%1\n\n' .. content .. '\n\n%2'
+
+    local new_readme, count = readme:gsub(pattern, replacement)
+    if count > 0 then
+      readme = new_readme
+      print('  Generated section: ' .. section.start_marker:gsub(':START', ''))
+    else
+      print('  Warning: Markers not found: ' .. section.start_marker .. ' / ' .. section.end_marker)
+    end
+  end
+
   Util.write_file('README.md', readme)
+  print('Documentation generation complete!')
 end
 
 return M
