@@ -20159,18 +20159,6 @@
 -- ```
 ---@field watcher "client" | "server"?
 
----@class lsp.rust_analyzer.Gc
--- This config controls the frequency in which rust-analyzer will perform its internal Garbage
--- Collection. It is specified in revisions, roughly equivalent to number of changes. The default
--- is 1000.
--- 
--- Setting a smaller value may help limit peak memory usage at the expense of speed.
--- 
--- ```lua
--- default = 1000
--- ```
----@field frequency integer?
-
 ---@class lsp.rust_analyzer.GotoImplementations
 -- If this is `true`, when "Goto Implementations" and in "Implementations" lens, are triggered on a `struct` or `enum` or `union`, we filter out trait implementations that originate from `derive`s above the type.
 ---@field filterAdjacentDerives boolean?
@@ -21245,7 +21233,6 @@
 ---@field diagnostics lsp.rust_analyzer.Diagnostics?
 ---@field document lsp.rust_analyzer.Document?
 ---@field files lsp.rust_analyzer.Files?
----@field gc lsp.rust_analyzer.Gc?
 ---@field gotoImplementations lsp.rust_analyzer.GotoImplementations?
 ---@field highlightRelated lsp.rust_analyzer.HighlightRelated?
 ---@field hover lsp.rust_analyzer.Hover?
