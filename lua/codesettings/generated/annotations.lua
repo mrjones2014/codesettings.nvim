@@ -20816,6 +20816,45 @@
 -- ```
 ---@field showConflicts boolean?
 
+---@class lsp.rust_analyzer.Bench
+-- Subcommand used for bench runnables instead of `bench`.
+-- 
+-- ```lua
+-- default = "bench"
+-- ```
+---@field command string?
+-- Override the command used for bench runnables.
+-- The first element of the array should be the program to execute (for example, `cargo`).
+-- 
+-- Use the placeholders `${package}`, `${target_arg}`, `${target}`, `${test_name}` to dynamically
+-- replace the package name, target option (such as `--bin` or `--example`), the target name and
+-- the test name (name of test function or test mod path).
+---@field overrideCommand string[]?
+
+---@class lsp.rust_analyzer.Doctest
+-- Override the command used for bench runnables.
+-- The first element of the array should be the program to execute (for example, `cargo`).
+-- 
+-- Use the placeholders `${package}`, `${target_arg}`, `${target}`, `${test_name}` to dynamically
+-- replace the package name, target option (such as `--bin` or `--example`), the target name and
+-- the test name (name of test function or test mod path).
+---@field overrideCommand string[]?
+
+---@class lsp.rust_analyzer.Test
+-- Subcommand used for test runnables instead of `test`.
+-- 
+-- ```lua
+-- default = "test"
+-- ```
+---@field command string?
+-- Override the command used for test runnables.
+-- The first element of the array should be the program to execute (for example, `cargo`).
+-- 
+-- Use the placeholders `${package}`, `${target_arg}`, `${target}`, `${test_name}` to dynamically
+-- replace the package name, target option (such as `--bin` or `--example`), the target name and
+-- the test name (name of test function or test mod path).
+---@field overrideCommand string[]?
+
 ---@class lsp.rust_analyzer.Runnables
 -- Ask before updating the test when running it.
 -- 
@@ -20823,8 +20862,10 @@
 -- default = true
 -- ```
 ---@field askBeforeUpdateTest boolean?
+---@field bench lsp.rust_analyzer.Bench?
 -- Command to be executed instead of 'cargo' for runnables.
 ---@field command string?
+---@field doctest lsp.rust_analyzer.Doctest?
 -- Additional arguments to be passed to cargo for runnables such as
 -- tests or binaries. For example, it may be `--release`.
 -- 
@@ -20852,6 +20893,7 @@
 -- default = { "$rustc" }
 -- ```
 ---@field problemMatcher string[]?
+---@field test lsp.rust_analyzer.Test?
 
 ---@class lsp.rust_analyzer.Rustc
 -- Path to the Cargo.toml of the rust compiler workspace, for usage in rustc_private
