@@ -38,9 +38,15 @@ local function format_value(value)
   if value == nil or value == vim.NIL then
     return 'nil'
   elseif type(value) == 'string' then
-    return vim.inspect(value)
+    return string.format("'%s'", value)
   elseif type(value) == 'table' and vim.tbl_isempty(value) then
     return '{}'
+  elseif type(value) == 'table' and vim.islist(value) then
+    local items = {}
+    for _, v in ipairs(value) do
+      table.insert(items, format_value(v))
+    end
+    return '{ ' .. table.concat(items, ', ') .. ' }'
   else
     return vim.inspect(value)
   end

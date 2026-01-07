@@ -31,7 +31,7 @@ return {
   -- these are the default settings just set `opts = {}` to use defaults
   opts = {
     ---Look for these config files
-    config_file_paths = { ".vscode/settings.json", "codesettings.json", "lspsettings.json" },
+    config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
     ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
     ---make sure you have the json tree-sitter parser installed for highlighting
     jsonc_filetype = true,
@@ -52,7 +52,7 @@ return {
     ---This integration also works for emmylua_ls
     lua_ls_integration = true,
     ---How to merge lists; 'append' (default), 'prepend' or 'replace'
-    merge_lists = "append",
+    merge_lists = 'append',
     ---Provide your own root dir; can be a string or function returning a string.
     ---It should be/return the full absolute path to the root directory.
     ---If not set, defaults to `require('codesettings.util').get_root()`
@@ -122,11 +122,15 @@ return codesettings.with_local_settings('rust-analyzer', {
 
 ### Rustaceanvim
 
-The `before_init` global hook does not work if you use [rustaceanvim](https://github.com/mrcjkb/rustaceanvim)
-to configure `rust-analyzer`, however you can still use `codesettings.nvim` to merge local settings.
+`codesettings.nvim` works out of the box with [rustaceanvim](https://github.com/mrcjkb/rustaceanvim) >= v7.0.9.
+Using the `before_init` global hook should work with v7.0.9 or later.
+
+<details>
+
+<summary>If you use a `rustaceanvim` version older than v7.0.9, you need some configuration</summary>
 
 `rustaceanvim` loads VS Code settings by default, but your global settings override the local ones; `codesettings.nvim`
-does the opposite. Here's how I configure `rustaceanvim` in my own setup:
+does the opposite. To make `rustaceanvim` respect workspace files via `codesettings.nvim`, you need to load them manually:
 
 ```lua
 return {
@@ -158,6 +162,8 @@ return {
   end,
 }
 ```
+
+</details>
 
 ## Features
 
