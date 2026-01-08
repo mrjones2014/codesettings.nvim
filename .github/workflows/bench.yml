@@ -1,0 +1,22 @@
+on:
+  push:
+    branches: [master]
+name: benchmarks
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Run benchmarks
+        run: nix develop --command just bench
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "chore(ci): Run automated benchmarks"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

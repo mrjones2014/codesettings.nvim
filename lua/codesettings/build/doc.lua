@@ -111,6 +111,33 @@ local sections = {
   },
 }
 
+---Generate vimdoc and help tags from README.md
+local function build_vim_docs()
+  print('Generating vim docs from README.md...')
+  local result = vim
+    .system({
+      'panvimdoc',
+      '--project-name',
+      'codesettings.nvim',
+      '--input-file',
+      'README.md',
+      '--vim-version',
+      'Neovim >= 0.11.0',
+      '--demojify',
+      'true',
+      '--treesitter',
+      'true',
+      '--shift-heading-level-by',
+      '-1', -- Don't duplicate project name due to README.md top-level heading
+    })
+    :wait()
+  if result.code ~= 0 then
+    error('Failed to generate vim docs: ' .. result.stderr)
+  end
+  print('Generating help tags...')
+  vim.cmd.helptags('doc')
+end
+
 function M.build()
   if #arg == 0 then
     error('This function is part of a build tool and should not be called directly!')
@@ -139,6 +166,7 @@ function M.build()
   end
 
   Util.write_file('README.md', readme)
+  build_vim_docs()
   print('Documentation generation complete!')
 end
 
