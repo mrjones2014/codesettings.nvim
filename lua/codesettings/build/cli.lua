@@ -12,7 +12,7 @@ local build_order = { 'schemas', 'terminals', 'annotations', 'config', 'doc' }
 local build_dependencies = {
   terminals = { 'schemas' },
   annotations = { 'schemas' },
-  doc = { 'schemas' },
+  doc = { 'config' },
 }
 
 local function get_target_names()
