@@ -16,10 +16,12 @@
           buildInputs = with pkgs; [
             jq
             just
-            stylua
-            selene
-            luajitPackages.busted
             luajitPackages.argparse
+            luajitPackages.busted
+            neovim
+            panvimdoc
+            selene
+            stylua
           ];
         };
       }
