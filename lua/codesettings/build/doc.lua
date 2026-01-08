@@ -129,7 +129,7 @@ local function build_vim_docs()
       'true',
       '--shift-heading-level-by',
       '-1', -- Don't duplicate project name due to README.md top-level heading
-    })
+    }, { text = true })
     :wait()
   if result.code ~= 0 then
     error('Failed to generate vim docs: ' .. result.stderr)
