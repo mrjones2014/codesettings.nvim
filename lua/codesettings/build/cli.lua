@@ -1,3 +1,9 @@
+-- Add treesitter parsers to runtimepath if provided via Nix
+local ts_parsers = vim.env.NVIM_TREESITTER_PARSERS
+if ts_parsers and ts_parsers ~= '' then
+  vim.opt.runtimepath:append(ts_parsers)
+end
+
 local build_targets = {
   schemas = require('codesettings.build.schemas'),
   annotations = require('codesettings.build.annotations'),

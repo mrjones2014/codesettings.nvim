@@ -125,6 +125,8 @@ local function build_vim_docs()
       'Neovim >= 0.11.0',
       '--demojify',
       'true',
+      '--treesitter',
+      'true',
       '--shift-heading-level-by',
       '-1', -- Don't duplicate project name due to README.md top-level heading
     }, { text = true })

@@ -10,19 +10,39 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
+
+        # Tree-sitter parsers needed by panvimdoc
+        treesitterParsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+          markdown
+          markdown_inline
+          vimdoc
+        ];
       in
       {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            jq
-            just
-            luajitPackages.argparse
-            luajitPackages.busted
-            neovim
-            panvimdoc
-            selene
-            stylua
-          ];
+          buildInputs =
+            with pkgs;
+            [
+              jq
+              just
+              luajitPackages.argparse
+              luajitPackages.busted
+              neovim
+              panvimdoc
+              selene
+              stylua
+            ]
+            ++ treesitterParsers;
+
+          shellHook = ''
+            # Add tree-sitter parsers to Neovim's runtimepath
+            export NVIM_TREESITTER_PARSERS="${
+              pkgs.symlinkJoin {
+                name = "treesitter-parsers";
+                paths = treesitterParsers;
+              }
+            }/parser"
+          '';
         };
       }
     );
