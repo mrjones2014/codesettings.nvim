@@ -10,7 +10,6 @@ jobs:
     steps:
       - uses: folke/github/neovim@main
       - uses: actions/checkout@v4
-      - uses: extractions/setup-just@v3
       - name: Install Nix
         uses: cachix/install-nix-action@v27
         with:
