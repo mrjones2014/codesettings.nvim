@@ -16913,6 +16913,12 @@
 ---@field commitElementsWithSpace boolean?
 
 ---@class lsp.omnisharp.Format
+-- %configuration.omnisharp.razor.format.attributeIndentStyle%
+-- 
+-- ```lua
+-- default = "alignWithFirst"
+-- ```
+---@field attributeIndentStyle "alignWithFirst" | "indentByOne"?
 -- %configuration.omnisharp.razor.format.codeBlockBraceOnNextLine%
 ---@field codeBlockBraceOnNextLine boolean?
 -- %configuration.omnisharp.razor.format.enable%
