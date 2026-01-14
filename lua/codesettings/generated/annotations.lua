@@ -12767,6 +12767,17 @@
 -- default = true
 -- ```
 ---@field enable boolean?
+-- %json.schemaDownload.trustedDomains.desc%
+-- 
+-- ```lua
+-- default = {
+--   ["https://json-schema.org/"] = true,
+--   ["https://raw.githubusercontent.com/"] = true,
+--   ["https://schemastore.azurewebsites.net/"] = true,
+--   ["https://www.schemastore.org/"] = true
+-- }
+-- ```
+---@field trustedDomains table?
 
 ---@class lsp.jsonls.Trace
 -- %json.tracing.desc%

@@ -28,6 +28,7 @@ return {
   ["haskell.serverEnvironment"] = true,
   ["haskell.toolchain"] = true,
   ["java.project.referencedLibraries.sources"] = true,
+  ["json.schemaDownload.trustedDomains"] = true,
   ["ltex.bibtex.fields"] = true,
   ["ltex.latex.commands"] = true,
   ["ltex.latex.environments"] = true,
