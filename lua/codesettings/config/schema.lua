@@ -59,7 +59,7 @@ If not set, defaults to `require('codesettings.util').get_root()`]],
       description = 'List of module paths, or inline extension instances',
     },
     description = 'List of loader extensions to use when loading settings; `string` values will be `require`d',
-    default = {},
+    default = { 'codesettings.extensions.vscode' },
     overridable = true,
   },
   jsonls_integration = {

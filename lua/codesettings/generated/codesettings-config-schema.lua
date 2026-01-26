@@ -17,7 +17,7 @@
 ---List of loader extensions to use when loading settings; `string` values will be `require`d
 ---
 ---```lua
----default = {}
+---default = { "codesettings.extensions.vscode" }
 ---```
 ---@field loader_extensions (string|CodesettingsLoaderExtension)[]?
 ---How to merge lists; 'append' (default), 'prepend' or 'replace'
@@ -82,7 +82,7 @@
 ---List of loader extensions to use when loading settings; `string` values will be `require`d
 ---
 ---```lua
----default = {}
+---default = { "codesettings.extensions.vscode" }
 ---```
 ---@field loader_extensions fun(self: CodesettingsConfigBuilder, value: (string|CodesettingsLoaderExtension)[]): CodesettingsConfigBuilder
 ---How to merge lists; 'append' (default), 'prepend' or 'replace'
