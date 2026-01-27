@@ -42,7 +42,7 @@ return {
     ---server is restarted
     live_reload = false,
     ---List of loader extensions to use when loading settings; `string` values will be `require`d
-    loader_extensions = {},
+    loader_extensions = { 'codesettings.extensions.vscode' },
     ---Set up library paths for `lua_ls` automatically to pick up the generated type
     ---annotations provided by codesettings.nvim; to enable for only your nvim config,
     ---you can also do something like:
@@ -171,6 +171,7 @@ return {
 - `jsonc` filetype for local config files
 - Live reload: automatically reload settings when config files change (opt-in via `live_reload = true`)
 - Configure the `codesettings.nvim` plugin itself in local config JSON files
+- Supports a subset of [VS Code variable interpolation](https://code.visualstudio.com/docs/reference/variables-reference) ([Loader Extensions](#loader-extensions))
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
   ![jsonls integration](https://github.com/user-attachments/assets/5d37f0bb-0e07-4c22-bc6b-16cf3e65e201)
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua, with optional `lua_ls` integration
@@ -300,32 +301,99 @@ for the full available API and which settings can be overridden.
 
 `codesettings.nvim` allows for custom post-processing of your local config files. Extensions can be registered globally,
 or through the `ConfigBuilder` for one-shot loaders. Extensions can be registered directly, or via a string which will be
-`require`d. **_No extensions are registered by default._**
+`require`d. **_Only the VS Code variable interpolation extension (`codesettings.extensions.vscode`) is loaded by default.
+All other extensions must be explicitly configured._**
 
 ```lua
-local SomeExtension = require('some-3rdparty-extension')
+-- To add additional extensions while keeping the default VS Code extension,
+-- you must explicitly include BOTH in the list (this replaces the default):
 require('codesettings').setup({
-  loader_extensions = { SomeExtension, 'another-3rdparty-extension' },
+  loader_extensions = {
+    'codesettings.extensions.vscode', -- Keep the default VS Code extension
+    'codesettings.extensions.env', -- Add environment variable support
+    require('some-3rdparty-ext'), -- you can also put inline extension modules
+    -- you can also put extension constructors for stateful extensions
+    function()
+      return SomeExtension.new()
+    end,
+  },
 })
 
--- or for one-shot loaders
+-- Or for one-shot loaders:
 require('codesettings')
   .loader()
-  :loader_extensions({ SomeExtension, 'another-3rdparty-extension' })
+  :loader_extensions({
+    'codesettings.extensions.vscode',
+    'codesettings.extensions.env',
+  })
   :with_local_settings('lua_ls', {
     -- ...
   })
 ```
 
-`codesettings.nvim` provides the following built-in loader extensions that can be enabled in your plugin config
-using their module path:
+`codesettings.nvim` provides the following built-in loader extensions:
 
+- `codesettings.extensions.vscode` **(loaded by default)**
+  - Expand VS Code variable interpolation syntax in JSON config files.
+  - Supports a subset of VS Code variables applicable to Neovim:
+    - `${userHome}` - User's home directory
+    - `${workspaceFolder}` - Project root directory
+    - `${workspaceFolderBasename}` - Project root directory name
+    - `${cwd}` - Current working directory
+    - `${pathSeparator}` - OS-specific path separator (`/` or `\`)
+    - `${/}` - Shorthand for `${pathSeparator}`
+  - **Note:** Variables requiring a currently open file (like `${file}`, `${relativeFile}`, etc.) or currently selected text are not supported.
+  - **Important:** If combining with `codesettings.extensions.env`, this extension must be listed **first** (see [Extension Ordering](#extension-ordering) below).
 - `codesettings.extensions.env`
   - Expand environment variables in JSON config files.
-  - Supports `$ENV_VAR`, `${ENV_VAR}`, and even `${ENV_VAR:-/some/default/path}` syntax.
+  - Supports `$ENV_VAR`, `${ENV_VAR}`, and `${ENV_VAR:-/some/default/path}` syntax.
+  - **Not loaded by default** - must be explicitly added to `loader_extensions`.
 - `codesettings.extensions.neoconf`
   - Enables compatibility on a best-effort basis with existing `.neoconf.json` files.
   - You will need to configure the plugin to look for those files via the `config_file_paths` option.
+  - **Not loaded by default** - must be explicitly added to `loader_extensions`.
+
+#### Extension Ordering
+
+When using multiple loader extensions, **order matters**. Extensions are applied sequentially, with each extension seeing the result of the previous extension's transformation.
+
+**Important for VS Code + Environment Variable Extensions:**
+
+If you want to use both `codesettings.extensions.vscode` (loaded by default) and `codesettings.extensions.env`, you must ensure the VS Code extension runs **before** the env extension:
+
+```lua
+require('codesettings').setup({
+  loader_extensions = {
+    'codesettings.extensions.vscode', -- Must be first
+    'codesettings.extensions.env', -- Then env vars
+  },
+})
+```
+
+**Why does order matter?**
+
+Both extensions use the `${...}` syntax for variable interpolation:
+
+- VS Code extension expands specific variables like `${workspaceFolder}`, `${userHome}`, etc.
+- Env extension expands any `${VARIABLE}` to environment variables
+
+If the env extension runs first, it will expand `${workspaceFolder}` to an empty string (since there's no such environment variable), and then the VS Code extension will see `/src` instead of `${workspaceFolder}/src`, preventing it from working correctly.
+
+By putting VS Code first, it expands `${workspaceFolder}` to the project root, and then the env extension can expand any remaining environment variables.
+
+**If you only use the default configuration** (VS Code extension only), no special ordering considerations are needed.
+
+**To disable the default VS Code extension:**
+
+If you don't want VS Code variable interpolation, set `loader_extensions` to an empty list or your preferred extensions:
+
+```lua
+require('codesettings').setup({
+  loader_extensions = {}, -- No extensions
+  -- or
+  loader_extensions = { 'codesettings.extensions.env' }, -- Only env vars
+})
+```
 
 #### Extension API
 
@@ -360,10 +428,12 @@ M.Control = {
 
 Extensions support both simple table style extensions, as well as stateful method style extensions;
 they will work whether your functions need to be called like `extension.leaf(value, ctx)` or
-`extension:leaf(value, ctx)`.
+`extension:leaf(value, ctx)`. To make a stateful extension, your module should return a function
+that constructs the extension instance.
 
 See [codesettings.extensions.env](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/extensions/env.lua)
-for a simple example extension.
+for a simple example extension, and [codesettings.extensions.vscode](https://github.com/mrjones2014/codesettings.nvim/tree/master/lua/codesettings/extensions/vscode.lua)
+for an example of a stateful extension.
 
 ## Performance
 

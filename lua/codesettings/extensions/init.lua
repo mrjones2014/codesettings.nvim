@@ -22,12 +22,11 @@ local function safe_call(fn, self, ...)
   if type(fn) ~= 'function' then
     error('Attempted to call a non-function')
   end
-  if self ~= nil and fn == rawget(self, fn) then
-    -- Actually, we can't reliably detect method from function
+  local metatable = getmetatable(self or {})
+  if metatable ~= nil and (metatable.object == fn or metatable.leaf == fn) then
     return fn(self, ...)
-  else
-    return fn(...)
   end
+  return fn(...)
 end
 
 ---@param ext any
@@ -49,7 +48,7 @@ local function is_extension(ext)
   return true
 end
 
----@param ext string|CodesettingsLoaderExtension
+---@param ext string|CodesettingsLoaderExtension|fun():CodesettingsLoaderExtension
 ---@return CodesettingsLoaderExtension
 local function to_extension(ext)
   if type(ext) == 'string' then
@@ -57,14 +56,28 @@ local function to_extension(ext)
     if not ok then
       error(extension)
     end
+    if type(extension) == 'function' then
+      extension = extension()
+    end
     if not is_extension(extension) then
       error(string.format('Module %q is not a valid CodesettingsLoaderExtension', ext))
     end
     return extension
   elseif type(ext) == 'table' and is_extension(ext) then
     return ext
+  elseif type(ext) == 'function' then
+    local ok, extension = pcall(ext)
+    if not ok or not is_extension(extension) then
+      error('Function did not return a valid CodesettingsLoaderExtension')
+    end
+    return extension
   else
-    error('Invalid extension type; expected string or CodesettingsLoaderExtension table')
+    error(
+      string.format(
+        'Invalid extension type; expected string or CodesettingsLoaderExtension table, got: %s',
+        vim.inspect(ext)
+      )
+    )
   end
 end
 
@@ -91,7 +104,7 @@ function M.resolve_extensions(extensions)
 end
 
 ---@param root any
----@param extensions (string|CodesettingsLoaderExtension)[]
+---@param extensions (string|CodesettingsLoaderExtension|fun():CodesettingsLoaderExtension)[]
 ---@return any
 function M.apply(root, extensions)
   local exts = M.resolve_extensions(extensions)
@@ -111,7 +124,7 @@ function M.traverse(node, path, parent, key, list_idx, extensions)
   local skip_node = false
   local replace_node, replacement
 
-  -- Run all extensions once per node
+  -- Run all extensions once per node, with each seeing the result of the previous
   vim.iter(extensions):each(function(ext)
     local ctx = { parent = parent, path = path, key = key, list_idx = list_idx }
 
@@ -122,12 +135,14 @@ function M.traverse(node, path, parent, key, list_idx, extensions)
       elseif c == M.Control.REPLACE then
         replace_node = true
         replacement = r
+        node = r -- Update node so next extension sees the replacement
       end
     elseif type(node) ~= 'table' and ext.leaf then
       local c, r = safe_call(ext.leaf, ext, node, ctx)
       if c == M.Control.REPLACE then
         replace_node = true
         replacement = r
+        node = r -- Update node so next extension sees the replacement
       end
       -- CONTINUE or SKIP has no effect on leaves; node remains as-is
     end
