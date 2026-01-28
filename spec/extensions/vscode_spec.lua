@@ -286,15 +286,24 @@ describe('CodesettingsVSCodeExtension', function()
             },
           },
         },
+        -- make sure to test an array value
+        tinymist = {
+          fontPaths = {
+            '${workspaceFolder}/fonts',
+            '${userHome}/.config/tinymist/fonts',
+          },
+        },
       }
 
-      local result = Extensions.apply(input, { VSCodeExtension })
-
       local root = Util.get_root()
+      local home = '/home/test'
+      local result = Extensions.apply(input, { VSCodeExtension({ root = root, home = home }) })
+
       assert.are.equal((root or '') .. '/target', result['rust-analyzer'].cargo.extraEnv.CARGO_TARGET_DIR)
       assert.are.equal('clippy', result['rust-analyzer'].checkOnSave.command)
       assert.are.equal((root or '') .. '/lua', result.Lua.workspace.library[1])
-      assert.are.equal(vim.fn.expand('~') .. '/.local/share/nvim/lazy', result.Lua.workspace.library[2])
+      assert.are.equal(home .. '/.local/share/nvim/lazy', result.Lua.workspace.library[2])
+      assert.are.same({ root .. '/fonts', home .. '/.config/tinymist/fonts' }, result.tinymist.fontPaths)
     end)
   end)
 end)
