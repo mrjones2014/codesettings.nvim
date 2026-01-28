@@ -1,5 +1,6 @@
 ---@module 'busted'
 
+local Codesettings = require('codesettings')
 local Extensions = require('codesettings.extensions')
 local Util = require('codesettings.util')
 local VSCodeExtension = require('codesettings.extensions.vscode')
@@ -304,6 +305,23 @@ describe('CodesettingsVSCodeExtension', function()
       assert.are.equal((root or '') .. '/lua', result.Lua.workspace.library[1])
       assert.are.equal(home .. '/.local/share/nvim/lazy', result.Lua.workspace.library[2])
       assert.are.same({ root .. '/fonts', home .. '/.config/tinymist/fonts' }, result.tinymist.fontPaths)
+    end)
+
+    it('handles dotted keys from config file', function()
+      local root = Util.get_root()
+      local settings = Codesettings.loader()
+        :root_dir(assert(root))
+        :config_file_paths({ 'spec/test-config-files/vscode_variables_extension.json' })
+        :loader_extensions({ VSCodeExtension })
+        :local_settings()
+        :totable()
+      assert.are.same({
+        tinymist = {
+          fontPaths = {
+            root .. '/fonts',
+          },
+        },
+      }, settings)
     end)
   end)
 end)

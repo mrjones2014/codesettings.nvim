@@ -28,6 +28,10 @@ function M.is_function_type(t)
   return type(t) == 'table' and t.args ~= nil and t.ret ~= nil
 end
 
+function M.function_type(args, ret)
+  return { args = args, ret = ret }
+end
+
 ---@type table<string, CodesettingsSchemaValue> JSON Schema properties for codesettings configuration
 M.properties = {
   config_file_paths = {
@@ -45,7 +49,7 @@ M.properties = {
     overridable = true,
   },
   root_dir = {
-    type = { 'string', { args = {}, ret = 'string' }, 'null' },
+    type = { 'string', M.function_type({}, 'string'), 'null' },
     description = [[Provide your own root dir; can be a string or function returning a string.
 It should be/return the full absolute path to the root directory.
 If not set, defaults to `require('codesettings.util').get_root()`]],
@@ -55,7 +59,7 @@ If not set, defaults to `require('codesettings.util').get_root()`]],
   loader_extensions = {
     type = 'array',
     items = {
-      type = { 'string', 'CodesettingsLoaderExtension' },
+      type = { 'string', 'CodesettingsLoaderExtension', M.function_type({}, 'CodesettingsLoaderExtension') },
       description = 'List of module paths, or inline extension instances',
     },
     description = 'List of loader extensions to use when loading settings; `string` values will be `require`d',
@@ -68,7 +72,7 @@ If not set, defaults to `require('codesettings.util').get_root()`]],
     default = true,
   },
   lua_ls_integration = {
-    type = { 'boolean', { args = {}, ret = 'boolean' } },
+    type = { 'boolean', M.function_type({}, 'boolean') },
     description = [[Set up library paths for `lua_ls` automatically to pick up the generated type
 annotations provided by codesettings.nvim; to enable for only your nvim config,
 you can also do something like:

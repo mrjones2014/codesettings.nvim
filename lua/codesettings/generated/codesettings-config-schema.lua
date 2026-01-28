@@ -19,7 +19,7 @@
 ---```lua
 ---default = { "codesettings.extensions.vscode" }
 ---```
----@field loader_extensions (string|CodesettingsLoaderExtension)[]?
+---@field loader_extensions (string|CodesettingsLoaderExtension|fun():CodesettingsLoaderExtension)[]?
 ---How to merge lists; 'append' (default), 'prepend' or 'replace'
 ---
 ---```lua
@@ -84,7 +84,7 @@
 ---```lua
 ---default = { "codesettings.extensions.vscode" }
 ---```
----@field loader_extensions fun(self: CodesettingsConfigBuilder, value: (string|CodesettingsLoaderExtension)[]): CodesettingsConfigBuilder
+---@field loader_extensions fun(self: CodesettingsConfigBuilder, value: (string|CodesettingsLoaderExtension|fun():CodesettingsLoaderExtension)[]): CodesettingsConfigBuilder
 ---How to merge lists; 'append' (default), 'prepend' or 'replace'
 ---
 ---```lua
