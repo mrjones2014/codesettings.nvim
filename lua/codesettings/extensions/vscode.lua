@@ -15,6 +15,13 @@ local Util = require('codesettings.util')
 ---@field cwd string? Override current working directory
 ---@field path_sep string? Override path separator
 
+local function strip_trailing_slash(path, path_sep)
+  if path:sub(-#path_sep) == path_sep then
+    return path:sub(1, -#path_sep - 1)
+  end
+  return path
+end
+
 --- Get VS Code variables
 ---@param overrides CodesettingsVsCodeVariableOverrides?
 ---@return CodesettingsVsCodeVariables
@@ -22,11 +29,14 @@ local function get_variables(overrides)
   overrides = overrides or {}
   local root = overrides.root or Util.get_root()
   local path_sep = overrides.path_sep or (vim.fn.has('win32') == 1 and '\\' or '/')
+  if #path_sep ~= 1 then
+    error('Path separator must be a single character')
+  end
   return {
-    userHome = overrides.home or vim.fn.expand('~'),
-    workspaceFolder = root,
-    workspaceFolderBasename = root and vim.fn.fnamemodify(root, ':t') or nil,
-    cwd = overrides.cwd or vim.uv.cwd(),
+    userHome = strip_trailing_slash(overrides.home or vim.fn.expand('~'), path_sep),
+    workspaceFolder = strip_trailing_slash(root, path_sep),
+    workspaceFolderBasename = strip_trailing_slash(root and vim.fn.fnamemodify(root, ':t') or nil, path_sep),
+    cwd = strip_trailing_slash(overrides.cwd or vim.uv.cwd(), path_sep),
     pathSeparator = path_sep,
     ['/'] = path_sep,
   }
@@ -43,6 +53,16 @@ function VsCodeExtension:leaf(value, _)
     if expanded ~= value then
       return Control.REPLACE, expanded
     end
+  elseif type(value) == 'table' and vim.islist(value) and #value > 0 then
+    local control = Control.CONTINUE
+    local expanded_list_values = vim.iter(value):map(function(list_value)
+      local expanded = self:expand_vscode_vars(list_value)
+      if expanded ~= list_value then
+        control = Control.REPLACE
+      end
+      return expanded
+    end)
+    return control, expanded_list_values
   end
   return Control.CONTINUE
 end
