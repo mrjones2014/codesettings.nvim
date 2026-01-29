@@ -173,6 +173,13 @@ describe('Settings:load()', function()
     settings:load(tmpfile)
     assert.same({ x = { y = true, z = false } }, settings:totable())
   end)
+
+  it('uses Config.loader_extensions as fallback when opts.loader_extensions not provided', function()
+    -- The default configuration includes the `vscode` extension to do VS Code variable interpolation
+    local root = require('codesettings.util').get_root()
+    local S = Settings.new():load('spec/test-config-files/vscode_variables_extension.json')
+    assert.same({ tinymist = { fontPaths = { root .. '/fonts' } } }, S:get())
+  end)
 end)
 
 describe('Settings:schema()', function()
