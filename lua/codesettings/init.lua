@@ -19,6 +19,9 @@ local SpecialCases = {
     end
     return settings:schema('nixd')
   end,
+  tinymist = function(settings)
+    return settings:schema('tinymist'):get_subtable('tinymist') or settings
+  end,
 }
 
 ---@class Codesettings
