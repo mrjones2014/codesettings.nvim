@@ -11,7 +11,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
       in
-      {
+      rec {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
             jq
@@ -21,6 +21,10 @@
             luajitPackages.busted
             luajitPackages.argparse
           ];
+        };
+        devShells.ci = pkgs.mkShell {
+          inputsFrom = [ devShell ];
+          buildInputs = [ pkgs.neovim ];
         };
       }
     );
