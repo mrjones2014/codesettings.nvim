@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
@@ -18,11 +20,7 @@ jobs:
           # because it makes the section tags have duped project name
           shiftheadinglevelby: -1
       - name: Generate helptags
-        run: nvim --headless -c 'helptags doc' -c 'qa'
-      - name: Install Nix
-        uses: cachix/install-nix-action@v27
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
+        run: nix develop .#ci --command nvim --headless -c 'helptags doc' -c 'qa'
       - name: Run benchmarks
         run: nix develop .#ci --command just bench
       - name: Push changes
