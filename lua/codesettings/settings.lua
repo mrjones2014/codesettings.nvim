@@ -15,11 +15,7 @@ Settings.__index = Settings
 ---@param settings table? optional initial settings to populate
 ---@return CodesettingsSettings
 function M.new(settings)
-  local ret = setmetatable({ _settings = {} }, Settings)
-  for k, v in pairs(settings or {}) do
-    ret:set(k, v)
-  end
-  return ret
+  return setmetatable({ _settings = settings or {} }, Settings)
 end
 
 ---Load all local settings files
