@@ -381,4 +381,20 @@ describe('Settings.expand()', function()
       },
     }, expanded)
   end)
+
+  it('works with missing original key table', function()
+    local config = {}
+
+    local A = Settings.new(config)
+    local B = Settings.new()
+    B:set('settings.gopls.buildFlags', { '-tags=bsd' })
+    A:merge(B)
+    assert.same({
+      settings = {
+        gopls = {
+          buildFlags = { '-tags=bsd' },
+        },
+      },
+    }, config)
+  end)
 end)
