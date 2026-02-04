@@ -2621,6 +2621,14 @@
 ---@field propertyDeclarationTypes lsp.denols.PropertyDeclarationTypes?
 ---@field variableTypes lsp.denols.VariableTypes?
 
+---@class lsp.denols.OrganizeImports
+-- Controls if the Deno language server contributes organize imports code actions. Disable to rely on VS Code's built-in TypeScript/JavaScript organize imports instead.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
 ---@class lsp.denols.Imports
 -- If enabled, when new hosts/origins are encountered that support import suggestions, you will be prompted to enable or disable it.  Defaults to `true`.
 -- 
@@ -2652,6 +2660,26 @@
 -- default = true
 -- ```
 ---@field paths boolean?
+
+---@class lsp.denols.Document
+-- Controls if the Deno language server provides document symbols. Disable to rely on VS Code's built-in providers instead.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.denols.Workspace
+-- Controls if the Deno language server provides workspace symbols. Disable to rely on VS Code's built-in providers instead.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.denols.Symbols
+---@field document lsp.denols.Document?
+---@field workspace lsp.denols.Workspace?
 
 ---@class lsp.denols.Testing
 -- Arguments to use when running tests via the Test Explorer.  Defaults to `[ "--allow-all" ]`.
@@ -2762,9 +2790,11 @@
 -- default = 3072
 -- ```
 ---@field maxTsServerMemory number?
+---@field organizeImports lsp.denols.OrganizeImports?
 -- A path to the `deno` CLI executable. By default, the extension looks for `deno` in the `PATH`, but if set, will use the path specified instead.
 ---@field path string?
 ---@field suggest lsp.denols.Suggest?
+---@field symbols lsp.denols.Symbols?
 ---@field testing lsp.denols.Testing?
 -- A path to a PEM certificate to use as the certificate authority when validating TLS certificates when fetching and caching remote resources. This is like using `--cert` on the Deno CLI and overrides the `DENO_CERT` environment variable if set.
 ---@field tlsCertificate string?
