@@ -24060,12 +24060,6 @@
 ---@field typeAcquisition lsp.ts_ls.TypeAcquisition?
 
 ---@class lsp.ts_ls.Tsserver
--- %typescript.tsserver.enableRegionDiagnostics%
--- 
--- ```lua
--- default = true
--- ```
----@field enableRegionDiagnostics boolean?
 -- %typescript.tsserver.enableTracing%
 ---@field enableTracing boolean?
 ---@field experimental lsp.ts_ls.Experimental?
