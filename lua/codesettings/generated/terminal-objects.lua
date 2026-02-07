@@ -17,6 +17,7 @@ return {
   ["dart.mcpServerTools"] = true,
   ["deno.env"] = true,
   ["deno.suggest.imports.hosts"] = true,
+  ["dotnet.server.environmentVariables"] = true,
   ["dotnet.unitTestDebuggingOptions.sourceFileMap"] = true,
   ["dotnet.unitTestDebuggingOptions.sourceLinkOptions"] = true,
   ["elixirLS.envVariables"] = true,
