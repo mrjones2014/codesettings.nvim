@@ -13085,7 +13085,7 @@
 -- Cell delimiter regular expressions for Julia files.
 -- 
 -- ```lua
--- default = { "^\\s?#\\s#+", "^##(?!#)", "^#(\\s?)%%", "^##(\\s?)-", "^##(\\s?)\\+" }
+-- default = { "^[ \\t]?#[ \\t]#+", "^##(?!#)", "^#([ \\t]?)%%", "^##([ \\t]?)-", "^##([ \\t]?)\\+" }
 -- ```
 ---@field cellDelimiters any[]?
 -- Sets the mode for completions.
@@ -16611,6 +16611,12 @@
 ---@field extensionPaths string[]?
 -- %configuration.dotnet.server.path%
 ---@field path string?
+-- %configuration.dotnet.server.sourceGeneratorExecution%
+-- 
+-- ```lua
+-- default = "Balanced"
+-- ```
+---@field sourceGeneratorExecution "Balanced" | "Automatic"?
 -- %configuration.dotnet.server.startTimeout%
 -- 
 -- ```lua
@@ -23557,9 +23563,9 @@
 ---@field useAliasesForRenames boolean?
 
 ---@class lsp.ts_ls.ReferencesCodeLens
--- %javascript.referencesCodeLens.enabled%
+-- %configuration.referencesCodeLens.enabled%
 ---@field enabled boolean?
--- %javascript.referencesCodeLens.showOnAllFunctions%
+-- %configuration.referencesCodeLens.showOnAllFunctions%
 ---@field showOnAllFunctions boolean?
 
 ---@class lsp.ts_ls.ClassMemberSnippets
@@ -23685,6 +23691,14 @@
 -- ```
 ---@field maximumLength number?
 
+---@class lsp.ts_ls.ImplementationsCodeLens
+-- %configuration.implementationsCodeLens.enabled%
+---@field enabled boolean?
+-- %configuration.implementationsCodeLens.showOnAllClassMethods%
+---@field showOnAllClassMethods boolean?
+-- %configuration.implementationsCodeLens.showOnInterfaceMethods%
+---@field showOnInterfaceMethods boolean?
+
 ---@class lsp.ts_ls.ImplicitProjectConfig
 -- %configuration.implicitProjectConfig.checkJs%
 ---@field checkJs boolean?
@@ -23721,9 +23735,17 @@
 -- ```
 ---@field target "ES3" | "ES5" | "ES6" | "ES2015" | "ES2016" | "ES2017" | "ES2018" | "ES2019" | "ES2020" | "ES2021" | "ES2022" | "ES2023" | "ES2024" | "ESNext"?
 
+---@class lsp.ts_ls.ReferencesCodeLens
+-- %configuration.referencesCodeLens.enabled%
+---@field enabled boolean?
+-- %configuration.referencesCodeLens.showOnAllFunctions%
+---@field showOnAllFunctions boolean?
+
 ---@class lsp.ts_ls.Js/ts
 ---@field hover lsp.ts_ls.Hover?
+---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens?
 ---@field implicitProjectConfig lsp.ts_ls.ImplicitProjectConfig?
+---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
 
 ---@class lsp.ts_ls.Check
 -- %typescript.check.npmIsInstalled%
@@ -23818,11 +23840,11 @@
 ---@field semicolons "ignore" | "insert" | "remove"?
 
 ---@class lsp.ts_ls.ImplementationsCodeLens
--- %typescript.implementationsCodeLens.enabled%
+-- %configuration.implementationsCodeLens.enabled%
 ---@field enabled boolean?
--- %typescript.implementationsCodeLens.showOnAllClassMethods%
+-- %configuration.implementationsCodeLens.showOnAllClassMethods%
 ---@field showOnAllClassMethods boolean?
--- %typescript.implementationsCodeLens.showOnInterfaceMethods%
+-- %configuration.implementationsCodeLens.showOnInterfaceMethods%
 ---@field showOnInterfaceMethods boolean?
 
 ---@class lsp.ts_ls.EnumMemberValues
@@ -23959,9 +23981,9 @@
 ---@field useAliasesForRenames boolean?
 
 ---@class lsp.ts_ls.ReferencesCodeLens
--- %typescript.referencesCodeLens.enabled%
+-- %configuration.referencesCodeLens.enabled%
 ---@field enabled boolean?
--- %typescript.referencesCodeLens.showOnAllFunctions%
+-- %configuration.referencesCodeLens.showOnAllFunctions%
 ---@field showOnAllFunctions boolean?
 
 ---@class lsp.ts_ls.ClassMemberSnippets
