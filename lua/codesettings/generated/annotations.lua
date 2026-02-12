@@ -11659,6 +11659,12 @@
 -- default = true
 -- ```
 ---@field unexpectedTokens boolean?
+-- Enables reporting of unreachable code.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field unreachableCode boolean?
 -- Enables unused variable, private member, and import diagnostics.
 -- 
 -- ```lua
