@@ -23741,17 +23741,149 @@
 -- ```
 ---@field target "ES3" | "ES5" | "ES6" | "ES2015" | "ES2016" | "ES2017" | "ES2018" | "ES2019" | "ES2020" | "ES2021" | "ES2022" | "ES2023" | "ES2024" | "ESNext"?
 
+---@class lsp.ts_ls.EnumMemberValues
+-- %configuration.inlayHints.enumMemberValues.enabled%
+---@field enabled boolean?
+
+---@class lsp.ts_ls.FunctionLikeReturnTypes
+-- %configuration.inlayHints.functionLikeReturnTypes.enabled%
+---@field enabled boolean?
+
+---@class lsp.ts_ls.ParameterNames
+-- %configuration.inlayHints.parameterNames.enabled%
+-- 
+-- ```lua
+-- default = "none"
+-- ```
+---@field enabled "none" | "literals" | "all"?
+-- %configuration.inlayHints.parameterNames.suppressWhenArgumentMatchesName%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field suppressWhenArgumentMatchesName boolean?
+
+---@class lsp.ts_ls.ParameterTypes
+-- %configuration.inlayHints.parameterTypes.enabled%
+---@field enabled boolean?
+
+---@class lsp.ts_ls.PropertyDeclarationTypes
+-- %configuration.inlayHints.propertyDeclarationTypes.enabled%
+---@field enabled boolean?
+
+---@class lsp.ts_ls.VariableTypes
+-- %configuration.inlayHints.variableTypes.enabled%
+---@field enabled boolean?
+-- %configuration.inlayHints.variableTypes.suppressWhenTypeMatchesName%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field suppressWhenTypeMatchesName boolean?
+
+---@class lsp.ts_ls.InlayHints
+---@field enumMemberValues lsp.ts_ls.EnumMemberValues?
+---@field functionLikeReturnTypes lsp.ts_ls.FunctionLikeReturnTypes?
+---@field parameterNames lsp.ts_ls.ParameterNames?
+---@field parameterTypes lsp.ts_ls.ParameterTypes?
+---@field propertyDeclarationTypes lsp.ts_ls.PropertyDeclarationTypes?
+---@field variableTypes lsp.ts_ls.VariableTypes?
+
 ---@class lsp.ts_ls.ReferencesCodeLens
 -- %configuration.referencesCodeLens.enabled%
 ---@field enabled boolean?
 -- %configuration.referencesCodeLens.showOnAllFunctions%
 ---@field showOnAllFunctions boolean?
 
+---@class lsp.ts_ls.ClassMemberSnippets
+-- %configuration.suggest.classMemberSnippets.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.ts_ls.Jsdoc
+-- %configuration.suggest.jsdoc.generateReturns%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field generateReturns boolean?
+
+---@class lsp.ts_ls.ObjectLiteralMethodSnippets
+-- %configuration.suggest.objectLiteralMethodSnippets.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.ts_ls.Suggest
+-- %configuration.suggest.autoImports%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field autoImports boolean?
+---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets?
+-- %configuration.suggest.completeFunctionCalls%
+---@field completeFunctionCalls boolean?
+-- %configuration.suggest.completeJSDocs%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field completeJSDocs boolean?
+-- %typescript.suggest.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+-- %configuration.suggest.includeAutomaticOptionalChainCompletions%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field includeAutomaticOptionalChainCompletions boolean?
+-- %configuration.suggest.includeCompletionsForImportStatements%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field includeCompletionsForImportStatements boolean?
+---@field jsdoc lsp.ts_ls.Jsdoc?
+-- %configuration.suggest.names%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field names boolean?
+---@field objectLiteralMethodSnippets lsp.ts_ls.ObjectLiteralMethodSnippets?
+-- %configuration.suggest.paths%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field paths boolean?
+
+---@class lsp.ts_ls.SuggestionActions
+-- %configuration.suggestionActions.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
 ---@class lsp.ts_ls.Js/ts
 ---@field hover lsp.ts_ls.Hover?
 ---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens?
 ---@field implicitProjectConfig lsp.ts_ls.ImplicitProjectConfig?
+---@field inlayHints lsp.ts_ls.InlayHints?
 ---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
+---@field suggest lsp.ts_ls.Suggest?
+---@field suggestionActions lsp.ts_ls.SuggestionActions?
 
 ---@class lsp.ts_ls.Check
 -- %typescript.check.npmIsInstalled%
