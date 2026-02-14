@@ -23789,6 +23789,91 @@
 ---@field propertyDeclarationTypes lsp.ts_ls.PropertyDeclarationTypes?
 ---@field variableTypes lsp.ts_ls.VariableTypes?
 
+-- %typescript.preferences.organizeImports%
+---@class lsp.ts_ls.OrganizeImports
+-- %typescript.preferences.organizeImports.accentCollation%
+---@field accentCollation boolean?
+-- %typescript.preferences.organizeImports.caseFirst%
+-- 
+-- ```lua
+-- default = "default"
+-- ```
+---@field caseFirst "default" | "upper" | "lower"?
+-- %typescript.preferences.organizeImports.caseSensitivity%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"?
+-- %typescript.preferences.organizeImports.locale%
+---@field locale string?
+-- %typescript.preferences.organizeImports.numericCollation%
+---@field numericCollation boolean?
+-- %typescript.preferences.organizeImports.typeOrder%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field typeOrder "auto" | "last" | "inline" | "first"?
+-- %typescript.preferences.organizeImports.unicodeCollation%
+-- 
+-- ```lua
+-- default = "ordinal"
+-- ```
+---@field unicodeCollation "ordinal" | "unicode"?
+
+---@class lsp.ts_ls.Preferences
+-- %typescript.preferences.autoImportFileExcludePatterns%
+---@field autoImportFileExcludePatterns string[]?
+-- %typescript.preferences.autoImportSpecifierExcludeRegexes%
+---@field autoImportSpecifierExcludeRegexes string[]?
+-- %typescript.preferences.importModuleSpecifier%
+-- 
+-- ```lua
+-- default = "shortest"
+-- ```
+---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"?
+-- %typescript.preferences.importModuleSpecifierEnding%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"?
+-- %typescript.preferences.includePackageJsonAutoImports%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field includePackageJsonAutoImports "auto" | "on" | "off"?
+-- %typescript.preferences.jsxAttributeCompletionStyle%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"?
+-- %typescript.preferences.organizeImports%
+---@field organizeImports lsp.ts_ls.OrganizeImports?
+-- %typescript.preferences.preferTypeOnlyAutoImports%
+---@field preferTypeOnlyAutoImports boolean?
+-- %typescript.preferences.quoteStyle%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field quoteStyle "auto" | "single" | "double"?
+-- %typescript.preferences.renameMatchingJsxTags%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field renameMatchingJsxTags boolean?
+-- %typescript.preferences.useAliasesForRenames%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field useAliasesForRenames boolean?
+
 ---@class lsp.ts_ls.ReferencesCodeLens
 -- %configuration.referencesCodeLens.enabled%
 ---@field enabled boolean?
@@ -23881,6 +23966,7 @@
 ---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens?
 ---@field implicitProjectConfig lsp.ts_ls.ImplicitProjectConfig?
 ---@field inlayHints lsp.ts_ls.InlayHints?
+---@field preferences lsp.ts_ls.Preferences?
 ---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
 ---@field suggest lsp.ts_ls.Suggest?
 ---@field suggestionActions lsp.ts_ls.SuggestionActions?

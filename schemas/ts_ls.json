@@ -195,6 +195,7 @@
       "items": {
         "type": "string"
       },
+      "markdownDeprecationMessage": "%configuration.preferences.autoImportFileExcludePatterns.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.autoImportFileExcludePatterns%",
       "scope": "resource",
       "type": "array"
@@ -203,6 +204,7 @@
       "items": {
         "type": "string"
       },
+      "markdownDeprecationMessage": "%configuration.preferences.autoImportSpecifierExcludeRegexes.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.autoImportSpecifierExcludeRegexes%",
       "scope": "resource",
       "type": "array"
@@ -216,6 +218,7 @@
         "non-relative",
         "project-relative"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.importModuleSpecifier.unifiedDeprecationMessage%",
       "markdownEnumDescriptions": [
         "%typescript.preferences.importModuleSpecifier.shortest%",
         "%typescript.preferences.importModuleSpecifier.relative%",
@@ -240,6 +243,7 @@
         null,
         "%typescript.preferences.importModuleSpecifierEnding.label.js%"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.importModuleSpecifierEnding.unifiedDeprecationMessage%",
       "markdownEnumDescriptions": [
         "%typescript.preferences.importModuleSpecifierEnding.auto%",
         "%typescript.preferences.importModuleSpecifierEnding.minimal%",
@@ -257,6 +261,7 @@
         "braces",
         "none"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.jsxAttributeCompletionStyle.unifiedDeprecationMessage%",
       "markdownEnumDescriptions": [
         "%javascript.preferences.jsxAttributeCompletionStyle.auto%",
         "%typescript.preferences.jsxAttributeCompletionStyle.braces%",
@@ -266,6 +271,7 @@
       "type": "string"
     },
     "javascript.preferences.organizeImports": {
+      "markdownDeprecationMessage": "%configuration.preferences.organizeImports.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.organizeImports%",
       "properties": {
         "accentCollation": {
@@ -350,6 +356,7 @@
         "single",
         "double"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.quoteStyle.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.quoteStyle%",
       "markdownEnumDescriptions": [
         "%typescript.preferences.quoteStyle.auto%",
@@ -362,12 +369,14 @@
     "javascript.preferences.renameMatchingJsxTags": {
       "default": true,
       "description": "%typescript.preferences.renameMatchingJsxTags%",
+      "markdownDeprecationMessage": "%configuration.preferences.renameMatchingJsxTags.unifiedDeprecationMessage%",
       "scope": "language-overridable",
       "type": "boolean"
     },
     "javascript.preferences.useAliasesForRenames": {
       "default": true,
       "description": "%typescript.preferences.useAliasesForRenames%",
+      "markdownDeprecationMessage": "%configuration.preferences.useAliasesForRenames.unifiedDeprecationMessage%",
       "scope": "language-overridable",
       "type": "boolean"
     },
@@ -677,6 +686,250 @@
     "js/ts.inlayHints.variableTypes.suppressWhenTypeMatchesName": {
       "default": true,
       "markdownDescription": "%configuration.inlayHints.variableTypes.suppressWhenTypeMatchesName%",
+      "scope": "language-overridable",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "boolean"
+    },
+    "js/ts.preferences.autoImportFileExcludePatterns": {
+      "items": {
+        "type": "string"
+      },
+      "markdownDescription": "%typescript.preferences.autoImportFileExcludePatterns%",
+      "scope": "resource",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "array"
+    },
+    "js/ts.preferences.autoImportSpecifierExcludeRegexes": {
+      "items": {
+        "type": "string"
+      },
+      "markdownDescription": "%typescript.preferences.autoImportSpecifierExcludeRegexes%",
+      "scope": "resource",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "array"
+    },
+    "js/ts.preferences.importModuleSpecifier": {
+      "default": "shortest",
+      "description": "%typescript.preferences.importModuleSpecifier%",
+      "enum": [
+        "shortest",
+        "relative",
+        "non-relative",
+        "project-relative"
+      ],
+      "markdownEnumDescriptions": [
+        "%typescript.preferences.importModuleSpecifier.shortest%",
+        "%typescript.preferences.importModuleSpecifier.relative%",
+        "%typescript.preferences.importModuleSpecifier.nonRelative%",
+        "%typescript.preferences.importModuleSpecifier.projectRelative%"
+      ],
+      "scope": "language-overridable",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "string"
+    },
+    "js/ts.preferences.importModuleSpecifierEnding": {
+      "default": "auto",
+      "description": "%typescript.preferences.importModuleSpecifierEnding%",
+      "enum": [
+        "auto",
+        "minimal",
+        "index",
+        "js"
+      ],
+      "enumItemLabels": [
+        null,
+        null,
+        null,
+        "%typescript.preferences.importModuleSpecifierEnding.label.js%"
+      ],
+      "markdownEnumDescriptions": [
+        "%typescript.preferences.importModuleSpecifierEnding.auto%",
+        "%typescript.preferences.importModuleSpecifierEnding.minimal%",
+        "%typescript.preferences.importModuleSpecifierEnding.index%",
+        "%typescript.preferences.importModuleSpecifierEnding.js%"
+      ],
+      "scope": "language-overridable",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "string"
+    },
+    "js/ts.preferences.includePackageJsonAutoImports": {
+      "default": "auto",
+      "enum": [
+        "auto",
+        "on",
+        "off"
+      ],
+      "enumDescriptions": [
+        "%typescript.preferences.includePackageJsonAutoImports.auto%",
+        "%typescript.preferences.includePackageJsonAutoImports.on%",
+        "%typescript.preferences.includePackageJsonAutoImports.off%"
+      ],
+      "markdownDescription": "%typescript.preferences.includePackageJsonAutoImports%",
+      "scope": "window",
+      "tags": [
+        "TypeScript"
+      ],
+      "type": "string"
+    },
+    "js/ts.preferences.jsxAttributeCompletionStyle": {
+      "default": "auto",
+      "description": "%typescript.preferences.jsxAttributeCompletionStyle%",
+      "enum": [
+        "auto",
+        "braces",
+        "none"
+      ],
+      "markdownEnumDescriptions": [
+        "%configuration.preferences.jsxAttributeCompletionStyle.auto%",
+        "%typescript.preferences.jsxAttributeCompletionStyle.braces%",
+        "%typescript.preferences.jsxAttributeCompletionStyle.none%"
+      ],
+      "scope": "language-overridable",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "string"
+    },
+    "js/ts.preferences.organizeImports": {
+      "markdownDescription": "%typescript.preferences.organizeImports%",
+      "properties": {
+        "accentCollation": {
+          "markdownDescription": "%typescript.preferences.organizeImports.accentCollation%",
+          "type": "boolean"
+        },
+        "caseFirst": {
+          "default": "default",
+          "enum": [
+            "default",
+            "upper",
+            "lower"
+          ],
+          "markdownDescription": "%typescript.preferences.organizeImports.caseFirst%",
+          "markdownEnumDescriptions": [
+            "%typescript.preferences.organizeImports.caseFirst.default%",
+            "%typescript.preferences.organizeImports.caseFirst.upper%",
+            "%typescript.preferences.organizeImports.caseFirst.lower%"
+          ],
+          "type": "string"
+        },
+        "caseSensitivity": {
+          "default": "auto",
+          "enum": [
+            "auto",
+            "caseInsensitive",
+            "caseSensitive"
+          ],
+          "markdownDescription": "%typescript.preferences.organizeImports.caseSensitivity%",
+          "markdownEnumDescriptions": [
+            "%typescript.preferences.organizeImports.caseSensitivity.auto%",
+            "%typescript.preferences.organizeImports.caseSensitivity.insensitive",
+            "%typescript.preferences.organizeImports.caseSensitivity.sensitive%"
+          ],
+          "type": "string"
+        },
+        "locale": {
+          "markdownDescription": "%typescript.preferences.organizeImports.locale%",
+          "type": "string"
+        },
+        "numericCollation": {
+          "markdownDescription": "%typescript.preferences.organizeImports.numericCollation%",
+          "type": "boolean"
+        },
+        "typeOrder": {
+          "default": "auto",
+          "enum": [
+            "auto",
+            "last",
+            "inline",
+            "first"
+          ],
+          "markdownDescription": "%typescript.preferences.organizeImports.typeOrder%",
+          "markdownEnumDescriptions": [
+            "%typescript.preferences.organizeImports.typeOrder.auto%",
+            "%typescript.preferences.organizeImports.typeOrder.last%",
+            "%typescript.preferences.organizeImports.typeOrder.inline%",
+            "%typescript.preferences.organizeImports.typeOrder.first%"
+          ],
+          "type": "string"
+        },
+        "unicodeCollation": {
+          "default": "ordinal",
+          "enum": [
+            "ordinal",
+            "unicode"
+          ],
+          "markdownDescription": "%typescript.preferences.organizeImports.unicodeCollation%",
+          "markdownEnumDescriptions": [
+            "%typescript.preferences.organizeImports.unicodeCollation.ordinal%",
+            "%typescript.preferences.organizeImports.unicodeCollation.unicode%"
+          ],
+          "type": "string"
+        }
+      },
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "object"
+    },
+    "js/ts.preferences.preferTypeOnlyAutoImports": {
+      "default": false,
+      "markdownDescription": "%typescript.preferences.preferTypeOnlyAutoImports%",
+      "scope": "resource",
+      "tags": [
+        "TypeScript"
+      ],
+      "type": "boolean"
+    },
+    "js/ts.preferences.quoteStyle": {
+      "default": "auto",
+      "enum": [
+        "auto",
+        "single",
+        "double"
+      ],
+      "markdownDescription": "%typescript.preferences.quoteStyle%",
+      "markdownEnumDescriptions": [
+        "%typescript.preferences.quoteStyle.auto%",
+        "%typescript.preferences.quoteStyle.single%",
+        "%typescript.preferences.quoteStyle.double%"
+      ],
+      "scope": "language-overridable",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "string"
+    },
+    "js/ts.preferences.renameMatchingJsxTags": {
+      "default": true,
+      "description": "%typescript.preferences.renameMatchingJsxTags%",
+      "scope": "language-overridable",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "boolean"
+    },
+    "js/ts.preferences.useAliasesForRenames": {
+      "default": true,
+      "description": "%typescript.preferences.useAliasesForRenames%",
       "scope": "language-overridable",
       "tags": [
         "JavaScript",
@@ -1116,6 +1369,7 @@
       "items": {
         "type": "string"
       },
+      "markdownDeprecationMessage": "%configuration.preferences.autoImportFileExcludePatterns.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.autoImportFileExcludePatterns%",
       "scope": "resource",
       "type": "array"
@@ -1124,6 +1378,7 @@
       "items": {
         "type": "string"
       },
+      "markdownDeprecationMessage": "%configuration.preferences.autoImportSpecifierExcludeRegexes.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.autoImportSpecifierExcludeRegexes%",
       "scope": "resource",
       "type": "array"
@@ -1137,6 +1392,7 @@
         "non-relative",
         "project-relative"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.importModuleSpecifier.unifiedDeprecationMessage%",
       "markdownEnumDescriptions": [
         "%typescript.preferences.importModuleSpecifier.shortest%",
         "%typescript.preferences.importModuleSpecifier.relative%",
@@ -1161,6 +1417,7 @@
         null,
         "%typescript.preferences.importModuleSpecifierEnding.label.js%"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.importModuleSpecifierEnding.unifiedDeprecationMessage%",
       "markdownEnumDescriptions": [
         "%typescript.preferences.importModuleSpecifierEnding.auto%",
         "%typescript.preferences.importModuleSpecifierEnding.minimal%",
@@ -1182,6 +1439,7 @@
         "%typescript.preferences.includePackageJsonAutoImports.on%",
         "%typescript.preferences.includePackageJsonAutoImports.off%"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.includePackageJsonAutoImports.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.includePackageJsonAutoImports%",
       "scope": "window",
       "type": "string"
@@ -1194,6 +1452,7 @@
         "braces",
         "none"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.jsxAttributeCompletionStyle.unifiedDeprecationMessage%",
       "markdownEnumDescriptions": [
         "%typescript.preferences.jsxAttributeCompletionStyle.auto%",
         "%typescript.preferences.jsxAttributeCompletionStyle.braces%",
@@ -1203,6 +1462,7 @@
       "type": "string"
     },
     "typescript.preferences.organizeImports": {
+      "markdownDeprecationMessage": "%configuration.preferences.organizeImports.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.organizeImports%",
       "properties": {
         "accentCollation": {
@@ -1282,6 +1542,7 @@
     },
     "typescript.preferences.preferTypeOnlyAutoImports": {
       "default": false,
+      "markdownDeprecationMessage": "%configuration.preferences.preferTypeOnlyAutoImports.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.preferTypeOnlyAutoImports%",
       "scope": "resource",
       "type": "boolean"
@@ -1293,6 +1554,7 @@
         "single",
         "double"
       ],
+      "markdownDeprecationMessage": "%configuration.preferences.quoteStyle.unifiedDeprecationMessage%",
       "markdownDescription": "%typescript.preferences.quoteStyle%",
       "markdownEnumDescriptions": [
         "%typescript.preferences.quoteStyle.auto%",
@@ -1305,12 +1567,14 @@
     "typescript.preferences.renameMatchingJsxTags": {
       "default": true,
       "description": "%typescript.preferences.renameMatchingJsxTags%",
+      "markdownDeprecationMessage": "%configuration.preferences.renameMatchingJsxTags.unifiedDeprecationMessage%",
       "scope": "language-overridable",
       "type": "boolean"
     },
     "typescript.preferences.useAliasesForRenames": {
       "default": true,
       "description": "%typescript.preferences.useAliasesForRenames%",
+      "markdownDeprecationMessage": "%configuration.preferences.useAliasesForRenames.unifiedDeprecationMessage%",
       "scope": "language-overridable",
       "type": "boolean"
     },
