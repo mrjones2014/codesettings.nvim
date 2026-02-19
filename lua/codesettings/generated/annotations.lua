@@ -23710,6 +23710,94 @@
 ---@field updateImportsOnPaste lsp.ts_ls.UpdateImportsOnPaste?
 ---@field validate lsp.ts_ls.Validate?
 
+---@class lsp.ts_ls.AutoClosingTags
+-- %typescript.autoClosingTags%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.ts_ls.Format
+-- %format.enable%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+-- %format.indentSwitchCase%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field indentSwitchCase boolean?
+-- %format.insertSpaceAfterCommaDelimiter%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field insertSpaceAfterCommaDelimiter boolean?
+-- %format.insertSpaceAfterConstructor%
+---@field insertSpaceAfterConstructor boolean?
+-- %format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean?
+-- %format.insertSpaceAfterKeywordsInControlFlowStatements%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field insertSpaceAfterKeywordsInControlFlowStatements boolean?
+-- %format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean?
+-- %format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%
+---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean?
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean?
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean?
+-- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%
+---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean?
+-- %format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%
+---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean?
+-- %format.insertSpaceAfterSemicolonInForStatements%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field insertSpaceAfterSemicolonInForStatements boolean?
+-- %format.insertSpaceAfterTypeAssertion%
+---@field insertSpaceAfterTypeAssertion boolean?
+-- %format.insertSpaceBeforeAndAfterBinaryOperators%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field insertSpaceBeforeAndAfterBinaryOperators boolean?
+-- %format.insertSpaceBeforeFunctionParenthesis%
+---@field insertSpaceBeforeFunctionParenthesis boolean?
+-- %format.placeOpenBraceOnNewLineForControlBlocks%
+---@field placeOpenBraceOnNewLineForControlBlocks boolean?
+-- %format.placeOpenBraceOnNewLineForFunctions%
+---@field placeOpenBraceOnNewLineForFunctions boolean?
+-- %format.semicolons%
+-- 
+-- ```lua
+-- default = "ignore"
+-- ```
+---@field semicolons "ignore" | "insert" | "remove"?
+
 ---@class lsp.ts_ls.Hover
 -- %configuration.hover.maximumLength%
 -- 
@@ -23982,15 +24070,52 @@
 -- ```
 ---@field enabled boolean?
 
+---@class lsp.ts_ls.UpdateImportsOnFileMove
+-- %typescript.updateImportsOnFileMove.enabled%
+-- 
+-- ```lua
+-- default = "prompt"
+-- ```
+---@field enabled "prompt" | "always" | "never"?
+
+---@class lsp.ts_ls.UpdateImportsOnPaste
+-- %configuration.updateImportsOnPaste%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.ts_ls.WorkspaceSymbols
+-- %typescript.workspaceSymbols.excludeLibrarySymbols%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field excludeLibrarySymbols boolean?
+-- %typescript.workspaceSymbols.scope%
+-- 
+-- ```lua
+-- default = "allOpenProjects"
+-- ```
+---@field scope "allOpenProjects" | "currentProject"?
+
 ---@class lsp.ts_ls.Js/ts
+---@field autoClosingTags lsp.ts_ls.AutoClosingTags?
+---@field format lsp.ts_ls.Format?
 ---@field hover lsp.ts_ls.Hover?
 ---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens?
 ---@field implicitProjectConfig lsp.ts_ls.ImplicitProjectConfig?
 ---@field inlayHints lsp.ts_ls.InlayHints?
+-- %configuration.preferGoToSourceDefinition%
+---@field preferGoToSourceDefinition boolean?
 ---@field preferences lsp.ts_ls.Preferences?
 ---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
 ---@field suggest lsp.ts_ls.Suggest?
 ---@field suggestionActions lsp.ts_ls.SuggestionActions?
+---@field updateImportsOnFileMove lsp.ts_ls.UpdateImportsOnFileMove?
+---@field updateImportsOnPaste lsp.ts_ls.UpdateImportsOnPaste?
+---@field workspaceSymbols lsp.ts_ls.WorkspaceSymbols?
 
 ---@class lsp.ts_ls.Check
 -- %typescript.check.npmIsInstalled%
