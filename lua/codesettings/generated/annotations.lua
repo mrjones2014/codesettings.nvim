@@ -8,7 +8,7 @@
 -- 
 -- This setting controls whether formatting should only perform the indentation of the new line (true) or also format the previous line (false).
 -- 
--- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+-- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `false`.
 ---@field indentOnly true | false?
 
 ---@class lsp.als.Trace
@@ -132,10 +132,6 @@
 -- 
 -- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
 ---@field useCompletionSnippets true | false?
--- Enable GNATformat as the formatting provider for Ada source files.
--- 
--- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
----@field useGnatformat true | false?
 
 ---@class lsp.als.E3-testsuite
 -- Command line arguments to pass to testsuite.py when running tests
