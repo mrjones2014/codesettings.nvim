@@ -323,7 +323,7 @@
           "markdownDescription": "%typescript.preferences.organizeImports.caseSensitivity%",
           "markdownEnumDescriptions": [
             "%typescript.preferences.organizeImports.caseSensitivity.auto%",
-            "%typescript.preferences.organizeImports.caseSensitivity.insensitive",
+            "%typescript.preferences.organizeImports.caseSensitivity.insensitive%",
             "%typescript.preferences.organizeImports.caseSensitivity.sensitive%"
           ],
           "type": "string"
@@ -1079,7 +1079,7 @@
           "markdownDescription": "%typescript.preferences.organizeImports.caseSensitivity%",
           "markdownEnumDescriptions": [
             "%typescript.preferences.organizeImports.caseSensitivity.auto%",
-            "%typescript.preferences.organizeImports.caseSensitivity.insensitive",
+            "%typescript.preferences.organizeImports.caseSensitivity.insensitive%",
             "%typescript.preferences.organizeImports.caseSensitivity.sensitive%"
           ],
           "type": "string"
@@ -1403,6 +1403,7 @@
     "typescript.experimental.useTsgo": {
       "default": false,
       "markdownDescription": "%typescript.useTsgo%",
+      "order": 2,
       "scope": "window",
       "tags": [
         "experimental"
@@ -1668,6 +1669,7 @@
         "中文(繁體)"
       ],
       "markdownDescription": "%typescript.locale%",
+      "order": 3,
       "scope": "window",
       "type": "string"
     },
@@ -2008,11 +2010,13 @@
         "%typescript.tsc.autoDetect.build%",
         "%typescript.tsc.autoDetect.watch%"
       ],
+      "order": 4,
       "scope": "window",
       "type": "string"
     },
     "typescript.tsdk": {
       "markdownDescription": "%typescript.tsdk.desc%",
+      "order": 1,
       "scope": "window",
       "type": "string"
     },
