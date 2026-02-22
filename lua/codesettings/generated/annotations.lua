@@ -24082,6 +24082,14 @@
 -- ```
 ---@field enabled boolean?
 
+---@class lsp.ts_ls.Validate
+-- %configuration.validate.enable%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
 ---@class lsp.ts_ls.WorkspaceSymbols
 -- %typescript.workspaceSymbols.excludeLibrarySymbols%
 -- 
@@ -24107,10 +24115,17 @@
 ---@field preferGoToSourceDefinition boolean?
 ---@field preferences lsp.ts_ls.Preferences?
 ---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
+-- %typescript.reportStyleChecksAsWarnings%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field reportStyleChecksAsWarnings boolean?
 ---@field suggest lsp.ts_ls.Suggest?
 ---@field suggestionActions lsp.ts_ls.SuggestionActions?
 ---@field updateImportsOnFileMove lsp.ts_ls.UpdateImportsOnFileMove?
 ---@field updateImportsOnPaste lsp.ts_ls.UpdateImportsOnPaste?
+---@field validate lsp.ts_ls.Validate?
 ---@field workspaceSymbols lsp.ts_ls.WorkspaceSymbols?
 
 ---@class lsp.ts_ls.Check

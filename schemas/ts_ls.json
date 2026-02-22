@@ -518,6 +518,7 @@
     "javascript.validate.enable": {
       "default": true,
       "description": "%javascript.validate.enable%",
+      "markdownDeprecationMessage": "%configuration.validate.enable.unifiedDeprecationMessage%",
       "scope": "window",
       "type": "boolean"
     },
@@ -1198,6 +1199,15 @@
       ],
       "type": "boolean"
     },
+    "js/ts.reportStyleChecksAsWarnings": {
+      "default": true,
+      "description": "%typescript.reportStyleChecksAsWarnings%",
+      "scope": "window",
+      "tags": [
+        "TypeScript"
+      ],
+      "type": "boolean"
+    },
     "js/ts.suggest.autoImports": {
       "default": true,
       "description": "%configuration.suggest.autoImports%",
@@ -1340,6 +1350,16 @@
       "default": true,
       "markdownDescription": "%configuration.updateImportsOnPaste%",
       "scope": "window",
+      "tags": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "type": "boolean"
+    },
+    "js/ts.validate.enabled": {
+      "default": true,
+      "description": "%configuration.validate.enable%",
+      "scope": "language-overridable",
       "tags": [
         "JavaScript",
         "TypeScript"
@@ -1915,6 +1935,7 @@
     "typescript.reportStyleChecksAsWarnings": {
       "default": true,
       "description": "%typescript.reportStyleChecksAsWarnings%",
+      "markdownDeprecationMessage": "%configuration.reportStyleChecksAsWarnings.unifiedDeprecationMessage%",
       "scope": "window",
       "type": "boolean"
     },
@@ -2203,6 +2224,7 @@
     "typescript.validate.enable": {
       "default": true,
       "description": "%typescript.validate.enable%",
+      "markdownDeprecationMessage": "%configuration.validate.enable.unifiedDeprecationMessage%",
       "scope": "window",
       "type": "boolean"
     },
