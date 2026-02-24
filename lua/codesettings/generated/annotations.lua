@@ -12834,9 +12834,11 @@
 -- 
 -- ```lua
 -- default = {
+--   ["https://developer.microsoft.com/json-schemas/"] = true,
 --   ["https://json-schema.org/"] = true,
 --   ["https://json.schemastore.org/"] = true,
---   ["https://raw.githubusercontent.com/"] = true,
+--   ["https://raw.githubusercontent.com/devcontainers/spec/"] = true,
+--   ["https://raw.githubusercontent.com/microsoft/vscode/"] = true,
 --   ["https://schemastore.azurewebsites.net/"] = true,
 --   ["https://www.schemastore.org/"] = true
 -- }
@@ -23714,6 +23716,10 @@
 -- ```
 ---@field enabled boolean?
 
+---@class lsp.ts_ls.Experimental
+-- %typescript.useTsgo%
+---@field useTsgo boolean?
+
 ---@class lsp.ts_ls.Format
 -- %format.enable%
 -- 
@@ -24066,6 +24072,110 @@
 -- ```
 ---@field enabled boolean?
 
+---@class lsp.ts_ls.Tsc
+-- %typescript.tsc.autoDetect%
+-- 
+-- ```lua
+-- default = "on"
+-- ```
+---@field autoDetect "on" | "off" | "build" | "watch"?
+
+---@class lsp.ts_ls.Tsdk
+-- %typescript.tsdk.desc%
+---@field path string?
+-- %typescript.enablePromptUseWorkspaceTsdk%
+---@field promptToUseWorkspaceVersion boolean?
+
+---@class lsp.ts_ls.AutomaticTypeAcquisition
+-- %configuration.automaticTypeAcquisition.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.ts_ls.Experimental
+-- %configuration.tsserver.experimental.enableProjectDiagnostics%
+---@field enableProjectDiagnostics boolean?
+
+---@class lsp.ts_ls.Node
+-- %configuration.tsserver.nodePath%
+---@field path string?
+
+---@class lsp.ts_ls.Npm
+-- %typescript.npm%
+---@field path string?
+
+---@class lsp.ts_ls.Tracing
+-- %typescript.tsserver.enableTracing%
+---@field enabled boolean?
+
+---@class lsp.ts_ls.ProjectWideIntellisense
+-- %configuration.tsserver.web.projectWideIntellisense.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+-- %configuration.tsserver.web.projectWideIntellisense.suppressSemanticErrors%
+---@field suppressSemanticErrors boolean?
+
+---@class lsp.ts_ls.TypeAcquisition
+-- %configuration.tsserver.web.typeAcquisition.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
+
+---@class lsp.ts_ls.Web
+---@field projectWideIntellisense lsp.ts_ls.ProjectWideIntellisense?
+---@field typeAcquisition lsp.ts_ls.TypeAcquisition?
+
+---@class lsp.ts_ls.Tsserver
+---@field automaticTypeAcquisition lsp.ts_ls.AutomaticTypeAcquisition?
+-- %typescript.check.npmIsInstalled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field checkNpmIsInstalled boolean?
+---@field experimental lsp.ts_ls.Experimental?
+-- %typescript.tsserver.log%
+-- 
+-- ```lua
+-- default = "off"
+-- ```
+---@field log "off" | "terse" | "normal" | "verbose" | "requestTime"?
+-- %configuration.tsserver.maxMemory%
+-- 
+-- ```lua
+-- default = 3072
+-- ```
+---@field maxMemory number?
+---@field node lsp.ts_ls.Node?
+---@field npm lsp.ts_ls.Npm?
+-- %typescript.tsserver.pluginPaths%
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field pluginPaths string[]?
+---@field tracing lsp.ts_ls.Tracing?
+-- %configuration.tsserver.useSyntaxServer%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field useSyntaxServer "always" | "never" | "auto"?
+-- %configuration.tsserver.watchOptions%
+-- 
+-- ```lua
+-- default = "vscode"
+-- ```
+---@field watchOptions "vscode"|table?
+---@field web lsp.ts_ls.Web?
+
 ---@class lsp.ts_ls.UpdateImportsOnFileMove
 -- %typescript.updateImportsOnFileMove.enabled%
 -- 
@@ -24106,11 +24216,18 @@
 
 ---@class lsp.ts_ls.Js/ts
 ---@field autoClosingTags lsp.ts_ls.AutoClosingTags?
+---@field experimental lsp.ts_ls.Experimental?
 ---@field format lsp.ts_ls.Format?
 ---@field hover lsp.ts_ls.Hover?
 ---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens?
 ---@field implicitProjectConfig lsp.ts_ls.ImplicitProjectConfig?
 ---@field inlayHints lsp.ts_ls.InlayHints?
+-- %typescript.locale%
+-- 
+-- ```lua
+-- default = "auto"
+-- ```
+---@field locale "auto" | "de" | "es" | "en" | "fr" | "it" | "ja" | "ko" | "ru" | "zh-CN" | "zh-TW"?
 -- %configuration.preferGoToSourceDefinition%
 ---@field preferGoToSourceDefinition boolean?
 ---@field preferences lsp.ts_ls.Preferences?
@@ -24123,6 +24240,9 @@
 ---@field reportStyleChecksAsWarnings boolean?
 ---@field suggest lsp.ts_ls.Suggest?
 ---@field suggestionActions lsp.ts_ls.SuggestionActions?
+---@field tsc lsp.ts_ls.Tsc?
+---@field tsdk lsp.ts_ls.Tsdk?
+---@field tsserver lsp.ts_ls.Tsserver?
 ---@field updateImportsOnFileMove lsp.ts_ls.UpdateImportsOnFileMove?
 ---@field updateImportsOnPaste lsp.ts_ls.UpdateImportsOnPaste?
 ---@field validate lsp.ts_ls.Validate?
