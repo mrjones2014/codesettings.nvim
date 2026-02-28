@@ -12385,6 +12385,10 @@
 ---@class lsp.jdtls.Imports
 ---@field gradle lsp.jdtls.Gradle?
 
+---@class lsp.jdtls.FormatParameters
+-- Enable/disable inlay hints for format specifiers in format strings (e.g. `String.format()`, `String.formatted()`, `PrintStream.printf()`). Shows which argument corresponds to each format specifier.
+---@field enabled boolean?
+
 ---@class lsp.jdtls.ParameterNames
 -- Enable/disable inlay hints for parameter names:
 -- ```java
@@ -12435,6 +12439,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.jdtls.InlayHints
+---@field formatParameters lsp.jdtls.FormatParameters?
 ---@field parameterNames lsp.jdtls.ParameterNames?
 ---@field parameterTypes lsp.jdtls.ParameterTypes?
 ---@field variableTypes lsp.jdtls.VariableTypes?
