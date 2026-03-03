@@ -87,8 +87,10 @@ function M.loader()
   return require('codesettings.config.builder').new()
 end
 
+---@class (partial) CodesettingsConfigSetupInput: CodesettingsConfig
+
 ---Setup the plugin with the given options.
----@param opts CodesettingsConfigOverrides? optional config overrides for the global plugin configuration
+---@param opts CodesettingsConfigSetupInput? optional config overrides for the global plugin configuration
 function M.setup(opts)
   vim.treesitter.language.register('markdown', 'codesettings-output')
 
