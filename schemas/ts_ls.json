@@ -437,7 +437,7 @@
     },
     "javascript.suggest.completeJSDocs": {
       "default": true,
-      "description": "%configuration.suggest.completeJSDocs%",
+      "description": "%configuration.suggest.jsdoc.enabled%",
       "markdownDeprecationMessage": "%configuration.suggest.completeJSDocs.unifiedDeprecationMessage%",
       "scope": "language-overridable",
       "type": "boolean"
@@ -1285,16 +1285,6 @@
       "scope": "language-overridable",
       "type": "boolean"
     },
-    "js/ts.suggest.completeJSDocs": {
-      "default": true,
-      "description": "%configuration.suggest.completeJSDocs%",
-      "keywords": [
-        "JavaScript",
-        "TypeScript"
-      ],
-      "scope": "language-overridable",
-      "type": "boolean"
-    },
     "js/ts.suggest.enabled": {
       "default": true,
       "description": "%typescript.suggest.enabled%",
@@ -1318,6 +1308,16 @@
     "js/ts.suggest.includeCompletionsForImportStatements": {
       "default": true,
       "description": "%configuration.suggest.includeCompletionsForImportStatements%",
+      "keywords": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "scope": "language-overridable",
+      "type": "boolean"
+    },
+    "js/ts.suggest.jsdoc.enabled": {
+      "default": true,
+      "description": "%configuration.suggest.jsdoc.enabled%",
       "keywords": [
         "JavaScript",
         "TypeScript"
@@ -2270,7 +2270,7 @@
     },
     "typescript.suggest.completeJSDocs": {
       "default": true,
-      "description": "%configuration.suggest.completeJSDocs%",
+      "description": "%configuration.suggest.jsdoc.enabled%",
       "markdownDeprecationMessage": "%configuration.suggest.completeJSDocs.unifiedDeprecationMessage%",
       "scope": "language-overridable",
       "type": "boolean"

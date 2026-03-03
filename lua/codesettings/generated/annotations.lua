@@ -23662,7 +23662,7 @@
 ---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets?
 -- %configuration.suggest.completeFunctionCalls%
 ---@field completeFunctionCalls boolean?
--- %configuration.suggest.completeJSDocs%
+-- %configuration.suggest.jsdoc.enabled%
 -- 
 -- ```lua
 -- default = true
@@ -24043,6 +24043,12 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Jsdoc
+-- %configuration.suggest.jsdoc.enabled%
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enabled boolean?
 -- %configuration.suggest.jsdoc.generateReturns%
 -- 
 -- ```lua
@@ -24068,12 +24074,6 @@
 ---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets?
 -- %configuration.suggest.completeFunctionCalls%
 ---@field completeFunctionCalls boolean?
--- %configuration.suggest.completeJSDocs%
--- 
--- ```lua
--- default = true
--- ```
----@field completeJSDocs boolean?
 -- %typescript.suggest.enabled%
 -- 
 -- ```lua
@@ -24564,7 +24564,7 @@
 ---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets?
 -- %configuration.suggest.completeFunctionCalls%
 ---@field completeFunctionCalls boolean?
--- %configuration.suggest.completeJSDocs%
+-- %configuration.suggest.jsdoc.enabled%
 -- 
 -- ```lua
 -- default = true
