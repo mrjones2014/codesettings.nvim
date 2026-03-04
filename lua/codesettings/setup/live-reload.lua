@@ -2,6 +2,8 @@ local Util = require('codesettings.util')
 
 local M = {}
 
+M.augroup_name = 'CodesettingsLiveReload'
+
 ---@type number|nil
 local augroup = nil
 
@@ -45,8 +47,17 @@ function M.setup()
     return
   end
 
-  augroup = vim.api.nvim_create_augroup('CodesettingsLiveReload', { clear = true })
   local config_files = Util.get_local_configs({ only_exists = false })
+  if #config_files == 0 then
+    -- if there are no config files,
+    -- skip setting up the autocmd,
+    -- otherwise the empty table `{}`
+    -- pattern will match _all_ files,
+    -- and try to parse any file as a
+    -- config file
+    return
+  end
+  augroup = vim.api.nvim_create_augroup(M.augroup_name, { clear = true })
   vim.api.nvim_create_autocmd('BufWritePost', {
     group = augroup,
     pattern = config_files,

@@ -189,4 +189,36 @@ describe('integration tests', function()
     -- see ./test-config-files/env_extension.json
     assert.same({ vim.env.HOME .. '/some-feature', 'base-feature' }, merged.settings['rust-analyzer'].cargo.features)
   end)
+
+  describe('live reload', function()
+    local group = require('codesettings.setup.live-reload').augroup_name
+    before_each(function()
+      pcall(vim.api.nvim_clear_autocmds, { group = group })
+      local ok, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group })
+      if not ok then
+        autocmds = {}
+      end
+      assert.equal(0, #autocmds)
+    end)
+
+    it('should setup the autocmd if at least 1 local config file is found', function()
+      local Codesettings = require('codesettings')
+      spy.on(vim.api, 'nvim_create_augroup')
+      Codesettings.setup({
+        root_dir = vim.fn.getcwd() .. '/spec/test-config-files/',
+        live_reload = true,
+      })
+      assert.spy(vim.api.nvim_create_augroup --[[@as luassert.spy]]).called_with(group, { clear = true })
+    end)
+
+    it('should NOT setup the autocmd if no local config files are found', function()
+      local Codesettings = require('codesettings')
+      spy.on(vim.api, 'nvim_create_augroup')
+      Codesettings.setup({
+        root_dir = vim.fn.tempname(),
+        live_reload = true,
+      })
+      assert.spy(vim.api.nvim_create_augroup --[[@as luassert.spy]]).not_called_with(group, { clear = true })
+    end)
+  end)
 end)
