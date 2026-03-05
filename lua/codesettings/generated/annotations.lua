@@ -11583,6 +11583,14 @@
 -- default = true
 -- ```
 ---@field enable boolean?
+-- A map of globs to diagnostic codes to be excluded for the matching files. Use `*` as a value in the array to exclude all diagnostics. By default the vendor directory is excluded. You can override this by setting `**/vendor/**` to an empty array.
+-- 
+-- ```lua
+-- default = {
+--   ["**/vendor/**"] = { "*" }
+-- }
+-- ```
+---@field exclude table?
 -- Enables reporting of problems associated with method and class implementations. For example, unimplemented methods or method signature incompatibilities.
 -- 
 -- ```lua
@@ -11619,6 +11627,16 @@
 -- default = "onType"
 -- ```
 ---@field run "onType" | "onSave"?
+-- Sets the severity level for each diagnostic code.
+---@field severity table?
+-- When enabled, type checks will be performed as if a `declare(strict_types=1)` directive is present in all files.
+---@field strictTypes boolean?
+-- Suppresses undefined property and method errors when `__get` or `__call` magic methods are declared.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field suppressUndefinedMembersWhenMagicMethodDeclared boolean?
 -- Enables diagnostics on type compatibility of arguments, property assignments, and return statements where types have been declared.
 -- 
 -- ```lua
@@ -22174,6 +22192,8 @@
 -- Disable automatic running of `swift package resolve` whenever the `Package.swift` or `Package.resolved` files are updated. This will also disable searching for command plugins and the initial test discovery process.
 ---@field disableAutoResolve boolean?
 -- Disable sandboxing when running SwiftPM commands. In most cases you should keep the sandbox enabled and leave this setting set to `false`
+---@field disableSandbox boolean?
+-- Disable sandboxing when running SwiftPM commands. In most cases you should keep the sandbox enabled and leave this setting set to `false`
 ---@field disableSandox boolean?
 -- Disables automated Build Tasks, Package Dependency view, Launch configuration generation and TestExplorer.
 ---@field disableSwiftPackageManagerIntegration boolean?
@@ -24141,6 +24161,21 @@
 -- %configuration.tsserver.experimental.enableProjectDiagnostics%
 ---@field enableProjectDiagnostics boolean?
 
+-- %configuration.tsserver.heapProfile%
+-- 
+-- ```lua
+-- default = {
+--   enabled = false
+-- }
+-- ```
+---@class lsp.ts_ls.HeapProfile
+-- %configuration.tsserver.heapProfile.dir%
+---@field dir string?
+-- %configuration.tsserver.heapProfile.enabled%
+---@field enabled boolean?
+-- %configuration.tsserver.heapProfile.interval%
+---@field interval number?
+
 ---@class lsp.ts_ls.Node
 -- %configuration.tsserver.nodePath%
 ---@field path string?
@@ -24183,7 +24218,23 @@
 -- default = true
 -- ```
 ---@field checkNpmIsInstalled boolean?
+-- %configuration.tsserver.diagnosticDir%
+---@field diagnosticDir string?
 ---@field experimental lsp.ts_ls.Experimental?
+-- %configuration.tsserver.heapProfile%
+-- 
+-- ```lua
+-- default = {
+--   enabled = false
+-- }
+-- ```
+---@field heapProfile lsp.ts_ls.HeapProfile?
+-- %configuration.tsserver.heapSnapshot%
+-- 
+-- ```lua
+-- default = 0
+-- ```
+---@field heapSnapshot number?
 -- %typescript.tsserver.log%
 -- 
 -- ```lua

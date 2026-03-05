@@ -28,6 +28,8 @@ return {
   ["gopls.semanticTokenTypes"] = true,
   ["haskell.serverEnvironment"] = true,
   ["haskell.toolchain"] = true,
+  ["intelephense.diagnostics.exclude"] = true,
+  ["intelephense.diagnostics.severity"] = true,
   ["java.project.referencedLibraries.sources"] = true,
   ["json.schemaDownload.trustedDomains"] = true,
   ["julia.environmentVariables"] = true,

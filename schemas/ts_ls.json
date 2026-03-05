@@ -1432,6 +1432,16 @@
       "scope": "window",
       "type": "boolean"
     },
+    "js/ts.tsserver.diagnosticDir": {
+      "keywords": [
+        "TypeScript",
+        "diagnostic",
+        "memory"
+      ],
+      "markdownDescription": "%configuration.tsserver.diagnosticDir%",
+      "scope": "machine",
+      "type": "string"
+    },
     "js/ts.tsserver.experimental.enableProjectDiagnostics": {
       "default": false,
       "description": "%configuration.tsserver.experimental.enableProjectDiagnostics%",
@@ -1442,6 +1452,48 @@
       ],
       "scope": "window",
       "type": "boolean"
+    },
+    "js/ts.tsserver.heapProfile": {
+      "default": {
+        "enabled": false
+      },
+      "keywords": [
+        "TypeScript",
+        "memory",
+        "heap",
+        "profile"
+      ],
+      "markdownDescription": "%configuration.tsserver.heapProfile%",
+      "properties": {
+        "dir": {
+          "description": "%configuration.tsserver.heapProfile.dir%",
+          "type": "string"
+        },
+        "enabled": {
+          "default": false,
+          "description": "%configuration.tsserver.heapProfile.enabled%",
+          "type": "boolean"
+        },
+        "interval": {
+          "description": "%configuration.tsserver.heapProfile.interval%",
+          "minimum": 1,
+          "type": "number"
+        }
+      },
+      "scope": "machine",
+      "type": "object"
+    },
+    "js/ts.tsserver.heapSnapshot": {
+      "default": 0,
+      "keywords": [
+        "TypeScript",
+        "memory",
+        "diagnostics"
+      ],
+      "markdownDescription": "%configuration.tsserver.heapSnapshot%",
+      "minimum": 0,
+      "scope": "window",
+      "type": "number"
     },
     "js/ts.tsserver.log": {
       "default": "off",
