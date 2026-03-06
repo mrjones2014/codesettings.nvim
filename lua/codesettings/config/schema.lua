@@ -90,9 +90,12 @@ make sure you have the json tree-sitter parser installed for highlighting]],
   },
   live_reload = {
     type = 'boolean',
-    description = [[Enable live reloading of settings when config files change; for servers that support it,
-this is done via the `workspace/didChangeConfiguration` notification, otherwise the
-server is restarted]],
+    description = [[Enable live reloading of settings when config files change
+via the `workspace/didChangeConfiguration` notification; after notifying,
+an autocmd `User CodesettingsFilesChanged` will be emitted. You
+can use this autocmd to handle edge cases like restarting servers
+that don't respond to `workspace/didChangeConfiguration` by
+restarting it.]],
     default = false,
   },
 }

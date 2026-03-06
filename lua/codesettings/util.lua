@@ -342,9 +342,11 @@ local function schedule_notify(fn, ...)
   end)
 end
 
----Tell the specified LSP server that configuration has changed.
----For servers that support it, this is done by `workspace/didChangeConfiguration` notification,
----otherwise the server is restarted.
+---Tell the specified LSP server that configuration has changed via
+---`workspace/didChangeConfiguration` notification. After notifying,
+---emits a `User CodesettingsConfigChanged` autocmd with the client
+---and config in the data, so that users can handle edge cases like
+---restarting servers that don't pick up notification-based changes.
 ---@param client_or_name vim.lsp.Client|string LSP client or name of the client
 ---@param config vim.lsp.Config|vim.lsp.ClientConfig new settings to notify the client about
 ---@param silent boolean? if true, suppress info/warn messages
@@ -371,30 +373,18 @@ function M.did_change_configuration(client_or_name, config, silent)
     M.error('Expected vim.lsp.Client or string')
     return
   end
-  local restarted_by_name = {}
   vim.iter(clients):each(function(client)
     ---@cast client vim.lsp.Client
-
-    if client:supports_method(vim.lsp.protocol.Methods.workspace_didChangeConfiguration) then
-      client:notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, {
-        settings = config.settings,
-      })
-      if not silent then
-        schedule_notify(M.info, '%s configuration reloaded', client.name)
-      end
-    else
-      if restarted_by_name[client.name] then
-        return
-      end
-      vim.lsp.enable(client.name, false)
-      restarted_by_name[client.name] = true
-      vim.defer_fn(function()
-        vim.lsp.enable(client.name)
-        if not silent then
-          schedule_notify(M.info, '%s configuration reloaded (server restarted)', client.name)
-        end
-      end, 500)
+    client:notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, {
+      settings = config.settings,
+    })
+    if not silent then
+      schedule_notify(M.info, '%s configuration reloaded', client.name)
     end
+    vim.api.nvim_exec_autocmds('User', {
+      pattern = 'CodesettingsFilesChanged',
+      data = { client_name = client.config.name },
+    })
   end)
 end
 

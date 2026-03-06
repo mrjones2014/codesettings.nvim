@@ -50,9 +50,12 @@
 ---default = true
 ---```
 ---@field jsonls_integration boolean
----Enable live reloading of settings when config files change; for servers that support it,
----this is done via the `workspace/didChangeConfiguration` notification, otherwise the
----server is restarted
+---Enable live reloading of settings when config files change
+---via the `workspace/didChangeConfiguration` notification; after notifying,
+---an autocmd `User CodesettingsFilesChanged` will be emitted. You
+---can use this autocmd to handle edge cases like restarting servers
+---that don't respond to `workspace/didChangeConfiguration` by
+---restarting it.
 ---@field live_reload boolean
 ---Set up library paths for `lua_ls` automatically to pick up the generated type
 ---annotations provided by codesettings.nvim; to enable for only your nvim config,
