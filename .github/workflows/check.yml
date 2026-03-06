@@ -4,31 +4,34 @@ on:
     branches: [master]
   pull_request:
 jobs:
-  run-checks:
-    name: Run Checks (${{ matrix.neovim }})
+  checks:
+    name: Flake Checks
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.neovim == 'nightly' }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - neovim: stable
-            shell: ci
-          - neovim: nightly
-            shell: ci-nightly
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Nix
-        uses: cachix/install-nix-action@v27
-      - name: Run all checks
-        run: nix develop .#${{ matrix.shell }} --accept-flake-config --command just check
-      - name: Open issue on nightly failure
-        if: failure() && matrix.neovim == 'nightly'
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
+      - run: nix flake check --accept-flake-config
+  tests-stable:
+    name: Tests (neovim stable)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
+      - run: nix develop .#ci --accept-flake-config --command just test
+  tests-nightly:
+    name: Tests (neovim nightly)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
+      - run: nix develop .#ci-nightly --accept-flake-config --command just test
+      - name: Open issue on failure
+        if: failure()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          existing=$(gh issue list --label "ci:nightly" --state open --limit 1 --json number -q '.[0].number')
+          existing=$(gh issue list --label "nvim-nightly" --state open --limit 1 --json number -q '.[0].number')
           if [ -n "$existing" ]; then
             gh issue comment "$existing" \
               --body "Still failing as of ${{ github.sha }}: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
