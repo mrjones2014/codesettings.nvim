@@ -1,6 +1,6 @@
-local Util = require('codesettings.util')
 local Jsonls = require('codesettings.setup.jsonls')
 local Settings = require('codesettings.settings')
+local Util = require('codesettings.util')
 local Benchmark = {}
 
 Benchmark.results = {}

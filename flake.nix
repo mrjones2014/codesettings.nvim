@@ -3,6 +3,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,8 +22,10 @@
   };
   outputs =
     {
+      self,
       nixpkgs,
       flake-utils,
+      treefmt-nix,
       neovim-nightly-overlay,
       ...
     }:
@@ -27,25 +33,35 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
+        treefmt-eval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+        treefmt-wrapper = treefmt-eval.config.build.wrapper;
       in
       rec {
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            jq
-            just
-            stylua
-            selene
-            luajitPackages.busted
-            luajitPackages.argparse
-          ];
+        formatter = treefmt-wrapper;
+        devShells = {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              jq
+              just
+              luajitPackages.busted
+              luajitPackages.argparse
+              treefmt-wrapper
+            ];
+          };
+          ci = pkgs.mkShell {
+            inputsFrom = [ devShells.default ];
+            buildInputs = [ pkgs.neovim ];
+          };
+          ci-nightly = pkgs.mkShell {
+            inputsFrom = [ devShells.default ];
+            buildInputs = [ neovim-nightly-overlay.packages.${system}.default ];
+          };
         };
-        devShells.ci = pkgs.mkShell {
-          inputsFrom = [ devShell ];
-          buildInputs = [ pkgs.neovim ];
-        };
-        devShells.ci-nightly = pkgs.mkShell {
-          inputsFrom = [ devShell ];
-          buildInputs = [ neovim-nightly-overlay.packages.${system}.default ];
+        checks = {
+          formatting = treefmt-eval.config.build.check self;
+          selene = pkgs.callPackage (import ./checks/selene.nix) { inherit self pkgs; };
+          statix = pkgs.callPackage (import ./checks/statix.nix) { inherit self pkgs; };
+          generated-files = pkgs.callPackage (import ./checks/generated-files.nix) { inherit self pkgs; };
         };
       }
     );
