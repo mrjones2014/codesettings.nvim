@@ -55,13 +55,16 @@ function VsCodeExtension:leaf(value, _)
     end
   elseif type(value) == 'table' and vim.islist(value) and #value > 0 then
     local control = Control.CONTINUE
-    local expanded_list_values = vim.iter(value):map(function(list_value)
-      local expanded = self:expand_vscode_vars(list_value)
-      if expanded ~= list_value then
-        control = Control.REPLACE
-      end
-      return expanded
-    end)
+    local expanded_list_values = vim
+      .iter(value)
+      :map(function(list_value)
+        local expanded = self:expand_vscode_vars(list_value)
+        if expanded ~= list_value then
+          control = Control.REPLACE
+        end
+        return expanded
+      end)
+      :totable()
     return control, expanded_list_values
   end
   return Control.CONTINUE
