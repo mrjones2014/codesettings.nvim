@@ -1,5 +1,3 @@
-local Settings = require('codesettings.settings')
-
 ---A mapping of LSP names to the subtable that should be passed to the vim.lsp.config() schema.
 ---In a few cases this varies slightly from the VS Code extension schema, e.g. for `eslint`,
 ---the VS Code properties all start with `eslint.*` but the LSP expects to be passed only the subtable.
@@ -46,6 +44,7 @@ local M = {}
 ---@return CodesettingsSettings config settings object, if any local config files were found, empty Settings object otherwise
 function M.local_settings(opts)
   opts = opts or {}
+  local Settings = require('codesettings.settings')
   return Settings.load_all(opts)
 end
 
@@ -62,6 +61,7 @@ function M.with_local_settings(lsp_name, config, opts)
   else
     local_settings = local_settings:schema(lsp_name)
   end
+  local Settings = require('codesettings.settings')
   return Settings.new(config):merge(local_settings, 'settings', opts):totable()
 end
 
