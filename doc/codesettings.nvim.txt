@@ -42,10 +42,8 @@ from VS Code’s settings schema into the LSP `settings` table you pass to
 ==============================================================================
 2. Installation                               *codesettings.nvim-installation*
 
-If you are only using the API, you do not need to call `.setup()` unless you
-with to use non-default config. You must call `.setup()` for some features like
-`jsonls`, `lua_ls`, and `jsonc` filetype integrations to work, or to configure
-`codesettings.nvim` itself with local files.
+**You do not need to call .setup() unless you want to use non-default
+options.** The defaults are shown below.
 
 - lazy.nvim (recommended)
 
