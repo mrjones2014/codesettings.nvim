@@ -27,7 +27,7 @@ jobs:
       - uses: cachix/install-nix-action@v27
       - run: nix develop .#ci-nightly --accept-flake-config --command just test
       - name: Open issue on failure
-        if: failure()
+        if: failure() && github.ref_name == 'master'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
