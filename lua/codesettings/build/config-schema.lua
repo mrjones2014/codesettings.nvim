@@ -14,7 +14,7 @@ Build.lines = {}
 ---@param prefix string|nil
 local function add_comment(desc, prefix)
   if desc then
-    prefix = (prefix or '') .. '---'
+    prefix = (prefix or '') .. '--- '
     table.insert(Build.lines, prefix .. desc:gsub('\n', '\n' .. prefix))
   end
 end

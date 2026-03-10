@@ -19,6 +19,9 @@ to `vim.lsp.config()` (or any way you configure LSP).
 
 **You do not need to call `.setup()` unless you want to use non-default options.** The defaults are shown below.
 
+You do not need to lazy load `codesettings.nvim` since the plugin already lazy loads all of its consituent parts
+via the `plugin/*` and `ftplugin/*` mechanisms. It should have a sub-5ms impact on your startup time.
+
 - lazy.nvim (recommended)
 
 <!-- GENERATED:CONFIG:START -->
@@ -26,42 +29,42 @@ to `vim.lsp.config()` (or any way you configure LSP).
 ```lua
 return {
   'mrjones2014/codesettings.nvim',
+  -- You don't need to lazy load this plugin since it already
+  -- lazy loads its constituent parts via `plugin/*` and `ftplugin/*` files
+  lazy = false,
   -- these are the default settings just set `opts = {}` to use defaults
   opts = {
-    ---Look for these config files
+    --- Look for these config files
     config_file_paths = { '.vscode/settings.json', 'codesettings.json', 'lspsettings.json' },
-    ---Set filetype to jsonc when opening a file specified by `config_file_paths`,
-    ---make sure you have the json tree-sitter parser installed for highlighting
+    --- Set filetype to jsonc when opening a file specified by `config_file_paths`,
+    --- make sure you have the json tree-sitter parser installed for highlighting
     jsonc_filetype = true,
-    ---Integrate with jsonls to provide LSP completion for LSP settings based on schemas
+    --- Integrate with jsonls to provide LSP completion for LSP settings based on schemas
     jsonls_integration = true,
-    ---Enable live reloading of settings when config files change
-    ---via the `workspace/didChangeConfiguration` notification; after notifying,
-    ---an autocmd `User CodesettingsFilesChanged` will be emitted. You
-    ---can use this autocmd to handle edge cases like restarting servers
-    ---that don't respond to `workspace/didChangeConfiguration` by
-    ---restarting it.
+    --- Enable live reloading of settings when config files change
+    --- via the `workspace/didChangeConfiguration` notification; after notifying,
+    --- an autocmd `User CodesettingsFilesChanged` will be emitted. You
+    --- can use this autocmd to handle edge cases like restarting servers
+    --- that don't respond to `workspace/didChangeConfiguration` by
+    --- restarting it.
     live_reload = false,
-    ---List of loader extensions to use when loading settings; `string` values will be `require`d
+    --- List of loader extensions to use when loading settings; `string` values will be `require`d
     loader_extensions = { 'codesettings.extensions.vscode' },
-    ---Set up library paths for `lua_ls` automatically to pick up the generated type
-    ---annotations provided by codesettings.nvim; to enable for only your nvim config,
-    ---you can also do something like:
-    ---lua_ls_integration = function()
-    ---  return vim.uv.cwd() == ('%s/.config/nvim'):format(vim.env.HOME)
-    ---end,
-    ---This integration also works for emmylua_ls
+    --- Set up library paths for `lua_ls` automatically to pick up the generated type
+    --- annotations provided by codesettings.nvim; to enable for only your nvim config,
+    --- you can also do something like:
+    --- lua_ls_integration = function()
+    ---   return vim.uv.cwd() == ('%s/.config/nvim'):format(vim.env.HOME)
+    --- end,
+    --- This integration also works for emmylua_ls
     lua_ls_integration = true,
-    ---How to merge lists; 'append' (default), 'prepend' or 'replace'
+    --- How to merge lists; 'append' (default), 'prepend' or 'replace'
     merge_lists = 'append',
-    ---Provide your own root dir; can be a string or function returning a string.
-    ---It should be/return the full absolute path to the root directory.
-    ---If not set, defaults to `require('codesettings.util').get_root()`
+    --- Provide your own root dir; can be a string or function returning a string.
+    --- It should be/return the full absolute path to the root directory.
+    --- If not set, defaults to `require('codesettings.util').get_root()`
     root_dir = nil,
   },
-  -- I recommend loading on these filetype so that the
-  -- jsonls integration, lua_ls integration, and jsonc filetype setup works
-  ft = { 'json', 'jsonc', 'lua' },
 }
 ```
 
