@@ -16,7 +16,7 @@ pkgs.runCommand "generated-files"
 
     just build doc
 
-    diff ./README.md ${self}/README.md || {
+    diff -rq . ${self} || {
       echo
       echo "Error: Generated files are out of date."
       echo "Please run 'just build doc' and commit the results."
