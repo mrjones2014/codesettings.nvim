@@ -59,6 +59,9 @@ local function generate_default_config()
   table.insert(lines, '```lua')
   table.insert(lines, 'return {')
   table.insert(lines, "  'mrjones2014/codesettings.nvim',")
+  table.insert(lines, "  -- You don't need to lazy load this plugin since it already")
+  table.insert(lines, '  -- lazy loads its constituent parts via `plugin/*` and `ftplugin/*` files')
+  table.insert(lines, '  lazy = false,')
   table.insert(lines, '  -- these are the default settings just set `opts = {}` to use defaults')
   table.insert(lines, '  opts = {')
 
@@ -73,7 +76,7 @@ local function generate_default_config()
     if prop.description then
       -- Handle multi-line descriptions
       for line in prop.description:gmatch('[^\n]+') do
-        table.insert(lines, '    ---' .. line)
+        table.insert(lines, '    --- ' .. line)
       end
     end
 
@@ -88,9 +91,6 @@ local function generate_default_config()
   end
 
   table.insert(lines, '  },')
-  table.insert(lines, '  -- I recommend loading on these filetype so that the')
-  table.insert(lines, '  -- jsonls integration, lua_ls integration, and jsonc filetype setup works')
-  table.insert(lines, "  ft = { 'json', 'jsonc', 'lua' },")
   table.insert(lines, '}')
   table.insert(lines, '```')
 
