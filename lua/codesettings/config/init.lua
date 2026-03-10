@@ -1,4 +1,4 @@
-local ConfigSchema = require('codesettings.config.schema')
+local Util = require('codesettings.util')
 
 ---@class CodesettingsConfigModule: CodesettingsConfig
 ---@field setup fun(opts: table|nil) Sets up the configuration with user options
@@ -7,7 +7,7 @@ local ConfigSchema = require('codesettings.config.schema')
 
 ---@class (partial) CodesettingsConfigInput: CodesettingsConfig
 
-local options = ConfigSchema.defaults()
+local options = vim.deepcopy(require('codesettings.generated.defaults'))
 
 local Config = {}
 
@@ -24,30 +24,27 @@ function Config.setup(opts)
   local plugin_config = settings:schema(Config.jsonschema()):get('codesettings') or {}
   options = vim.tbl_deep_extend('force', {}, options, plugin_config)
 
-  if options.jsonls_integration then
-    require('codesettings.integrations.jsonls').setup()
-  end
-
-  local lua_ls_integration = options.lua_ls_integration
-  if lua_ls_integration == true or (type(lua_ls_integration) == 'function' and lua_ls_integration()) then
-    require('codesettings.integrations.luals').setup()
-  end
-
   if options.live_reload then
-    require('codesettings.live-reload').setup()
+    require('codesettings.integrations.live-reload').setup()
   end
 end
 
 ---Reset the configuration to defaults.
 ---Useful for testing.
 function Config.reset()
-  options = ConfigSchema.defaults()
+  options = vim.deepcopy(require('codesettings.generated.defaults'))
 end
 
+local _jsonschema
 ---Get the canonical JSON schema for codesettings configuration.
 ---@return CodesettingsSchema
 function Config.jsonschema()
-  return ConfigSchema.jsonschema()
+  if not _jsonschema then
+    local Schema = require('codesettings.schema')
+    local json_str = Util.read_file(Util.path('schemas/codesettings.json'))
+    _jsonschema = Schema.from_table(vim.fn.json_decode(json_str))
+  end
+  return _jsonschema
 end
 
 setmetatable(Config, {

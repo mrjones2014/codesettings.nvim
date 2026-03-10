@@ -1,7 +1,9 @@
 local ConfigSchema = require('codesettings.config.schema')
 local Util = require('codesettings.util')
 
-local relpath = 'lua/codesettings/generated/codesettings-config-schema.lua'
+local annotations_relpath = 'lua/codesettings/generated/codesettings-config-schema.lua'
+local defaults_relpath = 'lua/codesettings/generated/defaults.lua'
+local jsonschema_relpath = 'schemas/codesettings.json'
 
 local Build = {}
 
@@ -41,11 +43,17 @@ local function get_lua_type(prop)
 
   local lua_types = {}
 
+  local has_multiple_types = #types > 1
+
   for _, t in
     ipairs(types --[[@as table<CodesettingsSchemaType>]])
   do
     if ConfigSchema.is_function_type(t) then
-      table.insert(lua_types, function_type_to_lua(t))
+      local func_str = function_type_to_lua(t)
+      if has_multiple_types then
+        func_str = '(' .. func_str .. ')'
+      end
+      table.insert(lua_types, func_str)
     elseif t == 'null' then
       table.insert(lua_types, 'nil')
     elseif t == 'array' then
@@ -273,16 +281,52 @@ function M.build()
   -- Generate builder method annotations
   generate_builder_methods(overridable_props, ConfigSchema.properties)
 
-  Util.write_file(Util.path(relpath), table.concat(Build.lines, '\n'))
-  print('Generated ' .. relpath)
+  Util.write_file(Util.path(annotations_relpath), table.concat(Build.lines, '\n'))
+  print('Generated ' .. annotations_relpath)
+
+  print('Generating defaults table...')
+  local defaults = ConfigSchema.defaults()
+
+  local default_entries = {}
+  for key, _ in pairs(ConfigSchema.properties) do
+    local value = defaults[key]
+    local value_str
+    if value == nil or value == vim.NIL then
+      value_str = 'nil'
+    else
+      value_str = vim.inspect(value)
+    end
+    table.insert(default_entries, string.format('  %s = %s,', key, value_str))
+  end
+  table.sort(default_entries)
+
+  local defaults_lines = {
+    '-- stylua: ignore start',
+    '---@type CodesettingsConfig',
+    'return {',
+    table.concat(default_entries, '\n'),
+    '}',
+    '',
+  }
+  Util.write_file(Util.path(defaults_relpath), table.concat(defaults_lines, '\n'))
+  print('Generated ' .. defaults_relpath)
+
+  print('Generating JSON schema for codesettings configuration...')
+  local schema = ConfigSchema.jsonschema():totable()
+  Util.write_file(Util.path(jsonschema_relpath), Util.json_format(schema))
+  print('Generated ' .. jsonschema_relpath)
 end
 
 function M.clean()
   if #arg == 0 then
     error('This function is part of a build tool and should not be called directly!')
   end
-  Util.delete_file(Util.path(relpath))
-  print('Deleted ' .. relpath)
+  Util.delete_file(Util.path(annotations_relpath))
+  print('Deleted ' .. annotations_relpath)
+  Util.delete_file(Util.path(defaults_relpath))
+  print('Deleted ' .. defaults_relpath)
+  Util.delete_file(Util.path(jsonschema_relpath))
+  print('Deleted ' .. jsonschema_relpath)
 end
 
 return M

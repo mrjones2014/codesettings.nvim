@@ -17,9 +17,7 @@ to `vim.lsp.config()` (or any way you configure LSP).
 
 ## Installation
 
-If you are only using the API, you do not need to call `.setup()` unless you with to use non-default config.
-You must call `.setup()` for some features like `jsonls`, `lua_ls`, and `jsonc` filetype integrations to work,
-or to configure `codesettings.nvim` itself with local files.
+**You do not need to call `.setup()` unless you want to use non-default options.** The defaults are shown below.
 
 - lazy.nvim (recommended)
 

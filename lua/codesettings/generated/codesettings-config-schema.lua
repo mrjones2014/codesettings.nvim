@@ -33,7 +33,7 @@
 ---```lua
 ---default = nil
 ---```
----@field root_dir string|fun():string|nil?
+---@field root_dir string|(fun():string)|nil?
 
 ---Main configuration class
 ---@class CodesettingsConfig: CodesettingsOverridableConfig
@@ -68,7 +68,7 @@
 ---```lua
 ---default = true
 ---```
----@field lua_ls_integration boolean|fun():boolean
+---@field lua_ls_integration boolean|(fun():boolean)
 
 ---Builder class for constructing Codesettings configuration
 ---
@@ -101,7 +101,7 @@
 ---```lua
 ---default = nil
 ---```
----@field root_dir fun(self: CodesettingsConfigBuilder, value: string|fun():string|nil): CodesettingsConfigBuilder
+---@field root_dir fun(self: CodesettingsConfigBuilder, value: string|(fun():string)|nil): CodesettingsConfigBuilder
 ---Return the resulting configuration table
 ---@field build fun(self: CodesettingsConfigBuilder): CodesettingsConfigOverrides
 ---Load the local settings using the configuration built by this builder

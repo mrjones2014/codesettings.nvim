@@ -1,4 +1,3 @@
-local Config = require('codesettings.config')
 local Extensions = require('codesettings.extensions')
 local TerminalObjects = require('codesettings.generated.terminal-objects')
 local Util = require('codesettings.util')
@@ -221,6 +220,7 @@ function Settings:load(file, opts)
     Util.error('failed to parse json settings from %s: %s', file, json)
     return self
   end
+  local Config = require('codesettings.config')
   json = Extensions.apply(M.expand(json), opts and opts.loader_extensions or Config.loader_extensions or {})
   self:merge(M.new(json))
   return self
