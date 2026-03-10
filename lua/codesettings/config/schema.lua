@@ -146,6 +146,7 @@ end
 ---@param prop CodesettingsSchemaValue
 ---@return table
 local function copy_and_filter_prop(prop)
+  ---@type table
   local result = vim.deepcopy(prop)
 
   -- Filter function types from the type field
@@ -163,6 +164,11 @@ local function copy_and_filter_prop(prop)
     for key, child_prop in pairs(result.properties) do
       result.properties[key] = copy_and_filter_prop(child_prop)
     end
+  end
+
+  -- make editors render the description as markdown
+  if result.description then
+    result.markdownDescription = result.description
   end
 
   -- Remove custom fields that aren't part of JSON schema
