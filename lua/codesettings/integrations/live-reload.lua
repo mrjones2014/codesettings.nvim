@@ -68,6 +68,14 @@ function M.setup()
         debounce_timers[args.file]:close()
       end
 
+      -- check if the feature is still enabled
+      if not require('codesettings.config').live_reload then
+        vim.schedule(function()
+          vim.api.nvim_del_augroup_by_id(augroup)
+        end)
+        return
+      end
+
       -- create new timer that will fire after 100ms
       debounce_timers[args.file] = vim.defer_fn(function()
         reload_settings(args.file)

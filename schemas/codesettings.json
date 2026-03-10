@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "codesettings.config_file_paths": {
+      "default": [
+        ".vscode/settings.json",
+        "codesettings.json",
+        "lspsettings.json"
+      ],
+      "description": "Look for these config files",
+      "items": {
+        "description": "List of relative config file paths to look for",
+        "type": "string"
+      },
+      "markdownDescription": "Look for these config files",
+      "type": "array"
+    },
+    "codesettings.jsonc_filetype": {
+      "default": true,
+      "description": "Set filetype to jsonc when opening a file specified by `config_file_paths`,\nmake sure you have the json tree-sitter parser installed for highlighting",
+      "markdownDescription": "Set filetype to jsonc when opening a file specified by `config_file_paths`,\nmake sure you have the json tree-sitter parser installed for highlighting",
+      "type": "boolean"
+    },
+    "codesettings.jsonls_integration": {
+      "default": true,
+      "description": "Integrate with jsonls to provide LSP completion for LSP settings based on schemas",
+      "markdownDescription": "Integrate with jsonls to provide LSP completion for LSP settings based on schemas",
+      "type": "boolean"
+    },
+    "codesettings.live_reload": {
+      "default": false,
+      "description": "Enable live reloading of settings when config files change\nvia the `workspace/didChangeConfiguration` notification; after notifying,\nan autocmd `User CodesettingsFilesChanged` will be emitted. You\ncan use this autocmd to handle edge cases like restarting servers\nthat don't respond to `workspace/didChangeConfiguration` by\nrestarting it.",
+      "markdownDescription": "Enable live reloading of settings when config files change\nvia the `workspace/didChangeConfiguration` notification; after notifying,\nan autocmd `User CodesettingsFilesChanged` will be emitted. You\ncan use this autocmd to handle edge cases like restarting servers\nthat don't respond to `workspace/didChangeConfiguration` by\nrestarting it.",
+      "type": "boolean"
+    },
+    "codesettings.loader_extensions": {
+      "default": [
+        "codesettings.extensions.vscode"
+      ],
+      "description": "List of loader extensions to use when loading settings; `string` values will be `require`d",
+      "items": {
+        "description": "List of module paths, or inline extension instances",
+        "type": [
+          "string",
+          "CodesettingsLoaderExtension"
+        ]
+      },
+      "markdownDescription": "List of loader extensions to use when loading settings; `string` values will be `require`d",
+      "type": "array"
+    },
+    "codesettings.lua_ls_integration": {
+      "default": true,
+      "description": "Set up library paths for `lua_ls` automatically to pick up the generated type\nannotations provided by codesettings.nvim; to enable for only your nvim config,\nyou can also do something like:\nlua_ls_integration = function()\n  return vim.uv.cwd() == ('%%s/.config/nvim'):format(vim.env.HOME)\nend,\nThis integration also works for emmylua_ls",
+      "markdownDescription": "Set up library paths for `lua_ls` automatically to pick up the generated type\nannotations provided by codesettings.nvim; to enable for only your nvim config,\nyou can also do something like:\nlua_ls_integration = function()\n  return vim.uv.cwd() == ('%%s/.config/nvim'):format(vim.env.HOME)\nend,\nThis integration also works for emmylua_ls",
+      "type": "boolean"
+    },
+    "codesettings.merge_lists": {
+      "default": "append",
+      "description": "How to merge lists; 'append' (default), 'prepend' or 'replace'",
+      "enum": [
+        "replace",
+        "append",
+        "prepend"
+      ],
+      "markdownDescription": "How to merge lists; 'append' (default), 'prepend' or 'replace'",
+      "type": "CodesettingsMergeListsBehavior"
+    },
+    "codesettings.root_dir": {
+      "default": null,
+      "description": "Provide your own root dir; can be a string or function returning a string.\nIt should be/return the full absolute path to the root directory.\nIf not set, defaults to `require('codesettings.util').get_root()`",
+      "markdownDescription": "Provide your own root dir; can be a string or function returning a string.\nIt should be/return the full absolute path to the root directory.\nIf not set, defaults to `require('codesettings.util').get_root()`",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "type": "object"
+}

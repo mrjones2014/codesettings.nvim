@@ -191,7 +191,7 @@ describe('integration tests', function()
   end)
 
   describe('live reload', function()
-    local group = require('codesettings.live-reload').augroup_name
+    local group = require('codesettings.integrations.live-reload').augroup_name
     before_each(function()
       pcall(vim.api.nvim_clear_autocmds, { group = group })
       local ok, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group })

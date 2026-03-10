@@ -1,5 +1,3 @@
-local Config = require('codesettings.config')
-
 ---@class CodesettingsUtil
 local M = {}
 
@@ -61,6 +59,7 @@ end
 ---@return string?
 function M.get_root(opts)
   opts = opts or {}
+  local Config = require('codesettings.config')
   local user_root = opts.root_dir or Config.root_dir
   if type(user_root) == 'string' then
     return normalize_root(user_root)
@@ -95,6 +94,7 @@ function M.get_local_configs(opts)
     return {}
   end
 
+  local Config = require('codesettings.config')
   local file_paths = opts.config_file_paths or Config.config_file_paths
   return vim
     .iter(file_paths)
