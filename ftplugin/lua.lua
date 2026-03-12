@@ -1,3 +1,10 @@
+---@type boolean
+vim.g.codesettings_lua_ls_setup_done = vim.g.codesettings_lua_ls_setup_done
+
+if vim.g.codesettings_lua_ls_setup_done then
+  return
+end
+
 local Config = require('codesettings.config')
 
 if
