@@ -1,4 +1,5 @@
 -- Build script to generate cache of terminal object paths
+local BuildUtil = require('codesettings.build.util')
 local Schemas = require('codesettings.build.schemas')
 local Util = require('codesettings.util')
 
@@ -35,7 +36,7 @@ function M.build()
   table.insert(lines, '}')
   table.insert(lines, '')
 
-  Util.write_file(Util.path(relpath), table.concat(lines, '\n'))
+  Util.write_file(BuildUtil.path(relpath), table.concat(lines, '\n'))
 
   print(string.format('Generated %s with %d terminal object paths', relpath, #paths))
 end

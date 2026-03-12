@@ -3,12 +3,13 @@ local Util = require('codesettings.util')
 local M = {}
 
 function M.setup()
+  local generated_dir = Util.runtime_dir('lua/codesettings/generated/annotations.lua')
   local config_update = {
     ---@type lsp.lua_ls
     settings = {
       Lua = {
         workspace = {
-          library = { Util.path('lua/codesettings/generated') },
+          library = generated_dir and { generated_dir } or {},
         },
       },
     },

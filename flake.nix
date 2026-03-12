@@ -45,6 +45,7 @@
               just
               luajitPackages.busted
               luajitPackages.argparse
+              selene
               treefmt-wrapper
             ];
           };

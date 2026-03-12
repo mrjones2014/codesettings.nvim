@@ -1,5 +1,5 @@
+local BuildUtil = require('codesettings.build.util')
 local ConfigSchema = require('codesettings.config.schema')
-local Schemas = require('codesettings.build.schemas')
 local Util = require('codesettings.util')
 
 local M = {}
@@ -13,7 +13,7 @@ local M = {}
 ---@return string
 local function generate_lsp_servers()
   local lines = {}
-  local schemas = Schemas.get_schemas()
+  local schemas = BuildUtil.get_schemas()
   local lsp_names = vim.tbl_keys(schemas)
   table.sort(lsp_names)
   for _, name in ipairs(lsp_names) do

@@ -1,9 +1,10 @@
+local BuildUtil = require('codesettings.build.util')
 local ConfigSchema = require('codesettings.config.schema')
 local Util = require('codesettings.util')
 
 local annotations_relpath = 'lua/codesettings/generated/codesettings-config-schema.lua'
 local defaults_relpath = 'lua/codesettings/generated/defaults.lua'
-local jsonschema_relpath = 'schemas/codesettings.json'
+local jsonschema_relpath = 'after/codesettings-schemas/codesettings.json'
 
 local Build = {}
 
@@ -281,7 +282,7 @@ function M.build()
   -- Generate builder method annotations
   generate_builder_methods(overridable_props, ConfigSchema.properties)
 
-  Util.write_file(Util.path(annotations_relpath), table.concat(Build.lines, '\n'))
+  Util.write_file(BuildUtil.path(annotations_relpath), table.concat(Build.lines, '\n'))
   print('Generated ' .. annotations_relpath)
 
   print('Generating defaults table...')
@@ -308,12 +309,12 @@ function M.build()
     '}',
     '',
   }
-  Util.write_file(Util.path(defaults_relpath), table.concat(defaults_lines, '\n'))
+  Util.write_file(BuildUtil.path(defaults_relpath), table.concat(defaults_lines, '\n'))
   print('Generated ' .. defaults_relpath)
 
   print('Generating JSON schema for codesettings configuration...')
   local schema = ConfigSchema.jsonschema():totable()
-  Util.write_file(Util.path(jsonschema_relpath), Util.json_format(schema))
+  Util.write_file(BuildUtil.path(jsonschema_relpath), Util.json_format(schema))
   print('Generated ' .. jsonschema_relpath)
 end
 
@@ -321,11 +322,11 @@ function M.clean()
   if #arg == 0 then
     error('This function is part of a build tool and should not be called directly!')
   end
-  Util.delete_file(Util.path(annotations_relpath))
+  Util.delete_file(BuildUtil.path(annotations_relpath))
   print('Deleted ' .. annotations_relpath)
-  Util.delete_file(Util.path(defaults_relpath))
+  Util.delete_file(BuildUtil.path(defaults_relpath))
   print('Deleted ' .. defaults_relpath)
-  Util.delete_file(Util.path(jsonschema_relpath))
+  Util.delete_file(BuildUtil.path(jsonschema_relpath))
   print('Deleted ' .. jsonschema_relpath)
 end
 

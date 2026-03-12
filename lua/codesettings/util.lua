@@ -278,9 +278,52 @@ function M.json_decode(json)
   return data
 end
 
-function M.path(str)
-  local f = debug.getinfo(1, 'S').source:sub(2)
-  return M.fqn(vim.fn.fnamemodify(f, ':h:h:h') .. '/' .. (str or ''))
+---Get first matching runtime file
+---@param path string relative path to find
+---@return string? filepath or nil if not found
+function M.runtime_file(path)
+  local files = vim.api.nvim_get_runtime_file(path, false)
+  return files[1]
+end
+
+---Get all matching runtime files
+---@param path string relative path to find
+---@return string[] filepaths
+function M.runtime_files(path)
+  return vim.api.nvim_get_runtime_file(path, true)
+end
+
+---Get runtime directory by finding a file within it
+---@param file_path string path to a file in the target directory
+---@return string? directory path or nil
+function M.runtime_dir(file_path)
+  local file = M.runtime_file(file_path)
+  return file and vim.fn.fnamemodify(file, ':h') or nil
+end
+
+local _schema_dir_cache
+
+---Get the codesettings schemas directory (cached after first lookup)
+---@return string? directory path or nil
+function M.get_schema_dir()
+  if _schema_dir_cache then
+    return _schema_dir_cache
+  end
+  local marker = M.runtime_file('after/codesettings-schemas/als.json')
+  if marker then
+    _schema_dir_cache = vim.fn.fnamemodify(marker, ':h')
+  end
+  return _schema_dir_cache
+end
+
+---Get all LSP schema files from runtime path
+---@return string[] list of schema file paths
+function M.get_schema_files()
+  local dir = M.get_schema_dir()
+  if not dir then
+    return {}
+  end
+  return vim.fn.glob(dir .. '/*.json', false, true)
 end
 
 function M.fetch(url)

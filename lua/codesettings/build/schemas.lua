@@ -1,3 +1,4 @@
+local BuildUtil = require('codesettings.build.util')
 local Util = require('codesettings.util')
 
 local M = {}
@@ -82,22 +83,6 @@ M.index = {
 ---@field package_url string url of the package.json of the LSP server
 ---@field settings_file string file of the settings json schema of the LSP server
 
----@return table<string, CodesettingsLspSchema>
-function M.get_schemas()
-  ---@type table<string, CodesettingsLspSchema>
-  local ret = {}
-
-  for server, package_json in pairs(M.index) do
-    ret[server] = {
-      name = server,
-      package_url = package_json,
-      settings_file = Util.path('schemas/' .. server .. '.json'),
-    }
-  end
-
-  return ret
-end
-
 --- Collect all terminal object property paths from a schema.
 --- Terminal objects are properties with type="object" but no "properties" field,
 --- meaning their keys are arbitrary user data and should not be dot-expanded.
@@ -138,7 +123,7 @@ end
 --- their keys dot-expanded (e.g., "yaml.schemas").
 ---@return table<string, boolean> terminal object paths
 function M.generate_terminal_objects_cache()
-  local schemas = M.get_schemas()
+  local schemas = BuildUtil.get_schemas()
   local terminals = {}
 
   for _, schema_meta in pairs(schemas) do
@@ -193,7 +178,7 @@ local SpecialCases = {
 
 ---@param schema CodesettingsLspSchema
 function M.fetch_schema(schema)
-  local json = vim.json.decode(Util.fetch(schema.package_url)) or {}
+  local json = vim.json.decode(BuildUtil.fetch(schema.package_url)) or {}
 
   local properties = vim.empty_dict()
   if SpecialCases[schema.name] then
@@ -228,7 +213,7 @@ end
 ---THIS WILL CALL `os.exit(1)` IF A SCHEMA CANNOT BE FETCHED.
 ---This is only meant to be called from a build script!
 function M.update_schemas()
-  local schemas = M.get_schemas()
+  local schemas = BuildUtil.get_schemas()
   local names = vim.tbl_keys(schemas)
   table.sort(names)
   for _, name in ipairs(names) do
@@ -238,7 +223,7 @@ function M.update_schemas()
     if not Util.exists(s.settings_file) then
       local ok, schema = pcall(M.fetch_schema, s)
       if ok then
-        Util.write_file(s.settings_file, Util.json_format(schema))
+        BuildUtil.write_file(s.settings_file, BuildUtil.json_format(schema))
       else
         os.exit(1)
       end
@@ -258,14 +243,14 @@ function M.clean()
   if #arg == 0 then
     error('This function is part of a build tool and should not be called directly!')
   end
-  local files = vim.fn.expand('schemas/*.json', false, true)
+  local files = vim.fn.expand(BuildUtil.path('after/codesettings-schemas/*.json'), false, true)
   if type(files) == 'string' then
     files = { files }
   end
   for _, f in pairs(files) do
     Util.delete_file(f)
   end
-  print('Deleted ' .. #files .. ' schema files from schemas/*')
+  print('Deleted ' .. #files .. ' schema files from after/codesettings-schemas/*')
 end
 
 return M

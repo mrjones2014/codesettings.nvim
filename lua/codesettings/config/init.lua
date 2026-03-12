@@ -41,7 +41,8 @@ local _jsonschema
 function Config.jsonschema()
   if not _jsonschema then
     local Schema = require('codesettings.schema')
-    local json_str = Util.read_file(Util.path('schemas/codesettings.json'))
+    local schema_file = Util.runtime_file('after/codesettings-schemas/codesettings.json')
+    local json_str = Util.read_file(schema_file)
     _jsonschema = Schema.from_table(vim.fn.json_decode(json_str))
   end
   return _jsonschema

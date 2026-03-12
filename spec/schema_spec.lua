@@ -1,11 +1,11 @@
 ---@module 'busted'
 
+local BuildUtil = require('codesettings.build.util')
 local Schema = require('codesettings.schema')
-local Schemas = require('codesettings.build.schemas')
 
 describe('Schema loading and property enumeration', function()
   it('has schemas index populated', function()
-    local all = Schemas.get_schemas()
+    local all = BuildUtil.get_schemas()
     assert.is_table(all)
     -- Expect at least several schemas present
     assert.is_true(vim.tbl_count(all) > 5)
