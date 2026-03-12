@@ -1,3 +1,4 @@
+local BuildUtil = require('codesettings.build.util')
 local Util = require('codesettings.util')
 
 local relpath = 'lua/codesettings/generated/annotations.lua'
@@ -194,8 +195,8 @@ function Build.process_definitions(definitions)
 end
 
 function Build.build_annotations(name)
-  local file = Util.path('schemas/' .. name .. '.json')
-  local json = Util.json_decode(Util.read_file(file)) or {}
+  local file = BuildUtil.schema_path(name)
+  local json = require('codesettings.util').json_decode(Util.read_file(file)) or {}
   Build.class_name = 'lsp.' .. name
 
   -- Process definitions first (they may be referenced by properties)
@@ -221,7 +222,7 @@ function M.build()
   print('Generating Lua type annotations based on all schemas...')
   Build.lines = { '-- vim: ft=bigfile', '-- stylua: ignore', '---@meta', '' }
 
-  local index = vim.tbl_keys(require('codesettings.build.schemas').get_schemas())
+  local index = vim.tbl_keys(BuildUtil.get_schemas())
   table.sort(index)
 
   for _, name in ipairs(index) do
@@ -236,7 +237,7 @@ function M.build()
     return v ~= nil
   end, Build.lines)
 
-  Util.write_file(relpath, table.concat(lines, '\n'))
+  Util.write_file(BuildUtil.path(relpath), table.concat(lines, '\n'))
   print('Generated ' .. relpath)
 end
 
@@ -244,7 +245,7 @@ function M.clean()
   if #arg == 0 then
     error('This function is part of a build tool and should not be called directly!')
   end
-  Util.delete_file(Util.path(relpath))
+  Util.delete_file(BuildUtil.path(relpath))
   print('Deleted ' .. relpath)
 end
 

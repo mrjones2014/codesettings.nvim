@@ -1,3 +1,4 @@
+local BuildUtil = require('codesettings.build.util')
 local Jsonls = require('codesettings.integrations.jsonls')
 local Settings = require('codesettings.settings')
 local Util = require('codesettings.util')
@@ -72,11 +73,12 @@ function Benchmark.generate_markdown()
     )
   end
 
+  table.insert(lines, '')
   return table.concat(lines, '\n')
 end
 
 function Benchmark.save_markdown()
-  local filename = Util.path('bench/report.md')
+  local filename = BuildUtil.path('bench/report.md')
   local content = Benchmark.generate_markdown()
   local file = io.open(filename, 'w')
   if file then

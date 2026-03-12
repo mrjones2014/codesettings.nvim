@@ -1,8 +1,6 @@
-local M = {}
+local Util = require('codesettings.util')
 
----map lsp_name to schema file metadata
----@type table<string, CodesettingsLspSchema>
-local _schema_metadata
+local M = {}
 
 ---map of lsp_name to parsed schema
 ---@type table<string, CodesettingsSchema>
@@ -32,31 +30,27 @@ end
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer'
 ---@return CodesettingsSchema schema the loaded schema, or an empty schema if none is found
 function M.load(lsp_name)
-  if _schema_metadata == nil then
-    _schema_metadata = require('codesettings.build.schemas').get_schemas()
-  end
-
   if _cache[lsp_name] then
     return _cache[lsp_name]
   end
 
-  local schema = _schema_metadata[lsp_name]
-  if not schema then
-    -- try replacing dashes with underscores and see if that helps, e.g. for rust
-    schema = _schema_metadata[string.gsub(lsp_name, '%-', '_')]
-    if not schema then
-      return M.new()
-    end
+  local schema_file = Util.runtime_file('after/codesettings-schemas/' .. lsp_name .. '.json')
+  if not schema_file then
+    local alt_name = string.gsub(lsp_name, '%-', '_')
+    schema_file = Util.runtime_file('after/codesettings-schemas/' .. alt_name .. '.json')
   end
+
+  if not schema_file then
+    return M.new()
+  end
+
   local settings_tbl = {}
-  if schema.settings_file then
-    local ok, data = pcall(vim.fn.readfile, schema.settings_file)
-    if ok and type(data) == 'table' then
-      local json_str = table.concat(data, '\n')
-      local ok2, json = pcall(vim.fn.json_decode, json_str)
-      if ok2 and type(json) == 'table' then
-        settings_tbl = json
-      end
+  local ok, data = pcall(vim.fn.readfile, schema_file)
+  if ok and type(data) == 'table' then
+    local json_str = table.concat(data, '\n')
+    local ok2, json = pcall(vim.fn.json_decode, json_str)
+    if ok2 and type(json) == 'table' then
+      settings_tbl = json
     end
   end
   _cache[lsp_name] = M.new(settings_tbl)

@@ -35,10 +35,10 @@ function M.get_json_schemas()
   local Settings = require('codesettings.settings')
   local merged = Settings.new()
 
-  vim.iter(pairs(require('codesettings.build.schemas').get_schemas())):each(function(_, schema)
-    local ok, json = pcall(Util.read_file, schema.settings_file)
+  vim.iter(Util.get_schema_files()):each(function(schema_file)
+    local ok, json = pcall(Util.read_file, schema_file)
     if not ok then
-      error('Failed to read JSON schema file: ' .. schema.settings_file)
+      error('Failed to read JSON schema file: ' .. schema_file)
     end
     merged:merge(Util.json_decode(json))
   end)
