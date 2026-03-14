@@ -1,3 +1,4 @@
+local NLS = require('codesettings.nls')
 local Util = require('codesettings.util')
 
 local M = {}
@@ -53,6 +54,12 @@ function M.load(lsp_name)
       settings_tbl = json
     end
   end
+
+  local nls_table = NLS.resolve(lsp_name)
+  if nls_table then
+    settings_tbl = NLS.apply(settings_tbl, nls_table)
+  end
+
   _cache[lsp_name] = M.new(settings_tbl)
   return _cache[lsp_name]
 end

@@ -197,6 +197,11 @@ end
 function Build.build_annotations(name)
   local file = BuildUtil.schema_path(name)
   local json = require('codesettings.util').json_decode(Util.read_file(file)) or {}
+  local NLS = require('codesettings.nls')
+  local nls_table = NLS.load_bundled(name)
+  if nls_table then
+    json = NLS.apply(json, nls_table)
+  end
   Build.class_name = 'lsp.' .. name
 
   -- Process definitions first (they may be referenced by properties)

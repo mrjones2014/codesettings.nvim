@@ -65,6 +65,16 @@
       "markdownDescription": "How to merge lists; 'append' (default), 'prepend' or 'replace'",
       "type": "CodesettingsMergeListsBehavior"
     },
+    "codesettings.nls": {
+      "default": true,
+      "description": "Controls %placeholder% string substitution in LSP schema descriptions.\n- true (default): use bundled English NLS files\n- false: disable substitution (raw %placeholders% visible)\n- string: path to a directory of per-LSP NLS JSON files (e.g. \"/path/to/dir\" containing jsonls.nls.json, lua_ls.nls.json, etc.)\n- table: flat `{ [\"%key%\"] = \"value\" }` NLS table applied to all LSPs\n- function(lsp_name) -> table: per-LSP resolver\nNote that only certain schemas support this, see the bundled *.nls.json files at\n./after/codesettings-nls/*.nls.json",
+      "markdownDescription": "Controls %placeholder% string substitution in LSP schema descriptions.\n- true (default): use bundled English NLS files\n- false: disable substitution (raw %placeholders% visible)\n- string: path to a directory of per-LSP NLS JSON files (e.g. \"/path/to/dir\" containing jsonls.nls.json, lua_ls.nls.json, etc.)\n- table: flat `{ [\"%key%\"] = \"value\" }` NLS table applied to all LSPs\n- function(lsp_name) -> table: per-LSP resolver\nNote that only certain schemas support this, see the bundled *.nls.json files at\n./after/codesettings-nls/*.nls.json",
+      "type": [
+        "boolean",
+        "string",
+        "table"
+      ]
+    },
     "codesettings.root_dir": {
       "default": null,
       "description": "Provide your own root dir; can be a string or function returning a string.\nIt should be/return the full absolute path to the root directory.\nIf not set, defaults to `require('codesettings.util').get_root()`",

@@ -1,3 +1,4 @@
+local NLS = require('codesettings.nls')
 local Transformer = require('codesettings.integrations.jsonls.transformer')
 local Util = require('codesettings.util')
 
@@ -35,15 +36,22 @@ function M.get_json_schemas()
   local Settings = require('codesettings.settings')
   local merged = Settings.new()
 
+  local Config = require('codesettings.config')
   vim.iter(Util.get_schema_files()):each(function(schema_file)
     local ok, json = pcall(Util.read_file, schema_file)
     if not ok then
       error('Failed to read JSON schema file: ' .. schema_file)
     end
-    merged:merge(Util.json_decode(json))
+    local schema_tbl = Util.json_decode(json)
+    local lsp_name = vim.fn.fnamemodify(schema_file, ':t:r')
+    local nls_table = NLS.resolve(lsp_name)
+    if nls_table then
+      schema_tbl = NLS.apply(schema_tbl, nls_table)
+    end
+    merged:merge(schema_tbl)
   end)
 
-  merged:merge(require('codesettings.config').jsonschema():totable())
+  merged:merge(Config.jsonschema():totable())
 
   -- Single expansion pass on the merged schema
   local expanded_schema = Transformer.expand_schema(merged:totable())

@@ -60,6 +60,15 @@ return {
     lua_ls_integration = true,
     --- How to merge lists; 'append' (default), 'prepend' or 'replace'
     merge_lists = 'append',
+    --- Controls placeholder string substitution in LSP schema descriptions.
+    --- - true (default): use bundled English NLS files
+    --- - false: disable substitution (raw placeholders visible)
+    --- - string: path to a directory of per-LSP NLS JSON files (e.g. "/path/to/dir" containing jsonls.nls.json, lua_ls.nls.json, etc.)
+    --- - table: flat `{ ["key"] = "value" }` NLS table applied to all LSPs
+    --- - function(lsp_name) -> table: per-LSP resolver
+    --- Note that only certain schemas support this, see the bundled *.nls.json files at
+    --- ./after/codesettings-nls/*.nls.json
+    nls = true,
     --- Provide your own root dir; can be a string or function returning a string.
     --- It should be/return the full absolute path to the root directory.
     --- If not set, defaults to `require('codesettings.util').get_root()`

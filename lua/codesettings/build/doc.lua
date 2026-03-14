@@ -18,7 +18,7 @@ local function generate_lsp_servers()
   table.sort(lsp_names)
   for _, name in ipairs(lsp_names) do
     local schema = schemas[name]
-    local url = schema.package_url
+    local url = schema.schema_url
     if url:find('githubusercontent') then
       url = url
         :gsub('raw%.githubusercontent', 'github')

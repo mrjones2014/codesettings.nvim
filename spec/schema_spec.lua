@@ -10,7 +10,7 @@ describe('Schema loading and property enumeration', function()
     -- Expect at least several schemas present
     assert.is_true(vim.tbl_count(all) > 5)
     assert.is_table(all.rust_analyzer)
-    assert.is_truthy(all.rust_analyzer.settings_file)
+    assert.is_truthy(all.rust_analyzer.schema_path)
   end)
 
   it('loads schema by underscore name and enumerates properties', function()
