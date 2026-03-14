@@ -1521,10 +1521,10 @@
       "type": "number"
     },
     "js/ts.tsserver.node.path": {
-      "description": "%configuration.tsserver.nodePath%",
       "keywords": [
         "TypeScript"
       ],
+      "markdownDescription": "%configuration.tsserver.nodePath%",
       "scope": "window",
       "type": "string"
     },
@@ -2442,8 +2442,8 @@
       "type": "number"
     },
     "typescript.tsserver.nodePath": {
-      "description": "%configuration.tsserver.nodePath%",
       "markdownDeprecationMessage": "%configuration.tsserver.nodePath.unifiedDeprecationMessage%",
+      "markdownDescription": "%configuration.tsserver.nodePath%",
       "scope": "window",
       "type": "string"
     },
