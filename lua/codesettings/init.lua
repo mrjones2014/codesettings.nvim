@@ -20,13 +20,42 @@ local SpecialCases = {
   tinymist = function(settings)
     return settings:schema('tinymist'):get_subtable('tinymist') or settings
   end,
+  jsonls = function(settings)
+    local schemas = settings:get('json.schemas')
+    if not schemas or type(schemas) ~= 'table' then
+      return settings
+    end
+    local root = require('codesettings.util').get_root()
+    for i, schema in ipairs(schemas) do
+      if type(schema.url) == 'string' then
+        if vim.startswith(schema.url, '~') then
+          -- expand tilde
+          local path = vim.fs.normalize(schema.url)
+          schemas[i].url = path
+        elseif not schema.url:match('^%w+://') and not vim.startswith(schema.url, '/') then
+          -- if there is no scheme like https:// and if not already an absolute path, resolve it to one
+          -- make sure the path exists first so we don't inadvertently resolve something that isn't actually
+          -- a file path in case of false positives here; if the file doesn't exist anyway, there is no harm
+          -- in not resolving it since the LSP won't find it anyway
+          local path = vim.fs.normalize(vim.fs.joinpath(root, schema.url))
+          if vim.uv.fs_stat(path) then
+            schemas[i].url = path
+          end
+        end
+      end
+    end
+    settings:set('json.schemas', schemas)
+    return settings
+  end,
 }
 
 ---@class Codesettings
 local M = {}
 
 ---For more granular control, load settings manually through this
----function and use the Settings API. For example:
+---function and use the Settings API. This DOES NOT apply `SpecialCases`
+---from above.
+---For example:
 ---```lua
 ---local c = require('codesettings')
 ---local eslint_settings = c.local_settings():schema('eslint'):merge({
@@ -49,6 +78,7 @@ function M.local_settings(opts)
 end
 
 ---Load settings from VS Code settings.json file. This mutates the given LSP config.
+---This applies transformations from the `SpecialCases` table above.
 ---@param lsp_name string the name of the LSP, like 'rust-analyzer' or 'tsserver'
 ---@param config vim.lsp.Config|vim.lsp.ClientConfig the LSP config to merge the vscode settings into
 ---@param opts CodesettingsConfigOverrides? optional config overrides for this load

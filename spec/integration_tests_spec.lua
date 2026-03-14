@@ -110,6 +110,19 @@ describe('integration tests', function()
     end)
   end)
 
+  describe('jsonls json.schemas.url key is resolved to an absolute path via SpecialCases', function()
+    it('should resolve jsonls schema urls to absolute paths', function()
+      local Codesettings = require('codesettings')
+      local settings = require('codesettings.settings').new(Codesettings.with_local_settings('jsonls', {}))
+      local schemas = assert(settings:get('settings.json.schemas'))
+      local jsonls_schema_url = schemas[1].url
+      local absolute_path = require('codesettings.util').get_root() .. '/after/codesettings-schemas/jsonls.json'
+      assert.equal(absolute_path, jsonls_schema_url)
+      -- also check that we don't clober paths with schemes (e.g. https://)
+      assert.equal('https://some.remote.url/some-schema.json', schemas[2].url)
+    end)
+  end)
+
   describe('one-shot custom loaders via CodesettingsConfigBuilder', function()
     setup(function()
       -- reset the global config to defaults before each test

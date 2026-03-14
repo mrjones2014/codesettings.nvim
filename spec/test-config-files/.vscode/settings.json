@@ -1,4 +1,20 @@
 {
   // set something so we can use this file as a test
   "Lua.window.statusBar": false,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/dir/*.json"
+      ],
+      // this should point to a real file relative
+      // to the workspace root
+      "url": "./after/codesettings-schemas/jsonls.json",
+    },
+    {
+      "fileMatch": [
+        "/other/*.json"
+      ],
+      "url": "https://some.remote.url/some-schema.json",
+    },
+  ]
 }
