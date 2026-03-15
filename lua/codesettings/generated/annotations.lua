@@ -1185,13 +1185,13 @@
 ---@field clangd lsp.clangd.Clangd?
 
 ---@class lsp.cssls.Completion
--- %css.completion.completePropertyWithSemicolon.desc%
+-- Insert semicolon at end of line when completing CSS properties.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field completePropertyWithSemicolon boolean?
--- %css.completion.triggerPropertyValueCompletion.desc%
+-- By default, VS Code triggers property value completion after selecting a CSS property. Use this setting to disable this behavior.
 -- 
 -- ```lua
 -- default = true
@@ -1199,49 +1199,49 @@
 ---@field triggerPropertyValueCompletion boolean?
 
 ---@class lsp.cssls.Format
--- %css.format.braceStyle.desc%
+-- Put braces on the same line as rules (`collapse`) or put braces on own line (`expand`).
 -- 
 -- ```lua
 -- default = "collapse"
 -- ```
 ---@field braceStyle "collapse" | "expand"?
--- %css.format.enable.desc%
+-- Enable/disable default CSS formatter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %css.format.maxPreserveNewLines.desc%
+-- Maximum number of line breaks to be preserved in one chunk, when `#css.format.preserveNewLines#` is enabled.
 ---@field maxPreserveNewLines number?
--- %css.format.newlineBetweenRules.desc%
+-- Separate rulesets by a blank line.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field newlineBetweenRules boolean?
--- %css.format.newlineBetweenSelectors.desc%
+-- Separate selectors with a new line.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field newlineBetweenSelectors boolean?
--- %css.format.preserveNewLines.desc%
+-- Whether existing line breaks before rules and declarations should be preserved.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field preserveNewLines boolean?
--- %css.format.spaceAroundSelectorSeparator.desc%
+-- Ensure a space character around selector separators `>`, `+`, `~` (e.g. `a > b`).
 ---@field spaceAroundSelectorSeparator boolean?
 
 ---@class lsp.cssls.Hover
--- %css.hover.documentation%
+-- Show property and value documentation in CSS hovers.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field documentation boolean?
--- %css.hover.references%
+-- Show references to MDN in CSS hovers.
 -- 
 -- ```lua
 -- default = true
@@ -1249,121 +1249,121 @@
 ---@field references boolean?
 
 ---@class lsp.cssls.Lint
--- %css.lint.argumentsInColorFunction.desc%
+-- Invalid number of parameters.
 -- 
 -- ```lua
 -- default = "error"
 -- ```
 ---@field argumentsInColorFunction "ignore" | "warning" | "error"?
--- %css.lint.boxModel.desc%
+-- Do not use `width` or `height` when using `padding` or `border`.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field boxModel "ignore" | "warning" | "error"?
--- %css.lint.compatibleVendorPrefixes.desc%
+-- When using a vendor-specific prefix make sure to also include all other vendor-specific properties.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field compatibleVendorPrefixes "ignore" | "warning" | "error"?
--- %css.lint.duplicateProperties.desc%
+-- Do not use duplicate style definitions.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field duplicateProperties "ignore" | "warning" | "error"?
--- %css.lint.emptyRules.desc%
+-- Do not use empty rulesets.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field emptyRules "ignore" | "warning" | "error"?
--- %css.lint.float.desc%
+-- Avoid using `float`. Floats lead to fragile CSS that is easy to break if one aspect of the layout changes.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field float "ignore" | "warning" | "error"?
--- %css.lint.fontFaceProperties.desc%
+-- `@font-face` rule must define `src` and `font-family` properties.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field fontFaceProperties "ignore" | "warning" | "error"?
--- %css.lint.hexColorLength.desc%
+-- Hex colors must consist of 3, 4, 6 or 8 hex numbers.
 -- 
 -- ```lua
 -- default = "error"
 -- ```
 ---@field hexColorLength "ignore" | "warning" | "error"?
--- %css.lint.idSelector.desc%
+-- Selectors should not contain IDs because these rules are too tightly coupled with the HTML.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field idSelector "ignore" | "warning" | "error"?
--- %css.lint.ieHack.desc%
+-- IE hacks are only necessary when supporting IE7 and older.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field ieHack "ignore" | "warning" | "error"?
--- %css.lint.importStatement.desc%
+-- Import statements do not load in parallel.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field importStatement "ignore" | "warning" | "error"?
--- %css.lint.important.desc%
+-- Avoid using `!important`. It is an indication that the specificity of the entire CSS has gotten out of control and needs to be refactored.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field important "ignore" | "warning" | "error"?
--- %css.lint.propertyIgnoredDueToDisplay.desc%
+-- Property is ignored due to the display. E.g. with `display: inline`, the `width`, `height`, `margin-top`, `margin-bottom`, and `float` properties have no effect.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field propertyIgnoredDueToDisplay "ignore" | "warning" | "error"?
--- %css.lint.universalSelector.desc%
+-- The universal selector (`*`) is known to be slow.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field universalSelector "ignore" | "warning" | "error"?
--- %css.lint.unknownAtRules.desc%
+-- Unknown at-rule.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field unknownAtRules "ignore" | "warning" | "error"?
--- %css.lint.unknownProperties.desc%
+-- Unknown property.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field unknownProperties "ignore" | "warning" | "error"?
--- %css.lint.unknownVendorSpecificProperties.desc%
+-- Unknown vendor specific property.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field unknownVendorSpecificProperties "ignore" | "warning" | "error"?
--- %css.lint.validProperties.desc%
+-- A list of properties that are not validated against the `unknownProperties` rule.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field validProperties string[]?
--- %css.lint.vendorPrefix.desc%
+-- When using a vendor-specific prefix, also include the standard property.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field vendorPrefix "ignore" | "warning" | "error"?
--- %css.lint.zeroUnits.desc%
+-- No unit for zero needed.
 -- 
 -- ```lua
 -- default = "ignore"
@@ -1371,7 +1371,7 @@
 ---@field zeroUnits "ignore" | "warning" | "error"?
 
 ---@class lsp.cssls.Trace
--- %css.trace.server.desc%
+-- Traces the communication between VS Code and the CSS language server.
 -- 
 -- ```lua
 -- default = "off"
@@ -1380,7 +1380,11 @@
 
 ---@class lsp.cssls.Css
 ---@field completion lsp.cssls.Completion?
--- %css.customData.desc%
+-- A list of relative file paths pointing to JSON files following the [custom data format](https://github.com/microsoft/vscode-css-languageservice/blob/master/docs/customData.md).
+-- 
+-- VS Code loads custom data on startup to enhance its CSS support for CSS custom properties (variables), at-rules, pseudo-classes, and pseudo-elements you specify in the JSON files.
+-- 
+-- The file paths are relative to workspace and only workspace folder settings are considered.
 -- 
 -- ```lua
 -- default = {}
@@ -1390,7 +1394,7 @@
 ---@field hover lsp.cssls.Hover?
 ---@field lint lsp.cssls.Lint?
 ---@field trace lsp.cssls.Trace?
--- %css.validate.desc%
+-- Enables or disables all validations.
 -- 
 -- ```lua
 -- default = true
@@ -1398,13 +1402,13 @@
 ---@field validate boolean?
 
 ---@class lsp.cssls.Completion
--- %less.completion.completePropertyWithSemicolon.desc%
+-- Insert semicolon at end of line when completing CSS properties.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field completePropertyWithSemicolon boolean?
--- %less.completion.triggerPropertyValueCompletion.desc%
+-- By default, VS Code triggers property value completion after selecting a CSS property. Use this setting to disable this behavior.
 -- 
 -- ```lua
 -- default = true
@@ -1412,49 +1416,49 @@
 ---@field triggerPropertyValueCompletion boolean?
 
 ---@class lsp.cssls.Format
--- %less.format.braceStyle.desc%
+-- Put braces on the same line as rules (`collapse`) or put braces on own line (`expand`).
 -- 
 -- ```lua
 -- default = "collapse"
 -- ```
 ---@field braceStyle "collapse" | "expand"?
--- %less.format.enable.desc%
+-- Enable/disable default LESS formatter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %less.format.maxPreserveNewLines.desc%
+-- Maximum number of line breaks to be preserved in one chunk, when `#less.format.preserveNewLines#` is enabled.
 ---@field maxPreserveNewLines number?
--- %less.format.newlineBetweenRules.desc%
+-- Separate rulesets by a blank line.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field newlineBetweenRules boolean?
--- %less.format.newlineBetweenSelectors.desc%
+-- Separate selectors with a new line.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field newlineBetweenSelectors boolean?
--- %less.format.preserveNewLines.desc%
+-- Whether existing line breaks before rules and declarations should be preserved.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field preserveNewLines boolean?
--- %less.format.spaceAroundSelectorSeparator.desc%
+-- Ensure a space character around selector separators `>`, `+`, `~` (e.g. `a > b`).
 ---@field spaceAroundSelectorSeparator boolean?
 
 ---@class lsp.cssls.Hover
--- %less.hover.documentation%
+-- Show property and value documentation in LESS hovers.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field documentation boolean?
--- %less.hover.references%
+-- Show references to MDN in LESS hovers.
 -- 
 -- ```lua
 -- default = true
@@ -1462,121 +1466,121 @@
 ---@field references boolean?
 
 ---@class lsp.cssls.Lint
--- %less.lint.argumentsInColorFunction.desc%
+-- Invalid number of parameters.
 -- 
 -- ```lua
 -- default = "error"
 -- ```
 ---@field argumentsInColorFunction "ignore" | "warning" | "error"?
--- %less.lint.boxModel.desc%
+-- Do not use `width` or `height` when using `padding` or `border`.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field boxModel "ignore" | "warning" | "error"?
--- %less.lint.compatibleVendorPrefixes.desc%
+-- When using a vendor-specific prefix make sure to also include all other vendor-specific properties.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field compatibleVendorPrefixes "ignore" | "warning" | "error"?
--- %less.lint.duplicateProperties.desc%
+-- Do not use duplicate style definitions.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field duplicateProperties "ignore" | "warning" | "error"?
--- %less.lint.emptyRules.desc%
+-- Do not use empty rulesets.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field emptyRules "ignore" | "warning" | "error"?
--- %less.lint.float.desc%
+-- Avoid using `float`. Floats lead to fragile CSS that is easy to break if one aspect of the layout changes.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field float "ignore" | "warning" | "error"?
--- %less.lint.fontFaceProperties.desc%
+-- `@font-face` rule must define `src` and `font-family` properties.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field fontFaceProperties "ignore" | "warning" | "error"?
--- %less.lint.hexColorLength.desc%
+-- Hex colors must consist of 3, 4, 6 or 8 hex numbers.
 -- 
 -- ```lua
 -- default = "error"
 -- ```
 ---@field hexColorLength "ignore" | "warning" | "error"?
--- %less.lint.idSelector.desc%
+-- Selectors should not contain IDs because these rules are too tightly coupled with the HTML.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field idSelector "ignore" | "warning" | "error"?
--- %less.lint.ieHack.desc%
+-- IE hacks are only necessary when supporting IE7 and older.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field ieHack "ignore" | "warning" | "error"?
--- %less.lint.importStatement.desc%
+-- Import statements do not load in parallel.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field importStatement "ignore" | "warning" | "error"?
--- %less.lint.important.desc%
+-- Avoid using `!important`. It is an indication that the specificity of the entire CSS has gotten out of control and needs to be refactored.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field important "ignore" | "warning" | "error"?
--- %less.lint.propertyIgnoredDueToDisplay.desc%
+-- Property is ignored due to the display. E.g. with `display: inline`, the `width`, `height`, `margin-top`, `margin-bottom`, and `float` properties have no effect.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field propertyIgnoredDueToDisplay "ignore" | "warning" | "error"?
--- %less.lint.universalSelector.desc%
+-- The universal selector (`*`) is known to be slow.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field universalSelector "ignore" | "warning" | "error"?
--- %less.lint.unknownAtRules.desc%
+-- Unknown at-rule.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field unknownAtRules "ignore" | "warning" | "error"?
--- %less.lint.unknownProperties.desc%
+-- Unknown property.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field unknownProperties "ignore" | "warning" | "error"?
--- %less.lint.unknownVendorSpecificProperties.desc%
+-- Unknown vendor specific property.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field unknownVendorSpecificProperties "ignore" | "warning" | "error"?
--- %less.lint.validProperties.desc%
+-- A list of properties that are not validated against the `unknownProperties` rule.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field validProperties string[]?
--- %less.lint.vendorPrefix.desc%
+-- When using a vendor-specific prefix, also include the standard property.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field vendorPrefix "ignore" | "warning" | "error"?
--- %less.lint.zeroUnits.desc%
+-- No unit for zero needed.
 -- 
 -- ```lua
 -- default = "ignore"
@@ -1588,7 +1592,7 @@
 ---@field format lsp.cssls.Format?
 ---@field hover lsp.cssls.Hover?
 ---@field lint lsp.cssls.Lint?
--- %less.validate.desc%
+-- Enables or disables all validations.
 -- 
 -- ```lua
 -- default = true
@@ -1596,13 +1600,13 @@
 ---@field validate boolean?
 
 ---@class lsp.cssls.Completion
--- %scss.completion.completePropertyWithSemicolon.desc%
+-- Insert semicolon at end of line when completing CSS properties.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field completePropertyWithSemicolon boolean?
--- %scss.completion.triggerPropertyValueCompletion.desc%
+-- By default, VS Code triggers property value completion after selecting a CSS property. Use this setting to disable this behavior.
 -- 
 -- ```lua
 -- default = true
@@ -1610,49 +1614,49 @@
 ---@field triggerPropertyValueCompletion boolean?
 
 ---@class lsp.cssls.Format
--- %scss.format.braceStyle.desc%
+-- Put braces on the same line as rules (`collapse`) or put braces on own line (`expand`).
 -- 
 -- ```lua
 -- default = "collapse"
 -- ```
 ---@field braceStyle "collapse" | "expand"?
--- %scss.format.enable.desc%
+-- Enable/disable default SCSS formatter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %scss.format.maxPreserveNewLines.desc%
+-- Maximum number of line breaks to be preserved in one chunk, when `#scss.format.preserveNewLines#` is enabled.
 ---@field maxPreserveNewLines number?
--- %scss.format.newlineBetweenRules.desc%
+-- Separate rulesets by a blank line.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field newlineBetweenRules boolean?
--- %scss.format.newlineBetweenSelectors.desc%
+-- Separate selectors with a new line.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field newlineBetweenSelectors boolean?
--- %scss.format.preserveNewLines.desc%
+-- Whether existing line breaks before rules and declarations should be preserved.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field preserveNewLines boolean?
--- %scss.format.spaceAroundSelectorSeparator.desc%
+-- Ensure a space character around selector separators `>`, `+`, `~` (e.g. `a > b`).
 ---@field spaceAroundSelectorSeparator boolean?
 
 ---@class lsp.cssls.Hover
--- %scss.hover.documentation%
+-- Show property and value documentation in SCSS hovers.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field documentation boolean?
--- %scss.hover.references%
+-- Show references to MDN in SCSS hovers.
 -- 
 -- ```lua
 -- default = true
@@ -1660,121 +1664,121 @@
 ---@field references boolean?
 
 ---@class lsp.cssls.Lint
--- %scss.lint.argumentsInColorFunction.desc%
+-- Invalid number of parameters.
 -- 
 -- ```lua
 -- default = "error"
 -- ```
 ---@field argumentsInColorFunction "ignore" | "warning" | "error"?
--- %scss.lint.boxModel.desc%
+-- Do not use `width` or `height` when using `padding` or `border`.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field boxModel "ignore" | "warning" | "error"?
--- %scss.lint.compatibleVendorPrefixes.desc%
+-- When using a vendor-specific prefix make sure to also include all other vendor-specific properties.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field compatibleVendorPrefixes "ignore" | "warning" | "error"?
--- %scss.lint.duplicateProperties.desc%
+-- Do not use duplicate style definitions.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field duplicateProperties "ignore" | "warning" | "error"?
--- %scss.lint.emptyRules.desc%
+-- Do not use empty rulesets.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field emptyRules "ignore" | "warning" | "error"?
--- %scss.lint.float.desc%
+-- Avoid using `float`. Floats lead to fragile CSS that is easy to break if one aspect of the layout changes.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field float "ignore" | "warning" | "error"?
--- %scss.lint.fontFaceProperties.desc%
+-- `@font-face` rule must define `src` and `font-family` properties.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field fontFaceProperties "ignore" | "warning" | "error"?
--- %scss.lint.hexColorLength.desc%
+-- Hex colors must consist of 3, 4, 6 or 8 hex numbers.
 -- 
 -- ```lua
 -- default = "error"
 -- ```
 ---@field hexColorLength "ignore" | "warning" | "error"?
--- %scss.lint.idSelector.desc%
+-- Selectors should not contain IDs because these rules are too tightly coupled with the HTML.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field idSelector "ignore" | "warning" | "error"?
--- %scss.lint.ieHack.desc%
+-- IE hacks are only necessary when supporting IE7 and older.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field ieHack "ignore" | "warning" | "error"?
--- %scss.lint.importStatement.desc%
+-- Import statements do not load in parallel.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field importStatement "ignore" | "warning" | "error"?
--- %scss.lint.important.desc%
+-- Avoid using `!important`. It is an indication that the specificity of the entire CSS has gotten out of control and needs to be refactored.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field important "ignore" | "warning" | "error"?
--- %scss.lint.propertyIgnoredDueToDisplay.desc%
+-- Property is ignored due to the display. E.g. with `display: inline`, the `width`, `height`, `margin-top`, `margin-bottom`, and `float` properties have no effect.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field propertyIgnoredDueToDisplay "ignore" | "warning" | "error"?
--- %scss.lint.universalSelector.desc%
+-- The universal selector (`*`) is known to be slow.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field universalSelector "ignore" | "warning" | "error"?
--- %scss.lint.unknownAtRules.desc%
+-- Unknown at-rule.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field unknownAtRules "ignore" | "warning" | "error"?
--- %scss.lint.unknownProperties.desc%
+-- Unknown property.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field unknownProperties "ignore" | "warning" | "error"?
--- %scss.lint.unknownVendorSpecificProperties.desc%
+-- Unknown vendor specific property.
 -- 
 -- ```lua
 -- default = "ignore"
 -- ```
 ---@field unknownVendorSpecificProperties "ignore" | "warning" | "error"?
--- %scss.lint.validProperties.desc%
+-- A list of properties that are not validated against the `unknownProperties` rule.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field validProperties string[]?
--- %scss.lint.vendorPrefix.desc%
+-- When using a vendor-specific prefix, also include the standard property.
 -- 
 -- ```lua
 -- default = "warning"
 -- ```
 ---@field vendorPrefix "ignore" | "warning" | "error"?
--- %scss.lint.zeroUnits.desc%
+-- No unit for zero needed.
 -- 
 -- ```lua
 -- default = "ignore"
@@ -1786,7 +1790,7 @@
 ---@field format lsp.cssls.Format?
 ---@field hover lsp.cssls.Hover?
 ---@field lint lsp.cssls.Lint?
--- %scss.validate.desc%
+-- Enables or disables all validations.
 -- 
 -- ```lua
 -- default = true
@@ -11259,7 +11263,7 @@
 ---@field haskell lsp.hls.Haskell?
 
 ---@class lsp.html.Completion
--- %html.completion.attributeDefaultValue%
+-- Controls the default value for attributes when completion is accepted.
 -- 
 -- ```lua
 -- default = "doublequotes"
@@ -11267,59 +11271,59 @@
 ---@field attributeDefaultValue "doublequotes" | "singlequotes" | "empty"?
 
 ---@class lsp.html.Format
--- %html.format.contentUnformatted.desc%
+-- List of tags, comma separated, where the content shouldn't be reformatted. `null` defaults to the `pre` tag.
 -- 
 -- ```lua
 -- default = "pre,code,textarea"
 -- ```
 ---@field contentUnformatted string?
--- %html.format.enable.desc%
+-- Enable/disable default HTML formatter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %html.format.extraLiners.desc%
+-- List of tags, comma separated, that should have an extra newline before them. `null` defaults to `"head, body, /html"`.
 -- 
 -- ```lua
 -- default = "head, body, /html"
 -- ```
 ---@field extraLiners string?
--- %html.format.indentHandlebars.desc%
+-- Format and indent `{{#foo}}` and `{{/foo}}`.
 ---@field indentHandlebars boolean?
--- %html.format.indentInnerHtml.desc%
+-- Indent `<head>` and `<body>` sections.
 ---@field indentInnerHtml boolean?
--- %html.format.maxPreserveNewLines.desc%
+-- Maximum number of line breaks to be preserved in one chunk. Use `null` for unlimited.
 ---@field maxPreserveNewLines number?
--- %html.format.preserveNewLines.desc%
+-- Controls whether existing line breaks before elements should be preserved. Only works before elements, not inside tags or for text.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field preserveNewLines boolean?
--- %html.format.templating.desc%
+-- Honor django, erb, handlebars and php templating language tags.
 ---@field templating boolean?
--- %html.format.unformatted.desc%
+-- List of tags, comma separated, that shouldn't be reformatted. `null` defaults to all tags listed at https://www.w3.org/TR/html5/dom.html#phrasing-content.
 -- 
 -- ```lua
 -- default = "wbr"
 -- ```
 ---@field unformatted string?
--- %html.format.unformattedContentDelimiter.desc%
+-- Keep text content together between this string.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field unformattedContentDelimiter string?
--- %html.format.wrapAttributes.desc%
+-- Wrap attributes.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field wrapAttributes "auto" | "force" | "force-aligned" | "force-expand-multiline" | "aligned-multiple" | "preserve" | "preserve-aligned"?
--- %html.format.wrapAttributesIndentSize.desc%
+-- Indent wrapped attributes to after N characters. Use `null` to use the default indent size. Ignored if `#html.format.wrapAttributes#` is set to `aligned`.
 ---@field wrapAttributesIndentSize number?
--- %html.format.wrapLineLength.desc%
+-- Maximum amount of characters per line (0 = disable).
 -- 
 -- ```lua
 -- default = 120
@@ -11327,13 +11331,13 @@
 ---@field wrapLineLength integer?
 
 ---@class lsp.html.Hover
--- %html.hover.documentation%
+-- Show tag and attribute documentation in hover.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field documentation boolean?
--- %html.hover.references%
+-- Show references to MDN in hover.
 -- 
 -- ```lua
 -- default = true
@@ -11341,9 +11345,9 @@
 ---@field references boolean?
 
 ---@class lsp.html.Suggest
--- %html.suggest.hideEndTagSuggestions.desc%
+-- Controls whether the built-in HTML language support suggests closing tags. When disabled, end tag completions like `</div>` will not be shown.
 ---@field hideEndTagSuggestions boolean?
--- %html.suggest.html5.desc%
+-- Controls whether the built-in HTML language support suggests HTML5 tags, properties and values.
 -- 
 -- ```lua
 -- default = true
@@ -11351,7 +11355,7 @@
 ---@field html5 boolean?
 
 ---@class lsp.html.Trace
--- %html.trace.server.desc%
+-- Traces the communication between VS Code and the HTML language server.
 -- 
 -- ```lua
 -- default = "off"
@@ -11359,13 +11363,13 @@
 ---@field server "off" | "messages" | "verbose"?
 
 ---@class lsp.html.Validate
--- %html.validate.scripts%
+-- Controls whether the built-in HTML language support validates embedded scripts.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field scripts boolean?
--- %html.validate.styles%
+-- Controls whether the built-in HTML language support validates embedded styles.
 -- 
 -- ```lua
 -- default = true
@@ -11373,20 +11377,24 @@
 ---@field styles boolean?
 
 ---@class lsp.html.Html
--- %html.autoClosingTags%
+-- Enable/disable autoclosing of HTML tags.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoClosingTags boolean?
--- %html.autoCreateQuotes%
+-- Enable/disable auto creation of quotes for HTML attribute assignment. The type of quotes can be configured by `#html.completion.attributeDefaultValue#`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoCreateQuotes boolean?
 ---@field completion lsp.html.Completion?
--- %html.customData.desc%
+-- A list of relative file paths pointing to JSON files following the [custom data format](https://github.com/microsoft/vscode-html-languageservice/blob/master/docs/customData.md).
+-- 
+-- VS Code loads custom data on startup to enhance its HTML support for the custom HTML tags, attributes and attribute values you specify in the JSON files.
+-- 
+-- The file paths are relative to workspace and only workspace folder settings are considered.
 -- 
 -- ```lua
 -- default = {}
@@ -11394,7 +11402,7 @@
 ---@field customData string[]?
 ---@field format lsp.html.Format?
 ---@field hover lsp.html.Hover?
--- %html.mirrorCursorOnMatchingTag%
+-- Enable/disable mirroring cursor on matching HTML tag.
 ---@field mirrorCursorOnMatchingTag boolean?
 ---@field suggest lsp.html.Suggest?
 ---@field trace lsp.html.Trace?
@@ -12809,7 +12817,7 @@
 ---@field redhat lsp.jdtls.Redhat?
 
 ---@class lsp.jsonls.ColorDecorators
--- %json.colorDecorators.enable.desc%
+-- Enables or disables color decorators
 -- 
 -- ```lua
 -- default = true
@@ -12817,23 +12825,23 @@
 ---@field enable boolean?
 
 ---@class lsp.jsonls.Format
--- %json.format.enable.desc%
+-- Enable/disable default JSON formatter
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %json.format.keepLines.desc%
+-- Keep all existing new lines when formatting.
 ---@field keepLines boolean?
 
 ---@class lsp.jsonls.SchemaDownload
--- %json.enableSchemaDownload.desc%
+-- When enabled, JSON schemas can be fetched from http and https locations.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %json.schemaDownload.trustedDomains.desc%
+-- List of trusted domains for downloading JSON schemas over http(s). Use `*` to trust all domains. `*` can also be used as a wildcard in domain names.
 -- 
 -- ```lua
 -- default = {
@@ -12849,7 +12857,7 @@
 ---@field trustedDomains table?
 
 ---@class lsp.jsonls.Trace
--- %json.tracing.desc%
+-- Traces the communication between VS Code and the JSON language server.
 -- 
 -- ```lua
 -- default = "off"
@@ -12857,7 +12865,7 @@
 ---@field server "off" | "messages" | "verbose"?
 
 ---@class lsp.jsonls.Validate
--- %json.validate.enable.desc%
+-- Enable/disable JSON validation.
 -- 
 -- ```lua
 -- default = true
@@ -12867,14 +12875,14 @@
 ---@class lsp.jsonls.Json
 ---@field colorDecorators lsp.jsonls.ColorDecorators?
 ---@field format lsp.jsonls.Format?
--- %json.maxItemsComputed.desc%
+-- The maximum number of outline symbols and folding regions computed (limited for performance reasons).
 -- 
 -- ```lua
 -- default = 5000
 -- ```
 ---@field maxItemsComputed number?
 ---@field schemaDownload lsp.jsonls.SchemaDownload?
--- %json.schemas.desc%
+-- Associate schemas to JSON files in the current project.
 ---@field schemas object[]?
 ---@field trace lsp.jsonls.Trace?
 ---@field validate lsp.jsonls.Validate?
@@ -13441,27 +13449,27 @@
 ---@field kotlin lsp.kotlin_language_server.Kotlin?
 
 ---@class lsp.ltex.AdditionalRules
--- %ltex.i18n.configuration.ltex.additionalRules.enablePickyRules.markdownDescription%
+-- Enable LanguageTool rules that are marked as picky and that are disabled by default, e.g., rules about passive voice, sentence length, etc., at the cost of more false positives.
 ---@field enablePickyRules boolean?
--- %ltex.i18n.configuration.ltex.additionalRules.languageModel.markdownDescription%
+-- Optional path to a directory with rules of a language model with *n*-gram occurrence counts. Set this setting to the parent directory that contains subdirectories for languages (e.g., `en`).
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field languageModel string?
--- %ltex.i18n.configuration.ltex.additionalRules.motherTongue.markdownDescription%
+-- Optional mother tongue of the user (e.g., `"de-DE"`). [More info...](https://valentjn.github.io/ltex/settings.html#ltexadditionalrulesmothertongue)
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field motherTongue "" | "ar" | "ast-ES" | "be-BY" | "br-FR" | "ca-ES" | "ca-ES-valencia" | "da-DK" | "de" | "de-AT" | "de-CH" | "de-DE" | "de-DE-x-simple-language" | "el-GR" | "en" | "en-AU" | "en-CA" | "en-GB" | "en-NZ" | "en-US" | "en-ZA" | "eo" | "es" | "es-AR" | "fa" | "fr" | "ga-IE" | "gl-ES" | "it" | "ja-JP" | "km-KH" | "nl" | "nl-BE" | "pl-PL" | "pt" | "pt-AO" | "pt-BR" | "pt-MZ" | "pt-PT" | "ro-RO" | "ru-RU" | "sk-SK" | "sl-SI" | "sv" | "ta-IN" | "tl-PH" | "uk-UA" | "zh-CN"?
--- %ltex.i18n.configuration.ltex.additionalRules.neuralNetworkModel.markdownDescription%
+-- Optional path to a directory with rules of a pretrained neural network model.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field neuralNetworkModel string?
--- %ltex.i18n.configuration.ltex.additionalRules.word2VecModel.markdownDescription%
+-- Optional path to a directory with rules of a word2vec language model.
 -- 
 -- ```lua
 -- default = ""
@@ -13469,14 +13477,14 @@
 ---@field word2VecModel string?
 
 ---@class lsp.ltex.Bibtex
--- %ltex.i18n.configuration.ltex.bibtex.fields.markdownDescription%
+-- List of BibTeX fields whose values are to be checked in BibTeX files. [More info...](https://valentjn.github.io/ltex/settings.html#ltexbibtexfields)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field fields table?
 
--- %ltex.i18n.configuration.ltex.configurationTarget.markdownDescription%
+-- Controls which `settings.json` or external setting file ([see documentation](https://valentjn.github.io/ltex/vscode-ltex/setting-scopes-files.html#external-setting-files)) to update when using one of the quick fixes.
 -- 
 -- ```lua
 -- default = {
@@ -13490,424 +13498,424 @@
 ---@field disabledRules "user" | "workspace" | "workspaceFolder" | "userExternalFile" | "workspaceExternalFile" | "workspaceFolderExternalFile"?
 ---@field hiddenFalsePositives "user" | "workspace" | "workspaceFolder" | "userExternalFile" | "workspaceExternalFile" | "workspaceFolderExternalFile"?
 
--- %ltex.i18n.configuration.ltex.dictionary.markdownDescription%
+-- Lists of additional words that should not be counted as spelling errors. [More info...](https://valentjn.github.io/ltex/settings.html#ltexdictionary)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.ltex.Dictionary
--- %ltex.i18n.configuration.ltex.dictionary.ar.markdownDescription%
+-- List of additional `ar` (Arabic) words that should not be counted as spelling errors.
 ---@field ar string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ast-ES.markdownDescription%
+-- List of additional `ast-ES` (Asturian) words that should not be counted as spelling errors.
 ---@field ast-ES string[]?
--- %ltex.i18n.configuration.ltex.dictionary.be-BY.markdownDescription%
+-- List of additional `be-BY` (Belarusian) words that should not be counted as spelling errors.
 ---@field be-BY string[]?
--- %ltex.i18n.configuration.ltex.dictionary.br-FR.markdownDescription%
+-- List of additional `br-FR` (Breton) words that should not be counted as spelling errors.
 ---@field br-FR string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ca-ES.markdownDescription%
+-- List of additional `ca-ES` (Catalan) words that should not be counted as spelling errors.
 ---@field ca-ES string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ca-ES-valencia.markdownDescription%
+-- List of additional `ca-ES-valencia` (Catalan (Valencian)) words that should not be counted as spelling errors.
 ---@field ca-ES-valencia string[]?
--- %ltex.i18n.configuration.ltex.dictionary.da-DK.markdownDescription%
+-- List of additional `da-DK` (Danish) words that should not be counted as spelling errors.
 ---@field da-DK string[]?
--- %ltex.i18n.configuration.ltex.dictionary.de.markdownDescription%
+-- List of additional `de` (German) words that should not be counted as spelling errors.
 ---@field de string[]?
--- %ltex.i18n.configuration.ltex.dictionary.de-AT.markdownDescription%
+-- List of additional `de-AT` (German (Austria)) words that should not be counted as spelling errors.
 ---@field de-AT string[]?
--- %ltex.i18n.configuration.ltex.dictionary.de-CH.markdownDescription%
+-- List of additional `de-CH` (German (Swiss)) words that should not be counted as spelling errors.
 ---@field de-CH string[]?
--- %ltex.i18n.configuration.ltex.dictionary.de-DE.markdownDescription%
+-- List of additional `de-DE` (German (Germany)) words that should not be counted as spelling errors.
 ---@field de-DE string[]?
--- %ltex.i18n.configuration.ltex.dictionary.de-DE-x-simple-language.markdownDescription%
+-- List of additional `de-DE-x-simple-language` (Simple German) words that should not be counted as spelling errors.
 ---@field de-DE-x-simple-language string[]?
--- %ltex.i18n.configuration.ltex.dictionary.el-GR.markdownDescription%
+-- List of additional `el-GR` (Greek) words that should not be counted as spelling errors.
 ---@field el-GR string[]?
--- %ltex.i18n.configuration.ltex.dictionary.en.markdownDescription%
+-- List of additional `en` (English) words that should not be counted as spelling errors.
 ---@field en string[]?
--- %ltex.i18n.configuration.ltex.dictionary.en-AU.markdownDescription%
+-- List of additional `en-AU` (English (Australian)) words that should not be counted as spelling errors.
 ---@field en-AU string[]?
--- %ltex.i18n.configuration.ltex.dictionary.en-CA.markdownDescription%
+-- List of additional `en-CA` (English (Canadian)) words that should not be counted as spelling errors.
 ---@field en-CA string[]?
--- %ltex.i18n.configuration.ltex.dictionary.en-GB.markdownDescription%
+-- List of additional `en-GB` (English (GB)) words that should not be counted as spelling errors.
 ---@field en-GB string[]?
--- %ltex.i18n.configuration.ltex.dictionary.en-NZ.markdownDescription%
+-- List of additional `en-NZ` (English (New Zealand)) words that should not be counted as spelling errors.
 ---@field en-NZ string[]?
--- %ltex.i18n.configuration.ltex.dictionary.en-US.markdownDescription%
+-- List of additional `en-US` (English (US)) words that should not be counted as spelling errors.
 ---@field en-US string[]?
--- %ltex.i18n.configuration.ltex.dictionary.en-ZA.markdownDescription%
+-- List of additional `en-ZA` (English (South African)) words that should not be counted as spelling errors.
 ---@field en-ZA string[]?
--- %ltex.i18n.configuration.ltex.dictionary.eo.markdownDescription%
+-- List of additional `eo` (Esperanto) words that should not be counted as spelling errors.
 ---@field eo string[]?
--- %ltex.i18n.configuration.ltex.dictionary.es.markdownDescription%
+-- List of additional `es` (Spanish) words that should not be counted as spelling errors.
 ---@field es string[]?
--- %ltex.i18n.configuration.ltex.dictionary.es-AR.markdownDescription%
+-- List of additional `es-AR` (Spanish (voseo)) words that should not be counted as spelling errors.
 ---@field es-AR string[]?
--- %ltex.i18n.configuration.ltex.dictionary.fa.markdownDescription%
+-- List of additional `fa` (Persian) words that should not be counted as spelling errors.
 ---@field fa string[]?
--- %ltex.i18n.configuration.ltex.dictionary.fr.markdownDescription%
+-- List of additional `fr` (French) words that should not be counted as spelling errors.
 ---@field fr string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ga-IE.markdownDescription%
+-- List of additional `ga-IE` (Irish) words that should not be counted as spelling errors.
 ---@field ga-IE string[]?
--- %ltex.i18n.configuration.ltex.dictionary.gl-ES.markdownDescription%
+-- List of additional `gl-ES` (Galician) words that should not be counted as spelling errors.
 ---@field gl-ES string[]?
--- %ltex.i18n.configuration.ltex.dictionary.it.markdownDescription%
+-- List of additional `it` (Italian) words that should not be counted as spelling errors.
 ---@field it string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ja-JP.markdownDescription%
+-- List of additional `ja-JP` (Japanese) words that should not be counted as spelling errors.
 ---@field ja-JP string[]?
--- %ltex.i18n.configuration.ltex.dictionary.km-KH.markdownDescription%
+-- List of additional `km-KH` (Khmer) words that should not be counted as spelling errors.
 ---@field km-KH string[]?
--- %ltex.i18n.configuration.ltex.dictionary.nl.markdownDescription%
+-- List of additional `nl` (Dutch) words that should not be counted as spelling errors.
 ---@field nl string[]?
--- %ltex.i18n.configuration.ltex.dictionary.nl-BE.markdownDescription%
+-- List of additional `nl-BE` (Dutch (Belgium)) words that should not be counted as spelling errors.
 ---@field nl-BE string[]?
--- %ltex.i18n.configuration.ltex.dictionary.pl-PL.markdownDescription%
+-- List of additional `pl-PL` (Polish) words that should not be counted as spelling errors.
 ---@field pl-PL string[]?
--- %ltex.i18n.configuration.ltex.dictionary.pt.markdownDescription%
+-- List of additional `pt` (Portuguese) words that should not be counted as spelling errors.
 ---@field pt string[]?
--- %ltex.i18n.configuration.ltex.dictionary.pt-AO.markdownDescription%
+-- List of additional `pt-AO` (Portuguese (Angola preAO)) words that should not be counted as spelling errors.
 ---@field pt-AO string[]?
--- %ltex.i18n.configuration.ltex.dictionary.pt-BR.markdownDescription%
+-- List of additional `pt-BR` (Portuguese (Brazil)) words that should not be counted as spelling errors.
 ---@field pt-BR string[]?
--- %ltex.i18n.configuration.ltex.dictionary.pt-MZ.markdownDescription%
+-- List of additional `pt-MZ` (Portuguese (Moçambique preAO)) words that should not be counted as spelling errors.
 ---@field pt-MZ string[]?
--- %ltex.i18n.configuration.ltex.dictionary.pt-PT.markdownDescription%
+-- List of additional `pt-PT` (Portuguese (Portugal)) words that should not be counted as spelling errors.
 ---@field pt-PT string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ro-RO.markdownDescription%
+-- List of additional `ro-RO` (Romanian) words that should not be counted as spelling errors.
 ---@field ro-RO string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ru-RU.markdownDescription%
+-- List of additional `ru-RU` (Russian) words that should not be counted as spelling errors.
 ---@field ru-RU string[]?
--- %ltex.i18n.configuration.ltex.dictionary.sk-SK.markdownDescription%
+-- List of additional `sk-SK` (Slovak) words that should not be counted as spelling errors.
 ---@field sk-SK string[]?
--- %ltex.i18n.configuration.ltex.dictionary.sl-SI.markdownDescription%
+-- List of additional `sl-SI` (Slovenian) words that should not be counted as spelling errors.
 ---@field sl-SI string[]?
--- %ltex.i18n.configuration.ltex.dictionary.sv.markdownDescription%
+-- List of additional `sv` (Swedish) words that should not be counted as spelling errors.
 ---@field sv string[]?
--- %ltex.i18n.configuration.ltex.dictionary.ta-IN.markdownDescription%
+-- List of additional `ta-IN` (Tamil) words that should not be counted as spelling errors.
 ---@field ta-IN string[]?
--- %ltex.i18n.configuration.ltex.dictionary.tl-PH.markdownDescription%
+-- List of additional `tl-PH` (Tagalog) words that should not be counted as spelling errors.
 ---@field tl-PH string[]?
--- %ltex.i18n.configuration.ltex.dictionary.uk-UA.markdownDescription%
+-- List of additional `uk-UA` (Ukrainian) words that should not be counted as spelling errors.
 ---@field uk-UA string[]?
--- %ltex.i18n.configuration.ltex.dictionary.zh-CN.markdownDescription%
+-- List of additional `zh-CN` (Chinese) words that should not be counted as spelling errors.
 ---@field zh-CN string[]?
 
--- %ltex.i18n.configuration.ltex.disabledRules.markdownDescription%
+-- Lists of rules that should be disabled (if enabled by default by LanguageTool). [More info...](https://valentjn.github.io/ltex/settings.html#ltexdisabledrules)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.ltex.DisabledRules
--- %ltex.i18n.configuration.ltex.disabledRules.ar.markdownDescription%
+-- List of additional `ar` (Arabic) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ar string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ast-ES.markdownDescription%
+-- List of additional `ast-ES` (Asturian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ast-ES string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.be-BY.markdownDescription%
+-- List of additional `be-BY` (Belarusian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field be-BY string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.br-FR.markdownDescription%
+-- List of additional `br-FR` (Breton) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field br-FR string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ca-ES.markdownDescription%
+-- List of additional `ca-ES` (Catalan) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ca-ES string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ca-ES-valencia.markdownDescription%
+-- List of additional `ca-ES-valencia` (Catalan (Valencian)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ca-ES-valencia string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.da-DK.markdownDescription%
+-- List of additional `da-DK` (Danish) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field da-DK string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.de.markdownDescription%
+-- List of additional `de` (German) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field de string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.de-AT.markdownDescription%
+-- List of additional `de-AT` (German (Austria)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field de-AT string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.de-CH.markdownDescription%
+-- List of additional `de-CH` (German (Swiss)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field de-CH string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.de-DE.markdownDescription%
+-- List of additional `de-DE` (German (Germany)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field de-DE string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.de-DE-x-simple-language.markdownDescription%
+-- List of additional `de-DE-x-simple-language` (Simple German) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field de-DE-x-simple-language string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.el-GR.markdownDescription%
+-- List of additional `el-GR` (Greek) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field el-GR string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.en.markdownDescription%
+-- List of additional `en` (English) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field en string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.en-AU.markdownDescription%
+-- List of additional `en-AU` (English (Australian)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field en-AU string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.en-CA.markdownDescription%
+-- List of additional `en-CA` (English (Canadian)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field en-CA string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.en-GB.markdownDescription%
+-- List of additional `en-GB` (English (GB)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field en-GB string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.en-NZ.markdownDescription%
+-- List of additional `en-NZ` (English (New Zealand)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field en-NZ string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.en-US.markdownDescription%
+-- List of additional `en-US` (English (US)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field en-US string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.en-ZA.markdownDescription%
+-- List of additional `en-ZA` (English (South African)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field en-ZA string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.eo.markdownDescription%
+-- List of additional `eo` (Esperanto) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field eo string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.es.markdownDescription%
+-- List of additional `es` (Spanish) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field es string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.es-AR.markdownDescription%
+-- List of additional `es-AR` (Spanish (voseo)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field es-AR string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.fa.markdownDescription%
+-- List of additional `fa` (Persian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field fa string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.fr.markdownDescription%
+-- List of additional `fr` (French) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field fr string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ga-IE.markdownDescription%
+-- List of additional `ga-IE` (Irish) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ga-IE string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.gl-ES.markdownDescription%
+-- List of additional `gl-ES` (Galician) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field gl-ES string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.it.markdownDescription%
+-- List of additional `it` (Italian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field it string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ja-JP.markdownDescription%
+-- List of additional `ja-JP` (Japanese) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ja-JP string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.km-KH.markdownDescription%
+-- List of additional `km-KH` (Khmer) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field km-KH string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.nl.markdownDescription%
+-- List of additional `nl` (Dutch) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field nl string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.nl-BE.markdownDescription%
+-- List of additional `nl-BE` (Dutch (Belgium)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field nl-BE string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.pl-PL.markdownDescription%
+-- List of additional `pl-PL` (Polish) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field pl-PL string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.pt.markdownDescription%
+-- List of additional `pt` (Portuguese) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field pt string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.pt-AO.markdownDescription%
+-- List of additional `pt-AO` (Portuguese (Angola preAO)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field pt-AO string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.pt-BR.markdownDescription%
+-- List of additional `pt-BR` (Portuguese (Brazil)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field pt-BR string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.pt-MZ.markdownDescription%
+-- List of additional `pt-MZ` (Portuguese (Moçambique preAO)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field pt-MZ string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.pt-PT.markdownDescription%
+-- List of additional `pt-PT` (Portuguese (Portugal)) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field pt-PT string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ro-RO.markdownDescription%
+-- List of additional `ro-RO` (Romanian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ro-RO string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ru-RU.markdownDescription%
+-- List of additional `ru-RU` (Russian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ru-RU string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.sk-SK.markdownDescription%
+-- List of additional `sk-SK` (Slovak) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field sk-SK string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.sl-SI.markdownDescription%
+-- List of additional `sl-SI` (Slovenian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field sl-SI string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.sv.markdownDescription%
+-- List of additional `sv` (Swedish) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field sv string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.ta-IN.markdownDescription%
+-- List of additional `ta-IN` (Tamil) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field ta-IN string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.tl-PH.markdownDescription%
+-- List of additional `tl-PH` (Tagalog) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field tl-PH string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.uk-UA.markdownDescription%
+-- List of additional `uk-UA` (Ukrainian) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field uk-UA string[]?
--- %ltex.i18n.configuration.ltex.disabledRules.zh-CN.markdownDescription%
+-- List of additional `zh-CN` (Chinese) rules that should be disabled (if enabled by default by LanguageTool).
 ---@field zh-CN string[]?
 
--- %ltex.i18n.configuration.ltex.enabledRules.markdownDescription%
+-- Lists of rules that should be enabled (if disabled by default by LanguageTool). [More info...](https://valentjn.github.io/ltex/settings.html#ltexenabledrules)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.ltex.EnabledRules
--- %ltex.i18n.configuration.ltex.enabledRules.ar.markdownDescription%
+-- List of additional `ar` (Arabic) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ar string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ast-ES.markdownDescription%
+-- List of additional `ast-ES` (Asturian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ast-ES string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.be-BY.markdownDescription%
+-- List of additional `be-BY` (Belarusian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field be-BY string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.br-FR.markdownDescription%
+-- List of additional `br-FR` (Breton) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field br-FR string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ca-ES.markdownDescription%
+-- List of additional `ca-ES` (Catalan) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ca-ES string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ca-ES-valencia.markdownDescription%
+-- List of additional `ca-ES-valencia` (Catalan (Valencian)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ca-ES-valencia string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.da-DK.markdownDescription%
+-- List of additional `da-DK` (Danish) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field da-DK string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.de.markdownDescription%
+-- List of additional `de` (German) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field de string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.de-AT.markdownDescription%
+-- List of additional `de-AT` (German (Austria)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field de-AT string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.de-CH.markdownDescription%
+-- List of additional `de-CH` (German (Swiss)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field de-CH string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.de-DE.markdownDescription%
+-- List of additional `de-DE` (German (Germany)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field de-DE string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.de-DE-x-simple-language.markdownDescription%
+-- List of additional `de-DE-x-simple-language` (Simple German) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field de-DE-x-simple-language string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.el-GR.markdownDescription%
+-- List of additional `el-GR` (Greek) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field el-GR string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.en.markdownDescription%
+-- List of additional `en` (English) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field en string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.en-AU.markdownDescription%
+-- List of additional `en-AU` (English (Australian)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field en-AU string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.en-CA.markdownDescription%
+-- List of additional `en-CA` (English (Canadian)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field en-CA string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.en-GB.markdownDescription%
+-- List of additional `en-GB` (English (GB)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field en-GB string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.en-NZ.markdownDescription%
+-- List of additional `en-NZ` (English (New Zealand)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field en-NZ string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.en-US.markdownDescription%
+-- List of additional `en-US` (English (US)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field en-US string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.en-ZA.markdownDescription%
+-- List of additional `en-ZA` (English (South African)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field en-ZA string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.eo.markdownDescription%
+-- List of additional `eo` (Esperanto) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field eo string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.es.markdownDescription%
+-- List of additional `es` (Spanish) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field es string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.es-AR.markdownDescription%
+-- List of additional `es-AR` (Spanish (voseo)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field es-AR string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.fa.markdownDescription%
+-- List of additional `fa` (Persian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field fa string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.fr.markdownDescription%
+-- List of additional `fr` (French) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field fr string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ga-IE.markdownDescription%
+-- List of additional `ga-IE` (Irish) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ga-IE string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.gl-ES.markdownDescription%
+-- List of additional `gl-ES` (Galician) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field gl-ES string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.it.markdownDescription%
+-- List of additional `it` (Italian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field it string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ja-JP.markdownDescription%
+-- List of additional `ja-JP` (Japanese) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ja-JP string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.km-KH.markdownDescription%
+-- List of additional `km-KH` (Khmer) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field km-KH string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.nl.markdownDescription%
+-- List of additional `nl` (Dutch) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field nl string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.nl-BE.markdownDescription%
+-- List of additional `nl-BE` (Dutch (Belgium)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field nl-BE string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.pl-PL.markdownDescription%
+-- List of additional `pl-PL` (Polish) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field pl-PL string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.pt.markdownDescription%
+-- List of additional `pt` (Portuguese) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field pt string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.pt-AO.markdownDescription%
+-- List of additional `pt-AO` (Portuguese (Angola preAO)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field pt-AO string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.pt-BR.markdownDescription%
+-- List of additional `pt-BR` (Portuguese (Brazil)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field pt-BR string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.pt-MZ.markdownDescription%
+-- List of additional `pt-MZ` (Portuguese (Moçambique preAO)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field pt-MZ string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.pt-PT.markdownDescription%
+-- List of additional `pt-PT` (Portuguese (Portugal)) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field pt-PT string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ro-RO.markdownDescription%
+-- List of additional `ro-RO` (Romanian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ro-RO string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ru-RU.markdownDescription%
+-- List of additional `ru-RU` (Russian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ru-RU string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.sk-SK.markdownDescription%
+-- List of additional `sk-SK` (Slovak) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field sk-SK string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.sl-SI.markdownDescription%
+-- List of additional `sl-SI` (Slovenian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field sl-SI string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.sv.markdownDescription%
+-- List of additional `sv` (Swedish) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field sv string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.ta-IN.markdownDescription%
+-- List of additional `ta-IN` (Tamil) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field ta-IN string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.tl-PH.markdownDescription%
+-- List of additional `tl-PH` (Tagalog) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field tl-PH string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.uk-UA.markdownDescription%
+-- List of additional `uk-UA` (Ukrainian) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field uk-UA string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.zh-CN.markdownDescription%
+-- List of additional `zh-CN` (Chinese) rules that should be enabled (if disabled by default by LanguageTool).
 ---@field zh-CN string[]?
 
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.markdownDescription%
+-- Lists of false-positive diagnostics to hide (by hiding all diagnostics of a specific rule within a specific sentence). [More info...](https://valentjn.github.io/ltex/settings.html#ltexhiddenfalsepositives)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.ltex.HiddenFalsePositives
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ar.markdownDescription%
+-- List of `ar` (Arabic) false-positive diagnostics to hide.
 ---@field ar string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ast-ES.markdownDescription%
+-- List of `ast-ES` (Asturian) false-positive diagnostics to hide.
 ---@field ast-ES string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.be-BY.markdownDescription%
+-- List of `be-BY` (Belarusian) false-positive diagnostics to hide.
 ---@field be-BY string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.br-FR.markdownDescription%
+-- List of `br-FR` (Breton) false-positive diagnostics to hide.
 ---@field br-FR string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ca-ES.markdownDescription%
+-- List of `ca-ES` (Catalan) false-positive diagnostics to hide.
 ---@field ca-ES string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ca-ES-valencia.markdownDescription%
+-- List of `ca-ES-valencia` (Catalan (Valencian)) false-positive diagnostics to hide.
 ---@field ca-ES-valencia string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.da-DK.markdownDescription%
+-- List of `da-DK` (Danish) false-positive diagnostics to hide.
 ---@field da-DK string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de.markdownDescription%
+-- List of `de` (German) false-positive diagnostics to hide.
 ---@field de string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-AT.markdownDescription%
+-- List of `de-AT` (German (Austria)) false-positive diagnostics to hide.
 ---@field de-AT string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-CH.markdownDescription%
+-- List of `de-CH` (German (Swiss)) false-positive diagnostics to hide.
 ---@field de-CH string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-DE.markdownDescription%
+-- List of `de-DE` (German (Germany)) false-positive diagnostics to hide.
 ---@field de-DE string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.de-DE-x-simple-language.markdownDescription%
+-- List of `de-DE-x-simple-language` (Simple German) false-positive diagnostics to hide.
 ---@field de-DE-x-simple-language string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.el-GR.markdownDescription%
+-- List of `el-GR` (Greek) false-positive diagnostics to hide.
 ---@field el-GR string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en.markdownDescription%
+-- List of `en` (English) false-positive diagnostics to hide.
 ---@field en string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-AU.markdownDescription%
+-- List of `en-AU` (English (Australian)) false-positive diagnostics to hide.
 ---@field en-AU string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-CA.markdownDescription%
+-- List of `en-CA` (English (Canadian)) false-positive diagnostics to hide.
 ---@field en-CA string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-GB.markdownDescription%
+-- List of `en-GB` (English (GB)) false-positive diagnostics to hide.
 ---@field en-GB string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-NZ.markdownDescription%
+-- List of `en-NZ` (English (New Zealand)) false-positive diagnostics to hide.
 ---@field en-NZ string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-US.markdownDescription%
+-- List of `en-US` (English (US)) false-positive diagnostics to hide.
 ---@field en-US string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.en-ZA.markdownDescription%
+-- List of `en-ZA` (English (South African)) false-positive diagnostics to hide.
 ---@field en-ZA string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.eo.markdownDescription%
+-- List of `eo` (Esperanto) false-positive diagnostics to hide.
 ---@field eo string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.es.markdownDescription%
+-- List of `es` (Spanish) false-positive diagnostics to hide.
 ---@field es string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.es-AR.markdownDescription%
+-- List of `es-AR` (Spanish (voseo)) false-positive diagnostics to hide.
 ---@field es-AR string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.fa.markdownDescription%
+-- List of `fa` (Persian) false-positive diagnostics to hide.
 ---@field fa string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.fr.markdownDescription%
+-- List of `fr` (French) false-positive diagnostics to hide.
 ---@field fr string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ga-IE.markdownDescription%
+-- List of `ga-IE` (Irish) false-positive diagnostics to hide.
 ---@field ga-IE string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.gl-ES.markdownDescription%
+-- List of `gl-ES` (Galician) false-positive diagnostics to hide.
 ---@field gl-ES string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.it.markdownDescription%
+-- List of `it` (Italian) false-positive diagnostics to hide.
 ---@field it string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ja-JP.markdownDescription%
+-- List of `ja-JP` (Japanese) false-positive diagnostics to hide.
 ---@field ja-JP string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.km-KH.markdownDescription%
+-- List of `km-KH` (Khmer) false-positive diagnostics to hide.
 ---@field km-KH string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.nl.markdownDescription%
+-- List of `nl` (Dutch) false-positive diagnostics to hide.
 ---@field nl string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.nl-BE.markdownDescription%
+-- List of `nl-BE` (Dutch (Belgium)) false-positive diagnostics to hide.
 ---@field nl-BE string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pl-PL.markdownDescription%
+-- List of `pl-PL` (Polish) false-positive diagnostics to hide.
 ---@field pl-PL string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt.markdownDescription%
+-- List of `pt` (Portuguese) false-positive diagnostics to hide.
 ---@field pt string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-AO.markdownDescription%
+-- List of `pt-AO` (Portuguese (Angola preAO)) false-positive diagnostics to hide.
 ---@field pt-AO string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-BR.markdownDescription%
+-- List of `pt-BR` (Portuguese (Brazil)) false-positive diagnostics to hide.
 ---@field pt-BR string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-MZ.markdownDescription%
+-- List of `pt-MZ` (Portuguese (Moçambique preAO)) false-positive diagnostics to hide.
 ---@field pt-MZ string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.pt-PT.markdownDescription%
+-- List of `pt-PT` (Portuguese (Portugal)) false-positive diagnostics to hide.
 ---@field pt-PT string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ro-RO.markdownDescription%
+-- List of `ro-RO` (Romanian) false-positive diagnostics to hide.
 ---@field ro-RO string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ru-RU.markdownDescription%
+-- List of `ru-RU` (Russian) false-positive diagnostics to hide.
 ---@field ru-RU string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.sk-SK.markdownDescription%
+-- List of `sk-SK` (Slovak) false-positive diagnostics to hide.
 ---@field sk-SK string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.sl-SI.markdownDescription%
+-- List of `sl-SI` (Slovenian) false-positive diagnostics to hide.
 ---@field sl-SI string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.sv.markdownDescription%
+-- List of `sv` (Swedish) false-positive diagnostics to hide.
 ---@field sv string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.ta-IN.markdownDescription%
+-- List of `ta-IN` (Tamil) false-positive diagnostics to hide.
 ---@field ta-IN string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.tl-PH.markdownDescription%
+-- List of `tl-PH` (Tagalog) false-positive diagnostics to hide.
 ---@field tl-PH string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.uk-UA.markdownDescription%
+-- List of `uk-UA` (Ukrainian) false-positive diagnostics to hide.
 ---@field uk-UA string[]?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.zh-CN.markdownDescription%
+-- List of `zh-CN` (Chinese) false-positive diagnostics to hide.
 ---@field zh-CN string[]?
 
 ---@class lsp.ltex.Java
--- %ltex.i18n.configuration.ltex.java.initialHeapSize.markdownDescription%
+-- Initial size of the Java heap memory in megabytes (corresponds to Java's `-Xms` option, must be a positive integer). [More info...](https://valentjn.github.io/ltex/settings.html#ltexjavainitialheapsize)
 -- 
 -- ```lua
 -- default = 64
 -- ```
 ---@field initialHeapSize integer?
--- %ltex.i18n.configuration.ltex.java.maximumHeapSize.markdownDescription%
+-- Maximum size of the Java heap memory in megabytes (corresponds to Java's `-Xmx` option, must be a positive integer). [More info...](https://valentjn.github.io/ltex/settings.html#ltexjavamaximumheapsize)
 -- 
 -- ```lua
 -- default = 512
 -- ```
 ---@field maximumHeapSize integer?
--- %ltex.i18n.configuration.ltex.java.path.markdownDescription%
+-- If set to an empty string, LTeX uses a Java distribution that is bundled with ltex-ls. You can point this setting to an existing Java installation on your computer to use that installation instead. [More info...](https://valentjn.github.io/ltex/settings.html#ltexjavapath)
 -- 
 -- ```lua
 -- default = ""
@@ -13915,13 +13923,13 @@
 ---@field path string?
 
 ---@class lsp.ltex.LanguageToolOrg
--- %ltex.i18n.configuration.ltex.languageToolOrg.apiKey.markdownDescription%
+-- API key for Premium API access. Only relevant if `ltex.languageToolHttpServerUri` is set.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field apiKey string?
--- %ltex.i18n.configuration.ltex.languageToolOrg.username.markdownDescription%
+-- Username/email as used to log in at languagetool.org for Premium API access. Only relevant if `ltex.languageToolHttpServerUri` is set.
 -- 
 -- ```lua
 -- default = ""
@@ -13929,13 +13937,13 @@
 ---@field username string?
 
 ---@class lsp.ltex.Latex
--- %ltex.i18n.configuration.ltex.latex.commands.markdownDescription%
+-- List of LaTeX commands to be handled by the LaTeX parser, listed together with empty arguments (e.g., `"\ref{}"`, `"\documentclass[]{}"`). [More info...](https://valentjn.github.io/ltex/settings.html#ltexlatexcommands)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field commands table?
--- %ltex.i18n.configuration.ltex.latex.environments.markdownDescription%
+-- List of names of LaTeX environments to be handled by the LaTeX parser. [More info...](https://valentjn.github.io/ltex/settings.html#ltexlatexenvironments)
 -- 
 -- ```lua
 -- default = {}
@@ -13955,13 +13963,13 @@
 -- default = ""
 -- ```
 ---@field languageToolOrgUsername string?
--- %ltex.i18n.configuration.ltex.ltex-ls.logLevel.markdownDescription%
+-- Logging level (verbosity) of the ltex-ls server log, which is accessible via `View` › `Output` › `LTeX Language Server`. [More info...](https://valentjn.github.io/ltex/settings.html#ltexltex-lsloglevel)
 -- 
 -- ```lua
 -- default = "fine"
 -- ```
 ---@field logLevel "severe" | "warning" | "info" | "config" | "fine" | "finer" | "finest"?
--- %ltex.i18n.configuration.ltex.ltex-ls.path.markdownDescription%
+-- If set to an empty string, LTeX automatically downloads [ltex-ls from GitHub](https://github.com/valentjn/ltex-ls/releases), stores it in the folder of the extension, and uses it for the checking process. You can point this setting to an ltex-ls release you downloaded by yourself. [More info...](https://valentjn.github.io/ltex/settings.html#ltexltex-lspath)
 -- 
 -- ```lua
 -- default = ""
@@ -13969,7 +13977,7 @@
 ---@field path string?
 
 ---@class lsp.ltex.Markdown
--- %ltex.i18n.configuration.ltex.markdown.nodes.markdownDescription%
+-- List of Markdown node types to be handled by the Markdown parser. [More info...](https://valentjn.github.io/ltex/settings.html#ltexmarkdownnodes)
 -- 
 -- ```lua
 -- default = {}
@@ -13977,7 +13985,7 @@
 ---@field nodes table?
 
 ---@class lsp.ltex.Trace
--- %ltex.i18n.configuration.ltex.trace.server.markdownDescription%
+-- Debug setting to log the communication between language client and server. [More info...](https://valentjn.github.io/ltex/settings.html#ltextraceserver)
 -- 
 -- ```lua
 -- default = "off"
@@ -13987,21 +13995,21 @@
 ---@class lsp.ltex.Ltex
 ---@field additionalRules lsp.ltex.AdditionalRules?
 ---@field bibtex lsp.ltex.Bibtex?
--- %ltex.i18n.configuration.ltex.checkFrequency.markdownDescription%
+-- Controls when documents should be checked. [More info...](https://valentjn.github.io/ltex/settings.html#ltexcheckfrequency)
 -- 
 -- ```lua
 -- default = "edit"
 -- ```
 ---@field checkFrequency "edit" | "save" | "manual"?
--- %ltex.i18n.configuration.ltex.clearDiagnosticsWhenClosingFile.markdownDescription%
+-- If set to `true`, diagnostics of a file are cleared when the file is closed.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field clearDiagnosticsWhenClosingFile boolean?
--- %ltex.i18n.configuration.ltex.completionEnabled.markdownDescription%
+-- Whether completion is enabled (also known as auto-completion, suggestions, or IntelliSense). [More info...](https://valentjn.github.io/ltex/settings.html#ltexcompletionenabled)
 ---@field completionEnabled boolean?
--- %ltex.i18n.configuration.ltex.configurationTarget.markdownDescription%
+-- Controls which `settings.json` or external setting file ([see documentation](https://valentjn.github.io/ltex/vscode-ltex/setting-scopes-files.html#external-setting-files)) to update when using one of the quick fixes.
 -- 
 -- ```lua
 -- default = {
@@ -14011,50 +14019,50 @@
 -- }
 -- ```
 ---@field configurationTarget lsp.ltex.ConfigurationTarget?
--- %ltex.i18n.configuration.ltex.diagnosticSeverity.markdownDescription%
+-- Severity of the diagnostics corresponding to the grammar and spelling errors. [More info...](https://valentjn.github.io/ltex/settings.html#ltexdiagnosticseverity)
 -- 
 -- ```lua
 -- default = "information"
 -- ```
 ---@field diagnosticSeverity "error" | "warning" | "information" | "hint"|table?
--- %ltex.i18n.configuration.ltex.dictionary.markdownDescription%
+-- Lists of additional words that should not be counted as spelling errors. [More info...](https://valentjn.github.io/ltex/settings.html#ltexdictionary)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field dictionary lsp.ltex.Dictionary?
--- %ltex.i18n.configuration.ltex.disabledRules.markdownDescription%
+-- Lists of rules that should be disabled (if enabled by default by LanguageTool). [More info...](https://valentjn.github.io/ltex/settings.html#ltexdisabledrules)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field disabledRules lsp.ltex.DisabledRules?
--- %ltex.i18n.configuration.ltex.enabled.markdownDescription%
+-- Controls whether the extension is enabled. Allows disabling LanguageTool on specific workspaces or for specific code language modes (i.e., file types). [More info...](https://valentjn.github.io/ltex/settings.html#ltexenabled)
 -- 
 -- ```lua
 -- default = { "bibtex", "context", "context.tex", "html", "latex", "markdown", "org", "restructuredtext", "rsweave" }
 -- ```
 ---@field enabled boolean|string[]?
--- %ltex.i18n.configuration.ltex.enabledRules.markdownDescription%
+-- Lists of rules that should be enabled (if disabled by default by LanguageTool). [More info...](https://valentjn.github.io/ltex/settings.html#ltexenabledrules)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field enabledRules lsp.ltex.EnabledRules?
--- %ltex.i18n.configuration.ltex.hiddenFalsePositives.markdownDescription%
+-- Lists of false-positive diagnostics to hide (by hiding all diagnostics of a specific rule within a specific sentence). [More info...](https://valentjn.github.io/ltex/settings.html#ltexhiddenfalsepositives)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field hiddenFalsePositives lsp.ltex.HiddenFalsePositives?
 ---@field java lsp.ltex.Java?
--- %ltex.i18n.configuration.ltex.language.markdownDescription%
+-- The language (e.g., `"en-US"`) LanguageTool should check against. If possible, use a specific variant like `"en-US"` or `"de-DE"` instead of the generic language code like `"en"` or `"de"` to obtain spelling corrections (in addition to grammar corrections). [More info...](https://valentjn.github.io/ltex/settings.html#ltexlanguage)
 -- 
 -- ```lua
 -- default = "en-US"
 -- ```
 ---@field language "auto" | "ar" | "ast-ES" | "be-BY" | "br-FR" | "ca-ES" | "ca-ES-valencia" | "da-DK" | "de" | "de-AT" | "de-CH" | "de-DE" | "de-DE-x-simple-language" | "el-GR" | "en" | "en-AU" | "en-CA" | "en-GB" | "en-NZ" | "en-US" | "en-ZA" | "eo" | "es" | "es-AR" | "fa" | "fr" | "ga-IE" | "gl-ES" | "it" | "ja-JP" | "km-KH" | "nl" | "nl-BE" | "pl-PL" | "pt" | "pt-AO" | "pt-BR" | "pt-MZ" | "pt-PT" | "ro-RO" | "ru-RU" | "sk-SK" | "sl-SI" | "sv" | "ta-IN" | "tl-PH" | "uk-UA" | "zh-CN"?
--- %ltex.i18n.configuration.ltex.languageToolHttpServerUri.markdownDescription%
+-- If set to a non-empty string, LTeX will not use the bundled, built-in version of LanguageTool. Instead, LTeX will connect to an external [LanguageTool HTTP server](http://wiki.languagetool.org/http-server). Set this setting to the root URI of the server, and do not append `v2/check` or similar. [More info...](https://valentjn.github.io/ltex/settings.html#ltexlanguagetoolhttpserveruri)
 -- 
 -- ```lua
 -- default = ""
@@ -14064,13 +14072,13 @@
 ---@field latex lsp.ltex.Latex?
 ---@field ltex-ls lsp.ltex.Ltex-ls?
 ---@field markdown lsp.ltex.Markdown?
--- %ltex.i18n.configuration.ltex.sentenceCacheSize.markdownDescription%
+-- Size of the LanguageTool `ResultCache` in sentences (must be a positive integer). [More info...](https://valentjn.github.io/ltex/settings.html#ltexsentencecachesize)
 -- 
 -- ```lua
 -- default = 2000
 -- ```
 ---@field sentenceCacheSize integer?
--- %ltex.i18n.configuration.ltex.statusBarItem.markdownDescription%
+-- If set to `true`, an item about the status of LTeX is shown permanently in the status bar.
 ---@field statusBarItem boolean?
 ---@field trace lsp.ltex.Trace?
 
@@ -14078,19 +14086,19 @@
 ---@field ltex lsp.ltex.Ltex?
 
 ---@class lsp.lua_ls.AddonManager
--- %config.addonManager.enable%
+-- Whether the addon manager is enabled or not.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %config.addonManager.repositoryBranch%
+-- Specifies the git branch used by the addon manager.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field repositoryBranch string?
--- %config.addonManager.repositoryPath%
+-- Specifies the git path used by the addon manager.
 -- 
 -- ```lua
 -- default = ""
@@ -14098,983 +14106,1100 @@
 ---@field repositoryPath string?
 
 ---@class lsp.lua_ls.CodeLens
--- %config.codeLens.enable%
+-- Enable code lens.
 ---@field enable boolean?
 
 ---@class lsp.lua_ls.Completion
--- %config.completion.autoRequire%
+-- When the input looks like a file name, automatically `require` this file.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoRequire boolean?
--- %config.completion.callSnippet%
+-- Shows function call snippets.
 -- 
 -- ```lua
 -- default = "Disable"
 -- ```
 ---@field callSnippet "Disable" | "Both" | "Replace"?
--- %config.completion.displayContext%
+-- Previewing the relevant code snippet of the suggestion may help you understand the usage of the suggestion. The number set indicates the number of intercepted lines in the code fragment. If it is set to `0`, this feature can be disabled.
 -- 
 -- ```lua
 -- default = 0
 -- ```
 ---@field displayContext integer?
--- %config.completion.enable%
+-- Enable completion.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %config.completion.keywordSnippet%
+-- Shows keyword syntax snippets.
 -- 
 -- ```lua
 -- default = "Replace"
 -- ```
 ---@field keywordSnippet "Disable" | "Both" | "Replace"?
--- %config.completion.maxSuggestCount%
+-- Maximum number of fields to analyze for completions. When an object has more fields than this limit, completions will require more specific input to appear.
 -- 
 -- ```lua
 -- default = 100
 -- ```
 ---@field maxSuggestCount integer?
--- %config.completion.postfix%
+-- The symbol used to trigger the postfix suggestion.
 -- 
 -- ```lua
 -- default = "@"
 -- ```
 ---@field postfix string?
--- %config.completion.requireSeparator%
+-- The separator used when `require`.
 -- 
 -- ```lua
 -- default = "."
 -- ```
 ---@field requireSeparator string?
--- %config.completion.showParams%
+-- Display parameters in completion list. When the function has multiple definitions, they will be displayed separately.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field showParams boolean?
--- %config.completion.showWord%
+-- Show contextual words in suggestions.
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field showWord "Enable" | "Fallback" | "Disable"?
--- %config.completion.workspaceWord%
+-- Whether the displayed context word contains the content of other files in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field workspaceWord boolean?
 
--- %config.diagnostics.groupFileStatus%
+-- Modify the diagnostic needed file status in a group.
+-- 
+-- * Opened:  only diagnose opened files
+-- * Any:     diagnose all files
+-- * None:    disable this diagnostic
+-- 
+-- `Fallback` means that diagnostics in this group are controlled by `diagnostics.neededFileStatus` separately.
+-- Other settings will override individual settings without end of `!`.
+-- 
 ---@class lsp.lua_ls.GroupFileStatus
--- %config.diagnostics.ambiguity%
+-- * ambiguity-1
+-- * count-down-loop
+-- * different-requires
+-- * newfield-call
+-- * newline-call
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field ambiguity "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.await%
+-- * await-in-sync
+-- * not-yieldable
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field await "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.codestyle%
+-- * codestyle-check
+-- * name-style-check
+-- * spell-check
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field codestyle "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.conventions%
+-- * global-element
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field conventions "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.duplicate%
+-- * duplicate-index
+-- * duplicate-set-field
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field duplicate "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.global%
+-- * global-in-nil-env
+-- * lowercase-global
+-- * undefined-env-child
+-- * undefined-global
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field global "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.luadoc%
+-- * circle-doc-class
+-- * doc-field-no-class
+-- * duplicate-doc-alias
+-- * duplicate-doc-field
+-- * duplicate-doc-param
+-- * incomplete-signature-doc
+-- * missing-global-doc
+-- * missing-local-export-doc
+-- * undefined-doc-class
+-- * undefined-doc-name
+-- * undefined-doc-param
+-- * unknown-cast-variable
+-- * unknown-diag-code
+-- * unknown-operator
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field luadoc "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.redefined%
+-- * redefined-local
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field redefined "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.strict%
+-- * close-non-object
+-- * deprecated
+-- * discard-returns
+-- * invisible
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field strict "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.strong%
+-- * no-unknown
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field strong "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.type-check%
+-- * assign-type-mismatch
+-- * cast-local-type
+-- * cast-type-mismatch
+-- * inject-field
+-- * need-check-nil
+-- * param-type-mismatch
+-- * return-type-mismatch
+-- * undefined-field
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field type-check "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.unbalanced%
+-- * missing-fields
+-- * missing-parameter
+-- * missing-return
+-- * missing-return-value
+-- * redundant-parameter
+-- * redundant-return-value
+-- * redundant-value
+-- * unbalanced-assignments
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field unbalanced "Any" | "Opened" | "None" | "Fallback"?
--- %config.diagnostics.unused%
+-- * code-after-break
+-- * empty-block
+-- * redundant-return
+-- * trailing-space
+-- * unreachable-code
+-- * unused-function
+-- * unused-label
+-- * unused-local
+-- * unused-vararg
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field unused "Any" | "Opened" | "None" | "Fallback"?
 
--- %config.diagnostics.groupSeverity%
+-- Modify the diagnostic severity in a group.
+-- `Fallback` means that diagnostics in this group are controlled by `diagnostics.severity` separately.
+-- Other settings will override individual settings without end of `!`.
+-- 
 ---@class lsp.lua_ls.GroupSeverity
--- %config.diagnostics.ambiguity%
+-- * ambiguity-1
+-- * count-down-loop
+-- * different-requires
+-- * newfield-call
+-- * newline-call
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field ambiguity "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.await%
+-- * await-in-sync
+-- * not-yieldable
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field await "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.codestyle%
+-- * codestyle-check
+-- * name-style-check
+-- * spell-check
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field codestyle "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.conventions%
+-- * global-element
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field conventions "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.duplicate%
+-- * duplicate-index
+-- * duplicate-set-field
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field duplicate "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.global%
+-- * global-in-nil-env
+-- * lowercase-global
+-- * undefined-env-child
+-- * undefined-global
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field global "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.luadoc%
+-- * circle-doc-class
+-- * doc-field-no-class
+-- * duplicate-doc-alias
+-- * duplicate-doc-field
+-- * duplicate-doc-param
+-- * incomplete-signature-doc
+-- * missing-global-doc
+-- * missing-local-export-doc
+-- * undefined-doc-class
+-- * undefined-doc-name
+-- * undefined-doc-param
+-- * unknown-cast-variable
+-- * unknown-diag-code
+-- * unknown-operator
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field luadoc "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.redefined%
+-- * redefined-local
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field redefined "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.strict%
+-- * close-non-object
+-- * deprecated
+-- * discard-returns
+-- * invisible
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field strict "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.strong%
+-- * no-unknown
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field strong "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.type-check%
+-- * assign-type-mismatch
+-- * cast-local-type
+-- * cast-type-mismatch
+-- * inject-field
+-- * need-check-nil
+-- * param-type-mismatch
+-- * return-type-mismatch
+-- * undefined-field
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field type-check "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.unbalanced%
+-- * missing-fields
+-- * missing-parameter
+-- * missing-return
+-- * missing-return-value
+-- * redundant-parameter
+-- * redundant-return-value
+-- * redundant-value
+-- * unbalanced-assignments
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field unbalanced "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
--- %config.diagnostics.unused%
+-- * code-after-break
+-- * empty-block
+-- * redundant-return
+-- * trailing-space
+-- * unreachable-code
+-- * unused-function
+-- * unused-label
+-- * unused-local
+-- * unused-vararg
 -- 
 -- ```lua
 -- default = "Fallback"
 -- ```
 ---@field unused "Error" | "Warning" | "Information" | "Hint" | "Fallback"?
 
--- %config.diagnostics.neededFileStatus%
+-- * Opened:  only diagnose opened files
+-- * Any:     diagnose all files
+-- * None:    disable this diagnostic
+-- 
+-- End with `!` means override the group setting `diagnostics.groupFileStatus`.
+-- 
 ---@class lsp.lua_ls.NeededFileStatus
--- %config.diagnostics.ambiguity-1%
+-- Enable ambiguous operator precedence diagnostics. For example, the `num or 0 + 1` expression will be suggested `(num or 0) + 1` instead.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field ambiguity-1 "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.assign-type-mismatch%
+-- Enable diagnostics for assignments in which the value's type does not match the type of the assigned variable.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field assign-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.await-in-sync%
+-- Enable diagnostics for calls of asynchronous functions within a synchronous function.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field await-in-sync "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.cast-local-type%
+-- Enable diagnostics for casts of local variables where the target type does not match the defined type.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field cast-local-type "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.cast-type-mismatch%
+-- Enable diagnostics for casts where the target type does not match the initial type.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field cast-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.circle-doc-class%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field circle-doc-class "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.close-non-object%
+-- Enable diagnostics for attempts to close a variable with a non-object.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field close-non-object "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.code-after-break%
+-- Enable diagnostics for code placed after a break statement in a loop.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field code-after-break "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.codestyle-check%
+-- Enable diagnostics for incorrectly styled lines.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field codestyle-check "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.count-down-loop%
+-- Enable diagnostics for `for` loops which will never reach their max/limit because the loop is incrementing instead of decrementing.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field count-down-loop "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.deprecated%
+-- Enable diagnostics to highlight deprecated API.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field deprecated "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.different-requires%
+-- Enable diagnostics for files which are required by two different paths.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field different-requires "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.discard-returns%
+-- Enable diagnostics for calls of functions annotated with `---@nodiscard` where the return values are ignored.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field discard-returns "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.doc-field-no-class%
+-- Enable diagnostics to highlight a field annotation without a defining class annotation.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field doc-field-no-class "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.duplicate-doc-alias%
+-- Enable diagnostics for a duplicated alias annotation name.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field duplicate-doc-alias "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.duplicate-doc-field%
+-- Enable diagnostics for a duplicated field annotation name.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field duplicate-doc-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.duplicate-doc-param%
+-- Enable diagnostics for a duplicated param annotation name.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field duplicate-doc-param "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.duplicate-index%
+-- Enable duplicate table index diagnostics.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field duplicate-index "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.duplicate-set-field%
+-- Enable diagnostics for setting the same field in a class more than once.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field duplicate-set-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.empty-block%
+-- Enable empty code block diagnostics.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field empty-block "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.global-element%
+-- Enable diagnostics to warn about global elements.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field global-element "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.global-in-nil-env%
+-- Enable cannot use global variables （ `_ENV` is set to `nil`） diagnostics.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field global-in-nil-env "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.incomplete-signature-doc%
+-- Incomplete @param or @return annotations for functions.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field incomplete-signature-doc "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.inject-field%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field inject-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.invisible%
+-- Enable diagnostics for accesses to fields which are invisible.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field invisible "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.lowercase-global%
+-- Enable lowercase global variable definition diagnostics.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field lowercase-global "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.missing-fields%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field missing-fields "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.missing-global-doc%
+-- Missing annotations for globals! Global functions must have a comment and annotations for all parameters and return values.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field missing-global-doc "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.missing-local-export-doc%
+-- Missing annotations for exported locals! Exported local functions must have a comment and annotations for all parameters and return values.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field missing-local-export-doc "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.missing-parameter%
+-- Enable diagnostics for function calls where the number of arguments is less than the number of annotated function parameters.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field missing-parameter "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.missing-return%
+-- Enable diagnostics for functions with return annotations which have no return statement.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field missing-return "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.missing-return-value%
+-- Enable diagnostics for return statements without values although the containing function declares returns.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field missing-return-value "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.name-style-check%
+-- Enable diagnostics for name style.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field name-style-check "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.need-check-nil%
+-- Enable diagnostics for variable usages if `nil` or an optional (potentially `nil`) value was assigned to the variable before.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field need-check-nil "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.newfield-call%
+-- Enable newfield call diagnostics. It is raised when the parenthesis of a function call appear on the following line when defining a field in a table.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field newfield-call "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.newline-call%
+-- Enable newline call diagnostics. It's raised when a line starting with `(` is encountered, which is syntactically parsed as a function call on the previous line.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field newline-call "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.no-unknown%
+-- Enable diagnostics for cases in which the type cannot be inferred.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field no-unknown "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.not-yieldable%
+-- Enable diagnostics for calls to `coroutine.yield()` when it is not permitted.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field not-yieldable "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.param-type-mismatch%
+-- Enable diagnostics for function calls where the type of a provided parameter does not match the type of the annotated function definition.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field param-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.redefined-local%
+-- Enable redefined local variable diagnostics.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field redefined-local "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.redundant-parameter%
+-- Enable redundant function parameter diagnostics.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field redundant-parameter "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.redundant-return%
+-- Enable diagnostics for return statements which are not needed because the function would exit on its own.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field redundant-return "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.redundant-return-value%
+-- Enable diagnostics for return statements which return an extra value which is not specified by a return annotation.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field redundant-return-value "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.redundant-value%
+-- Enable the redundant values assigned diagnostics. It's raised during assignment operation, when the number of values is higher than the number of objects being assigned.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field redundant-value "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.return-type-mismatch%
+-- Enable diagnostics for return values whose type does not match the type declared in the corresponding return annotation.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field return-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.spell-check%
+-- Enable diagnostics for typos in strings.
 -- 
 -- ```lua
 -- default = "None"
 -- ```
 ---@field spell-check "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.trailing-space%
+-- Enable trailing space diagnostics.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field trailing-space "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unbalanced-assignments%
+-- Enable diagnostics on multiple assignments if not all variables obtain a value (e.g., `local x,y = 1`).
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field unbalanced-assignments "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.undefined-doc-class%
+-- Enable diagnostics for class annotations in which an undefined class is referenced.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field undefined-doc-class "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.undefined-doc-name%
+-- Enable diagnostics for type annotations referencing an undefined type or alias.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field undefined-doc-name "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.undefined-doc-param%
+-- Enable diagnostics for cases in which a parameter annotation is given without declaring the parameter in the function definition.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field undefined-doc-param "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.undefined-env-child%
+-- Enable undefined environment variable diagnostics. It's raised when `_ENV` table is set to a new literal table, but the used global variable is no longer present in the global environment.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field undefined-env-child "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.undefined-field%
+-- Enable diagnostics for cases in which an undefined field of a variable is read.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field undefined-field "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.undefined-global%
+-- Enable undefined global variable diagnostics.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field undefined-global "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unknown-cast-variable%
+-- Enable diagnostics for casts of undefined variables.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field unknown-cast-variable "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unknown-diag-code%
+-- Enable diagnostics in cases in which an unknown diagnostics code is entered.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field unknown-diag-code "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unknown-operator%
+-- Enable diagnostics for unknown operators.
 -- 
 -- ```lua
 -- default = "Any"
 -- ```
 ---@field unknown-operator "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unreachable-code%
+-- Enable diagnostics for unreachable code.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field unreachable-code "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unused-function%
+-- Enable unused function diagnostics.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field unused-function "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unused-label%
+-- Enable unused label diagnostics.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field unused-label "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unused-local%
+-- Enable unused local variable diagnostics.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field unused-local "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- %config.diagnostics.unused-vararg%
+-- Enable unused vararg diagnostics.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field unused-vararg "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
 
--- %config.diagnostics.severity%
+-- Modify the diagnostic severity.
+-- 
+-- End with `!` means override the group setting `diagnostics.groupSeverity`.
+-- 
 ---@class lsp.lua_ls.Severity
--- %config.diagnostics.ambiguity-1%
+-- Enable ambiguous operator precedence diagnostics. For example, the `num or 0 + 1` expression will be suggested `(num or 0) + 1` instead.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field ambiguity-1 "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.assign-type-mismatch%
+-- Enable diagnostics for assignments in which the value's type does not match the type of the assigned variable.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field assign-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.await-in-sync%
+-- Enable diagnostics for calls of asynchronous functions within a synchronous function.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field await-in-sync "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.cast-local-type%
+-- Enable diagnostics for casts of local variables where the target type does not match the defined type.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field cast-local-type "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.cast-type-mismatch%
+-- Enable diagnostics for casts where the target type does not match the initial type.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field cast-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.circle-doc-class%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field circle-doc-class "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.close-non-object%
+-- Enable diagnostics for attempts to close a variable with a non-object.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field close-non-object "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.code-after-break%
+-- Enable diagnostics for code placed after a break statement in a loop.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field code-after-break "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.codestyle-check%
+-- Enable diagnostics for incorrectly styled lines.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field codestyle-check "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.count-down-loop%
+-- Enable diagnostics for `for` loops which will never reach their max/limit because the loop is incrementing instead of decrementing.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field count-down-loop "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.deprecated%
+-- Enable diagnostics to highlight deprecated API.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field deprecated "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.different-requires%
+-- Enable diagnostics for files which are required by two different paths.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field different-requires "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.discard-returns%
+-- Enable diagnostics for calls of functions annotated with `---@nodiscard` where the return values are ignored.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field discard-returns "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.doc-field-no-class%
+-- Enable diagnostics to highlight a field annotation without a defining class annotation.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field doc-field-no-class "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.duplicate-doc-alias%
+-- Enable diagnostics for a duplicated alias annotation name.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field duplicate-doc-alias "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.duplicate-doc-field%
+-- Enable diagnostics for a duplicated field annotation name.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field duplicate-doc-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.duplicate-doc-param%
+-- Enable diagnostics for a duplicated param annotation name.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field duplicate-doc-param "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.duplicate-index%
+-- Enable duplicate table index diagnostics.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field duplicate-index "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.duplicate-set-field%
+-- Enable diagnostics for setting the same field in a class more than once.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field duplicate-set-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.empty-block%
+-- Enable empty code block diagnostics.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field empty-block "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.global-element%
+-- Enable diagnostics to warn about global elements.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field global-element "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.global-in-nil-env%
+-- Enable cannot use global variables （ `_ENV` is set to `nil`） diagnostics.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field global-in-nil-env "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.incomplete-signature-doc%
+-- Incomplete @param or @return annotations for functions.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field incomplete-signature-doc "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.inject-field%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field inject-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.invisible%
+-- Enable diagnostics for accesses to fields which are invisible.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field invisible "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.lowercase-global%
+-- Enable lowercase global variable definition diagnostics.
 -- 
 -- ```lua
 -- default = "Information"
 -- ```
 ---@field lowercase-global "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.missing-fields%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field missing-fields "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.missing-global-doc%
+-- Missing annotations for globals! Global functions must have a comment and annotations for all parameters and return values.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field missing-global-doc "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.missing-local-export-doc%
+-- Missing annotations for exported locals! Exported local functions must have a comment and annotations for all parameters and return values.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field missing-local-export-doc "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.missing-parameter%
+-- Enable diagnostics for function calls where the number of arguments is less than the number of annotated function parameters.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field missing-parameter "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.missing-return%
+-- Enable diagnostics for functions with return annotations which have no return statement.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field missing-return "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.missing-return-value%
+-- Enable diagnostics for return statements without values although the containing function declares returns.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field missing-return-value "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.name-style-check%
+-- Enable diagnostics for name style.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field name-style-check "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.need-check-nil%
+-- Enable diagnostics for variable usages if `nil` or an optional (potentially `nil`) value was assigned to the variable before.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field need-check-nil "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.newfield-call%
+-- Enable newfield call diagnostics. It is raised when the parenthesis of a function call appear on the following line when defining a field in a table.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field newfield-call "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.newline-call%
+-- Enable newline call diagnostics. It's raised when a line starting with `(` is encountered, which is syntactically parsed as a function call on the previous line.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field newline-call "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.no-unknown%
+-- Enable diagnostics for cases in which the type cannot be inferred.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field no-unknown "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.not-yieldable%
+-- Enable diagnostics for calls to `coroutine.yield()` when it is not permitted.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field not-yieldable "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.param-type-mismatch%
+-- Enable diagnostics for function calls where the type of a provided parameter does not match the type of the annotated function definition.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field param-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.redefined-local%
+-- Enable redefined local variable diagnostics.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field redefined-local "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.redundant-parameter%
+-- Enable redundant function parameter diagnostics.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field redundant-parameter "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.redundant-return%
+-- Enable diagnostics for return statements which are not needed because the function would exit on its own.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field redundant-return "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.redundant-return-value%
+-- Enable diagnostics for return statements which return an extra value which is not specified by a return annotation.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field redundant-return-value "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.redundant-value%
+-- Enable the redundant values assigned diagnostics. It's raised during assignment operation, when the number of values is higher than the number of objects being assigned.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field redundant-value "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.return-type-mismatch%
+-- Enable diagnostics for return values whose type does not match the type declared in the corresponding return annotation.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field return-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.spell-check%
+-- Enable diagnostics for typos in strings.
 -- 
 -- ```lua
 -- default = "Information"
 -- ```
 ---@field spell-check "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.trailing-space%
+-- Enable trailing space diagnostics.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field trailing-space "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unbalanced-assignments%
+-- Enable diagnostics on multiple assignments if not all variables obtain a value (e.g., `local x,y = 1`).
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field unbalanced-assignments "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.undefined-doc-class%
+-- Enable diagnostics for class annotations in which an undefined class is referenced.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field undefined-doc-class "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.undefined-doc-name%
+-- Enable diagnostics for type annotations referencing an undefined type or alias.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field undefined-doc-name "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.undefined-doc-param%
+-- Enable diagnostics for cases in which a parameter annotation is given without declaring the parameter in the function definition.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field undefined-doc-param "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.undefined-env-child%
+-- Enable undefined environment variable diagnostics. It's raised when `_ENV` table is set to a new literal table, but the used global variable is no longer present in the global environment.
 -- 
 -- ```lua
 -- default = "Information"
 -- ```
 ---@field undefined-env-child "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.undefined-field%
+-- Enable diagnostics for cases in which an undefined field of a variable is read.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field undefined-field "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.undefined-global%
+-- Enable undefined global variable diagnostics.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field undefined-global "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unknown-cast-variable%
+-- Enable diagnostics for casts of undefined variables.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field unknown-cast-variable "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unknown-diag-code%
+-- Enable diagnostics in cases in which an unknown diagnostics code is entered.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field unknown-diag-code "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unknown-operator%
+-- Enable diagnostics for unknown operators.
 -- 
 -- ```lua
 -- default = "Warning"
 -- ```
 ---@field unknown-operator "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unreachable-code%
+-- Enable diagnostics for unreachable code.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field unreachable-code "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unused-function%
+-- Enable unused function diagnostics.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field unused-function "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unused-label%
+-- Enable unused label diagnostics.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field unused-label "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unused-local%
+-- Enable unused local variable diagnostics.
 -- 
 -- ```lua
 -- default = "Hint"
 -- ```
 ---@field unused-local "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- %config.diagnostics.unused-vararg%
+-- Enable unused vararg diagnostics.
 -- 
 -- ```lua
 -- default = "Hint"
@@ -15082,75 +15207,94 @@
 ---@field unused-vararg "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
 
 ---@class lsp.lua_ls.Diagnostics
--- %config.diagnostics.disable%
+-- Disabled diagnostic (Use code in hover brackets).
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field disable string[]?
--- %config.diagnostics.enable%
+-- Enable diagnostics.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %config.diagnostics.enableScheme%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = { "file" }
 -- ```
 ---@field enableScheme string[]?
--- %config.diagnostics.globals%
+-- Defined global variables.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field globals string[]?
--- %config.diagnostics.globalsRegex%
+-- Find defined global variables using regex.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field globalsRegex string[]?
--- %config.diagnostics.groupFileStatus%
+-- Modify the diagnostic needed file status in a group.
+-- 
+-- * Opened:  only diagnose opened files
+-- * Any:     diagnose all files
+-- * None:    disable this diagnostic
+-- 
+-- `Fallback` means that diagnostics in this group are controlled by `diagnostics.neededFileStatus` separately.
+-- Other settings will override individual settings without end of `!`.
+-- 
 ---@field groupFileStatus lsp.lua_ls.GroupFileStatus?
--- %config.diagnostics.groupSeverity%
+-- Modify the diagnostic severity in a group.
+-- `Fallback` means that diagnostics in this group are controlled by `diagnostics.severity` separately.
+-- Other settings will override individual settings without end of `!`.
+-- 
 ---@field groupSeverity lsp.lua_ls.GroupSeverity?
--- %config.diagnostics.ignoredFiles%
+-- How to diagnose ignored files.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field ignoredFiles "Enable" | "Opened" | "Disable"?
--- %config.diagnostics.libraryFiles%
+-- How to diagnose files loaded via `Lua.workspace.library`.
 -- 
 -- ```lua
 -- default = "Opened"
 -- ```
 ---@field libraryFiles "Enable" | "Opened" | "Disable"?
--- %config.diagnostics.neededFileStatus%
+-- * Opened:  only diagnose opened files
+-- * Any:     diagnose all files
+-- * None:    disable this diagnostic
+-- 
+-- End with `!` means override the group setting `diagnostics.groupFileStatus`.
+-- 
 ---@field neededFileStatus lsp.lua_ls.NeededFileStatus?
--- %config.diagnostics.severity%
+-- Modify the diagnostic severity.
+-- 
+-- End with `!` means override the group setting `diagnostics.groupSeverity`.
+-- 
 ---@field severity lsp.lua_ls.Severity?
--- %config.diagnostics.unusedLocalExclude%
+-- Do not diagnose `unused-local` when the variable name matches the following pattern.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field unusedLocalExclude string[]?
--- %config.diagnostics.workspaceDelay%
+-- Latency (milliseconds) for workspace diagnostics.
 -- 
 -- ```lua
 -- default = 3000
 -- ```
 ---@field workspaceDelay integer?
--- %config.diagnostics.workspaceEvent%
+-- Set the time to trigger workspace diagnostics.
 -- 
 -- ```lua
 -- default = "OnSave"
 -- ```
 ---@field workspaceEvent "OnChange" | "OnSave" | "None"?
--- %config.diagnostics.workspaceRate%
+-- Workspace diagnostics run rate (%). Decreasing this value reduces CPU usage, but also reduces the speed of workspace diagnostics. The diagnosis of the file you are currently editing is always done at full speed and is not affected by this setting.
 -- 
 -- ```lua
 -- default = 100
@@ -15158,25 +15302,25 @@
 ---@field workspaceRate integer?
 
 ---@class lsp.lua_ls.Doc
--- %config.doc.packageName%
+-- Treat specific field names as package, e.g. `m_*` means `XXX.m_id` and `XXX.m_type` are package, witch can only be accessed in the file where the definition is located.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field packageName string[]?
--- %config.doc.privateName%
+-- Treat specific field names as private, e.g. `m_*` means `XXX.m_id` and `XXX.m_type` are private, witch can only be accessed in the class where the definition is located.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field privateName string[]?
--- %config.doc.protectedName%
+-- Treat specific field names as protected, e.g. `m_*` means `XXX.m_id` and `XXX.m_type` are protected, witch can only be accessed in the class where the definition is located and its subclasses.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field protectedName string[]?
--- %config.doc.regengine%
+-- The regular expression engine used for matching documentation scope names.
 -- 
 -- ```lua
 -- default = "glob"
@@ -15184,13 +15328,15 @@
 ---@field regengine "glob" | "lua"?
 
 ---@class lsp.lua_ls.Format
--- %config.format.defaultConfig%
+-- The default format configuration. Has a lower priority than `.editorconfig` file in the workspace.
+-- Read [formatter docs](https://github.com/CppCXY/EmmyLuaCodeStyle/tree/master/docs) to learn usage.
+-- 
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field defaultConfig table?
--- %config.format.enable%
+-- Enable code formatter.
 -- 
 -- ```lua
 -- default = true
@@ -15198,81 +15344,82 @@
 ---@field enable boolean?
 
 ---@class lsp.lua_ls.Hint
--- %config.hint.arrayIndex%
+-- Show hints of array index when constructing a table.
 -- 
 -- ```lua
 -- default = "Auto"
 -- ```
 ---@field arrayIndex "Enable" | "Auto" | "Disable"?
--- %config.hint.await%
+-- If the called function is marked `---@async`, prompt `await` at the call.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field await boolean?
--- %config.hint.awaitPropagate%
+-- Enable the propagation of `await`. When a function calls a function marked `---@async`,it will be automatically marked as `---@async`.
 ---@field awaitPropagate boolean?
--- %config.hint.enable%
+-- Enable inlay hint.
 ---@field enable boolean?
--- %config.hint.paramName%
+-- Show hints of parameter name at the function call.
 -- 
 -- ```lua
 -- default = "All"
 -- ```
 ---@field paramName "All" | "Literal" | "Disable"?
--- %config.hint.paramType%
+-- Show type hints at the parameter of the function.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field paramType boolean?
--- %config.hint.semicolon%
+-- If there is no semicolon at the end of the statement, display a virtual semicolon.
 -- 
 -- ```lua
 -- default = "SameLine"
 -- ```
 ---@field semicolon "All" | "SameLine" | "Disable"?
--- %config.hint.setType%
+-- Show hints of type at assignment operation.
 ---@field setType boolean?
 
 ---@class lsp.lua_ls.Hover
--- %config.hover.enable%
+-- Enable hover.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %config.hover.enumsLimit%
+-- When the value corresponds to multiple types, limit the number of types displaying.
 -- 
 -- ```lua
 -- default = 5
 -- ```
 ---@field enumsLimit integer?
--- %config.hover.expandAlias%
+-- Whether to expand the alias. For example, expands `---@alias myType boolean|number` appears as `boolean|number`, otherwise it appears as `myType'.
+-- 
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field expandAlias boolean?
--- %config.hover.previewFields%
+-- When hovering to view a table, limits the maximum number of previews for fields.
 -- 
 -- ```lua
 -- default = 10
 -- ```
 ---@field previewFields integer?
--- %config.hover.viewNumber%
+-- Hover to view numeric content (only if literal is not decimal).
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field viewNumber boolean?
--- %config.hover.viewString%
+-- Hover to view the contents of a string (only if the literal contains an escape character).
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field viewString boolean?
--- %config.hover.viewStringMax%
+-- The maximum length of a hover to view the contents of a string.
 -- 
 -- ```lua
 -- default = 1000
@@ -15280,13 +15427,13 @@
 ---@field viewStringMax integer?
 
 ---@class lsp.lua_ls.Language
--- %config.language.completeAnnotation%
+-- (VSCode only) Automatically insert "---@ " after a line break following a annotation.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field completeAnnotation boolean?
--- %config.language.fixIndent%
+-- (VSCode only) Fix incorrect auto-indentation, such as incorrect indentation when line breaks occur within a string containing the word "function".
 -- 
 -- ```lua
 -- default = true
@@ -15294,13 +15441,13 @@
 ---@field fixIndent boolean?
 
 ---@class lsp.lua_ls.Misc
--- %config.misc.executablePath%
+-- Specify the executable path in VSCode.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field executablePath string?
--- %config.misc.parameters%
+-- [Command line parameters](https://github.com/LuaLS/lua-telemetry-server/tree/master/method) when starting the language server in VSCode.
 -- 
 -- ```lua
 -- default = {}
@@ -15308,130 +15455,137 @@
 ---@field parameters string[]?
 
 ---@class lsp.lua_ls.NameStyle
--- %config.nameStyle.config%
+-- Set name style config.
+-- Read [formatter docs](https://github.com/CppCXY/EmmyLuaCodeStyle/tree/master/docs) to learn usage.
+-- 
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field config table?
 
--- %config.runtime.builtin%
+-- Adjust the enabled state of the built-in library. You can disable (or redefine) the non-existent library according to the actual runtime environment.
+-- 
+-- * `default`: Indicates that the library will be enabled or disabled according to the runtime version
+-- * `enable`: always enable
+-- * `disable`: always disable
+-- 
 ---@class lsp.lua_ls.Builtin
--- %config.runtime.builtin.basic%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field basic "default" | "enable" | "disable"?
--- %config.runtime.builtin.bit%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field bit "default" | "enable" | "disable"?
--- %config.runtime.builtin.bit32%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field bit32 "default" | "enable" | "disable"?
--- %config.runtime.builtin.builtin%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field builtin "default" | "enable" | "disable"?
--- %config.runtime.builtin.coroutine%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field coroutine "default" | "enable" | "disable"?
--- %config.runtime.builtin.debug%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field debug "default" | "enable" | "disable"?
--- %config.runtime.builtin.ffi%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field ffi "default" | "enable" | "disable"?
--- %config.runtime.builtin.io%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field io "default" | "enable" | "disable"?
--- %config.runtime.builtin.jit%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field jit "default" | "enable" | "disable"?
--- %config.runtime.builtin.jit.profile%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field jit.profile "default" | "enable" | "disable"?
--- %config.runtime.builtin.jit.util%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field jit.util "default" | "enable" | "disable"?
--- %config.runtime.builtin.math%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field math "default" | "enable" | "disable"?
--- %config.runtime.builtin.os%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field os "default" | "enable" | "disable"?
--- %config.runtime.builtin.package%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field package "default" | "enable" | "disable"?
--- %config.runtime.builtin.string%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field string "default" | "enable" | "disable"?
--- %config.runtime.builtin.string.buffer%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field string.buffer "default" | "enable" | "disable"?
--- %config.runtime.builtin.table%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field table "default" | "enable" | "disable"?
--- %config.runtime.builtin.table.clear%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field table.clear "default" | "enable" | "disable"?
--- %config.runtime.builtin.table.new%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field table.new "default" | "enable" | "disable"?
--- %config.runtime.builtin.utf8%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = "default"
@@ -15439,47 +15593,63 @@
 ---@field utf8 "default" | "enable" | "disable"?
 
 ---@class lsp.lua_ls.Runtime
--- %config.runtime.builtin%
+-- Adjust the enabled state of the built-in library. You can disable (or redefine) the non-existent library according to the actual runtime environment.
+-- 
+-- * `default`: Indicates that the library will be enabled or disabled according to the runtime version
+-- * `enable`: always enable
+-- * `disable`: always disable
+-- 
 ---@field builtin lsp.lua_ls.Builtin?
--- %config.runtime.fileEncoding%
+-- File encoding. The `ansi` option is only available under the `Windows` platform.
 -- 
 -- ```lua
 -- default = "utf8"
 -- ```
 ---@field fileEncoding "utf8" | "ansi" | "utf16le" | "utf16be"?
--- %config.runtime.meta%
+-- Format of the directory name of the meta files.
 -- 
 -- ```lua
 -- default = "${version} ${language} ${encoding}"
 -- ```
 ---@field meta string?
--- %config.runtime.nonstandardSymbol%
+-- Supports non-standard symbols. Make sure that your runtime environment supports these symbols.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field nonstandardSymbol string[]?
--- %config.runtime.path%
+-- When using `require`, how to find the file based on the input name.
+-- Setting this config to `?/init.lua` means that when you enter `require 'myfile'`, `${workspace}/myfile/init.lua` will be searched from the loaded files.
+-- if `runtime.pathStrict` is `false`, `${workspace}/**/myfile/init.lua` will also be searched.
+-- If you want to load files outside the workspace, you need to set `Lua.workspace.library` first.
+-- 
 -- 
 -- ```lua
 -- default = { "?.lua", "?/init.lua" }
 -- ```
 ---@field path string[]?
--- %config.runtime.pathStrict%
+-- When enabled, `runtime.path` will only search the first level of directories, see the description of `runtime.path`.
 ---@field pathStrict boolean?
--- %config.runtime.plugin%
+-- Plugin path. Please read [wiki](https://luals.github.io/wiki/plugins) to learn more.
 ---@field plugin string|any[]?
--- %config.runtime.pluginArgs%
+-- Additional arguments for the plugin.
 ---@field pluginArgs any[]|table?
--- %config.runtime.special%
+-- The custom global variables are regarded as some special built-in variables, and the language server will provide special support
+-- The following example shows that 'include' is treated as' require '.
+-- ```json
+-- "Lua.runtime.special" : {
+--     "include" : "require"
+-- }
+-- ```
+-- 
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field special table?
--- %config.runtime.unicodeName%
+-- Allows Unicode characters in name.
 ---@field unicodeName boolean?
--- %config.runtime.version%
+-- Lua runtime version.
 -- 
 -- ```lua
 -- default = "Lua 5.4"
@@ -15487,21 +15657,21 @@
 ---@field version "Lua 5.1" | "Lua 5.2" | "Lua 5.3" | "Lua 5.4" | "Lua 5.5" | "LuaJIT"?
 
 ---@class lsp.lua_ls.Semantic
--- %config.semantic.annotation%
+-- Semantic coloring of type annotations.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field annotation boolean?
--- %config.semantic.enable%
+-- Enable semantic color. You may need to set `editor.semanticHighlighting.enabled` to `true` to take effect.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %config.semantic.keyword%
+-- Semantic coloring of keywords/literals/operators. You only need to enable this feature if your editor cannot do syntax coloring.
 ---@field keyword boolean?
--- %config.semantic.variable%
+-- Semantic coloring of variables/fields/parameters.
 -- 
 -- ```lua
 -- default = true
@@ -15509,7 +15679,7 @@
 ---@field variable boolean?
 
 ---@class lsp.lua_ls.SignatureHelp
--- %config.signatureHelp.enable%
+-- Enable signature help.
 -- 
 -- ```lua
 -- default = true
@@ -15517,7 +15687,7 @@
 ---@field enable boolean?
 
 ---@class lsp.lua_ls.Spell
--- %config.spell.dict%
+-- Custom words for spell checking.
 -- 
 -- ```lua
 -- default = {}
@@ -15525,48 +15695,58 @@
 ---@field dict string[]?
 
 ---@class lsp.lua_ls.Type
--- %config.type.castNumberToInteger%
+-- Allowed to assign the `number` type to the `integer` type.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field castNumberToInteger boolean?
--- %config.type.checkTableShape%
+-- Strictly check the shape of the table.
+-- 
 ---@field checkTableShape boolean?
--- %config.type.inferParamType%
+-- When a parameter type is not annotated, it is inferred from the function's call sites.
+-- 
+-- When this setting is `false`, the type of the parameter is `any` when it is not annotated.
+-- 
 ---@field inferParamType boolean?
--- %config.type.inferTableSize%
+-- Maximum number of table fields analyzed during type inference.
 -- 
 -- ```lua
 -- default = 10
 -- ```
 ---@field inferTableSize integer?
--- %config.type.maxUnionVariants%
+-- TODO: Needs documentation
 -- 
 -- ```lua
 -- default = 0
 -- ```
 ---@field maxUnionVariants integer?
--- %config.type.weakNilCheck%
+-- When checking the type of union type, ignore the `nil` in it.
+-- 
+-- When this setting is `false`, the `number|nil` type cannot be assigned to the `number` type. It can be with `true`.
+-- 
 ---@field weakNilCheck boolean?
--- %config.type.weakUnionCheck%
+-- Once one subtype of a union type meets the condition, the union type also meets the condition.
+-- 
+-- When this setting is `false`, the `number|boolean` type cannot be assigned to the `number` type. It can be with `true`.
+-- 
 ---@field weakUnionCheck boolean?
 
--- %config.typeFormat.config%
+-- Configures the formatting behavior while typing Lua code.
 ---@class lsp.lua_ls.Config
--- %config.typeFormat.config.auto_complete_end%
+-- Controls if `end` is automatically completed at suitable positions.
 -- 
 -- ```lua
 -- default = "true"
 -- ```
 ---@field auto_complete_end string?
--- %config.typeFormat.config.auto_complete_table_sep%
+-- Controls if a separator is automatically appended at the end of a table declaration.
 -- 
 -- ```lua
 -- default = "true"
 -- ```
 ---@field auto_complete_table_sep string?
--- %config.typeFormat.config.format_line%
+-- Controls if a line is formatted at all.
 -- 
 -- ```lua
 -- default = "true"
@@ -15574,17 +15754,17 @@
 ---@field format_line string?
 
 ---@class lsp.lua_ls.TypeFormat
--- %config.typeFormat.config%
+-- Configures the formatting behavior while typing Lua code.
 ---@field config lsp.lua_ls.Config?
 
 ---@class lsp.lua_ls.Window
--- %config.window.progressBar%
+-- Show progress bar in status bar.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field progressBar boolean?
--- %config.window.statusBar%
+-- Show extension status in status bar.
 -- 
 -- ```lua
 -- default = true
@@ -15592,45 +15772,53 @@
 ---@field statusBar boolean?
 
 ---@class lsp.lua_ls.Workspace
--- %config.workspace.checkThirdParty%
+-- Automatic detection and adaptation of third-party libraries, currently supported libraries are:
+-- 
+-- * OpenResty
+-- * Cocos4.0
+-- * LÖVE
+-- * LÖVR
+-- * skynet
+-- * Jass
+-- 
 ---@field checkThirdParty string|boolean?
--- %config.workspace.ignoreDir%
+-- Ignored files and directories (Use `.gitignore` grammar).
 -- 
 -- ```lua
 -- default = { ".vscode" }
 -- ```
 ---@field ignoreDir string[]?
--- %config.workspace.ignoreSubmodules%
+-- Ignore submodules.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field ignoreSubmodules boolean?
--- %config.workspace.library%
+-- In addition to the current workspace, which directories will load files from. The files in these directories will be treated as externally provided code libraries, and some features (such as renaming fields) will not modify these files.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field library string[]?
--- %config.workspace.maxPreload%
+-- Max preloaded files.
 -- 
 -- ```lua
 -- default = 5000
 -- ```
 ---@field maxPreload integer?
--- %config.workspace.preloadFileSize%
+-- Skip files larger than this value (KB) when preloading.
 -- 
 -- ```lua
 -- default = 500
 -- ```
 ---@field preloadFileSize integer?
--- %config.workspace.useGitIgnore%
+-- Ignore files list in `.gitignore` .
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field useGitIgnore boolean?
--- %config.workspace.userThirdParty%
+-- Add private third-party library configuration file paths here, please refer to the built-in [configuration file path](https://github.com/LuaLS/lua-language-server/tree/master/meta/3rd)
 -- 
 -- ```lua
 -- default = {}
@@ -15639,7 +15827,7 @@
 
 ---@class lsp.lua_ls.Lua
 ---@field addonManager lsp.lua_ls.AddonManager?
--- %config.addonRepositoryPath%
+-- Specifies the addon repository path (not related to the addon manager).
 -- 
 -- ```lua
 -- default = ""
@@ -15649,7 +15837,7 @@
 ---@field completion lsp.lua_ls.Completion?
 ---@field diagnostics lsp.lua_ls.Diagnostics?
 ---@field doc lsp.lua_ls.Doc?
--- %config.docScriptPath%
+-- The regular expression engine used for matching documentation scope names.
 -- 
 -- ```lua
 -- default = ""
@@ -16217,119 +16405,127 @@
 ---@field nixd lsp.nixd.Nixd?
 
 ---@class lsp.omnisharp.ExpressionEvaluationOptions
--- %generateOptionsSchema.expressionEvaluationOptions.allowFastEvaluate.description%
+-- When true (the default state), the debugger will attempt faster evaluation by simulating execution of simple properties and methods.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field allowFastEvaluate boolean?
--- %generateOptionsSchema.expressionEvaluationOptions.allowImplicitFuncEval.description%
+-- When true (the default state), the debugger will automatically call property `get` methods and other implicit function calls.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field allowImplicitFuncEval boolean?
--- %generateOptionsSchema.expressionEvaluationOptions.allowToString.markdownDescription%
+-- When true (the default state), the debugger will automatically call `ToString` to format objects. This option has no effect if `allowImplicitFuncEval` is `false`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field allowToString boolean?
--- %generateOptionsSchema.expressionEvaluationOptions.showRawValues.description%
+-- When true, the debugger will show raw structure of objects in variables windows.
 ---@field showRawValues boolean?
 
 ---@class lsp.omnisharp.DiagnosticsLog
--- %generateOptionsSchema.logging.diagnosticsLog.debugEngineAPITracing.markdownDescription%
+-- Controls if API calls to Microsoft.VisualStudio.Debugger.Engine/vsdebugeng.h should be printed to the output window. This option defaults to `none`.
 -- 
 -- ```lua
 -- default = "none"
 -- ```
 ---@field debugEngineAPITracing "none" | "error" | "all"?
--- %generateOptionsSchema.logging.diagnosticsLog.debugRuntimeEventTracing.markdownDescription%
+-- Flag to determine whether verbose tracing for events raised by the underlying runtime should be enabled. This option defaults to `false`.
 ---@field debugRuntimeEventTracing boolean?
--- %generateOptionsSchema.logging.diagnosticsLog.dispatcherMessages.markdownDescription%
+-- Controls which messages are printed to the output window from the debugger's dispatcher. If not specified, this will default to `none` unless one of the verbose log settings are enabled (`debugEngineAPITracing`, `debugRuntimeEventTracing`, `expressionEvaluationTracing` or `startDebuggingTracing`), in which case the default changes to `normal`.
 -- 
 -- ```lua
 -- default = "none"
 -- ```
 ---@field dispatcherMessages "none" | "error" | "important" | "normal"?
--- %generateOptionsSchema.logging.diagnosticsLog.expressionEvaluationTracing.markdownDescription%
+-- Flag to determine whether verbose tracing for expression evaluation should be enabled. This option defaults to `false`.
 ---@field expressionEvaluationTracing boolean?
--- %generateOptionsSchema.logging.diagnosticsLog.protocolMessages.markdownDescription%
+-- Flag to determine whether DAP protocol messages exchanged between the C# debugger and the UI should be logged to the output window. This option defaults to `false`.
 ---@field protocolMessages boolean?
--- %generateOptionsSchema.logging.diagnosticsLog.startDebuggingTracing.markdownDescription%
+-- Flag to determine whether verbose tracing for start debugging should be enabled. This option defaults to `false`.
 ---@field startDebuggingTracing boolean?
 
 ---@class lsp.omnisharp.Logging
--- %generateOptionsSchema.logging.browserStdOut.markdownDescription%
+-- Flag to determine if stdout text from the launching the web browser should be logged to the output window. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field browserStdOut boolean?
--- %generateOptionsSchema.logging.consoleUsageMessage.description%
+-- Controls if a message is logged when the target process calls a 'Console.Read*' API and stdin is redirected to the console.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field consoleUsageMessage boolean?
 ---@field diagnosticsLog lsp.omnisharp.DiagnosticsLog?
--- %generateOptionsSchema.logging.elapsedTiming.markdownDescription%
+-- If true, protocol message logging will include `adapterElapsedTime` and `engineElapsedTime` properties to indicate the amount of time, in microseconds, that a request took. This option defaults to `false`.
 ---@field elapsedTiming boolean?
 ---@field engineLogging boolean?
--- %generateOptionsSchema.logging.exceptions.markdownDescription%
+-- Flag to determine whether exception messages should be logged to the output window. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field exceptions boolean?
--- %generateOptionsSchema.logging.moduleLoad.markdownDescription%
+-- Flag to determine whether module load events should be logged to the output window. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field moduleLoad boolean?
--- %generateOptionsSchema.logging.processExit.markdownDescription%
+-- Controls if a message is logged when the target process exits, or debugging is stopped. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field processExit boolean?
--- %generateOptionsSchema.logging.programOutput.markdownDescription%
+-- Flag to determine whether program output should be logged to the output window when not using an external console. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field programOutput boolean?
--- %generateOptionsSchema.logging.threadExit.markdownDescription%
+-- Controls if a message is logged when a thread in the target process exits. This option defaults to `false`.
 ---@field threadExit boolean?
 
 ---@class lsp.omnisharp.ModuleFilter
--- %generateOptionsSchema.symbolOptions.moduleFilter.excludedModules.description%
+-- Array of modules that the debugger should NOT load symbols for. Wildcards (example: MyCompany.*.dll) are supported.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadAllButExcluded'.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field excludedModules string[]?
--- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsNextToModules.description%
+-- If true, for any module NOT in the 'includedModules' array, the debugger will still check next to the module itself and the launching executable, but it will not check paths on the symbol search list. This option defaults to 'true'.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadOnlyIncluded'.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeSymbolsNextToModules boolean?
--- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsOnDemand.description%
+-- If true, for any module NOT in the 'includedModules' array, the debugger will attempt to download symbols when it detects symbols are needed, such as when trying to step into the module. This option defaults to 'true'.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadOnlyIncluded'.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeSymbolsOnDemand boolean?
--- %generateOptionsSchema.symbolOptions.moduleFilter.includedModules.description%
+-- Array of modules that the debugger should load symbols for. Wildcards (example: MyCompany.*.dll) are supported.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadOnlyIncluded'.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field includedModules string[]?
--- %generateOptionsSchema.symbolOptions.moduleFilter.mode.description%
+-- Controls which of the two basic operating modes the module filter operates in.
 -- 
 -- ```lua
 -- default = "loadAllButExcluded"
@@ -16337,18 +16533,18 @@
 ---@field mode "loadAllButExcluded" | "loadOnlyIncluded"?
 
 ---@class lsp.omnisharp.SymbolOptions
--- %generateOptionsSchema.symbolOptions.cachePath.description%
+-- Directory where symbols downloaded from symbol servers should be cached. If unspecified, on Windows the debugger will default to %TEMP%\SymbolCache, and on Linux and macOS the debugger will default to ~/.dotnet/symbolcache.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field cachePath string?
 ---@field moduleFilter lsp.omnisharp.ModuleFilter?
--- %generateOptionsSchema.symbolOptions.searchMicrosoftSymbolServer.description%
+-- If 'true' the Microsoft Symbol server (https​://msdl.microsoft.com​/download/symbols) is added to the symbols search path. If unspecified, this option defaults to 'false'.
 ---@field searchMicrosoftSymbolServer boolean?
--- %generateOptionsSchema.symbolOptions.searchNuGetOrgSymbolServer.description%
+-- If 'true' the NuGet.org symbol server (https​://symbols.nuget.org​/download/symbols) is added to the symbols search path. If unspecified, this option defaults to 'false'.
 ---@field searchNuGetOrgSymbolServer boolean?
--- %generateOptionsSchema.symbolOptions.searchPaths.description%
+-- Array of symbol server URLs (example: http​://MyExampleSymbolServer) or directories (example: /build/symbols) to search for .pdb files. These directories will be searched in addition to the default locations -- next to the module and the path where the pdb was originally dropped to.
 -- 
 -- ```lua
 -- default = {}
@@ -16356,46 +16552,52 @@
 ---@field searchPaths string[]?
 
 ---@class lsp.omnisharp.Debug
--- %generateOptionsSchema.console.settingsDescription%
+-- **Note:** _This option is only used for console projects launched with the `dotnet` debug configuration type_.
+-- 
+-- Indicates which console the target program should be launched into. See https://aka.ms/VSCode-CS-LaunchJson-Console for more information.
 -- 
 -- ```lua
 -- default = "internalConsole"
 -- ```
 ---@field console "internalConsole" | "integratedTerminal" | "externalTerminal"?
--- %generateOptionsSchema.enableStepFiltering.markdownDescription%
+-- Flag to enable stepping over Properties and Operators. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enableStepFiltering boolean?
 ---@field expressionEvaluationOptions lsp.omnisharp.ExpressionEvaluationOptions?
--- %generateOptionsSchema.justMyCode.markdownDescription%
+-- When enabled (the default), the debugger only displays and steps into user code ("My Code"), ignoring system code and other code that is optimized or that does not have debugging symbols. [More information](https://aka.ms/VSCode-CS-LaunchJson-JustMyCode)
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field justMyCode boolean?
 ---@field logging lsp.omnisharp.Logging?
--- %generateOptionsSchema.requireExactSource.markdownDescription%
+-- Flag to require current source code to match the pdb. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field requireExactSource boolean?
--- %generateOptionsSchema.sourceFileMap.markdownDescription%
+-- Maps build-time paths to local source locations. All instances of build-time path will be replaced with the local source path.
+-- 
+-- Example:
+-- 
+-- `{"<build-path>":"<local-source-path>"}`
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field sourceFileMap table?
--- %generateOptionsSchema.stopAtEntry.markdownDescription%
+-- If true, the debugger should stop at the entry point of the target. This option defaults to `false`.
 ---@field stopAtEntry boolean?
--- %generateOptionsSchema.suppressJITOptimizations.markdownDescription%
+-- If true, when an optimized module (.dll compiled in the Release configuration) loads in the target process, the debugger will ask the Just-In-Time compiler to generate code with optimizations disabled. [More information](https://aka.ms/VSCode-CS-LaunchJson-SuppressJITOptimizations)
 ---@field suppressJITOptimizations boolean?
 ---@field symbolOptions lsp.omnisharp.SymbolOptions?
 
 ---@class lsp.omnisharp.Format
--- %configuration.omnisharp.csharp.format.enable%
+-- Enable/disable default C# formatter (requires restart).
 -- 
 -- ```lua
 -- default = true
@@ -16403,17 +16605,17 @@
 ---@field enable boolean?
 
 ---@class lsp.omnisharp.InlayHints
--- %configuration.csharp.inlayHints.enableInlayHintsForImplicitObjectCreation%
+-- Show hints for implicit object creation
 ---@field enableInlayHintsForImplicitObjectCreation boolean?
--- %configuration.csharp.inlayHints.enableInlayHintsForImplicitVariableTypes%
+-- Show hints for variables with inferred types
 ---@field enableInlayHintsForImplicitVariableTypes boolean?
--- %configuration.csharp.inlayHints.enableInlayHintsForLambdaParameterTypes%
+-- Show hints for lambda parameter types
 ---@field enableInlayHintsForLambdaParameterTypes boolean?
--- %configuration.csharp.inlayHints.enableInlayHintsForTypes%
+-- Display inline type hints
 ---@field enableInlayHintsForTypes boolean?
 
 ---@class lsp.omnisharp.ReferencesCodeLens
--- %configuration.omnisharp.csharp.referencesCodeLens.filteredSymbols%
+-- Array of custom symbol names for which CodeLens should be disabled.
 -- 
 -- ```lua
 -- default = {}
@@ -16421,7 +16623,7 @@
 ---@field filteredSymbols string[]?
 
 ---@class lsp.omnisharp.SemanticHighlighting
--- %configuration.omnisharp.csharp.semanticHighlighting.enabled%
+-- Enable/disable Semantic Highlighting for C# files (Razor files currently unsupported). Defaults to false. Close open files for changes to take effect.
 -- 
 -- ```lua
 -- default = true
@@ -16432,7 +16634,7 @@
 ---@field debug lsp.omnisharp.Debug?
 ---@field format lsp.omnisharp.Format?
 ---@field inlayHints lsp.omnisharp.InlayHints?
--- %configuration.omnisharp.csharp.maxProjectFileCountForDiagnosticAnalysis%
+-- Specifies the maximum number of files for which diagnostics are reported for the whole workspace. If this limit is exceeded, diagnostics will be shown for currently opened files only. Specify 0 or less to disable the limit completely.
 -- 
 -- ```lua
 -- default = 1000
@@ -16440,29 +16642,29 @@
 ---@field maxProjectFileCountForDiagnosticAnalysis number?
 ---@field referencesCodeLens lsp.omnisharp.ReferencesCodeLens?
 ---@field semanticHighlighting lsp.omnisharp.SemanticHighlighting?
--- %configuration.omnisharp.csharp.showOmnisharpLogOnError%
+-- Shows the OmniSharp log in the Output pane when OmniSharp reports an error.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field showOmnisharpLogOnError boolean?
--- %configuration.omnisharp.csharp.suppressBuildAssetsNotification%
+-- Suppress the notification window to add missing assets to build or debug the application.
 ---@field suppressBuildAssetsNotification boolean?
--- %configuration.omnisharp.csharp.suppressDotnetInstallWarning%
+-- Suppress the warning that the .NET Core SDK is not on the path.
 ---@field suppressDotnetInstallWarning boolean?
--- %configuration.omnisharp.csharp.suppressDotnetRestoreNotification%
+-- Suppress the notification window to perform a 'dotnet restore' when dependencies can't be resolved.
 ---@field suppressDotnetRestoreNotification boolean?
--- %configuration.omnisharp.csharp.suppressHiddenDiagnostics%
+-- Suppress 'hidden' diagnostics (such as 'unnecessary using directives') from appearing in the editor or the Problems pane.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field suppressHiddenDiagnostics boolean?
--- %configuration.omnisharp.csharp.suppressProjectJsonWarning%
+-- Suppress the warning that project.json is no longer a supported project format for .NET Core applications
 ---@field suppressProjectJsonWarning boolean?
 
 ---@class lsp.omnisharp.AutoInsert
--- %configuration.dotnet.autoInsert.enableAutoInsert%
+-- Enable automatic adjustments of code constructs on typing, including documentation comment insertion, brace formatting adjustments, and raw string literal support.
 -- 
 -- ```lua
 -- default = true
@@ -16470,13 +16672,13 @@
 ---@field enableAutoInsert boolean?
 
 ---@class lsp.omnisharp.BackgroundAnalysis
--- %configuration.dotnet.backgroundAnalysis.analyzerDiagnosticsScope%
+-- Run background code analysis for: (Previously `omnisharp.enableRoslynAnalyzers`)
 -- 
 -- ```lua
 -- default = "openFiles"
 -- ```
 ---@field analyzerDiagnosticsScope "openFiles" | "fullSolution" | "none"?
--- %configuration.dotnet.backgroundAnalysis.compilerDiagnosticsScope%
+-- Show compiler errors and warnings for:
 -- 
 -- ```lua
 -- default = "openFiles"
@@ -16484,13 +16686,13 @@
 ---@field compilerDiagnosticsScope "openFiles" | "fullSolution" | "none"?
 
 ---@class lsp.omnisharp.CodeLens
--- %configuration.dotnet.codeLens.enableReferencesCodeLens%
+-- Specifies whether the references CodeLens should be shown. (Previously `csharp.referencesCodeLens.enabled`)
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enableReferencesCodeLens boolean?
--- %configuration.dotnet.codeLens.enableTestsCodeLens%
+-- Specifies whether the run and debug test CodeLens should be shown. (Previously `csharp.testsCodeLens.enabled`)
 -- 
 -- ```lua
 -- default = true
@@ -16498,25 +16700,25 @@
 ---@field enableTestsCodeLens boolean?
 
 ---@class lsp.omnisharp.Completion
--- %configuration.dotnet.completion.provideRegexCompletions%
+-- Show regular expressions in completion list.
 -- 
 -- ```lua
 -- default = "true"
 -- ```
 ---@field provideRegexCompletions boolean?
--- %configuration.dotnet.completion.showCompletionItemsFromUnimportedNamespaces%
+-- Enables support for showing unimported types and unimported extension methods in completion lists. When committed, the appropriate using directive will be added at the top of the current file. (Previously `omnisharp.enableImportCompletion`)
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field showCompletionItemsFromUnimportedNamespaces boolean?
--- %configuration.dotnet.completion.showNameCompletionSuggestions%
+-- Perform automatic object name completion for the members that you have recently selected.
 -- 
 -- ```lua
 -- default = "true"
 -- ```
 ---@field showNameCompletionSuggestions boolean?
--- %configuration.dotnet.completion.triggerCompletionInArgumentLists%
+-- Automatically show completion list in argument lists
 -- 
 -- ```lua
 -- default = "true"
@@ -16524,7 +16726,7 @@
 ---@field triggerCompletionInArgumentLists boolean?
 
 ---@class lsp.omnisharp.Diagnostics
--- %configuration.dotnet.diagnostics.reportInformationAsHint%
+-- Enable this setting to reduce visual distractions in your editor. Information problems will be reported as hints and only be visible when the code actions popup is open. (Requires extension restart)
 -- 
 -- ```lua
 -- default = true
@@ -16532,17 +16734,17 @@
 ---@field reportInformationAsHint boolean?
 
 ---@class lsp.omnisharp.Formatting
--- %configuration.dotnet.formatting.organizeImportsOnFormat%
+-- Specifies whether 'using' directives should be grouped and sorted during document formatting. (Previously `omnisharp.organizeImportsOnFormat`)
 ---@field organizeImportsOnFormat boolean?
 
 ---@class lsp.omnisharp.Highlighting
--- %configuration.dotnet.highlighting.highlightRelatedJsonComponents%
+-- Highlight related JSON components under cursor.
 -- 
 -- ```lua
 -- default = "true"
 -- ```
 ---@field highlightRelatedJsonComponents boolean?
--- %configuration.dotnet.highlighting.highlightRelatedRegexComponents%
+-- Highlight related regular expression components under cursor.
 -- 
 -- ```lua
 -- default = "true"
@@ -16550,31 +16752,31 @@
 ---@field highlightRelatedRegexComponents boolean?
 
 ---@class lsp.omnisharp.InlayHints
--- %configuration.csharp.inlayHints.enableInlayHintsForIndexerParameters%
+-- Show hints for indexers
 ---@field enableInlayHintsForIndexerParameters boolean?
--- %configuration.dotnet.inlayHints.enableInlayHintsForLiteralParameters%
+-- Show hints for literals
 ---@field enableInlayHintsForLiteralParameters boolean?
--- %configuration.dotnet.inlayHints.enableInlayHintsForObjectCreationParameters%
+-- Show hints for 'new' expressions
 ---@field enableInlayHintsForObjectCreationParameters boolean?
--- %configuration.dotnet.inlayHints.enableInlayHintsForOtherParameters%
+-- Show hints for everything else
 ---@field enableInlayHintsForOtherParameters boolean?
--- %configuration.dotnet.inlayHints.enableInlayHintsForParameters%
+-- Display inline parameter name hints
 ---@field enableInlayHintsForParameters boolean?
--- %configuration.dotnet.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix%
+-- Suppress hints when parameter names differ only by suffix
 ---@field suppressInlayHintsForParametersThatDifferOnlyBySuffix boolean?
--- %configuration.dotnet.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName%
+-- Suppress hints when argument matches parameter name
 ---@field suppressInlayHintsForParametersThatMatchArgumentName boolean?
--- %configuration.dotnet.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent%
+-- Suppress hints when parameter name matches the method's intent
 ---@field suppressInlayHintsForParametersThatMatchMethodIntent boolean?
 
 ---@class lsp.omnisharp.Navigation
--- %configuration.dotnet.navigation.navigateToDecompiledSources%
+-- Enable navigation to decomplied sources.
 -- 
 -- ```lua
 -- default = "true"
 -- ```
 ---@field navigateToDecompiledSources boolean?
--- %configuration.dotnet.navigation.navigateToSourceLinkAndEmbeddedSources%
+-- Enable navigation to source link and embedded sources.
 -- 
 -- ```lua
 -- default = "true"
@@ -16582,21 +16784,21 @@
 ---@field navigateToSourceLinkAndEmbeddedSources boolean?
 
 ---@class lsp.omnisharp.Projects
--- %configuration.dotnet.projects.binaryLogPath%
+-- Sets a path where MSBuild binary logs are written to when loading projects, to help diagnose loading errors.
 ---@field binaryLogPath string?
--- %configuration.dotnet.projects.enableAutomaticRestore%
+-- Enables automatic NuGet restore if the extension detects assets are missing.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enableAutomaticRestore boolean?
--- %configuration.dotnet.projects.enableFileBasedPrograms%
+-- Enables the "file-based programs" (dotnet run app.cs) experience.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enableFileBasedPrograms boolean?
--- %configuration.dotnet.projects.enableFileBasedProgramsWhenAmbiguous%
+-- Enables the "file-based programs" (dotnet run app.cs) experience in files where the editor is unable to determine with certainty whether the file is a file-based program. Only respected when `dotnet.projects.enableFileBasedPrograms` is `true`.
 -- 
 -- ```lua
 -- default = true
@@ -16604,76 +16806,76 @@
 ---@field enableFileBasedProgramsWhenAmbiguous boolean?
 
 ---@class lsp.omnisharp.QuickInfo
--- %configuration.dotnet.quickInfo.showRemarksInQuickInfo%
+-- Show remarks information when display symbol.
 -- 
 -- ```lua
 -- default = "true"
 -- ```
 ---@field showRemarksInQuickInfo boolean?
 
--- %configuration.dotnet.server.componentPaths%
+-- Allows overriding the folder path for built in components of the language server (for example, override the .roslynDevKit path in the extension directory to use locally built components). (Requires extension restart)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.omnisharp.ComponentPaths
--- %configuration.dotnet.server.componentPaths.razorExtension%
+-- Overrides the folder path for the Razor extension component of the language server
 ---@field razorExtension string?
--- %configuration.dotnet.server.componentPaths.roslynCopilot%
+-- Overrides the folder path for the .roslynCopilot component of the language server
 ---@field roslynCopilot string?
--- %configuration.dotnet.server.componentPaths.roslynDevKit%
+-- Overrides the folder path for the .roslynDevKit component of the language server
 ---@field roslynDevKit string?
--- %configuration.dotnet.server.componentPaths.xamlTools%
+-- Overrides the folder path for the .xamlTools component of the language server
 ---@field xamlTools string?
 
 ---@class lsp.omnisharp.Server
--- %configuration.dotnet.server.componentPaths%
+-- Allows overriding the folder path for built in components of the language server (for example, override the .roslynDevKit path in the extension directory to use locally built components). (Requires extension restart)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field componentPaths lsp.omnisharp.ComponentPaths?
--- %configuration.dotnet.server.crashDumpPath%
+-- Sets a folder path where crash dumps are written to if the language server crashes.  Must be writeable by the user. (Requires extension restart)
 ---@field crashDumpPath string?
--- %configuration.dotnet.server.environmentVariables%
+-- Custom environment variables to pass to the language server process. Specify as key-value pairs, for example: { "DOTNET_GCName": "libclrgc.dylib" }. (Requires extension restart)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field environmentVariables table?
--- %configuration.dotnet.server.extensionPaths%
+-- Override for path to language server --extension arguments
 ---@field extensionPaths string[]?
--- %configuration.dotnet.server.path%
+-- Specifies the absolute path to the server (LSP or O#) executable. When left empty the version pinned to the C# Extension is used. (Previously `omnisharp.path`) (Requires extension restart)
 ---@field path string?
--- %configuration.dotnet.server.sourceGeneratorExecution%
+-- Controls when source generators are executed. (Requires extension restart)
 -- 
 -- ```lua
 -- default = "Balanced"
 -- ```
 ---@field sourceGeneratorExecution "Balanced" | "Automatic"?
--- %configuration.dotnet.server.startTimeout%
+-- Specifies a timeout (in ms) for the client to successfully start and connect to the language server.
 -- 
 -- ```lua
 -- default = 120000
 -- ```
 ---@field startTimeout number?
--- %configuration.dotnet.server.suppressLspErrorToasts%
+-- Suppresses error toasts from showing up if the server encounters a recoverable error.
 ---@field suppressLspErrorToasts boolean?
--- %configuration.dotnet.server.suppressMiscellaneousFilesToasts%
+-- Suppress warning toasts from showing up if the active document is outside the open workspace.
 ---@field suppressMiscellaneousFilesToasts boolean?
--- %configuration.omnisharp.dotnet.server.useOmnisharp%
+-- Switches to use the Omnisharp server for language features when enabled (requires restart). This option will not be honored with C# Dev Kit installed.
 ---@field useOmnisharp boolean?
--- %configuration.dotnet.server.useServerGC%
+-- Configure the language server to use .NET server garbage collection.  Server garbage collection generally provides better performance at the expense of higher memory consumption. (Requires extension restart)
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field useServerGC boolean?
--- %configuration.dotnet.server.waitForDebugger%
+-- Passes the --debug flag when launching the server to allow a debugger to be attached. (Previously `omnisharp.waitForDebugger`) (Requires extension restart)
 ---@field waitForDebugger boolean?
 
 ---@class lsp.omnisharp.SymbolSearch
--- %configuration.dotnet.symbolSearch.searchReferenceAssemblies%
+-- Search symbols in reference assemblies. It affects features requires symbol searching, such as add imports.
 -- 
 -- ```lua
 -- default = true
@@ -16681,80 +16883,80 @@
 ---@field searchReferenceAssemblies boolean?
 
 ---@class lsp.omnisharp.TypeMembers
--- %configuration.dotnet.typeMembers.memberInsertionLocation%
+-- The insertion location of properties, events, and methods When implement interface or abstract class.
 -- 
 -- ```lua
 -- default = "withOtherMembersOfTheSameKind"
 -- ```
 ---@field memberInsertionLocation "withOtherMembersOfTheSameKind" | "atTheEnd"?
--- %configuration.dotnet.typeMembers.propertyGenerationBehavior%
+-- Generation behavior of properties when implement interface or abstract class.
 -- 
 -- ```lua
 -- default = "preferThrowingProperties"
 -- ```
 ---@field propertyGenerationBehavior "preferThrowingProperties" | "preferAutoProperties"?
 
--- %generateOptionsSchema.expressionEvaluationOptions.description%
+-- Options to control how the debugger evaluates expressions in data tips, the debug view's 'Watch' and 'Variables' sections, or in the Debug Console.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.omnisharp.ExpressionEvaluationOptions
--- %generateOptionsSchema.expressionEvaluationOptions.allowFastEvaluate.description%
+-- When true (the default state), the debugger will attempt faster evaluation by simulating execution of simple properties and methods.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field allowFastEvaluate boolean?
--- %generateOptionsSchema.expressionEvaluationOptions.allowImplicitFuncEval.description%
+-- When true (the default state), the debugger will automatically call property `get` methods and other implicit function calls.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field allowImplicitFuncEval boolean?
--- %generateOptionsSchema.expressionEvaluationOptions.allowToString.markdownDescription%
+-- When true (the default state), the debugger will automatically call `ToString` to format objects. This option has no effect if `allowImplicitFuncEval` is `false`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field allowToString boolean?
--- %generateOptionsSchema.expressionEvaluationOptions.showRawValues.description%
+-- When true, the debugger will show raw structure of objects in variables windows.
 ---@field showRawValues boolean?
 
--- %generateOptionsSchema.logging.description%
+-- Flags to determine what types of messages should be logged to the output window.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.omnisharp.Logging
--- %generateOptionsSchema.logging.exceptions.markdownDescription%
+-- Flag to determine whether exception messages should be logged to the output window. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field exceptions boolean?
--- %generateOptionsSchema.logging.moduleLoad.markdownDescription%
+-- Flag to determine whether module load events should be logged to the output window. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field moduleLoad boolean?
--- %generateOptionsSchema.logging.processExit.markdownDescription%
+-- Controls if a message is logged when the target process exits, or debugging is stopped. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field processExit boolean?
--- %generateOptionsSchema.logging.programOutput.markdownDescription%
+-- Flag to determine whether program output should be logged to the output window when not using an external console. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field programOutput boolean?
--- %generateOptionsSchema.logging.threadExit.markdownDescription%
+-- Controls if a message is logged when a thread in the target process exits. This option defaults to `false`.
 ---@field threadExit boolean?
 
--- %generateOptionsSchema.symbolOptions.moduleFilter.description%
+-- Provides options to control which modules (.dll files) the debugger will attempt to load symbols (.pdb files) for.
 -- 
 -- ```lua
 -- default = {
@@ -16763,38 +16965,46 @@
 -- }
 -- ```
 ---@class lsp.omnisharp.ModuleFilter
--- %generateOptionsSchema.symbolOptions.moduleFilter.excludedModules.description%
+-- Array of modules that the debugger should NOT load symbols for. Wildcards (example: MyCompany.*.dll) are supported.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadAllButExcluded'.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field excludedModules string[]?
--- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsNextToModules.description%
+-- If true, for any module NOT in the 'includedModules' array, the debugger will still check next to the module itself and the launching executable, but it will not check paths on the symbol search list. This option defaults to 'true'.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadOnlyIncluded'.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeSymbolsNextToModules boolean?
--- %generateOptionsSchema.symbolOptions.moduleFilter.includeSymbolsOnDemand.description%
+-- If true, for any module NOT in the 'includedModules' array, the debugger will attempt to download symbols when it detects symbols are needed, such as when trying to step into the module. This option defaults to 'true'.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadOnlyIncluded'.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeSymbolsOnDemand boolean?
--- %generateOptionsSchema.symbolOptions.moduleFilter.includedModules.description%
+-- Array of modules that the debugger should load symbols for. Wildcards (example: MyCompany.*.dll) are supported.
+-- 
+-- This property is ignored unless 'mode' is set to 'loadOnlyIncluded'.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field includedModules string[]?
--- %generateOptionsSchema.symbolOptions.moduleFilter.mode.description%
+-- Controls which of the two basic operating modes the module filter operates in.
 -- 
 -- ```lua
 -- default = "loadAllButExcluded"
 -- ```
 ---@field mode "loadAllButExcluded" | "loadOnlyIncluded"?
 
--- %generateOptionsSchema.symbolOptions.description%
+-- Options to control how symbols (.pdb files) are found and loaded.
 -- 
 -- ```lua
 -- default = {
@@ -16804,13 +17014,13 @@
 -- }
 -- ```
 ---@class lsp.omnisharp.SymbolOptions
--- %generateOptionsSchema.symbolOptions.cachePath.description%
+-- Directory where symbols downloaded from symbol servers should be cached. If unspecified, on Windows the debugger will default to %TEMP%\SymbolCache, and on Linux and macOS the debugger will default to ~/.dotnet/symbolcache.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field cachePath string?
--- %generateOptionsSchema.symbolOptions.moduleFilter.description%
+-- Provides options to control which modules (.dll files) the debugger will attempt to load symbols (.pdb files) for.
 -- 
 -- ```lua
 -- default = {
@@ -16819,62 +17029,66 @@
 -- }
 -- ```
 ---@field moduleFilter lsp.omnisharp.ModuleFilter?
--- %generateOptionsSchema.symbolOptions.searchMicrosoftSymbolServer.description%
+-- If 'true' the Microsoft Symbol server (https​://msdl.microsoft.com​/download/symbols) is added to the symbols search path. If unspecified, this option defaults to 'false'.
 ---@field searchMicrosoftSymbolServer boolean?
--- %generateOptionsSchema.symbolOptions.searchNuGetOrgSymbolServer.description%
+-- If 'true' the NuGet.org symbol server (https​://symbols.nuget.org​/download/symbols) is added to the symbols search path. If unspecified, this option defaults to 'false'.
 ---@field searchNuGetOrgSymbolServer boolean?
--- %generateOptionsSchema.symbolOptions.searchPaths.description%
+-- Array of symbol server URLs (example: http​://MyExampleSymbolServer) or directories (example: /build/symbols) to search for .pdb files. These directories will be searched in addition to the default locations -- next to the module and the path where the pdb was originally dropped to.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field searchPaths string[]?
 
--- %configuration.dotnet.unitTestDebuggingOptions%
+-- Options to use with the debugger when launching for unit test debugging. (Previously `csharp.unitTestDebuggingOptions`)
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@class lsp.omnisharp.UnitTestDebuggingOptions
--- %generateOptionsSchema.debugServer.description%
+-- For debug extension development only: if a port is specified VS Code tries to connect to a debug adapter running in server mode
 -- 
 -- ```lua
 -- default = 4711
 -- ```
 ---@field debugServer number?
--- %generateOptionsSchema.enableStepFiltering.markdownDescription%
+-- Flag to enable stepping over Properties and Operators. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enableStepFiltering boolean?
--- %generateOptionsSchema.expressionEvaluationOptions.description%
+-- Options to control how the debugger evaluates expressions in data tips, the debug view's 'Watch' and 'Variables' sections, or in the Debug Console.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field expressionEvaluationOptions lsp.omnisharp.ExpressionEvaluationOptions?
--- %generateOptionsSchema.justMyCode.markdownDescription%
+-- When enabled (the default), the debugger only displays and steps into user code ("My Code"), ignoring system code and other code that is optimized or that does not have debugging symbols. [More information](https://aka.ms/VSCode-CS-LaunchJson-JustMyCode)
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field justMyCode boolean?
--- %generateOptionsSchema.logging.description%
+-- Flags to determine what types of messages should be logged to the output window.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field logging lsp.omnisharp.Logging?
--- %generateOptionsSchema.requireExactSource.markdownDescription%
+-- Flag to require current source code to match the pdb. This option defaults to `true`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field requireExactSource boolean?
--- %generateOptionsSchema.sourceFileMap.markdownDescription%
+-- Maps build-time paths to local source locations. All instances of build-time path will be replaced with the local source path.
+-- 
+-- Example:
+-- 
+-- `{"<build-path>":"<local-source-path>"}`
 ---@field sourceFileMap table?
--- %generateOptionsSchema.sourceLinkOptions.markdownDescription%
+-- Options to control how Source Link connects to web servers. [More information](https://aka.ms/VSCode-DotNet-SourceLink)
 -- 
 -- ```lua
 -- default = {
@@ -16884,9 +17098,9 @@
 -- }
 -- ```
 ---@field sourceLinkOptions table?
--- %generateOptionsSchema.suppressJITOptimizations.markdownDescription%
+-- If true, when an optimized module (.dll compiled in the Release configuration) loads in the target process, the debugger will ask the Just-In-Time compiler to generate code with optimizations disabled. [More information](https://aka.ms/VSCode-CS-LaunchJson-SuppressJITOptimizations)
 ---@field suppressJITOptimizations boolean?
--- %generateOptionsSchema.symbolOptions.description%
+-- Options to control how symbols (.pdb files) are found and loaded.
 -- 
 -- ```lua
 -- default = {
@@ -16896,9 +17110,11 @@
 -- }
 -- ```
 ---@field symbolOptions lsp.omnisharp.SymbolOptions?
--- %generateOptionsSchema.targetArchitecture.markdownDescription%
+-- [Only supported in local macOS debugging]
+-- 
+-- The architecture of the debuggee. This will automatically be detected unless this parameter is set. Allowed values are `x86_64` or `arm64`.
 ---@field targetArchitecture "x86_64" | "arm64"?
--- %generateOptionsSchema.type.markdownDescription%
+-- Type type of code to debug. Can be either `coreclr` for .NET Core debugging, or `clr` for Desktop .NET Framework. `clr` only works on Windows as the Desktop framework is Windows-only.
 -- 
 -- ```lua
 -- default = "coreclr"
@@ -16906,7 +17122,7 @@
 ---@field type "coreclr" | "clr"?
 
 ---@class lsp.omnisharp.UnitTests
--- %configuration.dotnet.unitTests.runSettingsPath%
+-- Path to the .runsettings file which should be used when running unit tests. (Previously `omnisharp.testRunSettings`)
 ---@field runSettingsPath string?
 
 ---@class lsp.omnisharp.Dotnet
@@ -16914,10 +17130,10 @@
 ---@field backgroundAnalysis lsp.omnisharp.BackgroundAnalysis?
 ---@field codeLens lsp.omnisharp.CodeLens?
 ---@field completion lsp.omnisharp.Completion?
--- %configuration.dotnet.defaultSolution.description%
+-- The path of the default solution to be opened in the workspace, or set to 'disable' to skip it. (Previously `omnisharp.defaultLaunchSolution`)
 ---@field defaultSolution string?
 ---@field diagnostics lsp.omnisharp.Diagnostics?
--- %configuration.dotnet.enableXamlTools%
+-- Enables XAML tools when using C# Dev Kit. (Requires extension restart)
 -- 
 -- ```lua
 -- default = true
@@ -16927,14 +17143,14 @@
 ---@field highlighting lsp.omnisharp.Highlighting?
 ---@field inlayHints lsp.omnisharp.InlayHints?
 ---@field navigation lsp.omnisharp.Navigation?
--- %configuration.dotnet.preferCSharpExtension%
+-- Forces projects to load with the C# extension only.  This can be useful when using legacy project types that are not supported by C# Dev Kit. (Requires extension restart)
 ---@field preferCSharpExtension boolean?
 ---@field projects lsp.omnisharp.Projects?
 ---@field quickInfo lsp.omnisharp.QuickInfo?
 ---@field server lsp.omnisharp.Server?
 ---@field symbolSearch lsp.omnisharp.SymbolSearch?
 ---@field typeMembers lsp.omnisharp.TypeMembers?
--- %configuration.dotnet.unitTestDebuggingOptions%
+-- Options to use with the debugger when launching for unit test debugging. (Previously `csharp.unitTestDebuggingOptions`)
 -- 
 -- ```lua
 -- default = {}
@@ -16943,87 +17159,87 @@
 ---@field unitTests lsp.omnisharp.UnitTests?
 
 ---@class lsp.omnisharp.Omnisharp
--- %configuration.omnisharp.autoStart%
+-- Specifies whether the OmniSharp server will be automatically started or not. If false, OmniSharp can be started with the 'Restart OmniSharp' command
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoStart boolean?
--- %configuration.omnisharp.disableMSBuildDiagnosticWarning%
+-- Specifies whether notifications should be shown if OmniSharp encounters warnings or errors loading a project. Note that these warnings/errors are always emitted to the OmniSharp log
 ---@field disableMSBuildDiagnosticWarning boolean?
--- %configuration.omnisharp.dotNetCliPaths%
+-- Paths to a local download of the .NET CLI to use for running any user code.
 ---@field dotNetCliPaths string[]?
--- %configuration.omnisharp.dotnetPath%
+-- Specifies the path to a dotnet installation directory to use instead of the default system one. This only influences the dotnet installation to use for hosting the OmniSharp server itself. Example: "/home/username/mycustomdotnetdirectory".
 ---@field dotnetPath string?
--- %configuration.omnisharp.enableAsyncCompletion%
+-- Enables support for resolving completion edits asynchronously. This can speed up time to show the completion list, particularly override and partial method completion lists, at the cost of slight delays after inserting a completion item. Most completion items will have no noticeable impact with this feature, but typing immediately after inserting an override or partial method completion, before the insert is completed, can have unpredictable results.
 ---@field enableAsyncCompletion boolean?
--- %configuration.omnisharp.enableDecompilationSupport%
+-- Enables support for decompiling external references instead of viewing metadata.
 ---@field enableDecompilationSupport boolean?
--- %configuration.omnisharp.enableEditorConfigSupport%
+-- Enables support for reading code style, naming convention and analyzer settings from .editorconfig.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enableEditorConfigSupport boolean?
--- %configuration.omnisharp.enableLspDriver%
+-- Enables support for the experimental language protocol based engine (requires reload to setup bindings correctly)
 ---@field enableLspDriver boolean?
--- %configuration.omnisharp.enableMsBuildLoadProjectsOnDemand%
+-- If true, MSBuild project system will only load projects for files that were opened in the editor. This setting is useful for big C# codebases and allows for faster initialization of code navigation features only for projects that are relevant to code that is being edited. With this setting enabled OmniSharp may load fewer projects and may thus display incomplete reference lists for symbols.
 ---@field enableMsBuildLoadProjectsOnDemand boolean?
--- %configuration.omnisharp.loggingLevel%
+-- Specifies the level of logging output from the OmniSharp server.
 -- 
 -- ```lua
 -- default = "information"
 -- ```
 ---@field loggingLevel "trace" | "debug" | "information" | "warning" | "error" | "critical"?
--- %configuration.omnisharp.maxFindSymbolsItems%
+-- The maximum number of items that 'Go to Symbol in Workspace' operation can show. The limit is applied only when a positive number is specified here.
 -- 
 -- ```lua
 -- default = 1000
 -- ```
 ---@field maxFindSymbolsItems number?
--- %configuration.omnisharp.maxProjectResults%
+-- The maximum number of projects to be shown in the 'Select Project' dropdown (maximum 250).
 -- 
 -- ```lua
 -- default = 250
 -- ```
 ---@field maxProjectResults number?
--- %configuration.omnisharp.minFindSymbolsFilterLength%
+-- The minimum number of characters to enter before 'Go to Symbol in Workspace' operation shows any results.
 -- 
 -- ```lua
 -- default = 0
 -- ```
 ---@field minFindSymbolsFilterLength number?
--- %configuration.omnisharp.monoPath%
+-- Specifies the path to a mono installation to use when "useModernNet" is set to false, instead of the default system one. Example: "/Library/Frameworks/Mono.framework/Versions/Current"
 ---@field monoPath string?
--- %configuration.omnisharp.projectFilesExcludePattern%
+-- The exclude pattern used by OmniSharp to find all project files.
 -- 
 -- ```lua
 -- default = "**/node_modules/**,**/.git/**,**/bower_components/**"
 -- ```
 ---@field projectFilesExcludePattern string?
--- %configuration.omnisharp.projectLoadTimeout%
+-- The time Visual Studio Code will wait for the OmniSharp server to start. Time is expressed in seconds.
 -- 
 -- ```lua
 -- default = 60
 -- ```
 ---@field projectLoadTimeout number?
--- %configuration.omnisharp.sdkIncludePrereleases%
+-- Specifies whether to include preview versions of the .NET SDK when determining which version to use for project loading. Applies when "useModernNet" is set to true.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field sdkIncludePrereleases boolean?
--- %configuration.omnisharp.sdkPath%
+-- Specifies the path to a .NET SDK installation to use for project loading instead of the highest version installed. Applies when "useModernNet" is set to true. Example: /home/username/dotnet/sdks/6.0.300.
 ---@field sdkPath string?
--- %configuration.omnisharp.sdkVersion%
+-- Specifies the version of the .NET SDK to use for project loading instead of the highest version installed. Applies when "useModernNet" is set to true. Example: 6.0.300.
 ---@field sdkVersion string?
--- %configuration.omnisharp.useEditorFormattingSettings%
+-- Specifes whether OmniSharp should use VS Code editor settings for C# code formatting (use of tabs, indentation size).
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field useEditorFormattingSettings boolean?
--- %configuration.omnisharp.useModernNet.description%
+-- Use OmniSharp build for .NET 6. This version _does not_ support non-SDK-style .NET Framework projects, including Unity. SDK-style Framework, .NET Core, and .NET 5+ projects should see significant performance improvements.
 -- 
 -- ```lua
 -- default = true
@@ -17031,19 +17247,19 @@
 ---@field useModernNet boolean?
 
 ---@class lsp.omnisharp.Completion
--- %configuration.razor.razor.completion.commitElementsWithSpace%
+-- Specifies whether to commit tag helper and component elements with a space.
 ---@field commitElementsWithSpace boolean?
 
 ---@class lsp.omnisharp.Format
--- %configuration.razor.razor.format.attributeIndentStyle%
+-- Specifies the indentation style for Html and component tag attributes in Razor files.
 -- 
 -- ```lua
 -- default = "alignWithFirst"
 -- ```
 ---@field attributeIndentStyle "alignWithFirst" | "indentByOne" | "indentByTwo"?
--- %configuration.razor.razor.format.codeBlockBraceOnNextLine%
+-- Forces the open brace after an @code or @functions directive to be on the following line.
 ---@field codeBlockBraceOnNextLine boolean?
--- %configuration.omnisharp.razor.format.enable%
+-- Enable/disable default Razor formatter.
 -- 
 -- ```lua
 -- default = true
@@ -17051,12 +17267,12 @@
 ---@field enable boolean?
 
 ---@class lsp.omnisharp.Plugin
--- %configuration.omnisharp.razor.plugin.path%
+-- Overrides the path to the Razor plugin dll.
 ---@field path string?
 
 ---@class lsp.omnisharp.Razor
 ---@field completion lsp.omnisharp.Completion?
--- %configuration.omnisharp.razor.devmode%
+-- Forces the extension to run in a mode that enables local Razor.VSCode development.
 ---@field devmode boolean?
 ---@field format lsp.omnisharp.Format?
 ---@field plugin lsp.omnisharp.Plugin?
@@ -23150,25 +23366,25 @@
 ---@field terraform lsp.terraformls.Terraform?
 
 ---@class lsp.tinymist.Completion
--- %extension.tinymist.config.tinymist.completion.postfix.desc%
+-- Whether to enable postfix code completion. For example, `[A].box|` will be completed to `box[A]|`. Hint: Restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field postfix boolean?
--- %extension.tinymist.config.tinymist.completion.postfixUfcs.desc%
+-- Whether to enable UFCS-style completion. For example, `[A].box|` will be completed to `box[A]|`. Hint: Restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field postfixUfcs boolean?
--- %extension.tinymist.config.tinymist.completion.postfixUfcsLeft.desc%
+-- Whether to enable left-variant UFCS-style completion. For example, `[A].table|` will be completed to `table(|)[A]`. Hint: Restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field postfixUfcsLeft boolean?
--- %extension.tinymist.config.tinymist.completion.postfixUfcsRight.desc%
+-- Whether to enable right-variant UFCS-style completion. For example, `[A].table|` will be completed to `table([A], |)`. Hint: Restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = true
@@ -23180,13 +23396,13 @@
 -- default = "step"
 -- ```
 ---@field symbol "step" | "stepless"?
--- %extension.tinymist.config.tinymist.completion.triggerOnSnippetPlaceholders.desc%
+-- Whether to trigger completions on arguments (placeholders) of snippets. For example, `box` will be completed to `box(|)`, and server will request the editor (lsp client) to request completion after moving cursor to the placeholder in the snippet. Note: this has no effect if the editor doesn't support `editor.action.triggerSuggest` or `tinymist.triggerSuggestAndParameterHints` command. Hint: Restarting the editor is required to change this setting.
 ---@field triggerOnSnippetPlaceholders boolean?
 
 ---@class lsp.tinymist.Lint
--- %extension.tinymist.config.tinymist.lint.enabled.desc%
+-- Enable or disable lint checks. Note: restarting the editor is required to change this setting.
 ---@field enabled boolean?
--- %extension.tinymist.config.tinymist.lint.when.desc%
+-- Configure when to perform lint checks. Note: restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = "onSave"
@@ -23194,47 +23410,47 @@
 ---@field when "onSave" | "onType"?
 
 ---@class lsp.tinymist.Preview
--- %extension.tinymist.config.tinymist.preview.cursorIndicator.desc%
+-- (Experimental) Show typst cursor indicator in preview.
 ---@field cursorIndicator boolean?
--- %extension.tinymist.config.tinymist.preview.fontPaths.desc%
+-- List of *additional* paths to font assets used by typst-preview.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field fontPaths string[]?
--- %extension.tinymist.config.tinymist.preview.invertColors.desc%
+-- Invert colors of the preview (useful for dark themes without cost). Please note you could see the origin colors when you hover elements in the preview. It is also possible to specify strategy to each element kind by an object map in JSON format.
 -- 
 -- ```lua
 -- default = "never"
 -- ```
 ---@field invertColors "never" | "auto" | "always"|table?
--- %extension.tinymist.config.tinymist.preview.partialRendering.desc%
+-- Only render visible part of the document. This can improve performance but still being experimental.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field partialRendering boolean?
--- %extension.tinymist.config.tinymist.preview.pinPreviewFile.desc%
+-- Declare current previewing file as entrypoint for typst-lsp or tinymist. This will make typst-lsp or tinymist to use this file as entrypoint instead of the file opened in vscode. This can improve diagnostics messages and auto completion but still being experimental.
 ---@field pinPreviewFile boolean?
--- %extension.tinymist.config.tinymist.preview.refresh.desc%
+-- Refresh preview when the document is saved or when the document is changed
 -- 
 -- ```lua
 -- default = "onType"
 -- ```
 ---@field refresh "onSave" | "onType"?
--- %extension.tinymist.config.tinymist.preview.scrollSync.desc%
+-- Configure scroll sync mode.
 -- 
 -- ```lua
 -- default = "onSelectionChangeByMouse"
 -- ```
 ---@field scrollSync "never" | "onSelectionChangeByMouse" | "onSelectionChange"?
--- %extension.tinymist.config.tinymist.preview.sysInputs.desc%
+-- key-value pairs visible through `sys.inputs`, corresponds to `--input` argument of typst cli
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field sysInputs table?
--- %extension.tinymist.config.tinymist.preview.systemFonts.desc%
+-- Whether to load system fonts. If disabled, only fonts in `typst-preview.fontPaths` is loaded
 -- 
 -- ```lua
 -- default = true
@@ -23242,7 +23458,7 @@
 ---@field systemFonts boolean?
 
 ---@class lsp.tinymist.Trace
--- %extension.tinymist.config.tinymist.trace.server.desc%
+-- Traces the communication between VS Code and the language server.
 -- 
 -- ```lua
 -- default = "off"
@@ -23250,147 +23466,154 @@
 ---@field server "off" | "messages" | "verbose"?
 
 ---@class lsp.tinymist.Tinymist
--- %extension.tinymist.config.tinymist.compileStatus.desc%
+-- In VSCode, enable compile status meaning that the extension will show the compilation status in the status bar. Since Neovim and Helix don't have a such feature, it is disabled by default at the language server label.
 -- 
 -- ```lua
 -- default = "enable"
 -- ```
 ---@field compileStatus "enable" | "disable"?
 ---@field completion lsp.tinymist.Completion?
--- %extension.tinymist.config.tinymist.configureDefaultWordSeparator.string.desc%
+-- Whether to configure default word separators on startup
 -- 
 -- ```lua
 -- default = "disable"
 -- ```
 ---@field configureDefaultWordSeparator "enable" | "disable"?
--- %extension.tinymist.config.tinymist.convertExtension.desc%
+-- This configuration specifies how to let the editor use Typst templates to convert other format files into PDF documents.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field convertExtension any[]?
--- %extension.tinymist.config.tinymist.copyAndPaste.desc%
+-- Whether to handle paste of resources into the editing typst document. Note: restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = "enable"
 -- ```
 ---@field copyAndPaste "enable" | "disable"?
--- %extension.tinymist.config.tinymist.dragAndDrop.desc%
+-- Whether to handle drag-and-drop of resources into the editing typst document. Note: restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = "enable"
 -- ```
 ---@field dragAndDrop "enable" | "disable"?
--- %extension.tinymist.config.tinymist.exportPdf.desc%
+-- The extension can export PDFs of your Typst files. This setting controls whether this feature is enabled and how often it runs.
 -- 
 -- ```lua
 -- default = "never"
 -- ```
 ---@field exportPdf "never" | "onSave" | "onType" | "onDocumentHasTitle"?
--- %extension.tinymist.config.tinymist.exportTarget.desc%
+-- The target to export the document to. Defaults to `paged`. Note: you can still export PDF when it is set to `html`. This configuration only affects how the language server completes your code.
 -- 
 -- ```lua
 -- default = "paged"
 -- ```
 ---@field exportTarget "paged" | "html"?
--- %extension.tinymist.config.tinymist.fontPaths.desc%
+-- A list of file or directory path to fonts. Note: The configuration source in higher priority will **override** the configuration source in lower priority. The order of precedence is: Configuration `tinymist.fontPaths` > Configuration `tinymist.typstExtraArgs.fontPaths` > LSP's CLI Argument `--font-path` > The environment variable `TYPST_FONT_PATHS` (a path list separated by `;` (on Windows) or `:` (Otherwise)). Note: If the path to fonts is a relative path, it will be resolved based on the root directory. Note: In VSCode, you can use VSCode variables in the path, e.g. `${workspaceFolder}/fonts`.
 ---@field fontPaths any[]?
--- %extension.tinymist.config.tinymist.formatterIndentSize.desc%
+-- Sets the indent size (using space) for the formatter.
 -- 
 -- ```lua
 -- default = 2
 -- ```
 ---@field formatterIndentSize number?
--- %extension.tinymist.config.tinymist.formatterMode.desc%
+-- The extension can format Typst files using typstfmt or typstyle.
 -- 
 -- ```lua
 -- default = "typstyle"
 -- ```
 ---@field formatterMode "disable" | "typstyle" | "typstfmt"?
--- %extension.tinymist.config.tinymist.formatterPrintWidth.desc%
+-- Sets the print width for the formatter, which is a **soft limit** of characters per line. See [the definition of *Print Width*](https://prettier.io/docs/en/options.html#print-width). Note: this has lower priority than the formatter's specific configurations.
 -- 
 -- ```lua
 -- default = 120
 -- ```
 ---@field formatterPrintWidth number?
--- %extension.tinymist.config.tinymist.formatterProseWrap.desc%
+-- Controls how the formatter handles prose line wrapping. If enabled, the formatter will insert hard line breaks at the specified print width. If disabled, the formatter keeps the original line breaks and spaces.
 ---@field formatterProseWrap boolean?
 ---@field lint lsp.tinymist.Lint?
--- %extension.tinymist.config.tinymist.onEnterEvent.desc%
+-- Enable or disable [experimental/onEnter](https://github.com/rust-lang/rust-analyzer/blob/master/docs/dev/lsp-extensions.md#on-enter) (LSP onEnter feature) to allow automatic insertion of characters on enter, such as `///` for comments. Note: restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field onEnterEvent boolean?
--- %extension.tinymist.config.tinymist.onPaste.desc%
+-- The script to be executed when pasting resources into the editing typst document. If the script code starts with `{` and ends with `}`, it will be evaluated as a typst code expression, e.g. `$root/x/$dir/$name` evaluated as `/path/to/root/x/dir/main`, otherwise it will be evaluated as a path pattern, e.g. `{ join(root, "x", dir, if name.ends-with(".png") ("imgs"), name) }` evaluated as `/path/to/root/x/dir/imgs/main`. The extra valid definitions are `root`, `dir`, `name`, and `join`. To learn more about the paste script, please visit [Script Hooks](https://myriad-dreamin.github.io/tinymist/feature/script-hook.html). Hint: you could import `@local` packages in the paste script. Note: restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = "$root/assets"
 -- ```
 ---@field onPaste string?
--- %extension.tinymist.config.tinymist.outputPath.desc%
+-- The path pattern to store Typst artifacts, you can use `$root` or `$dir` or `$name` to do magic configuration, e.g. `$dir/$name` (default) and `$root/target/$dir/$name`.
 -- 
 -- ```lua
 -- default = ""
 -- ```
 ---@field outputPath string?
 ---@field preview lsp.tinymist.Preview?
--- %extension.tinymist.config.tinymist.previewFeature.desc%
+-- Enable or disable preview features of Typst. Note: restarting the editor is required to change this setting.
 -- 
 -- ```lua
 -- default = "enable"
 -- ```
 ---@field previewFeature "enable" | "disable"?
--- %extension.tinymist.config.tinymist.projectResolution.desc%
+-- This configuration specifies the way to resolved projects.
 -- 
 -- ```lua
 -- default = "singleFile"
 -- ```
 ---@field projectResolution "singleFile" | "lockDatabase"?
--- %extension.tinymist.config.tinymist.renderDocs.desc%
+-- (Experimental) Whether to render typst elements in (hover) docs. In VS Code, when this feature is enabled, tinymist will store rendered results in the filesystem's temporary storage to show them in the hover content. Note: Please disable this feature if the editor doesn't support/handle image previewing in docs.
 -- 
 -- ```lua
 -- default = "enable"
 -- ```
 ---@field renderDocs "enable" | "disable"?
--- %extension.tinymist.config.tinymist.rootPath.desc%
+-- Configure the root for absolute paths in typst. Note: for Neovim users, if it complains root not found, you must set `require("lspconfig")["tinymist"].setup { root_dir }` as well, see [tinymist#528](https://github.com/Myriad-Dreamin/tinymist/issues/528).
 ---@field rootPath string?
--- %extension.tinymist.config.tinymist.semanticTokens.desc%
+-- Enable or disable semantic tokens (LSP syntax highlighting)
 -- 
 -- ```lua
 -- default = "enable"
 -- ```
 ---@field semanticTokens "enable" | "disable"?
--- %extension.tinymist.config.tinymist.serverPath.desc%
+-- The extension can use a local tinymist executable instead of the one bundled with the extension. This setting controls the path to the executable. The string "tinymist" means look up Tinymist in PATH.
 ---@field serverPath string?
--- %extension.tinymist.config.tinymist.showExportFileIn.desc%
+-- Configures way of opening exported files, e.g. inside of editor tabs or using system application.
 ---@field showExportFileIn "editorTab" | "systemDefault"?
--- %extension.tinymist.config.tinymist.statusBarFormat.desc%
+-- Set format string of the server status. For example, `{compileStatusIcon}{wordCount} [{fileName}]` will format the status as `$(check) 123 words [main]`. Valid placeholders are:
+-- 
+-- - `{compileStatusIcon}`: Icon indicating the compile status
+-- - `{wordCount}`: Number of words in the document
+-- - `{charCount}`: Number of characters in the document
+-- - `{fileName}`: Name of the file being compiled
+-- 
+-- Note: The status bar will be hidden if the format string is empty.
 -- 
 -- ```lua
 -- default = "{compileStatusIcon} {wordCount} [{fileName}]"
 -- ```
 ---@field statusBarFormat string?
--- %extension.tinymist.config.tinymist.syntaxOnly.desc%
+-- Configure whether to enable syntax-only mode for the language server. In syntax-only mode, the language server will only provide syntax checking and basic code completion, but will not perform full document compilation or code analysis. This can be useful for improving performance on low-end devices or when working with large documents.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field syntaxOnly "auto" | "onPowerSaving" | "enable" | "disable"?
--- %extension.tinymist.config.tinymist.systemFonts.desc%
+-- A flag that determines whether to load system fonts for Typst compiler, which is useful for ensuring reproducible compilation. If set to null or not set, the extension will use the default behavior of the Typst compiler. Note: You need to restart LSP to change this options.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field systemFonts boolean?
 ---@field trace lsp.tinymist.Trace?
--- %extension.tinymist.config.tinymist.typingContinueCommentsOnNewline.desc%
+-- Whether to prefix newlines after comments with the corresponding comment prefix.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field typingContinueCommentsOnNewline boolean?
--- %extension.tinymist.config.tinymist.typstExtraArgs.desc%
+-- You can pass any arguments as you like, and we will try to follow behaviors of the **same version** of typst-cli. Note: the arguments may be overridden by other settings. For example, `--font-path` will be overridden by `tinymist.fontPaths`.
 -- 
 -- ```lua
 -- default = {}
@@ -23401,77 +23624,77 @@
 ---@field tinymist lsp.tinymist.Tinymist?
 
 ---@class lsp.ts_ls.Format
--- %javascript.format.enable%
+-- Enable/disable default JavaScript formatter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %format.indentSwitchCase%
+-- Indent case clauses in switch statements. Requires using TypeScript 5.1+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field indentSwitchCase boolean?
--- %format.insertSpaceAfterCommaDelimiter%
+-- Defines space handling after a comma delimiter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterCommaDelimiter boolean?
--- %format.insertSpaceAfterConstructor%
+-- Defines space handling after the constructor keyword.
 ---@field insertSpaceAfterConstructor boolean?
--- %format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%
+-- Defines space handling after function keyword for anonymous functions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean?
--- %format.insertSpaceAfterKeywordsInControlFlowStatements%
+-- Defines space handling after keywords in a control flow statement.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterKeywordsInControlFlowStatements boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces%
+-- Defines space handling after opening and before closing empty braces.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%
+-- Defines space handling after opening and before closing JSX expression braces.
 ---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%
+-- Defines space handling after opening and before closing non-empty braces.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%
+-- Defines space handling after opening and before closing non-empty brackets.
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%
+-- Defines space handling after opening and before closing non-empty parenthesis.
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%
+-- Defines space handling after opening and before closing template string braces.
 ---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean?
--- %format.insertSpaceAfterSemicolonInForStatements%
+-- Defines space handling after a semicolon in a for statement.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterSemicolonInForStatements boolean?
--- %format.insertSpaceBeforeAndAfterBinaryOperators%
+-- Defines space handling after a binary operator.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceBeforeAndAfterBinaryOperators boolean?
--- %format.insertSpaceBeforeFunctionParenthesis%
+-- Defines space handling before function argument parentheses.
 ---@field insertSpaceBeforeFunctionParenthesis boolean?
--- %format.placeOpenBraceOnNewLineForControlBlocks%
+-- Defines whether an open brace is put onto a new line for control blocks or not.
 ---@field placeOpenBraceOnNewLineForControlBlocks boolean?
--- %format.placeOpenBraceOnNewLineForFunctions%
+-- Defines whether an open brace is put onto a new line for functions or not.
 ---@field placeOpenBraceOnNewLineForFunctions boolean?
--- %format.semicolons%
+-- Defines handling of optional semicolons.
 -- 
 -- ```lua
 -- default = "ignore"
@@ -23479,17 +23702,29 @@
 ---@field semicolons "ignore" | "insert" | "remove"?
 
 ---@class lsp.ts_ls.FunctionLikeReturnTypes
--- %configuration.inlayHints.functionLikeReturnTypes.enabled%
+-- Enable/disable inlay hints for implicit return types on function signatures:
+-- ```typescript
+-- 
+-- function foo() /* :number */ {
+-- 	return Date.now();
+-- } 
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.ParameterNames
--- %configuration.inlayHints.parameterNames.enabled%
+-- Enable/disable inlay hints for parameter names:
+-- ```typescript
+-- 
+-- parseInt(/* str: */ '123', /* radix: */ 8)
+--  
+-- ```
 -- 
 -- ```lua
 -- default = "none"
 -- ```
 ---@field enabled "none" | "literals" | "all"?
--- %configuration.inlayHints.parameterNames.suppressWhenArgumentMatchesName%
+-- Suppress parameter name hints on arguments whose text is identical to the parameter name.
 -- 
 -- ```lua
 -- default = true
@@ -23497,17 +23732,34 @@
 ---@field suppressWhenArgumentMatchesName boolean?
 
 ---@class lsp.ts_ls.ParameterTypes
--- %configuration.inlayHints.parameterTypes.enabled%
+-- Enable/disable inlay hints for implicit parameter types:
+-- ```typescript
+-- 
+-- el.addEventListener('click', e /* :MouseEvent */ => ...)
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.PropertyDeclarationTypes
--- %configuration.inlayHints.propertyDeclarationTypes.enabled%
+-- Enable/disable inlay hints for implicit types on property declarations:
+-- ```typescript
+-- 
+-- class Foo {
+-- 	prop /* :number */ = Date.now();
+-- }
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.VariableTypes
--- %configuration.inlayHints.variableTypes.enabled%
+-- Enable/disable inlay hints for implicit variable types:
+-- ```typescript
+-- 
+-- const foo /* :number */ = Date.now();
+--  
+-- ```
 ---@field enabled boolean?
--- %configuration.inlayHints.variableTypes.suppressWhenTypeMatchesName%
+-- Suppress type hints on variables whose name is identical to the type name.
 -- 
 -- ```lua
 -- default = true
@@ -23521,33 +23773,33 @@
 ---@field propertyDeclarationTypes lsp.ts_ls.PropertyDeclarationTypes?
 ---@field variableTypes lsp.ts_ls.VariableTypes?
 
--- %typescript.preferences.organizeImports%
+-- Advanced preferences that control how imports are ordered.
 ---@class lsp.ts_ls.OrganizeImports
--- %typescript.preferences.organizeImports.accentCollation%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Compare characters with diacritical marks as unequal to base character.
 ---@field accentCollation boolean?
--- %typescript.preferences.organizeImports.caseFirst%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`, and `organizeImports.caseSensitivity` is not `caseInsensitive`. Indicates whether upper-case will sort before lower-case.
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field caseFirst "default" | "upper" | "lower"?
--- %typescript.preferences.organizeImports.caseSensitivity%
+-- Specifies how imports should be sorted with regards to case-sensitivity. If `auto` or unspecified, we will detect the case-sensitivity per file
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"?
--- %typescript.preferences.organizeImports.locale%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Overrides the locale used for collation. Specify `auto` to use the UI locale.
 ---@field locale string?
--- %typescript.preferences.organizeImports.numericCollation%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Sort numeric strings by integer value.
 ---@field numericCollation boolean?
--- %typescript.preferences.organizeImports.typeOrder%
+-- Specify how type-only named imports should be sorted.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field typeOrder "auto" | "last" | "inline" | "first"?
--- %typescript.preferences.organizeImports.unicodeCollation%
+-- Specify whether to sort imports using Unicode or Ordinal collation.
 -- 
 -- ```lua
 -- default = "ordinal"
@@ -23555,43 +23807,48 @@
 ---@field unicodeCollation "ordinal" | "unicode"?
 
 ---@class lsp.ts_ls.Preferences
--- %typescript.preferences.autoImportFileExcludePatterns%
+-- Specify glob patterns of files to exclude from auto imports. Relative paths are resolved relative to the workspace root. Patterns are evaluated using tsconfig.json [`exclude`](https://www.typescriptlang.org/tsconfig#exclude) semantics.
 ---@field autoImportFileExcludePatterns string[]?
--- %typescript.preferences.autoImportSpecifierExcludeRegexes%
+-- Specify regular expressions to exclude auto imports with matching import specifiers. Examples:
+-- 
+-- - `^node:`
+-- - `lib/internal` (slashes don't need to be escaped...)
+-- - `/lib\/internal/i` (...unless including surrounding slashes for `i` or `u` flags)
+-- - `^lodash$` (only allow subpath imports from lodash)
 ---@field autoImportSpecifierExcludeRegexes string[]?
--- %typescript.preferences.importModuleSpecifier%
+-- Preferred path style for auto imports.
 -- 
 -- ```lua
 -- default = "shortest"
 -- ```
 ---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"?
--- %typescript.preferences.importModuleSpecifierEnding%
+-- Preferred path ending for auto imports.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"?
--- %typescript.preferences.jsxAttributeCompletionStyle%
+-- Preferred style for JSX attribute completions.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"?
--- %typescript.preferences.organizeImports%
+-- Advanced preferences that control how imports are ordered.
 ---@field organizeImports lsp.ts_ls.OrganizeImports?
--- %typescript.preferences.quoteStyle%
+-- Preferred quote style to use for Quick Fixes.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field quoteStyle "auto" | "single" | "double"?
--- %typescript.preferences.renameMatchingJsxTags%
+-- When on a JSX tag, try to rename the matching tag instead of renaming the symbol. Requires using TypeScript 5.1+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field renameMatchingJsxTags boolean?
--- %typescript.preferences.useAliasesForRenames%
+-- Enable/disable introducing aliases for object shorthand properties during renames.
 -- 
 -- ```lua
 -- default = true
@@ -23599,13 +23856,13 @@
 ---@field useAliasesForRenames boolean?
 
 ---@class lsp.ts_ls.ReferencesCodeLens
--- %configuration.referencesCodeLens.enabled%
+-- Enable/disable references CodeLens in JavaScript and TypeScript files. This CodeLens shows the number of references for classes and exported functions and allows you to peek or navigate to them.
 ---@field enabled boolean?
--- %configuration.referencesCodeLens.showOnAllFunctions%
+-- Enable/disable the [references CodeLens](#js/ts.referencesCodeLens.enabled) on all functions in JavaScript and TypeScript files.
 ---@field showOnAllFunctions boolean?
 
 ---@class lsp.ts_ls.ClassMemberSnippets
--- %configuration.suggest.classMemberSnippets.enabled%
+-- Enable/disable snippet completions for class members.
 -- 
 -- ```lua
 -- default = true
@@ -23613,7 +23870,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Jsdoc
--- %configuration.suggest.jsdoc.generateReturns%
+-- Enable/disable generating `@returns` annotations for JSDoc templates.
 -- 
 -- ```lua
 -- default = true
@@ -23621,47 +23878,47 @@
 ---@field generateReturns boolean?
 
 ---@class lsp.ts_ls.Suggest
--- %configuration.suggest.autoImports%
+-- Enable/disable auto import suggestions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoImports boolean?
 ---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets?
--- %configuration.suggest.completeFunctionCalls%
+-- Complete functions with their parameter signature.
 ---@field completeFunctionCalls boolean?
--- %configuration.suggest.jsdoc.enabled%
+-- Enable/disable suggestion to complete JSDoc comments.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field completeJSDocs boolean?
--- %typescript.suggest.enabled%
+-- Enable/disable autocomplete suggestions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.suggest.includeAutomaticOptionalChainCompletions%
+-- Enable/disable showing completions on potentially undefined values that insert an optional chain call. Requires strict null checks to be enabled.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeAutomaticOptionalChainCompletions boolean?
--- %configuration.suggest.includeCompletionsForImportStatements%
+-- Enable/disable auto-import-style completions on partially-typed import statements.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeCompletionsForImportStatements boolean?
 ---@field jsdoc lsp.ts_ls.Jsdoc?
--- %configuration.suggest.names%
+-- Enable/disable including unique names from the file in JavaScript suggestions. Note that name suggestions are always disabled in JavaScript code that is semantically checked using `@ts-check` or `checkJs`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field names boolean?
--- %configuration.suggest.paths%
+-- Enable/disable suggestions for paths in import statements and require calls.
 -- 
 -- ```lua
 -- default = true
@@ -23669,7 +23926,7 @@
 ---@field paths boolean?
 
 ---@class lsp.ts_ls.SuggestionActions
--- %javascript.suggestionActions.enabled%
+-- Enable/disable suggestion diagnostics for JavaScript files in the editor.
 -- 
 -- ```lua
 -- default = true
@@ -23677,7 +23934,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.UpdateImportsOnFileMove
--- %typescript.updateImportsOnFileMove.enabled%
+-- Enable/disable automatic updating of import paths when you rename or move a file in VS Code.
 -- 
 -- ```lua
 -- default = "prompt"
@@ -23685,7 +23942,7 @@
 ---@field enabled "prompt" | "always" | "never"?
 
 ---@class lsp.ts_ls.UpdateImportsOnPaste
--- %configuration.updateImportsOnPaste%
+-- Automatically update imports when pasting code. Requires TypeScript 5.6+.
 -- 
 -- ```lua
 -- default = true
@@ -23693,7 +23950,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Validate
--- %javascript.validate.enable%
+-- Enable/disable JavaScript validation.
 -- 
 -- ```lua
 -- default = true
@@ -23701,7 +23958,7 @@
 ---@field enable boolean?
 
 ---@class lsp.ts_ls.Javascript
--- %typescript.autoClosingTags%
+-- Enable/disable automatic closing of JSX tags.
 -- 
 -- ```lua
 -- default = true
@@ -23709,7 +23966,7 @@
 ---@field autoClosingTags boolean?
 ---@field format lsp.ts_ls.Format?
 ---@field inlayHints lsp.ts_ls.InlayHints?
--- %configuration.preferGoToSourceDefinition%
+-- Makes `Go to Definition` avoid type declaration files when possible by triggering `Go to Source Definition` instead. This allows `Go to Source Definition` to be triggered with the mouse gesture.
 ---@field preferGoToSourceDefinition boolean?
 ---@field preferences lsp.ts_ls.Preferences?
 ---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
@@ -23720,7 +23977,7 @@
 ---@field validate lsp.ts_ls.Validate?
 
 ---@class lsp.ts_ls.AutoClosingTags
--- %typescript.autoClosingTags%
+-- Enable/disable automatic closing of JSX tags.
 -- 
 -- ```lua
 -- default = true
@@ -23728,83 +23985,83 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Experimental
--- %typescript.useTsgo%
+-- Disables TypeScript and JavaScript language features to allow usage of the TypeScript Go experimental extension. Requires TypeScript Go to be installed and configured. Requires reloading extensions after changing this setting.
 ---@field useTsgo boolean?
 
 ---@class lsp.ts_ls.Format
--- %format.enable%
+-- Enable/disable the default JavaScript and TypeScript formatter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %format.indentSwitchCase%
+-- Indent case clauses in switch statements. Requires using TypeScript 5.1+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field indentSwitchCase boolean?
--- %format.insertSpaceAfterCommaDelimiter%
+-- Defines space handling after a comma delimiter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterCommaDelimiter boolean?
--- %format.insertSpaceAfterConstructor%
+-- Defines space handling after the constructor keyword.
 ---@field insertSpaceAfterConstructor boolean?
--- %format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%
+-- Defines space handling after function keyword for anonymous functions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean?
--- %format.insertSpaceAfterKeywordsInControlFlowStatements%
+-- Defines space handling after keywords in a control flow statement.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterKeywordsInControlFlowStatements boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces%
+-- Defines space handling after opening and before closing empty braces.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%
+-- Defines space handling after opening and before closing JSX expression braces.
 ---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%
+-- Defines space handling after opening and before closing non-empty braces.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%
+-- Defines space handling after opening and before closing non-empty brackets.
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%
+-- Defines space handling after opening and before closing non-empty parenthesis.
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%
+-- Defines space handling after opening and before closing template string braces.
 ---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean?
--- %format.insertSpaceAfterSemicolonInForStatements%
+-- Defines space handling after a semicolon in a for statement.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterSemicolonInForStatements boolean?
--- %format.insertSpaceAfterTypeAssertion%
+-- Defines space handling after type assertions in TypeScript.
 ---@field insertSpaceAfterTypeAssertion boolean?
--- %format.insertSpaceBeforeAndAfterBinaryOperators%
+-- Defines space handling after a binary operator.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceBeforeAndAfterBinaryOperators boolean?
--- %format.insertSpaceBeforeFunctionParenthesis%
+-- Defines space handling before function argument parentheses.
 ---@field insertSpaceBeforeFunctionParenthesis boolean?
--- %format.placeOpenBraceOnNewLineForControlBlocks%
+-- Defines whether an open brace is put onto a new line for control blocks or not.
 ---@field placeOpenBraceOnNewLineForControlBlocks boolean?
--- %format.placeOpenBraceOnNewLineForFunctions%
+-- Defines whether an open brace is put onto a new line for functions or not.
 ---@field placeOpenBraceOnNewLineForFunctions boolean?
--- %format.semicolons%
+-- Defines handling of optional semicolons.
 -- 
 -- ```lua
 -- default = "ignore"
@@ -23812,7 +24069,7 @@
 ---@field semicolons "ignore" | "insert" | "remove"?
 
 ---@class lsp.ts_ls.Hover
--- %configuration.hover.maximumLength%
+-- The maximum number of characters in a hover. If the hover is longer than this, it will be truncated. Requires TypeScript 5.9+.
 -- 
 -- ```lua
 -- default = 500
@@ -23820,43 +24077,43 @@
 ---@field maximumLength number?
 
 ---@class lsp.ts_ls.ImplementationsCodeLens
--- %configuration.implementationsCodeLens.enabled%
+-- Enable/disable implementations CodeLens in TypeScript files. This CodeLens shows the implementers of TypeScript interfaces.
 ---@field enabled boolean?
--- %configuration.implementationsCodeLens.showOnAllClassMethods%
+-- Enable/disable showing [implementations CodeLens](#js/ts.implementationsCodeLens.enabled) above all TypeScript class methods instead of only on abstract methods.
 ---@field showOnAllClassMethods boolean?
--- %configuration.implementationsCodeLens.showOnInterfaceMethods%
+-- Enable/disable [implementations CodeLens](#js/ts.implementationsCodeLens.enabled) on TypeScript interface methods.
 ---@field showOnInterfaceMethods boolean?
 
 ---@class lsp.ts_ls.ImplicitProjectConfig
--- %configuration.implicitProjectConfig.checkJs%
+-- Enable/disable semantic checking of JavaScript files. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
 ---@field checkJs boolean?
--- %configuration.implicitProjectConfig.experimentalDecorators%
+-- Enable/disable `experimentalDecorators` in JavaScript files that are not part of a project. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
 ---@field experimentalDecorators boolean?
--- %configuration.implicitProjectConfig.module%
+-- Sets the module system for the program. See more: https://www.typescriptlang.org/tsconfig#module.
 -- 
 -- ```lua
 -- default = "ESNext"
 -- ```
 ---@field module "CommonJS" | "AMD" | "System" | "UMD" | "ES6" | "ES2015" | "ES2020" | "ESNext" | "None" | "ES2022" | "Node12" | "NodeNext"?
--- %configuration.implicitProjectConfig.strict%
+-- Enable/disable [strict mode](https://www.typescriptlang.org/tsconfig#strict) in JavaScript and TypeScript files that are not part of a project. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field strict boolean?
--- %configuration.implicitProjectConfig.strictFunctionTypes%
+-- Enable/disable [strict function types](https://www.typescriptlang.org/tsconfig#strictFunctionTypes) in JavaScript and TypeScript files that are not part of a project. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field strictFunctionTypes boolean?
--- %configuration.implicitProjectConfig.strictNullChecks%
+-- Enable/disable [strict null checks](https://www.typescriptlang.org/tsconfig#strictNullChecks) in JavaScript and TypeScript files that are not part of a project. Existing `jsconfig.json` or `tsconfig.json` files override this setting.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field strictNullChecks boolean?
--- %configuration.implicitProjectConfig.target%
+-- Set target JavaScript language version for emitted JavaScript and include library declarations. See more: https://www.typescriptlang.org/tsconfig#target.
 -- 
 -- ```lua
 -- default = "ES2024"
@@ -23864,21 +24121,41 @@
 ---@field target "ES3" | "ES5" | "ES6" | "ES2015" | "ES2016" | "ES2017" | "ES2018" | "ES2019" | "ES2020" | "ES2021" | "ES2022" | "ES2023" | "ES2024" | "ESNext"?
 
 ---@class lsp.ts_ls.EnumMemberValues
--- %configuration.inlayHints.enumMemberValues.enabled%
+-- Enable/disable inlay hints for member values in enum declarations:
+-- ```typescript
+-- 
+-- enum MyValue {
+-- 	A /* = 0 */;
+-- 	B /* = 1 */;
+-- }
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.FunctionLikeReturnTypes
--- %configuration.inlayHints.functionLikeReturnTypes.enabled%
+-- Enable/disable inlay hints for implicit return types on function signatures:
+-- ```typescript
+-- 
+-- function foo() /* :number */ {
+-- 	return Date.now();
+-- } 
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.ParameterNames
--- %configuration.inlayHints.parameterNames.enabled%
+-- Enable/disable inlay hints for parameter names:
+-- ```typescript
+-- 
+-- parseInt(/* str: */ '123', /* radix: */ 8)
+--  
+-- ```
 -- 
 -- ```lua
 -- default = "none"
 -- ```
 ---@field enabled "none" | "literals" | "all"?
--- %configuration.inlayHints.parameterNames.suppressWhenArgumentMatchesName%
+-- Suppress parameter name hints on arguments whose text is identical to the parameter name.
 -- 
 -- ```lua
 -- default = true
@@ -23886,17 +24163,34 @@
 ---@field suppressWhenArgumentMatchesName boolean?
 
 ---@class lsp.ts_ls.ParameterTypes
--- %configuration.inlayHints.parameterTypes.enabled%
+-- Enable/disable inlay hints for implicit parameter types:
+-- ```typescript
+-- 
+-- el.addEventListener('click', e /* :MouseEvent */ => ...)
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.PropertyDeclarationTypes
--- %configuration.inlayHints.propertyDeclarationTypes.enabled%
+-- Enable/disable inlay hints for implicit types on property declarations:
+-- ```typescript
+-- 
+-- class Foo {
+-- 	prop /* :number */ = Date.now();
+-- }
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.VariableTypes
--- %configuration.inlayHints.variableTypes.enabled%
+-- Enable/disable inlay hints for implicit variable types:
+-- ```typescript
+-- 
+-- const foo /* :number */ = Date.now();
+--  
+-- ```
 ---@field enabled boolean?
--- %configuration.inlayHints.variableTypes.suppressWhenTypeMatchesName%
+-- Suppress type hints on variables whose name is identical to the type name.
 -- 
 -- ```lua
 -- default = true
@@ -23911,33 +24205,33 @@
 ---@field propertyDeclarationTypes lsp.ts_ls.PropertyDeclarationTypes?
 ---@field variableTypes lsp.ts_ls.VariableTypes?
 
--- %typescript.preferences.organizeImports%
+-- Advanced preferences that control how imports are ordered.
 ---@class lsp.ts_ls.OrganizeImports
--- %typescript.preferences.organizeImports.accentCollation%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Compare characters with diacritical marks as unequal to base character.
 ---@field accentCollation boolean?
--- %typescript.preferences.organizeImports.caseFirst%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`, and `organizeImports.caseSensitivity` is not `caseInsensitive`. Indicates whether upper-case will sort before lower-case.
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field caseFirst "default" | "upper" | "lower"?
--- %typescript.preferences.organizeImports.caseSensitivity%
+-- Specifies how imports should be sorted with regards to case-sensitivity. If `auto` or unspecified, we will detect the case-sensitivity per file
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"?
--- %typescript.preferences.organizeImports.locale%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Overrides the locale used for collation. Specify `auto` to use the UI locale.
 ---@field locale string?
--- %typescript.preferences.organizeImports.numericCollation%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Sort numeric strings by integer value.
 ---@field numericCollation boolean?
--- %typescript.preferences.organizeImports.typeOrder%
+-- Specify how type-only named imports should be sorted.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field typeOrder "auto" | "last" | "inline" | "first"?
--- %typescript.preferences.organizeImports.unicodeCollation%
+-- Specify whether to sort imports using Unicode or Ordinal collation.
 -- 
 -- ```lua
 -- default = "ordinal"
@@ -23945,51 +24239,56 @@
 ---@field unicodeCollation "ordinal" | "unicode"?
 
 ---@class lsp.ts_ls.Preferences
--- %typescript.preferences.autoImportFileExcludePatterns%
+-- Specify glob patterns of files to exclude from auto imports. Relative paths are resolved relative to the workspace root. Patterns are evaluated using tsconfig.json [`exclude`](https://www.typescriptlang.org/tsconfig#exclude) semantics.
 ---@field autoImportFileExcludePatterns string[]?
--- %typescript.preferences.autoImportSpecifierExcludeRegexes%
+-- Specify regular expressions to exclude auto imports with matching import specifiers. Examples:
+-- 
+-- - `^node:`
+-- - `lib/internal` (slashes don't need to be escaped...)
+-- - `/lib\/internal/i` (...unless including surrounding slashes for `i` or `u` flags)
+-- - `^lodash$` (only allow subpath imports from lodash)
 ---@field autoImportSpecifierExcludeRegexes string[]?
--- %typescript.preferences.importModuleSpecifier%
+-- Preferred path style for auto imports.
 -- 
 -- ```lua
 -- default = "shortest"
 -- ```
 ---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"?
--- %typescript.preferences.importModuleSpecifierEnding%
+-- Preferred path ending for auto imports.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"?
--- %typescript.preferences.includePackageJsonAutoImports%
+-- Enable/disable searching `package.json` dependencies for available auto imports.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field includePackageJsonAutoImports "auto" | "on" | "off"?
--- %typescript.preferences.jsxAttributeCompletionStyle%
+-- Preferred style for JSX attribute completions.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"?
--- %typescript.preferences.organizeImports%
+-- Advanced preferences that control how imports are ordered.
 ---@field organizeImports lsp.ts_ls.OrganizeImports?
--- %typescript.preferences.preferTypeOnlyAutoImports%
+-- Include the `type` keyword in auto-imports whenever possible. Requires using TypeScript 5.3+ in the workspace.
 ---@field preferTypeOnlyAutoImports boolean?
--- %typescript.preferences.quoteStyle%
+-- Preferred quote style to use for Quick Fixes.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field quoteStyle "auto" | "single" | "double"?
--- %typescript.preferences.renameMatchingJsxTags%
+-- When on a JSX tag, try to rename the matching tag instead of renaming the symbol. Requires using TypeScript 5.1+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field renameMatchingJsxTags boolean?
--- %typescript.preferences.useAliasesForRenames%
+-- Enable/disable introducing aliases for object shorthand properties during renames.
 -- 
 -- ```lua
 -- default = true
@@ -23997,13 +24296,13 @@
 ---@field useAliasesForRenames boolean?
 
 ---@class lsp.ts_ls.ReferencesCodeLens
--- %configuration.referencesCodeLens.enabled%
+-- Enable/disable references CodeLens in JavaScript and TypeScript files. This CodeLens shows the number of references for classes and exported functions and allows you to peek or navigate to them.
 ---@field enabled boolean?
--- %configuration.referencesCodeLens.showOnAllFunctions%
+-- Enable/disable the [references CodeLens](#js/ts.referencesCodeLens.enabled) on all functions in JavaScript and TypeScript files.
 ---@field showOnAllFunctions boolean?
 
 ---@class lsp.ts_ls.ClassMemberSnippets
--- %configuration.suggest.classMemberSnippets.enabled%
+-- Enable/disable snippet completions for class members.
 -- 
 -- ```lua
 -- default = true
@@ -24011,13 +24310,13 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Jsdoc
--- %configuration.suggest.jsdoc.enabled%
+-- Enable/disable suggestion to complete JSDoc comments.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.suggest.jsdoc.generateReturns%
+-- Enable/disable generating `@returns` annotations for JSDoc templates.
 -- 
 -- ```lua
 -- default = true
@@ -24025,7 +24324,7 @@
 ---@field generateReturns boolean?
 
 ---@class lsp.ts_ls.ObjectLiteralMethodSnippets
--- %configuration.suggest.objectLiteralMethodSnippets.enabled%
+-- Enable/disable snippet completions for methods in object literals.
 -- 
 -- ```lua
 -- default = true
@@ -24033,42 +24332,42 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Suggest
--- %configuration.suggest.autoImports%
+-- Enable/disable auto import suggestions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoImports boolean?
 ---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets?
--- %configuration.suggest.completeFunctionCalls%
+-- Complete functions with their parameter signature.
 ---@field completeFunctionCalls boolean?
--- %typescript.suggest.enabled%
+-- Enable/disable autocomplete suggestions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.suggest.includeAutomaticOptionalChainCompletions%
+-- Enable/disable showing completions on potentially undefined values that insert an optional chain call. Requires strict null checks to be enabled.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeAutomaticOptionalChainCompletions boolean?
--- %configuration.suggest.includeCompletionsForImportStatements%
+-- Enable/disable auto-import-style completions on partially-typed import statements.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeCompletionsForImportStatements boolean?
 ---@field jsdoc lsp.ts_ls.Jsdoc?
--- %configuration.suggest.names%
+-- Enable/disable including unique names from the file in JavaScript suggestions. Note that name suggestions are always disabled in JavaScript code that is semantically checked using `@ts-check` or `checkJs`.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field names boolean?
 ---@field objectLiteralMethodSnippets lsp.ts_ls.ObjectLiteralMethodSnippets?
--- %configuration.suggest.paths%
+-- Enable/disable suggestions for paths in import statements and require calls.
 -- 
 -- ```lua
 -- default = true
@@ -24076,7 +24375,7 @@
 ---@field paths boolean?
 
 ---@class lsp.ts_ls.SuggestionActions
--- %configuration.suggestionActions.enabled%
+-- Enable/disable suggestion diagnostics for JavaScript and TypeScript files in the editor.
 -- 
 -- ```lua
 -- default = true
@@ -24084,7 +24383,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Tsc
--- %typescript.tsc.autoDetect%
+-- Controls auto detection of tsc tasks.
 -- 
 -- ```lua
 -- default = "on"
@@ -24092,13 +24391,18 @@
 ---@field autoDetect "on" | "off" | "build" | "watch"?
 
 ---@class lsp.ts_ls.Tsdk
--- %typescript.tsdk.desc%
+-- Specifies the folder path to the tsserver and `lib*.d.ts` files under a TypeScript install to use for IntelliSense, for example: `./node_modules/typescript/lib`.
+-- 
+-- - When specified as a user setting, the TypeScript version from `typescript.tsdk` automatically replaces the built-in TypeScript version.
+-- - When specified as a workspace setting, `typescript.tsdk` allows you to switch to use that workspace version of TypeScript for IntelliSense with the `TypeScript: Select TypeScript version` command.
+-- 
+-- See the [TypeScript documentation](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-newer-typescript-versions) for more detail about managing TypeScript versions.
 ---@field path string?
--- %typescript.enablePromptUseWorkspaceTsdk%
+-- Enables prompting of users to use the TypeScript version configured in the workspace for Intellisense.
 ---@field promptToUseWorkspaceVersion boolean?
 
 ---@class lsp.ts_ls.AutomaticTypeAcquisition
--- %configuration.automaticTypeAcquisition.enabled%
+-- Enable [automatic type acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition). Automatic type acquisition fetches `@types` packages from npm to improve IntelliSense for external libraries.
 -- 
 -- ```lua
 -- default = true
@@ -24106,10 +24410,10 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Experimental
--- %configuration.tsserver.experimental.enableProjectDiagnostics%
+-- Enables project wide error reporting.
 ---@field enableProjectDiagnostics boolean?
 
--- %configuration.tsserver.heapProfile%
+-- Configures heap profiling for TypeScript server.
 -- 
 -- ```lua
 -- default = {
@@ -24117,37 +24421,37 @@
 -- }
 -- ```
 ---@class lsp.ts_ls.HeapProfile
--- %configuration.tsserver.heapProfile.dir%
+-- Directory where TypeScript server writes heap profiles by passing `--heap-prof-dir`.
 ---@field dir string?
--- %configuration.tsserver.heapProfile.enabled%
+-- Enable heap profiling for TypeScript server by passing `--heap-prof`.
 ---@field enabled boolean?
--- %configuration.tsserver.heapProfile.interval%
+-- Sampling interval in bytes for TypeScript server heap profiling by passing `--heap-prof-interval`.
 ---@field interval number?
 
 ---@class lsp.ts_ls.Node
--- %configuration.tsserver.nodePath%
+-- Run TS Server on a custom Node installation. This can be a path to a Node executable, or `node` if you want VS Code to detect a Node installation.
 ---@field path string?
 
 ---@class lsp.ts_ls.Npm
--- %typescript.npm%
+-- Specifies the path to the npm executable used for [Automatic Type Acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition).
 ---@field path string?
 
 ---@class lsp.ts_ls.Tracing
--- %typescript.tsserver.enableTracing%
+-- Enables tracing TS server performance to a directory. These trace files can be used to diagnose TS Server performance issues. The log may contain file paths, source code, and other potentially sensitive information from your project.
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.ProjectWideIntellisense
--- %configuration.tsserver.web.projectWideIntellisense.enabled%
+-- Enable/disable project-wide IntelliSense on web. Requires that VS Code is running in a trusted context.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.tsserver.web.projectWideIntellisense.suppressSemanticErrors%
+-- Suppresses semantic errors on web even when project wide IntelliSense is enabled. This is always on when project wide IntelliSense is not enabled or available. See `#js/ts.tsserver.web.projectWideIntellisense.enabled#`
 ---@field suppressSemanticErrors boolean?
 
 ---@class lsp.ts_ls.TypeAcquisition
--- %configuration.tsserver.web.typeAcquisition.enabled%
+-- Enable/disable package acquisition on the web. This enables IntelliSense for imported packages. Requires `#js/ts.tsserver.web.projectWideIntellisense.enabled#`. Currently not supported for Safari.
 -- 
 -- ```lua
 -- default = true
@@ -24160,16 +24464,16 @@
 
 ---@class lsp.ts_ls.Tsserver
 ---@field automaticTypeAcquisition lsp.ts_ls.AutomaticTypeAcquisition?
--- %typescript.check.npmIsInstalled%
+-- Check if npm is installed for [Automatic Type Acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition).
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field checkNpmIsInstalled boolean?
--- %configuration.tsserver.diagnosticDir%
+-- Directory where TypeScript server writes Node diagnostic output by passing `--diagnostic-dir`.
 ---@field diagnosticDir string?
 ---@field experimental lsp.ts_ls.Experimental?
--- %configuration.tsserver.heapProfile%
+-- Configures heap profiling for TypeScript server.
 -- 
 -- ```lua
 -- default = {
@@ -24177,19 +24481,19 @@
 -- }
 -- ```
 ---@field heapProfile lsp.ts_ls.HeapProfile?
--- %configuration.tsserver.heapSnapshot%
+-- Controls how many near-heap-limit snapshots TypeScript server writes by passing `--heapsnapshot-near-heap-limit`. Set to `0` to disable.
 -- 
 -- ```lua
 -- default = 0
 -- ```
 ---@field heapSnapshot number?
--- %typescript.tsserver.log%
+-- Enables logging of the TS server to a file. This log can be used to diagnose TS Server issues. The log may contain file paths, source code, and other potentially sensitive information from your project.
 -- 
 -- ```lua
 -- default = "off"
 -- ```
 ---@field log "off" | "terse" | "normal" | "verbose" | "requestTime"?
--- %configuration.tsserver.maxMemory%
+-- The maximum amount of memory (in MB) to allocate to the TypeScript server process. To use a memory limit greater than 4 GB, use `#js/ts.tsserver.node.path#` to run TS Server with a custom Node installation.
 -- 
 -- ```lua
 -- default = 3072
@@ -24197,20 +24501,20 @@
 ---@field maxMemory number?
 ---@field node lsp.ts_ls.Node?
 ---@field npm lsp.ts_ls.Npm?
--- %typescript.tsserver.pluginPaths%
+-- Additional paths to discover TypeScript Language Service plugins.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field pluginPaths string[]?
 ---@field tracing lsp.ts_ls.Tracing?
--- %configuration.tsserver.useSyntaxServer%
+-- Controls if TypeScript launches a dedicated server to more quickly handle syntax related operations, such as computing code folding.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field useSyntaxServer "always" | "never" | "auto"?
--- %configuration.tsserver.watchOptions%
+-- Configure which watching strategies should be used to keep track of files and directories.
 -- 
 -- ```lua
 -- default = "vscode"
@@ -24219,7 +24523,7 @@
 ---@field web lsp.ts_ls.Web?
 
 ---@class lsp.ts_ls.UpdateImportsOnFileMove
--- %typescript.updateImportsOnFileMove.enabled%
+-- Enable/disable automatic updating of import paths when you rename or move a file in VS Code.
 -- 
 -- ```lua
 -- default = "prompt"
@@ -24227,7 +24531,7 @@
 ---@field enabled "prompt" | "always" | "never"?
 
 ---@class lsp.ts_ls.UpdateImportsOnPaste
--- %configuration.updateImportsOnPaste%
+-- Automatically update imports when pasting code. Requires TypeScript 5.6+.
 -- 
 -- ```lua
 -- default = true
@@ -24235,7 +24539,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Validate
--- %configuration.validate.enable%
+-- Enable/disable JavaScript and TypeScript validation.
 -- 
 -- ```lua
 -- default = true
@@ -24243,13 +24547,13 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.WorkspaceSymbols
--- %typescript.workspaceSymbols.excludeLibrarySymbols%
+-- Exclude symbols that come from library files in `Go to Symbol in Workspace` results. Requires using TypeScript 5.3+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field excludeLibrarySymbols boolean?
--- %typescript.workspaceSymbols.scope%
+-- Controls which files are searched by [Go to Symbol in Workspace](https://code.visualstudio.com/docs/editor/editingevolved#_open-symbol-by-name).
 -- 
 -- ```lua
 -- default = "allOpenProjects"
@@ -24264,17 +24568,17 @@
 ---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens?
 ---@field implicitProjectConfig lsp.ts_ls.ImplicitProjectConfig?
 ---@field inlayHints lsp.ts_ls.InlayHints?
--- %typescript.locale%
+-- Sets the locale used to report JavaScript and TypeScript errors. Defaults to use VS Code's locale.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field locale "auto" | "de" | "es" | "en" | "fr" | "it" | "ja" | "ko" | "ru" | "zh-CN" | "zh-TW"?
--- %configuration.preferGoToSourceDefinition%
+-- Makes `Go to Definition` avoid type declaration files when possible by triggering `Go to Source Definition` instead. This allows `Go to Source Definition` to be triggered with the mouse gesture.
 ---@field preferGoToSourceDefinition boolean?
 ---@field preferences lsp.ts_ls.Preferences?
 ---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
--- %typescript.reportStyleChecksAsWarnings%
+-- Report style checks as warnings.
 -- 
 -- ```lua
 -- default = true
@@ -24291,7 +24595,7 @@
 ---@field workspaceSymbols lsp.ts_ls.WorkspaceSymbols?
 
 ---@class lsp.ts_ls.Check
--- %typescript.check.npmIsInstalled%
+-- Check if npm is installed for [Automatic Type Acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition).
 -- 
 -- ```lua
 -- default = true
@@ -24299,83 +24603,83 @@
 ---@field npmIsInstalled boolean?
 
 ---@class lsp.ts_ls.Experimental
--- %typescript.useTsgo%
+-- Disables TypeScript and JavaScript language features to allow usage of the TypeScript Go experimental extension. Requires TypeScript Go to be installed and configured. Requires reloading extensions after changing this setting.
 ---@field useTsgo boolean?
 
 ---@class lsp.ts_ls.Format
--- %typescript.format.enable%
+-- Enable/disable default TypeScript formatter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enable boolean?
--- %format.indentSwitchCase%
+-- Indent case clauses in switch statements. Requires using TypeScript 5.1+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field indentSwitchCase boolean?
--- %format.insertSpaceAfterCommaDelimiter%
+-- Defines space handling after a comma delimiter.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterCommaDelimiter boolean?
--- %format.insertSpaceAfterConstructor%
+-- Defines space handling after the constructor keyword.
 ---@field insertSpaceAfterConstructor boolean?
--- %format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%
+-- Defines space handling after function keyword for anonymous functions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterFunctionKeywordForAnonymousFunctions boolean?
--- %format.insertSpaceAfterKeywordsInControlFlowStatements%
+-- Defines space handling after keywords in a control flow statement.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterKeywordsInControlFlowStatements boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces%
+-- Defines space handling after opening and before closing empty braces.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterOpeningAndBeforeClosingEmptyBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%
+-- Defines space handling after opening and before closing JSX expression braces.
 ---@field insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%
+-- Defines space handling after opening and before closing non-empty braces.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%
+-- Defines space handling after opening and before closing non-empty brackets.
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%
+-- Defines space handling after opening and before closing non-empty parenthesis.
 ---@field insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis boolean?
--- %format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%
+-- Defines space handling after opening and before closing template string braces.
 ---@field insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces boolean?
--- %format.insertSpaceAfterSemicolonInForStatements%
+-- Defines space handling after a semicolon in a for statement.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceAfterSemicolonInForStatements boolean?
--- %format.insertSpaceAfterTypeAssertion%
+-- Defines space handling after type assertions in TypeScript.
 ---@field insertSpaceAfterTypeAssertion boolean?
--- %format.insertSpaceBeforeAndAfterBinaryOperators%
+-- Defines space handling after a binary operator.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field insertSpaceBeforeAndAfterBinaryOperators boolean?
--- %format.insertSpaceBeforeFunctionParenthesis%
+-- Defines space handling before function argument parentheses.
 ---@field insertSpaceBeforeFunctionParenthesis boolean?
--- %format.placeOpenBraceOnNewLineForControlBlocks%
+-- Defines whether an open brace is put onto a new line for control blocks or not.
 ---@field placeOpenBraceOnNewLineForControlBlocks boolean?
--- %format.placeOpenBraceOnNewLineForFunctions%
+-- Defines whether an open brace is put onto a new line for functions or not.
 ---@field placeOpenBraceOnNewLineForFunctions boolean?
--- %format.semicolons%
+-- Defines handling of optional semicolons.
 -- 
 -- ```lua
 -- default = "ignore"
@@ -24383,29 +24687,49 @@
 ---@field semicolons "ignore" | "insert" | "remove"?
 
 ---@class lsp.ts_ls.ImplementationsCodeLens
--- %configuration.implementationsCodeLens.enabled%
+-- Enable/disable implementations CodeLens in TypeScript files. This CodeLens shows the implementers of TypeScript interfaces.
 ---@field enabled boolean?
--- %configuration.implementationsCodeLens.showOnAllClassMethods%
+-- Enable/disable showing [implementations CodeLens](#js/ts.implementationsCodeLens.enabled) above all TypeScript class methods instead of only on abstract methods.
 ---@field showOnAllClassMethods boolean?
--- %configuration.implementationsCodeLens.showOnInterfaceMethods%
+-- Enable/disable [implementations CodeLens](#js/ts.implementationsCodeLens.enabled) on TypeScript interface methods.
 ---@field showOnInterfaceMethods boolean?
 
 ---@class lsp.ts_ls.EnumMemberValues
--- %configuration.inlayHints.enumMemberValues.enabled%
+-- Enable/disable inlay hints for member values in enum declarations:
+-- ```typescript
+-- 
+-- enum MyValue {
+-- 	A /* = 0 */;
+-- 	B /* = 1 */;
+-- }
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.FunctionLikeReturnTypes
--- %configuration.inlayHints.functionLikeReturnTypes.enabled%
+-- Enable/disable inlay hints for implicit return types on function signatures:
+-- ```typescript
+-- 
+-- function foo() /* :number */ {
+-- 	return Date.now();
+-- } 
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.ParameterNames
--- %configuration.inlayHints.parameterNames.enabled%
+-- Enable/disable inlay hints for parameter names:
+-- ```typescript
+-- 
+-- parseInt(/* str: */ '123', /* radix: */ 8)
+--  
+-- ```
 -- 
 -- ```lua
 -- default = "none"
 -- ```
 ---@field enabled "none" | "literals" | "all"?
--- %configuration.inlayHints.parameterNames.suppressWhenArgumentMatchesName%
+-- Suppress parameter name hints on arguments whose text is identical to the parameter name.
 -- 
 -- ```lua
 -- default = true
@@ -24413,17 +24737,34 @@
 ---@field suppressWhenArgumentMatchesName boolean?
 
 ---@class lsp.ts_ls.ParameterTypes
--- %configuration.inlayHints.parameterTypes.enabled%
+-- Enable/disable inlay hints for implicit parameter types:
+-- ```typescript
+-- 
+-- el.addEventListener('click', e /* :MouseEvent */ => ...)
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.PropertyDeclarationTypes
--- %configuration.inlayHints.propertyDeclarationTypes.enabled%
+-- Enable/disable inlay hints for implicit types on property declarations:
+-- ```typescript
+-- 
+-- class Foo {
+-- 	prop /* :number */ = Date.now();
+-- }
+--  
+-- ```
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.VariableTypes
--- %configuration.inlayHints.variableTypes.enabled%
+-- Enable/disable inlay hints for implicit variable types:
+-- ```typescript
+-- 
+-- const foo /* :number */ = Date.now();
+--  
+-- ```
 ---@field enabled boolean?
--- %configuration.inlayHints.variableTypes.suppressWhenTypeMatchesName%
+-- Suppress type hints on variables whose name is identical to the type name.
 -- 
 -- ```lua
 -- default = true
@@ -24438,33 +24779,33 @@
 ---@field propertyDeclarationTypes lsp.ts_ls.PropertyDeclarationTypes?
 ---@field variableTypes lsp.ts_ls.VariableTypes?
 
--- %typescript.preferences.organizeImports%
+-- Advanced preferences that control how imports are ordered.
 ---@class lsp.ts_ls.OrganizeImports
--- %typescript.preferences.organizeImports.accentCollation%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Compare characters with diacritical marks as unequal to base character.
 ---@field accentCollation boolean?
--- %typescript.preferences.organizeImports.caseFirst%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`, and `organizeImports.caseSensitivity` is not `caseInsensitive`. Indicates whether upper-case will sort before lower-case.
 -- 
 -- ```lua
 -- default = "default"
 -- ```
 ---@field caseFirst "default" | "upper" | "lower"?
--- %typescript.preferences.organizeImports.caseSensitivity%
+-- Specifies how imports should be sorted with regards to case-sensitivity. If `auto` or unspecified, we will detect the case-sensitivity per file
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field caseSensitivity "auto" | "caseInsensitive" | "caseSensitive"?
--- %typescript.preferences.organizeImports.locale%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Overrides the locale used for collation. Specify `auto` to use the UI locale.
 ---@field locale string?
--- %typescript.preferences.organizeImports.numericCollation%
+-- Requires `organizeImports.unicodeCollation: 'unicode'`. Sort numeric strings by integer value.
 ---@field numericCollation boolean?
--- %typescript.preferences.organizeImports.typeOrder%
+-- Specify how type-only named imports should be sorted.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field typeOrder "auto" | "last" | "inline" | "first"?
--- %typescript.preferences.organizeImports.unicodeCollation%
+-- Specify whether to sort imports using Unicode or Ordinal collation.
 -- 
 -- ```lua
 -- default = "ordinal"
@@ -24472,51 +24813,56 @@
 ---@field unicodeCollation "ordinal" | "unicode"?
 
 ---@class lsp.ts_ls.Preferences
--- %typescript.preferences.autoImportFileExcludePatterns%
+-- Specify glob patterns of files to exclude from auto imports. Relative paths are resolved relative to the workspace root. Patterns are evaluated using tsconfig.json [`exclude`](https://www.typescriptlang.org/tsconfig#exclude) semantics.
 ---@field autoImportFileExcludePatterns string[]?
--- %typescript.preferences.autoImportSpecifierExcludeRegexes%
+-- Specify regular expressions to exclude auto imports with matching import specifiers. Examples:
+-- 
+-- - `^node:`
+-- - `lib/internal` (slashes don't need to be escaped...)
+-- - `/lib\/internal/i` (...unless including surrounding slashes for `i` or `u` flags)
+-- - `^lodash$` (only allow subpath imports from lodash)
 ---@field autoImportSpecifierExcludeRegexes string[]?
--- %typescript.preferences.importModuleSpecifier%
+-- Preferred path style for auto imports.
 -- 
 -- ```lua
 -- default = "shortest"
 -- ```
 ---@field importModuleSpecifier "shortest" | "relative" | "non-relative" | "project-relative"?
--- %typescript.preferences.importModuleSpecifierEnding%
+-- Preferred path ending for auto imports.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field importModuleSpecifierEnding "auto" | "minimal" | "index" | "js"?
--- %typescript.preferences.includePackageJsonAutoImports%
+-- Enable/disable searching `package.json` dependencies for available auto imports.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field includePackageJsonAutoImports "auto" | "on" | "off"?
--- %typescript.preferences.jsxAttributeCompletionStyle%
+-- Preferred style for JSX attribute completions.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field jsxAttributeCompletionStyle "auto" | "braces" | "none"?
--- %typescript.preferences.organizeImports%
+-- Advanced preferences that control how imports are ordered.
 ---@field organizeImports lsp.ts_ls.OrganizeImports?
--- %typescript.preferences.preferTypeOnlyAutoImports%
+-- Include the `type` keyword in auto-imports whenever possible. Requires using TypeScript 5.3+ in the workspace.
 ---@field preferTypeOnlyAutoImports boolean?
--- %typescript.preferences.quoteStyle%
+-- Preferred quote style to use for Quick Fixes.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field quoteStyle "auto" | "single" | "double"?
--- %typescript.preferences.renameMatchingJsxTags%
+-- When on a JSX tag, try to rename the matching tag instead of renaming the symbol. Requires using TypeScript 5.1+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field renameMatchingJsxTags boolean?
--- %typescript.preferences.useAliasesForRenames%
+-- Enable/disable introducing aliases for object shorthand properties during renames.
 -- 
 -- ```lua
 -- default = true
@@ -24524,13 +24870,13 @@
 ---@field useAliasesForRenames boolean?
 
 ---@class lsp.ts_ls.ReferencesCodeLens
--- %configuration.referencesCodeLens.enabled%
+-- Enable/disable references CodeLens in JavaScript and TypeScript files. This CodeLens shows the number of references for classes and exported functions and allows you to peek or navigate to them.
 ---@field enabled boolean?
--- %configuration.referencesCodeLens.showOnAllFunctions%
+-- Enable/disable the [references CodeLens](#js/ts.referencesCodeLens.enabled) on all functions in JavaScript and TypeScript files.
 ---@field showOnAllFunctions boolean?
 
 ---@class lsp.ts_ls.ClassMemberSnippets
--- %configuration.suggest.classMemberSnippets.enabled%
+-- Enable/disable snippet completions for class members.
 -- 
 -- ```lua
 -- default = true
@@ -24538,7 +24884,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Jsdoc
--- %configuration.suggest.jsdoc.generateReturns%
+-- Enable/disable generating `@returns` annotations for JSDoc templates.
 -- 
 -- ```lua
 -- default = true
@@ -24546,7 +24892,7 @@
 ---@field generateReturns boolean?
 
 ---@class lsp.ts_ls.ObjectLiteralMethodSnippets
--- %configuration.suggest.objectLiteralMethodSnippets.enabled%
+-- Enable/disable snippet completions for methods in object literals.
 -- 
 -- ```lua
 -- default = true
@@ -24554,34 +24900,34 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Suggest
--- %configuration.suggest.autoImports%
+-- Enable/disable auto import suggestions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoImports boolean?
 ---@field classMemberSnippets lsp.ts_ls.ClassMemberSnippets?
--- %configuration.suggest.completeFunctionCalls%
+-- Complete functions with their parameter signature.
 ---@field completeFunctionCalls boolean?
--- %configuration.suggest.jsdoc.enabled%
+-- Enable/disable suggestion to complete JSDoc comments.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field completeJSDocs boolean?
--- %typescript.suggest.enabled%
+-- Enable/disable autocomplete suggestions.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.suggest.includeAutomaticOptionalChainCompletions%
+-- Enable/disable showing completions on potentially undefined values that insert an optional chain call. Requires strict null checks to be enabled.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field includeAutomaticOptionalChainCompletions boolean?
--- %configuration.suggest.includeCompletionsForImportStatements%
+-- Enable/disable auto-import-style completions on partially-typed import statements.
 -- 
 -- ```lua
 -- default = true
@@ -24589,7 +24935,7 @@
 ---@field includeCompletionsForImportStatements boolean?
 ---@field jsdoc lsp.ts_ls.Jsdoc?
 ---@field objectLiteralMethodSnippets lsp.ts_ls.ObjectLiteralMethodSnippets?
--- %configuration.suggest.paths%
+-- Enable/disable suggestions for paths in import statements and require calls.
 -- 
 -- ```lua
 -- default = true
@@ -24597,7 +24943,7 @@
 ---@field paths boolean?
 
 ---@class lsp.ts_ls.SuggestionActions
--- %typescript.suggestionActions.enabled%
+-- Enable/disable suggestion diagnostics for TypeScript files in the editor.
 -- 
 -- ```lua
 -- default = true
@@ -24605,7 +24951,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Tsc
--- %typescript.tsc.autoDetect%
+-- Controls auto detection of tsc tasks.
 -- 
 -- ```lua
 -- default = "on"
@@ -24613,21 +24959,21 @@
 ---@field autoDetect "on" | "off" | "build" | "watch"?
 
 ---@class lsp.ts_ls.Experimental
--- %configuration.tsserver.experimental.enableProjectDiagnostics%
+-- Enables project wide error reporting.
 ---@field enableProjectDiagnostics boolean?
 
 ---@class lsp.ts_ls.ProjectWideIntellisense
--- %configuration.tsserver.web.projectWideIntellisense.enabled%
+-- Enable/disable project-wide IntelliSense on web. Requires that VS Code is running in a trusted context.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.tsserver.web.projectWideIntellisense.suppressSemanticErrors%
+-- Suppresses semantic errors on web even when project wide IntelliSense is enabled. This is always on when project wide IntelliSense is not enabled or available. See `#js/ts.tsserver.web.projectWideIntellisense.enabled#`
 ---@field suppressSemanticErrors boolean?
 
 ---@class lsp.ts_ls.TypeAcquisition
--- %configuration.tsserver.web.typeAcquisition.enabled%
+-- Enable/disable package acquisition on the web. This enables IntelliSense for imported packages. Requires `#js/ts.tsserver.web.projectWideIntellisense.enabled#`. Currently not supported for Safari.
 -- 
 -- ```lua
 -- default = true
@@ -24639,36 +24985,36 @@
 ---@field typeAcquisition lsp.ts_ls.TypeAcquisition?
 
 ---@class lsp.ts_ls.Tsserver
--- %typescript.tsserver.enableTracing%
+-- Enables tracing TS server performance to a directory. These trace files can be used to diagnose TS Server performance issues. The log may contain file paths, source code, and other potentially sensitive information from your project.
 ---@field enableTracing boolean?
 ---@field experimental lsp.ts_ls.Experimental?
--- %typescript.tsserver.log%
+-- Enables logging of the TS server to a file. This log can be used to diagnose TS Server issues. The log may contain file paths, source code, and other potentially sensitive information from your project.
 -- 
 -- ```lua
 -- default = "off"
 -- ```
 ---@field log "off" | "terse" | "normal" | "verbose" | "requestTime"?
--- %configuration.tsserver.maxTsServerMemory%
+-- The maximum amount of memory (in MB) to allocate to the TypeScript server process. To use a memory limit greater than 4 GB, use `#js/ts.tsserver.node.path#` to run TS Server with a custom Node installation.
 -- 
 -- ```lua
 -- default = 3072
 -- ```
 ---@field maxTsServerMemory number?
--- %configuration.tsserver.nodePath%
+-- Run TS Server on a custom Node installation. This can be a path to a Node executable, or `node` if you want VS Code to detect a Node installation.
 ---@field nodePath string?
--- %typescript.tsserver.pluginPaths%
+-- Additional paths to discover TypeScript Language Service plugins.
 -- 
 -- ```lua
 -- default = {}
 -- ```
 ---@field pluginPaths string[]?
--- %configuration.tsserver.useSyntaxServer%
+-- Controls if TypeScript launches a dedicated server to more quickly handle syntax related operations, such as computing code folding.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field useSyntaxServer "always" | "never" | "auto"?
--- %configuration.tsserver.watchOptions%
+-- Configure which watching strategies should be used to keep track of files and directories.
 -- 
 -- ```lua
 -- default = "vscode"
@@ -24677,7 +25023,7 @@
 ---@field web lsp.ts_ls.Web?
 
 ---@class lsp.ts_ls.UpdateImportsOnFileMove
--- %typescript.updateImportsOnFileMove.enabled%
+-- Enable/disable automatic updating of import paths when you rename or move a file in VS Code.
 -- 
 -- ```lua
 -- default = "prompt"
@@ -24685,7 +25031,7 @@
 ---@field enabled "prompt" | "always" | "never"?
 
 ---@class lsp.ts_ls.UpdateImportsOnPaste
--- %configuration.updateImportsOnPaste%
+-- Automatically update imports when pasting code. Requires TypeScript 5.6+.
 -- 
 -- ```lua
 -- default = true
@@ -24693,7 +25039,7 @@
 ---@field enabled boolean?
 
 ---@class lsp.ts_ls.Validate
--- %typescript.validate.enable%
+-- Enable/disable TypeScript validation.
 -- 
 -- ```lua
 -- default = true
@@ -24701,13 +25047,13 @@
 ---@field enable boolean?
 
 ---@class lsp.ts_ls.WorkspaceSymbols
--- %typescript.workspaceSymbols.excludeLibrarySymbols%
+-- Exclude symbols that come from library files in `Go to Symbol in Workspace` results. Requires using TypeScript 5.3+ in the workspace.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field excludeLibrarySymbols boolean?
--- %typescript.workspaceSymbols.scope%
+-- Controls which files are searched by [Go to Symbol in Workspace](https://code.visualstudio.com/docs/editor/editingevolved#_open-symbol-by-name).
 -- 
 -- ```lua
 -- default = "allOpenProjects"
@@ -24715,34 +25061,34 @@
 ---@field scope "allOpenProjects" | "currentProject"?
 
 ---@class lsp.ts_ls.Typescript
--- %typescript.autoClosingTags%
+-- Enable/disable automatic closing of JSX tags.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field autoClosingTags boolean?
 ---@field check lsp.ts_ls.Check?
--- %typescript.disableAutomaticTypeAcquisition%
+-- Disables [automatic type acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition). Automatic type acquisition fetches `@types` packages from npm to improve IntelliSense for external libraries.
 ---@field disableAutomaticTypeAcquisition boolean?
--- %typescript.enablePromptUseWorkspaceTsdk%
+-- Enables prompting of users to use the TypeScript version configured in the workspace for Intellisense.
 ---@field enablePromptUseWorkspaceTsdk boolean?
 ---@field experimental lsp.ts_ls.Experimental?
 ---@field format lsp.ts_ls.Format?
 ---@field implementationsCodeLens lsp.ts_ls.ImplementationsCodeLens?
 ---@field inlayHints lsp.ts_ls.InlayHints?
--- %typescript.locale%
+-- Sets the locale used to report JavaScript and TypeScript errors. Defaults to use VS Code's locale.
 -- 
 -- ```lua
 -- default = "auto"
 -- ```
 ---@field locale "auto" | "de" | "es" | "en" | "fr" | "it" | "ja" | "ko" | "ru" | "zh-CN" | "zh-TW"?
--- %typescript.npm%
+-- Specifies the path to the npm executable used for [Automatic Type Acquisition](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_typings-and-automatic-type-acquisition).
 ---@field npm string?
--- %configuration.preferGoToSourceDefinition%
+-- Makes `Go to Definition` avoid type declaration files when possible by triggering `Go to Source Definition` instead. This allows `Go to Source Definition` to be triggered with the mouse gesture.
 ---@field preferGoToSourceDefinition boolean?
 ---@field preferences lsp.ts_ls.Preferences?
 ---@field referencesCodeLens lsp.ts_ls.ReferencesCodeLens?
--- %typescript.reportStyleChecksAsWarnings%
+-- Report style checks as warnings.
 -- 
 -- ```lua
 -- default = true
@@ -24751,7 +25097,12 @@
 ---@field suggest lsp.ts_ls.Suggest?
 ---@field suggestionActions lsp.ts_ls.SuggestionActions?
 ---@field tsc lsp.ts_ls.Tsc?
--- %typescript.tsdk.desc%
+-- Specifies the folder path to the tsserver and `lib*.d.ts` files under a TypeScript install to use for IntelliSense, for example: `./node_modules/typescript/lib`.
+-- 
+-- - When specified as a user setting, the TypeScript version from `typescript.tsdk` automatically replaces the built-in TypeScript version.
+-- - When specified as a workspace setting, `typescript.tsdk` allows you to switch to use that workspace version of TypeScript for IntelliSense with the `TypeScript: Select TypeScript version` command.
+-- 
+-- See the [TypeScript documentation](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-newer-typescript-versions) for more detail about managing TypeScript versions.
 ---@field tsdk string?
 ---@field tsserver lsp.ts_ls.Tsserver?
 ---@field updateImportsOnFileMove lsp.ts_ls.UpdateImportsOnFileMove?
@@ -24801,17 +25152,17 @@
 ---@field typst-lsp lsp.typst_lsp.Typst-lsp?
 
 ---@class lsp.volar.AutoInsert
--- %configuration.autoInsert.bracketSpacing%
+-- Auto add space between double curly brackets: `{{|}}` -> `{{ | }}`
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field bracketSpacing boolean?
--- %configuration.autoInsert.dotValue%
+-- Auto-complete Ref value with `.value`.
 ---@field dotValue boolean?
 
 ---@class lsp.volar.CodeActions
--- %configuration.codeActions.askNewComponentName%
+-- Ask for new component name when extract component.
 -- 
 -- ```lua
 -- default = true
@@ -24819,15 +25170,15 @@
 ---@field askNewComponentName boolean?
 
 ---@class lsp.volar.Editor
--- %configuration.editor.focusMode%
+-- Fade top-level SFC tags.
 ---@field focusMode boolean?
--- %configuration.editor.reactivityVisualization%
+-- Reactivity system visualization.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field reactivityVisualization boolean?
--- %configuration.editor.templateInterpolationDecorators%
+-- Enhanced template interpolation highlighting.
 -- 
 -- ```lua
 -- default = true
@@ -24835,33 +25186,33 @@
 ---@field templateInterpolationDecorators boolean?
 
 ---@class lsp.volar.Script
--- %configuration.format.script.enabled%
+-- Enable formatting for `<script>` block.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.format.script.initialIndent%
+-- Initial indent for `<script>` block.
 ---@field initialIndent boolean?
 
 ---@class lsp.volar.Style
--- %configuration.format.style.enabled%
+-- Enable formatting for `<style>` block.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.format.style.initialIndent%
+-- Initial indent for `<style>` block.
 ---@field initialIndent boolean?
 
 ---@class lsp.volar.Template
--- %configuration.format.template.enabled%
+-- Enable formatting for `<template>` block.
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field enabled boolean?
--- %configuration.format.template.initialIndent%
+-- Initial indent for `<template>` block.
 -- 
 -- ```lua
 -- default = true
@@ -24872,7 +25223,7 @@
 ---@field script lsp.volar.Script?
 ---@field style lsp.volar.Style?
 ---@field template lsp.volar.Template?
--- %configuration.format.wrapAttributes%
+-- Wrap attributes.
 -- 
 -- ```lua
 -- default = "auto"
@@ -24880,45 +25231,69 @@
 ---@field wrapAttributes "auto" | "force" | "force-aligned" | "force-expand-multiline" | "aligned-multiple" | "preserve" | "preserve-aligned"?
 
 ---@class lsp.volar.Hover
--- %configuration.hover.rich%
+-- (Experimental) Enable rich hover for Vue components using type information (show props, events, slots, exposed in table format).
 ---@field rich boolean?
 
 ---@class lsp.volar.InlayHints
--- %configuration.inlayHints.destructuredProps%
+-- Show inlay hints for destructured props:
+-- 
+-- ```ts
+-- watch(() => /* props. */foo, () => { ... });
+-- ```
 ---@field destructuredProps boolean?
--- %configuration.inlayHints.inlineHandlerLeading%
+-- Show inlay hints for event argument in inline handlers:
+-- 
+-- ```html
+-- <Comp @foo="/* $event => */console.log($event)" />
+-- ```
 ---@field inlineHandlerLeading boolean?
--- %configuration.inlayHints.missingProps%
+-- Show inlay hints for missing required props:
+-- 
+-- ```html
+-- <Comp />
+-- <!-- ^ foo! -->
+-- ```
 ---@field missingProps boolean?
--- %configuration.inlayHints.optionsWrapper%
+-- Show inlay hints for component options wrapper for type support:
+-- 
+-- ```vue
+-- <script lang="ts">
+-- export default /* (await import('vue')).defineComponent( */{}/* ) */;
+-- </script>
+-- ```
 ---@field optionsWrapper boolean?
--- %configuration.inlayHints.vBindShorthand%
+-- Show inlay hints for v-bind shorthand:
+-- 
+-- ```html
+-- <Comp :foo />
+--      <!-- ^ ="foo" -->
+-- ```
 ---@field vBindShorthand boolean?
 
 ---@class lsp.volar.Server
--- %configuration.server.includeLanguages%
+-- Configure the languages for which the extension should be activated.
 -- 
 -- ```lua
 -- default = { "vue" }
 -- ```
 ---@field includeLanguages string[]?
--- %configuration.server.path%
+-- Path to the `@vue/language-server` module. If not set, the server will be loaded from the extension's bundled.
 ---@field path string?
 
 ---@class lsp.volar.Suggest
--- %configuration.suggest.componentNameCasing%
+-- Preferred component name case.
 -- 
 -- ```lua
 -- default = "preferPascalCase"
 -- ```
 ---@field componentNameCasing "preferKebabCase" | "preferPascalCase" | "alwaysKebabCase" | "alwaysPascalCase"?
--- %configuration.suggest.defineAssignment%
+-- Auto add `const props = ` before `defineProps` when selecting the completion item `props`. (also `emit` and `slots`)
 -- 
 -- ```lua
 -- default = true
 -- ```
 ---@field defineAssignment boolean?
--- %configuration.suggest.propNameCasing%
+-- Preferred attr name case.
 -- 
 -- ```lua
 -- default = "preferKebabCase"
@@ -24926,7 +25301,7 @@
 ---@field propNameCasing "preferKebabCase" | "preferCamelCase" | "alwaysKebabCase" | "alwaysCamelCase"?
 
 ---@class lsp.volar.Trace
--- %configuration.trace.server%
+-- Traces the communication between VS Code and the language server.
 -- 
 -- ```lua
 -- default = "off"

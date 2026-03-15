@@ -69,6 +69,19 @@
 --- default = true
 --- ```
 ---@field lua_ls_integration boolean|(fun():boolean)
+--- Controls %placeholder% string substitution in LSP schema descriptions.
+--- - true (default): use bundled English NLS files
+--- - false: disable substitution (raw %placeholders% visible)
+--- - string: path to a directory of per-LSP NLS JSON files (e.g. "/path/to/dir" containing jsonls.nls.json, lua_ls.nls.json, etc.)
+--- - table: flat `{ ["%key%"] = "value" }` NLS table applied to all LSPs
+--- - function(lsp_name) -> table: per-LSP resolver
+--- Note that only certain schemas support this, see the bundled *.nls.json files at
+--- ./after/codesettings-nls/*.nls.json
+--- 
+--- ```lua
+--- default = true
+--- ```
+---@field nls boolean|string|table|(fun(string):table)
 
 ---Builder class for constructing Codesettings configuration
 ---

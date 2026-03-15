@@ -11,7 +11,10 @@ M.index = {
   basedpyright = 'https://raw.githubusercontent.com/DetachHead/basedpyright/main/packages/vscode-pyright/package.json',
   bashls = 'https://raw.githubusercontent.com/bash-lsp/bash-language-server/master/vscode-client/package.json',
   clangd = 'https://raw.githubusercontent.com/clangd/vscode-clangd/master/package.json',
-  cssls = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/css-language-features/package.json',
+  cssls = {
+    schema = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/css-language-features/package.json',
+    nls = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/css-language-features/package.nls.json',
+  },
   dartls = 'https://raw.githubusercontent.com/Dart-Code/Dart-Code/master/package.json',
   denols = 'https://raw.githubusercontent.com/denoland/vscode_deno/main/package.json',
   elixirls = 'https://raw.githubusercontent.com/elixir-lsp/vscode-elixir-ls/master/package.json',
@@ -26,20 +29,35 @@ M.index = {
   hhvm = 'https://raw.githubusercontent.com/slackhq/vscode-hack/master/package.json',
   hie = 'https://raw.githubusercontent.com/alanz/vscode-hie-server/master/package.json',
   hls = 'https://raw.githubusercontent.com/haskell/vscode-haskell/refs/heads/master/package.json',
-  html = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/html-language-features/package.json',
+  html = {
+    schema = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/html-language-features/package.json',
+    nls = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/html-language-features/package.nls.json',
+  },
   intelephense = 'https://raw.githubusercontent.com/bmewburn/vscode-intelephense/master/package.json',
   java_language_server = 'https://raw.githubusercontent.com/georgewfraser/java-language-server/master/package.json',
   jdtls = 'https://raw.githubusercontent.com/redhat-developer/vscode-java/master/package.json',
-  jsonls = 'https://raw.githubusercontent.com/microsoft/vscode/master/extensions/json-language-features/package.json',
+  jsonls = {
+    schema = 'https://raw.githubusercontent.com/microsoft/vscode/master/extensions/json-language-features/package.json',
+    nls = 'https://raw.githubusercontent.com/microsoft/vscode/master/extensions/json-language-features/package.nls.json',
+  },
   julials = 'https://raw.githubusercontent.com/julia-vscode/julia-vscode/master/package.json',
   kotlin_language_server = 'https://raw.githubusercontent.com/fwcd/vscode-kotlin/master/package.json',
-  ltex = 'https://raw.githubusercontent.com/valentjn/vscode-ltex/develop/package.json',
-  lua_ls = 'https://raw.githubusercontent.com/LuaLS/vscode-lua/master/package.json',
+  ltex = {
+    schema = 'https://raw.githubusercontent.com/valentjn/vscode-ltex/develop/package.json',
+    nls = 'https://raw.githubusercontent.com/valentjn/vscode-ltex/develop/package.nls.json',
+  },
+  lua_ls = {
+    schema = 'https://raw.githubusercontent.com/LuaLS/vscode-lua/master/package.json',
+    nls = 'https://raw.githubusercontent.com/LuaLS/vscode-lua/master/package.nls.json',
+  },
   luau_lsp = 'https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/editors/code/package.json',
   nickel_ls = 'https://raw.githubusercontent.com/tweag/nickel/refs/heads/master/lsp/vscode-extension/package.json',
   nil_ls = 'https://raw.githubusercontent.com/oxalica/nil/refs/heads/main/editors/coc-nil/package.json',
   nixd = 'https://raw.githubusercontent.com/nix-community/nixd/refs/heads/main/nixd/docs/nixd-schema.json',
-  omnisharp = 'https://raw.githubusercontent.com/OmniSharp/omnisharp-vscode/master/package.json',
+  omnisharp = {
+    schema = 'https://raw.githubusercontent.com/OmniSharp/omnisharp-vscode/master/package.json',
+    nls = 'https://raw.githubusercontent.com/OmniSharp/omnisharp-vscode/master/package.nls.json',
+  },
   perlls = 'https://raw.githubusercontent.com/richterger/Perl-LanguageServer/master/clients/vscode/perl/package.json',
   perlnavigator = 'https://raw.githubusercontent.com/bscan/PerlNavigator/main/package.json',
   perlpls = 'https://raw.githubusercontent.com/FractalBoy/perl-language-server/master/client/package.json',
@@ -66,10 +84,19 @@ M.index = {
   svlangserver = 'https://raw.githubusercontent.com/eirikpre/VSCode-SystemVerilog/master/package.json',
   tailwindcss = 'https://raw.githubusercontent.com/tailwindlabs/tailwindcss-intellisense/master/packages/vscode-tailwindcss/package.json',
   terraformls = 'https://raw.githubusercontent.com/hashicorp/vscode-terraform/master/package.json',
-  tinymist = 'https://raw.githubusercontent.com/Myriad-Dreamin/tinymist/refs/heads/main/editors/vscode/package.json',
-  ts_ls = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/typescript-language-features/package.json',
+  tinymist = {
+    schema = 'https://raw.githubusercontent.com/Myriad-Dreamin/tinymist/refs/heads/main/editors/vscode/package.json',
+    nls = 'https://raw.githubusercontent.com/Myriad-Dreamin/tinymist/main/locales/tinymist-vscode.toml',
+  },
+  ts_ls = {
+    schema = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/typescript-language-features/package.json',
+    nls = 'https://raw.githubusercontent.com/microsoft/vscode/main/extensions/typescript-language-features/package.nls.json',
+  },
   typst_lsp = 'https://raw.githubusercontent.com/nvarner/typst-lsp/refs/heads/master/editors/vscode/package.json',
-  volar = 'https://raw.githubusercontent.com/vuejs/language-tools/master/extensions/vscode/package.json',
+  volar = {
+    schema = 'https://raw.githubusercontent.com/vuejs/language-tools/master/extensions/vscode/package.json',
+    nls = 'https://raw.githubusercontent.com/vuejs/language-tools/master/extensions/vscode/package.nls.json',
+  },
   vtsls = 'https://raw.githubusercontent.com/yioneko/vtsls/main/packages/service/configuration.schema.json',
   vuels = 'https://raw.githubusercontent.com/vuejs/vetur/master/package.json',
   wgls_analyzer = 'https://raw.githubusercontent.com/wgsl-analyzer/wgsl-analyzer/main/editors/code/package.json',
@@ -77,11 +104,6 @@ M.index = {
   zeta_note = 'https://raw.githubusercontent.com/artempyanykh/zeta-note-vscode/main/package.json',
   zls = 'https://raw.githubusercontent.com/zigtools/zls-vscode/master/package.json',
 }
-
----@class CodesettingsLspSchema
----@field name string the name of the LSP server
----@field package_url string url of the package.json of the LSP server
----@field settings_file string file of the settings json schema of the LSP server
 
 --- Collect all terminal object property paths from a schema.
 --- Terminal objects are properties with type="object" but no "properties" field,
@@ -123,12 +145,16 @@ end
 --- their keys dot-expanded (e.g., "yaml.schemas").
 ---@return table<string, boolean> terminal object paths
 function M.generate_terminal_objects_cache()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
+
   local schemas = BuildUtil.get_schemas()
   local terminals = {}
 
   for _, schema_meta in pairs(schemas) do
-    if Util.exists(schema_meta.settings_file) then
-      local ok, data = pcall(vim.fn.readfile, schema_meta.settings_file)
+    if Util.exists(schema_meta.schema_path) then
+      local ok, data = pcall(vim.fn.readfile, schema_meta.schema_path)
       if ok and type(data) == 'table' then
         local json_str = table.concat(data, '\n')
         local ok2, schema_json = pcall(vim.fn.json_decode, json_str)
@@ -176,9 +202,13 @@ local SpecialCases = {
   end,
 }
 
----@param schema CodesettingsLspSchema
+---@param schema CodesettingsSchemaFile
 function M.fetch_schema(schema)
-  local json = vim.json.decode(BuildUtil.fetch(schema.package_url)) or {}
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
+
+  local json = vim.json.decode(BuildUtil.fetch(schema.schema_url)) or {}
 
   local properties = vim.empty_dict()
   if SpecialCases[schema.name] then
@@ -213,6 +243,10 @@ end
 ---THIS WILL CALL `os.exit(1)` IF A SCHEMA CANNOT BE FETCHED.
 ---This is only meant to be called from a build script!
 function M.update_schemas()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
+
   local schemas = BuildUtil.get_schemas()
   local names = vim.tbl_keys(schemas)
   table.sort(names)
@@ -220,11 +254,81 @@ function M.update_schemas()
     local s = schemas[name]
     print(('Generating schema for %s'):format(name))
 
-    if not Util.exists(s.settings_file) then
+    if not Util.exists(s.schema_path) then
       local ok, schema = pcall(M.fetch_schema, s)
       if ok then
-        BuildUtil.write_file(s.settings_file, BuildUtil.json_format(schema))
+        BuildUtil.write_file(s.schema_path, BuildUtil.json_format(schema))
       else
+        os.exit(1)
+      end
+    end
+  end
+end
+
+---Normalize a raw NLS table to a flat { key = "English string" } map.
+---Handles two formats:
+---  JSON format: flat { key = "string" }
+---  TOML format: dotted keys expanded into nested tables by remarshal,
+---    with leaf nodes of the form { en = "string", zh = "..." }
+---@param raw table
+---@return table<string, string>
+local function flatten_dotted_toml(raw)
+  local out = {}
+
+  local function is_nls_leaf(node)
+    return type(node) == 'table' and (type(node.en) == 'string')
+  end
+
+  local function walk(node, path)
+    if type(node) ~= 'table' then
+      return
+    end
+    if is_nls_leaf(node) then
+      out[path] = node.en
+    else
+      for k, v in pairs(node) do
+        walk(v, path .. '.' .. k)
+      end
+    end
+  end
+
+  for k, v in pairs(raw) do
+    local key = k:match('^%%(.+)%%$') or k
+    if type(v) == 'string' then
+      out[key] = v
+    else
+      walk(v, key)
+    end
+  end
+
+  return out
+end
+
+---THIS WILL CALL `os.exit(1)` IF AN NLS FILE CANNOT BE FETCHED.
+---This is only meant to be called from a build script!
+function M.update_nls()
+  if #arg == 0 then
+    error('This function is part of a build tool and should not be called directly!')
+  end
+
+  local schemas = BuildUtil.get_schemas()
+  local names = vim.tbl_keys(schemas)
+  table.sort(names)
+  for _, name in ipairs(names) do
+    local s = schemas[name]
+    local nls_file = BuildUtil.nls_path(name)
+    if s.nls_url and not Util.exists(nls_file) then
+      print(('Generating NLS for %s'):format(name))
+      local ok, nls_table = pcall(function()
+        local content = BuildUtil.fetch(s.nls_url)
+        return s.nls_url:match('%.toml$') and flatten_dotted_toml(BuildUtil.toml_to_table(content))
+          or vim.json.decode(content)
+      end)
+
+      if ok and type(nls_table) == 'table' then
+        BuildUtil.write_file(nls_file, BuildUtil.json_format(nls_table))
+      else
+        print(('Warning: could not fetch/parse NLS for %s: %s'):format(name, tostring(nls_table)))
         os.exit(1)
       end
     end
@@ -237,20 +341,30 @@ function M.build()
   end
   M.clean()
   M.update_schemas()
+  M.update_nls()
 end
 
 function M.clean()
   if #arg == 0 then
     error('This function is part of a build tool and should not be called directly!')
   end
-  local files = vim.fn.expand(BuildUtil.path('after/codesettings-schemas/*.json'), false, true)
-  if type(files) == 'string' then
-    files = { files }
+  local schema_files = vim.fn.expand(BuildUtil.path('after/codesettings-schemas/*.json'), false, true)
+  if type(schema_files) == 'string' then
+    schema_files = { schema_files }
   end
-  for _, f in pairs(files) do
+  for _, f in pairs(schema_files) do
     Util.delete_file(f)
   end
-  print('Deleted ' .. #files .. ' schema files from after/codesettings-schemas/*')
+  print('Deleted ' .. #schema_files .. ' schema files from after/codesettings-schemas/*')
+
+  local nls_files = vim.fn.expand(BuildUtil.path('after/codesettings-nls/*.json'), false, true)
+  if type(nls_files) == 'string' then
+    nls_files = { nls_files }
+  end
+  for _, f in pairs(nls_files) do
+    Util.delete_file(f)
+  end
+  print('Deleted ' .. #nls_files .. ' NLS files from after/codesettings-nls/*')
 end
 
 return M

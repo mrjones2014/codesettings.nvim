@@ -88,6 +88,18 @@ This integration also works for emmylua_ls]],
 make sure you have the json tree-sitter parser installed for highlighting]],
     default = true,
   },
+  nls = {
+    type = { 'boolean', 'string', 'table', M.function_type({ 'string' }, 'table') },
+    description = [[Controls %placeholder% string substitution in LSP schema descriptions.
+- true (default): use bundled English NLS files
+- false: disable substitution (raw %placeholders% visible)
+- string: path to a directory of per-LSP NLS JSON files (e.g. "/path/to/dir" containing jsonls.nls.json, lua_ls.nls.json, etc.)
+- table: flat `{ ["%key%"] = "value" }` NLS table applied to all LSPs
+- function(lsp_name) -> table: per-LSP resolver
+Note that only certain schemas support this, see the bundled *.nls.json files at
+./after/codesettings-nls/*.nls.json]],
+    default = true,
+  },
   live_reload = {
     type = 'boolean',
     description = [[Enable live reloading of settings when config files change

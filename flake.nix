@@ -43,6 +43,7 @@
             buildInputs = with pkgs; [
               jq
               just
+              remarshal
               luajitPackages.busted
               luajitPackages.argparse
               selene

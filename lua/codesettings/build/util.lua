@@ -25,21 +25,32 @@ function M.schema_path(lsp_name)
   return M.path('after/codesettings-schemas/' .. lsp_name .. '.json')
 end
 
----@class CodesettingsBuildLspSchema
----@field name string the name of the LSP server
----@field package_url string url of the package.json of the LSP server
----@field settings_file string file of the settings json schema of the LSP server
+---Get NLS file path for an LSP server
+---@param lsp_name string
+---@return string
+function M.nls_path(lsp_name)
+  return M.path('after/codesettings-nls/' .. lsp_name .. '.nls.json')
+end
 
----@return table<string, CodesettingsBuildLspSchema>
+---@class CodesettingsSchemaFile
+---@field name string the name of the LSP server
+---@field schema_url string url of the package.json of the LSP server
+---@field nls_url string|nil url of the NLS JSON file for the LSP server
+---@field schema_path string file of the settings json schema of the LSP server
+
+---@return table<string, CodesettingsSchemaFile>
 function M.get_schemas()
   local index = require('codesettings.build.schemas').index
-  ---@type table<string, CodesettingsBuildLspSchema>
+  ---@type table<string, CodesettingsSchemaFile>
   local ret = {}
-  for server, package_json in pairs(index) do
+  for server, entry in pairs(index) do
+    local package_url = type(entry) == 'table' and entry.schema or entry --[[@as string]]
+    local nls = type(entry) == 'table' and entry.nls or nil
     ret[server] = {
       name = server,
-      package_url = package_json,
-      settings_file = M.schema_path(server),
+      schema_url = package_url,
+      nls_url = nls,
+      schema_path = M.schema_path(server),
     }
   end
   return ret
@@ -74,6 +85,27 @@ function M.fetch(url)
   local ret = fd:read('*a')
   fd:close()
   return ret
+end
+
+---Convert a TOML string to a Lua table using remarshal;
+---requires `remarshal` to be installed and available in PATH
+---@param toml string TOML content
+---@return table
+function M.toml_to_table(toml)
+  local tmp = os.tmpname()
+  M.write_file(tmp, toml)
+  local fd = io.popen('remarshal -if toml -of json < ' .. tmp)
+  if not fd then
+    os.remove(tmp)
+    error('Could not run remarshal (is it installed?)')
+  end
+  local json = fd:read('*a')
+  fd:close()
+  os.remove(tmp)
+  if json == '' then
+    error('remarshal produced no output')
+  end
+  return vim.json.decode(json)
 end
 
 ---Format JSON using jq;
