@@ -50,7 +50,7 @@ Click to expand list ~
 - basedpyright <https://github.com/DetachHead/basedpyright/tree/main/packages/vscode-pyright/package.json>
 - bashls <https://github.com/bash-lsp/bash-language-server/tree/master/vscode-client/package.json>
 - clangd <https://github.com/clangd/vscode-clangd/tree/master/package.json>
-- cssls <https://github.com/microsoft/vscode/tree/main/extensions/css-language-features/package.json>
+- cssls <https://github.com/microsoft/vscode/tree/main/extensions/css-language-features/package.json> (supports i18n)
 - dartls <https://github.com/Dart-Code/Dart-Code/tree/master/package.json>
 - denols <https://github.com/denoland/vscode_deno/tree/main/package.json>
 - elixirls <https://github.com/elixir-lsp/vscode-elixir-ls/tree/master/package.json>
@@ -65,20 +65,20 @@ Click to expand list ~
 - hhvm <https://github.com/slackhq/vscode-hack/tree/master/package.json>
 - hie <https://github.com/alanz/vscode-hie-server/tree/master/package.json>
 - hls <https://github.com/haskell/vscode-haskell/refs/heads/tree/master/package.json>
-- html <https://github.com/microsoft/vscode/tree/main/extensions/html-language-features/package.json>
+- html <https://github.com/microsoft/vscode/tree/main/extensions/html-language-features/package.json> (supports i18n)
 - intelephense <https://github.com/bmewburn/vscode-intelephense/tree/master/package.json>
 - java_language_server <https://github.com/georgewfraser/java-language-server/tree/master/package.json>
 - jdtls <https://github.com/redhat-developer/vscode-java/tree/master/package.json>
-- jsonls <https://github.com/microsoft/vscode/tree/master/extensions/json-language-features/package.json>
+- jsonls <https://github.com/microsoft/vscode/tree/master/extensions/json-language-features/package.json> (supports i18n)
 - julials <https://github.com/julia-vscode/julia-vscode/tree/master/package.json>
 - kotlin_language_server <https://github.com/fwcd/vscode-kotlin/tree/master/package.json>
-- ltex <https://github.com/valentjn/vscode-ltex/tree/develop/package.json>
-- lua_ls <https://github.com/LuaLS/vscode-lua/tree/master/package.json>
+- ltex <https://github.com/valentjn/vscode-ltex/tree/develop/package.json> (supports i18n)
+- lua_ls <https://github.com/LuaLS/vscode-lua/tree/master/package.json> (supports i18n)
 - luau_lsp <https://github.com/JohnnyMorganz/luau-lsp/tree/main/editors/code/package.json>
 - nickel_ls <https://github.com/tweag/nickel/refs/heads/tree/master/lsp/vscode-extension/package.json>
 - nil_ls <https://github.com/oxalica/nil/refs/heads/tree/main/editors/coc-nil/package.json>
 - nixd <https://github.com/nix-community/nixd/refs/heads/tree/main/nixd/docs/nixd-schema.json>
-- omnisharp <https://github.com/OmniSharp/omnisharp-vscode/tree/master/package.json>
+- omnisharp <https://github.com/OmniSharp/omnisharp-vscode/tree/master/package.json> (supports i18n)
 - perlls <https://github.com/richterger/Perl-LanguageServer/tree/master/clients/vscode/perl/package.json>
 - perlnavigator <https://github.com/bscan/PerlNavigator/tree/main/package.json>
 - perlpls <https://github.com/FractalBoy/perl-language-server/tree/master/client/package.json>
@@ -105,10 +105,10 @@ Click to expand list ~
 - svlangserver <https://github.com/eirikpre/VSCode-SystemVerilog/tree/master/package.json>
 - tailwindcss <https://github.com/tailwindlabs/tailwindcss-intellisense/tree/master/packages/vscode-tailwindcss/package.json>
 - terraformls <https://github.com/hashicorp/vscode-terraform/tree/master/package.json>
-- tinymist <https://github.com/Myriad-Dreamin/tinymist/refs/heads/tree/main/editors/vscode/package.json>
-- ts_ls <https://github.com/microsoft/vscode/tree/main/extensions/typescript-language-features/package.json>
+- tinymist <https://github.com/Myriad-Dreamin/tinymist/refs/heads/tree/main/editors/vscode/package.json> (supports i18n)
+- ts_ls <https://github.com/microsoft/vscode/tree/main/extensions/typescript-language-features/package.json> (supports i18n)
 - typst_lsp <https://github.com/nvarner/typst-lsp/refs/heads/tree/master/editors/vscode/package.json>
-- volar <https://github.com/vuejs/language-tools/tree/master/extensions/vscode/package.json>
+- volar <https://github.com/vuejs/language-tools/tree/master/extensions/vscode/package.json> (supports i18n)
 - vtsls <https://github.com/yioneko/vtsls/tree/main/packages/service/configuration.schema.json>
 - vuels <https://github.com/vuejs/vetur/tree/master/package.json>
 - wgls_analyzer <https://github.com/wgsl-analyzer/wgsl-analyzer/tree/main/editors/code/package.json>
