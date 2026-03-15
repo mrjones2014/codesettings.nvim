@@ -206,8 +206,9 @@ return {
 }
 ```
 
-To get autocomplete in Lua files, either set `config.lua_ls_integration = true`, or (for `lua_ls` only, not `emmylua_ls`) use `---@module 'codesettings'` which will tell `lua_ls` as though `codesettings`
-has been `require`d, then you will have access to `---@type lsp.server_name` generated type annotations.
+To get autocomplete in Lua files, either set `config.lua_ls_integration = true`, or (for `lua_ls` only, not `emmylua_ls`) use
+`---@module 'codesettings'` which will tell `lua_ls` to act as though `codesettings` has been `require`d, then you will
+have access to `---@type lsp.server_name` generated type annotations.
 
 ```lua
 -- for example, for lua_ls
