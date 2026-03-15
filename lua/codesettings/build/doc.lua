@@ -55,46 +55,38 @@ end
 ---Generate the default config section
 ---@return string
 local function generate_default_config()
-  local lines = {}
-  table.insert(lines, '```lua')
-  table.insert(lines, 'return {')
-  table.insert(lines, "  'mrjones2014/codesettings.nvim',")
-  table.insert(lines, "  -- You don't need to lazy load this plugin since it already")
-  table.insert(lines, '  -- lazy loads its constituent parts via `plugin/*` and `ftplugin/*` files')
-  table.insert(lines, '  lazy = false,')
-  table.insert(lines, '  -- these are the default settings just set `opts = {}` to use defaults')
-  table.insert(lines, '  opts = {')
+  local template = [[```lua
+return {
+  'mrjones2014/codesettings.nvim',
+  -- You don't need to lazy load this plugin since it already
+  -- lazy loads its constituent parts via `plugin/*` and `ftplugin/*` files
+  lazy = false,
+  -- these are the default settings just set `opts = {}` to use defaults
+  opts = {
+%s
+  },
+}
+```]]
 
-  -- Get sorted property names
+  local prop_lines = {}
   local props = vim.tbl_keys(ConfigSchema.properties)
   table.sort(props)
 
   for _, name in ipairs(props) do
     local prop = ConfigSchema.properties[name]
-
-    -- Add description as comment
     if prop.description then
-      -- Handle multi-line descriptions
       for line in prop.description:gmatch('[^\n]+') do
-        table.insert(lines, '    --- ' .. line)
+        table.insert(prop_lines, '    --- ' .. line)
       end
     end
-
-    -- Add the field with default value
     local default_val = prop.default
     if default_val == vim.NIL then
       default_val = nil
     end
-
-    local formatted_value = format_value(default_val)
-    table.insert(lines, '    ' .. name .. ' = ' .. formatted_value .. ',')
+    table.insert(prop_lines, '    ' .. name .. ' = ' .. format_value(default_val) .. ',')
   end
 
-  table.insert(lines, '  },')
-  table.insert(lines, '}')
-  table.insert(lines, '```')
-
-  return table.concat(lines, '\n')
+  return template:format(table.concat(prop_lines, '\n'))
 end
 
 ---@type DocSection[]
