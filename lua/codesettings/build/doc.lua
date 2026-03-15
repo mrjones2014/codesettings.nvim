@@ -26,7 +26,8 @@ local function generate_lsp_servers()
         :gsub('/develop/', '/tree/develop/', 1)
         :gsub('/main/', '/tree/main/', 1)
     end
-    table.insert(lines, ('- [x] [%s](%s)'):format(name, url))
+    local supports_i18n = vim.uv.fs_stat(BuildUtil.nls_path(name))
+    table.insert(lines, ('- [x] [%s](%s)%s'):format(name, url, supports_i18n and ' (supports i18n)' or ''))
   end
   return table.concat(lines, '\n')
 end
