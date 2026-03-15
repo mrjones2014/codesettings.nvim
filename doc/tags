@@ -13,6 +13,6 @@ codesettings.nvim-performance	codesettings.nvim.txt	/*codesettings.nvim-performa
 codesettings.nvim-quick-start	codesettings.nvim.txt	/*codesettings.nvim-quick-start*
 codesettings.nvim-quick-start-rustaceanvim	codesettings.nvim.txt	/*codesettings.nvim-quick-start-rustaceanvim*
 codesettings.nvim-requirements	codesettings.nvim.txt	/*codesettings.nvim-requirements*
-codesettings.nvim-supported-lsp-servers	codesettings.nvim.txt	/*codesettings.nvim-supported-lsp-servers*
+codesettings.nvim-requirements-supported-lsp-servers	codesettings.nvim.txt	/*codesettings.nvim-requirements-supported-lsp-servers*
 codesettings.nvim-table-of-contents	codesettings.nvim.txt	/*codesettings.nvim-table-of-contents*
 codesettings.nvim.txt	codesettings.nvim.txt	/*codesettings.nvim.txt*
