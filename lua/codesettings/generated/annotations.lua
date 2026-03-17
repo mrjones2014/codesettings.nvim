@@ -16676,7 +16676,7 @@
 ---@field enableAutoInsert boolean?
 
 ---@class lsp.omnisharp.BackgroundAnalysis
--- Run background code analysis for: (Previously `omnisharp.enableRoslynAnalyzers`)
+-- Run background code analysis for:
 -- 
 -- ```lua
 -- default = "openFiles"
@@ -16710,7 +16710,7 @@
 -- default = "true"
 -- ```
 ---@field provideRegexCompletions boolean?
--- Enables support for showing unimported types and unimported extension methods in completion lists. When committed, the appropriate using directive will be added at the top of the current file. (Previously `omnisharp.enableImportCompletion`)
+-- Enables support for showing unimported types and unimported extension methods in completion lists. When committed, the appropriate using directive will be added at the top of the current file.
 -- 
 -- ```lua
 -- default = true
@@ -16738,7 +16738,7 @@
 ---@field reportInformationAsHint boolean?
 
 ---@class lsp.omnisharp.Formatting
--- Specifies whether 'using' directives should be grouped and sorted during document formatting. (Previously `omnisharp.organizeImportsOnFormat`)
+-- Specifies whether 'using' directives should be grouped and sorted during document formatting.
 ---@field organizeImportsOnFormat boolean?
 
 ---@class lsp.omnisharp.Highlighting
@@ -16849,7 +16849,7 @@
 ---@field environmentVariables table?
 -- Override for path to language server --extension arguments
 ---@field extensionPaths string[]?
--- Specifies the absolute path to the server (LSP or O#) executable. When left empty the version pinned to the C# Extension is used. (Previously `omnisharp.path`) (Requires extension restart)
+-- Specifies the absolute path to the server (LSP or O#) executable. When left empty the version pinned to the C# Extension is used. (Requires extension restart)
 ---@field path string?
 -- Controls when source generators are executed. (Requires extension restart)
 -- 
@@ -16875,7 +16875,7 @@
 -- default = true
 -- ```
 ---@field useServerGC boolean?
--- Passes the --debug flag when launching the server to allow a debugger to be attached. (Previously `omnisharp.waitForDebugger`) (Requires extension restart)
+-- Passes the --debug flag when launching the server to allow a debugger to be attached. (Requires extension restart)
 ---@field waitForDebugger boolean?
 
 ---@class lsp.omnisharp.SymbolSearch
@@ -17126,7 +17126,7 @@
 ---@field type "coreclr" | "clr"?
 
 ---@class lsp.omnisharp.UnitTests
--- Path to the .runsettings file which should be used when running unit tests. (Previously `omnisharp.testRunSettings`)
+-- Path to the .runsettings file which should be used when running unit tests.
 ---@field runSettingsPath string?
 
 ---@class lsp.omnisharp.Dotnet
@@ -17134,7 +17134,7 @@
 ---@field backgroundAnalysis lsp.omnisharp.BackgroundAnalysis?
 ---@field codeLens lsp.omnisharp.CodeLens?
 ---@field completion lsp.omnisharp.Completion?
--- The path of the default solution to be opened in the workspace, or set to 'disable' to skip it. (Previously `omnisharp.defaultLaunchSolution`)
+-- The path of the default solution to be opened in the workspace when multiple solutions are available.
 ---@field defaultSolution string?
 ---@field diagnostics lsp.omnisharp.Diagnostics?
 -- Enables XAML tools when using C# Dev Kit. (Requires extension restart)
