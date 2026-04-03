@@ -9344,6 +9344,55 @@
 ---@class lsp.grammarly
 ---@field grammarly lsp.grammarly.Grammarly?
 
+---@class lsp.graphql.Load
+-- optional <configName>.config.{js,ts,toml,yaml,json} & <configName>rc* instead of default `graphql`
+---@field configName string?
+-- exact filePath for a `graphql-config` file `loadConfig()`
+---@field filepath string?
+-- legacy mode for graphql config v2 config
+---@field legacy boolean?
+-- Base dir for graphql config loadConfig(), to look for config files or package.json
+---@field rootDir string?
+
+---@class lsp.graphql.Graphql-config
+-- optional .env load file path, if not the default. specify a relative path to the .env file to be loaded by dotenv module. you can also import dotenv in the config file.
+---@field dotEnvPath string?
+---@field load lsp.graphql.Load?
+
+---@class lsp.graphql.Vscode-graphql
+-- Use a cached file output of your graphql-config schema result for definition lookups, symbols, outline, etc. Enabled by default when one or more schema entry is not a local file with SDL in it. Disable if you want to use SDL with a generated schema.
+---@field cacheSchemaFileForLookup boolean?
+-- Enable debug logs and node debugger for client
+---@field debug boolean?
+-- Disables outlining and other expensive operations for files larger than this threshold (in bytes). Defaults to 1000000 (one million).
+-- 
+-- ```lua
+-- default = 1000000
+-- ```
+---@field largeFileThreshold number?
+-- Fail the request on invalid certificate
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field rejectUnauthorized boolean?
+-- Schema cache ttl in milliseconds - the interval before requesting a fresh schema when caching the local schema file is enabled. Defaults to 30000 (30 seconds).
+-- 
+-- ```lua
+-- default = 30000
+-- ```
+---@field schemaCacheTTL number?
+-- The transport used between the language server and the client.
+-- 
+-- ```lua
+-- default = "ipc"
+-- ```
+---@field transport "ipc" | "stdio"?
+
+---@class lsp.graphql
+---@field graphql-config lsp.graphql.Graphql-config?
+---@field vscode-graphql lsp.graphql.Vscode-graphql?
+
 -- Options for generating anonymous functions
 -- 
 -- ```lua
