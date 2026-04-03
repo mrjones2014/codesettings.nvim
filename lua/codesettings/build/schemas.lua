@@ -25,6 +25,7 @@ M.index = {
   fsautocomplete = 'https://raw.githubusercontent.com/ionide/ionide-vscode-fsharp/main/release/package.json',
   gopls = 'https://raw.githubusercontent.com/golang/vscode-go/master/extension/package.json',
   grammarly = 'https://raw.githubusercontent.com/znck/grammarly/main/extension/package.json',
+  graphql = 'https://raw.githubusercontent.com/graphql/graphiql/refs/heads/main/packages/vscode-graphql/package.json',
   haxe_language_server = 'https://raw.githubusercontent.com/vshaxe/vshaxe/master/package.json',
   hhvm = 'https://raw.githubusercontent.com/slackhq/vscode-hack/master/package.json',
   hie = 'https://raw.githubusercontent.com/alanz/vscode-hie-server/master/package.json',
