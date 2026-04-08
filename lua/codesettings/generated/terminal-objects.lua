@@ -8,6 +8,7 @@ return {
   ["Lua.format.defaultConfig"] = true,
   ["Lua.nameStyle.config"] = true,
   ["Lua.runtime.special"] = true,
+  ["ada.metricThresholds"] = true,
   ["ada.scenarioVariables"] = true,
   ["csharp.debug.sourceFileMap"] = true,
   ["dart.customDevTools.env"] = true,
