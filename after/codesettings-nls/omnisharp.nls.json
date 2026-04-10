@@ -500,6 +500,7 @@
     ],
     "message": "Type type of code to debug. Can be either `coreclr` for .NET Core debugging, or `clr` for Desktop .NET Framework. `clr` only works on Windows as the Desktop framework is Windows-only."
   },
+  "generateOptionsSchema.useVSDbg.description": "Enable new .NET 9+ Wasm Debugger (preview)",
   "viewsWelcome.debug.contents": {
     "comment": [
       "Do not translate 'command:dotnet.generateAssets' and 'https://aka.ms/VSCode-CS-LaunchJson'"
