@@ -16677,6 +16677,10 @@
 -- If true, when an optimized module (.dll compiled in the Release configuration) loads in the target process, the debugger will ask the Just-In-Time compiler to generate code with optimizations disabled. [More information](https://aka.ms/VSCode-CS-LaunchJson-SuppressJITOptimizations)
 ---@field suppressJITOptimizations boolean?
 ---@field symbolOptions lsp.omnisharp.SymbolOptions?
+-- When the debug session ends, if this is set to `true`, the debugger will terminate the debuggee and all child processes it spawned. If set to `false`, only the debuggee itself is terminated and child processes are left running. This option defaults to `false`.
+-- 
+-- On Windows, child processes are tracked using a Job Object. Processes that need to outlive the debug session can opt out by passing the `CREATE_BREAKAWAY_FROM_JOB` flag when calling `CreateProcess`.
+---@field terminateChildProcesses boolean?
 
 ---@class lsp.omnisharp.Format
 -- Enable/disable default C# formatter (requires restart).

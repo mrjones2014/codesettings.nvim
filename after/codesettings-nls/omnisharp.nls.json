@@ -494,6 +494,12 @@
     "message": "[Only supported in local macOS debugging]\n\nThe architecture of the debuggee. This will automatically be detected unless this parameter is set. Allowed values are `x86_64` or `arm64`."
   },
   "generateOptionsSchema.targetOutputLogPath.description": "When set, text that the target application writes to stdout and stderr (ex: Console.WriteLine) will be saved to the specified file. This option is ignored if console is set to something other than internalConsole. E.g. '${workspaceFolder}/out.txt'",
+  "generateOptionsSchema.terminateChildProcesses.description": {
+    "comment": [
+      "Markdown text between `` should not be translated or localized (they represent literal text) and the capitalization, spacing, and punctuation (including the ``) should not be altered."
+    ],
+    "message": "When the debug session ends, if this is set to `true`, the debugger will terminate the debuggee and all child processes it spawned. If set to `false`, only the debuggee itself is terminated and child processes are left running. This option defaults to `false`.\n\nOn Windows, child processes are tracked using a Job Object. Processes that need to outlive the debug session can opt out by passing the `CREATE_BREAKAWAY_FROM_JOB` flag when calling `CreateProcess`."
+  },
   "generateOptionsSchema.type.markdownDescription": {
     "comment": [
       "Markdown text between `` should not be translated or localized (they represent literal text) and the capitalization, spacing, and punctuation (including the ``) should not be altered."
