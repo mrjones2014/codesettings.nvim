@@ -17832,12 +17832,6 @@
 -- default = true
 -- ```
 ---@field whitespaceAroundOperator boolean?
--- **Deprecated:** Please use the `#powershell.codeFormatting.addWhitespaceAroundPipe#` setting instead. If you've used this setting before, we have moved it for you automatically.
--- 
--- ```lua
--- default = true
--- ```
----@field whitespaceAroundPipe boolean?
 -- Adds a space between a keyword and its associated script-block expression.
 -- 
 -- ```lua
@@ -23562,7 +23556,7 @@
 ---@class lsp.tinymist.Preview
 -- (Experimental) Show typst cursor indicator in preview.
 ---@field cursorIndicator boolean?
--- List of *additional* paths to font assets used by typst-preview.
+-- Deprecated preview-only font paths. Preview now uses the same compiler font environment as editing and export.
 -- 
 -- ```lua
 -- default = {}
@@ -23600,7 +23594,7 @@
 -- default = {}
 -- ```
 ---@field sysInputs table?
--- Whether to load system fonts. If disabled, only fonts in `typst-preview.fontPaths` is loaded
+-- Deprecated preview-only font toggle. Preview now uses the same compiler font environment as editing and export.
 -- 
 -- ```lua
 -- default = true
@@ -23659,7 +23653,7 @@
 -- default = "paged"
 -- ```
 ---@field exportTarget "paged" | "html"?
--- A list of file or directory path to fonts. Note: The configuration source in higher priority will **override** the configuration source in lower priority. The order of precedence is: Configuration `tinymist.fontPaths` > Configuration `tinymist.typstExtraArgs.fontPaths` > LSP's CLI Argument `--font-path` > The environment variable `TYPST_FONT_PATHS` (a path list separated by `;` (on Windows) or `:` (Otherwise)). Note: If the path to fonts is a relative path, it will be resolved based on the root directory. Note: In VSCode, you can use VSCode variables in the path, e.g. `${workspaceFolder}/fonts`.
+-- List of font files or directories to add to Tinymist's shared compiler environment. When `tinymist.systemFonts` is `false`, Tinymist uses its embedded Typst font bundle plus these paths, which is helpful for reproducible builds. Precedence is `tinymist.fontPaths` > `--font-path` entries from `tinymist.typstExtraArgs` > the LSP CLI `--font-path` argument > `TYPST_FONT_PATHS`. Relative paths resolve against the root directory, and VS Code variables such as `${workspaceFolder}` are supported. See [Compiler Settings](https://myriad-dreamin.github.io/tinymist/feature/compiler-settings.html).
 ---@field fontPaths any[]?
 -- Sets the indent size (using space) for the formatter.
 -- 
@@ -23719,7 +23713,7 @@
 -- default = "enable"
 -- ```
 ---@field renderDocs "enable" | "disable"?
--- Configure the root for absolute paths in typst. Note: for Neovim users, if it complains root not found, you must set `require("lspconfig")["tinymist"].setup { root_dir }` as well, see [tinymist#528](https://github.com/Myriad-Dreamin/tinymist/issues/528).
+-- Configure the Typst root used for absolute paths. This dedicated setting overrides `--root` from `tinymist.typstExtraArgs`. For a broader explanation of shared compiler settings, see [Compiler Settings](https://myriad-dreamin.github.io/tinymist/feature/compiler-settings.html). Note: for Neovim users, if it complains root not found, you must set `require("lspconfig")["tinymist"].setup { root_dir }` as well, see [tinymist#528](https://github.com/Myriad-Dreamin/tinymist/issues/528).
 ---@field rootPath string?
 -- Enable or disable semantic tokens (LSP syntax highlighting)
 -- 
@@ -23750,7 +23744,7 @@
 -- default = "auto"
 -- ```
 ---@field syntaxOnly "auto" | "onPowerSaving" | "enable" | "disable"?
--- A flag that determines whether to load system fonts for Typst compiler, which is useful for ensuring reproducible compilation. If set to null or not set, the extension will use the default behavior of the Typst compiler. Note: You need to restart LSP to change this options.
+-- Controls whether Tinymist loads system fonts for the shared Typst compiler environment used by editing, preview, and export. Set this to `false` together with explicit `tinymist.fontPaths` for reproducible builds; if left unset, Tinymist follows Typst's default behavior. This dedicated setting overrides `--ignore-system-fonts` from `tinymist.typstExtraArgs`. See [Compiler Settings](https://myriad-dreamin.github.io/tinymist/feature/compiler-settings.html). Note: restart the LSP after changing this setting.
 -- 
 -- ```lua
 -- default = true
@@ -23763,7 +23757,7 @@
 -- default = true
 -- ```
 ---@field typingContinueCommentsOnNewline boolean?
--- You can pass any arguments as you like, and we will try to follow behaviors of the **same version** of typst-cli. Note: the arguments may be overridden by other settings. For example, `--font-path` will be overridden by `tinymist.fontPaths`.
+-- CLI-shaped arguments for the supported Typst subset that Tinymist parses today. Supported examples include `--input`, `--features=html`, `--root`, `--font-path`, `--ignore-system-fonts`, `--package-path`, `--package-cache-path`, `--creation-timestamp`, and `--cert`, plus a final entry file. Dedicated settings such as `tinymist.rootPath`, `tinymist.fontPaths`, and `tinymist.systemFonts` override overlapping arguments. See [Compiler Settings](https://myriad-dreamin.github.io/tinymist/feature/compiler-settings.html) for examples.
 -- 
 -- ```lua
 -- default = {}
