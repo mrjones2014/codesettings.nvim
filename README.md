@@ -221,15 +221,18 @@ return codesettings.with_local_settings('rust-analyzer', {
 
 ### Rustaceanvim
 
-`codesettings.nvim` works out of the box with [rustaceanvim](https://github.com/mrcjkb/rustaceanvim) >= v7.0.9.
-Using the `before_init` global hook should work with v7.0.9 or later.
+`codesettings.nvim` works with
+[rustaceanvim](https://github.com/mrcjkb/rustaceanvim) >= v7.0.9. You just need a
+`before_init` hook like any other LSP.
 
 <details>
 
 <summary>If you use a `rustaceanvim` version older than v7.0.9, you need some configuration</summary>
 
-`rustaceanvim` loads VS Code settings by default, but your global settings override the local ones; `codesettings.nvim`
-does the opposite. To make `rustaceanvim` respect workspace files via `codesettings.nvim`, you need to load them manually:
+Older `rustaceanvim` does its own VS Code settings loading by default, but your
+global settings override the local ones; `codesettings.nvim` does the opposite.
+To make `rustaceanvim` respect workspace files via `codesettings.nvim`, you
+need to load them manually:
 
 ```lua
 return {
@@ -263,6 +266,23 @@ return {
 ```
 
 </details>
+
+Some rust-analyzer settings need to be included in the init params as well as
+the default settings, in particular for non-Cargo build systems. Here is the
+recommended `before_init` hook:
+
+```lua
+vim.lsp.config('rust-analyzer', {
+  before_init = function(init_params, config)
+    local codesettings = require('codesettings')
+    codesettings.with_local_settings(config.name, config)
+    -- Some settings must be passed at init time, for example rust-analyzer.workspace.discoverConfig
+    if config.default_settings and config.default_settings[config.name] then
+      init_params.initializationOptions = config.default_settings[config.name]
+    end
+  end,
+})
+```
 
 ## Features
 
@@ -376,8 +396,8 @@ Follows the semantics of `vim.tbl_deep_extend('force', your_config, local_config
 global configuration. This is useful, for example, for multi-root projects where you might have a separate instance of the LSP server per-root.
 
 ```lua
-vim.lsp.config('rust_analyzer', {
-  before_init = function(_, config)
+vim.lsp.config('rust-analyzer', {
+  before_init = function(init_params, config)
     local c = require('codesettings')
     c
       -- starts from the plugin's global config as a base
@@ -390,6 +410,10 @@ vim.lsp.config('rust_analyzer', {
         config.name,
         config
       )
+    -- Some settings must be passed at init time, for example rust-analyzer.workspace.discoverConfig
+    if config.default_settings and config.default_settings[config.name] then
+      init_params.initializationOptions = config.default_settings[config.name]
+    end
   end,
 })
 ```
