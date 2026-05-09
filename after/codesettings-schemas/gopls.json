@@ -757,7 +757,7 @@
         },
         "ST1019": {
           "default": false,
-          "markdownDescription": "Importing the same package multiple times\n\nGo allows importing the same package multiple times, as long as\ndifferent import aliases are being used. That is, the following\nbit of code is valid:\n\n    import (\n        \"fmt\"\n        fumpt \"fmt\"\n        format \"fmt\"\n        _ \"fmt\"\n    )\n\nHowever, this is very rarely done on purpose. Usually, it is a\nsign of code that got refactored, accidentally adding duplicate\nimport statements. It is also a rarely known feature, which may\ncontribute to confusion.\n\nDo note that sometimes, this feature may be used\nintentionally (see for example\nhttps://github.com/golang/go/commit/3409ce39bfd7584523b7a8c150a310cea92d879d)\n– if you want to allow this pattern in your code base, you're\nadvised to disable this check.\n\nAvailable since\n    2020.1\n",
+          "markdownDescription": "Importing the same package multiple times\n\nGo allows importing the same package multiple times, as long as\ndifferent import aliases are being used. That is, the following\nbit of code is valid:\n\n    import (\n        \"fmt\"\n        fumpt \"fmt\"\n        format \"fmt\"\n    )\n\nHowever, this is very rarely done on purpose. Usually, it is a\nsign of code that got refactored, accidentally adding duplicate\nimport statements. It is also a rarely known feature, which may\ncontribute to confusion.\n\nDo note that sometimes, this feature may be used\nintentionally (see for example\nhttps://github.com/golang/go/commit/3409ce39bfd7584523b7a8c150a310cea92d879d)\n– if you want to allow this pattern in your code base, you're\nadvised to disable this check.\n\nIt is acceptable to import the same package twice if one of the imports\nuses the blank identifier. This is allowed in order to increase\nresilience against erroneous changes when using the same package for its\nside effects as well as its exported API.\n\nAvailable since\n    2020.1\n",
           "type": "boolean"
         },
         "ST1020": {
@@ -815,9 +815,14 @@
           "markdownDescription": "check for non-64-bits-aligned arguments to sync/atomic functions",
           "type": "boolean"
         },
+        "atomictypes": {
+          "default": true,
+          "markdownDescription": "replace basic types in sync/atomic calls with atomic types\n\nThe atomictypes analyzer suggests replacing the primitive sync/atomic functions with\nthe strongly typed atomic wrapper types introduced in Go1.19 (e.g.\natomic.Int32). For example,\n\n\tvar x int32\n\tatomic.AddInt32(&x, 1)\n\nwould become\n\n\tvar x atomic.Int32\n\tx.Add(1)\n\nThe atomic types are safer because they don't allow non-atomic access, which is\na common source of bugs. These types also resolve memory alignment issues that\nplagued the old atomic functions on 32-bit architectures.",
+          "type": "boolean"
+        },
         "bloop": {
           "default": true,
-          "markdownDescription": "replace for-range over b.N with b.Loop\n\nThe bloop analyzer suggests replacing benchmark loops of the form\n`for i := 0; i < b.N; i++` or `for range b.N` with the more modern\n`for b.Loop()`, which was added in Go 1.24.\n\nThis change makes benchmark code more readable and also removes the need for\nmanual timer control, so any preceding calls to b.StartTimer, b.StopTimer,\nor b.ResetTimer within the same function will also be removed.\n\nCaveats: The b.Loop() method is designed to prevent the compiler from\noptimizing away the benchmark loop, which can occasionally result in\nslower execution due to increased allocations in some specific cases.",
+          "markdownDescription": "replace for-range over b.N with b.Loop\n\nThe bloop analyzer suggests replacing benchmark loops of the form\n`for i := 0; i < b.N; i++` or `for range b.N` with the more modern\n`for b.Loop()`, which was added in Go 1.24.\n\nThis change makes benchmark code more readable and also removes the need for\nmanual timer control, so any preceding calls to b.StartTimer, b.StopTimer,\nor b.ResetTimer within the same function will also be removed.\n\nCaveats: The b.Loop() method is designed to prevent the compiler from\noptimizing away the benchmark loop, which can occasionally result in\nslower execution due to increased allocations in some specific cases.\nSince its fix may change the performance of nanosecond-scale benchmarks,\nbloop is disabled by default in the `go fix` analyzer suite; see golang/go#74967.",
           "type": "boolean"
         },
         "bools": {
@@ -870,14 +875,24 @@
           "markdownDescription": "check //go:embed directive usage\n\nThis analyzer checks that the embed package is imported if //go:embed\ndirectives are present, providing a suggested fix to add the import if\nit is missing.\n\nThis analyzer also checks that //go:embed directives precede the\ndeclaration of a single variable.",
           "type": "boolean"
         },
+        "embedlit": {
+          "default": true,
+          "markdownDescription": "simplify references to embedded fields in composite literals\n\nThe embedlit analyzer suggests removing redundant embedded field type specifiers\nfrom composite literals. Go1.27 introduced the ability to directly initialize\nfields promoted from embedded struct types without a nested literal. For\nexample, given the following structs:\n\n\ttype T struct {\n\t\tU\n\t}\n\n\ttype U struct {\n\t\tx int\n\t}\n\nA composite literal such as\n\n\tt := T{U: U{x: 1}}\n\nwould become\n\n\tt := T{x: 1}",
+          "type": "boolean"
+        },
         "errorsas": {
           "default": true,
-          "markdownDescription": "report passing non-pointer or non-error values to errors.As\n\nThe errorsas analyzer reports calls to errors.As where the type\nof the second argument is not a pointer to a type implementing error.",
+          "markdownDescription": "report passing non-pointer or non-error values to errors.As\n\nThe errorsas analyzer reports calls to errors.As where the type\nof the second argument is not a pointer to a type implementing error.\nFor example:\n\n\tvar unwrappedErr net.DNSError\n\terrors.As(err, unwrappedErr) // should use &unwrappedErr, DNSError.Error has a pointer reciever\n",
           "type": "boolean"
         },
         "errorsastype": {
           "default": true,
-          "markdownDescription": "replace errors.As with errors.AsType[T]\n\nThis analyzer suggests fixes to simplify uses of [errors.As] of\nthis form:\n\n\tvar myerr *MyErr\n\tif errors.As(err, &myerr) {\n\t\thandle(myerr)\n\t}\n\nby using the less error-prone generic [errors.AsType] function,\nintroduced in Go 1.26:\n\n\tif myerr, ok := errors.AsType[*MyErr](err); ok {\n\t\thandle(myerr)\n\t}\n\nThe fix is only offered if the var declaration has the form shown and\nthere are no uses of myerr outside the if statement.",
+          "markdownDescription": "Reports misuse of errors.AsType[T] in if/else chains.\nFor example:\n\n\terr := f()\n\tif err, ok := errors.AsType[*FooErr](err); ok {\n\t    useFoo(err)\n\t} else if err, ok := errors.AsType[*BarErr](err); ok {\n\t    useBar(err)\n\t}\n\nIn this case, the second call to errors.AsType does not operate on the\noriginal error. Instead, its operand is the zero value of type *FooErr\nproduced by the first if statement; this is invariably a mistake.\n",
+          "type": "boolean"
+        },
+        "fieldalignment": {
+          "default": false,
+          "markdownDescription": "find structs that would use less memory if their fields were sorted\n\nThis analyzer finds structs that can be rearranged to use less memory, and provides\na suggested edit with the most compact order.\n\nNote that there are two different diagnostics reported. One checks struct size,\nand the other reports \"pointer bytes\" used. Pointer bytes is how many bytes of the\nobject that the garbage collector has to potentially scan for pointers, for example:\n\n\tstruct { uint32; string }\n\nhave 16 pointer bytes because the garbage collector has to scan up through the string's\ninner pointer.\n\n\tstruct { string; *uint32 }\n\nhas 24 pointer bytes because it has to scan further through the *uint32.\n\n\tstruct { string; uint32 }\n\nhas 8 because it can stop immediately after the string pointer.\n\nBe aware that the most compact order is not always the most efficient.\nIn rare cases it may cause two variables each updated by its own goroutine\nto occupy the same CPU cache line, inducing a form of memory contention\nknown as \"false sharing\" that slows down both goroutines.\n\nUnlike most analyzers, which report likely mistakes, the diagnostics\nproduced by fieldanalyzer very rarely indicate a significant problem,\nso the analyzer is not included in typical suites such as vet or\ngopls. Use this standalone command to run it on your code:\n\n   $ go install golang.org/x/tools/go/analysis/passes/fieldalignment/cmd/fieldalignment@latest\n   $ fieldalignment [packages]\n\n",
           "type": "boolean"
         },
         "fillreturns": {
@@ -887,7 +902,7 @@
         },
         "fmtappendf": {
           "default": true,
-          "markdownDescription": "replace []byte(fmt.Sprintf) with fmt.Appendf\n\nThe fmtappendf analyzer suggests replacing `[]byte(fmt.Sprintf(...))` with\n`fmt.Appendf(nil, ...)`. This avoids the intermediate allocation of a string\nby Sprintf, making the code more efficient. The suggestion also applies to\nfmt.Sprint and fmt.Sprintln.",
+          "markdownDescription": "replace []byte(fmt.Sprintf) with fmt.Appendf\n\nThe fmtappendf analyzer suggests replacing `[]byte(fmt.Sprintf(...))` with\n`fmt.Appendf(nil, ...)`. This avoids the intermediate allocation of a string\nby Sprintf, making the code more efficient. The suggestion also applies to\nfmt.Sprint and fmt.Sprintln.\n\nSince its fix is not a Pareto improvement, fmtappendf is disabled by default in\nthe `go fix` analyzer suite; see golang/go#77581.",
           "type": "boolean"
         },
         "forvar": {
@@ -1002,7 +1017,12 @@
         },
         "reflecttypefor": {
           "default": true,
-          "markdownDescription": "replace reflect.TypeOf(x) with TypeFor[T]()\n\nThis analyzer suggests fixes to replace uses of reflect.TypeOf(x) with\nreflect.TypeFor, introduced in go1.22, when the desired runtime type\nis known at compile time, for example:\n\n\treflect.TypeOf(uint32(0))        -> reflect.TypeFor[uint32]()\n\treflect.TypeOf((*ast.File)(nil)) -> reflect.TypeFor[*ast.File]()\n\nIt also offers a fix to simplify the construction below, which uses\nreflect.TypeOf to return the runtime type for an interface type,\n\n\treflect.TypeOf((*io.Reader)(nil)).Elem()\n\nto:\n\n\treflect.TypeFor[io.Reader]()\n\nNo fix is offered in cases when the runtime type is dynamic, such as:\n\n\tvar r io.Reader = ...\n\treflect.TypeOf(r)\n\nor when the operand has potential side effects.",
+          "markdownDescription": "replace reflect.TypeOf(x) with TypeFor[T]()\n\nThis analyzer suggests fixes to replace uses of reflect.TypeOf(x) with\nreflect.TypeFor, introduced in go1.22, when the desired runtime type\nis known at compile time, for example:\n\n\treflect.TypeOf(uint32(0))        -> reflect.TypeFor[uint32]()\n\treflect.TypeOf((*ast.File)(nil)) -> reflect.TypeFor[*ast.File]()\n\nIt also offers a fix to simplify the constructions below, which use\nreflect.TypeOf to return the runtime type for an interface type,\n\n\treflect.TypeOf((*io.Reader)(nil)).Elem()\n\nor:\n\n\treflect.TypeOf([]io.Reader(nil)).Elem()\n\nto:\n\n\treflect.TypeFor[io.Reader]()\n\nNo fix is offered in cases when the runtime type is dynamic, such as:\n\n\tvar r io.Reader = ...\n\treflect.TypeOf(r)\n\nor when the operand has potential side effects.",
+          "type": "boolean"
+        },
+        "scannererr": {
+          "default": true,
+          "markdownDescription": "scannererr: report failure to check bufio.Scanner.Err\n\nThis analyzer reports uses of bufio.Scanner in which the result of\nNewScanner is assigned to a local variable that is then used in a loop\nthat calls Scanner.Scan, but lacks a final check of Scanner.Err,\nwhich is how I/O errors are reported.\n\nFor example:\n\n\tsc := bufio.NewScanner(os.Stdin) // error: \"bufio.Scanner sc is used in Scan loop without final check of sc.Err()\"\n\tfor sc.Scan() {\n\t\tline := sc.Text()\n\t\tuse(line)\n\t}\n\t/* ...no use of sc.Err()... */\n\nTo avoid false positives, the analyzer is silent if the scanner is\npassed into or out of the function or assigned somewhere other than a\nlocal variable.\n\nIt is not this analyzer's goal to ensure proper handling of errors in\nall cases, but merely the simple mistakes where the user may have been\noblivious to the existence of the Scanner.Err method.\n\nThe analyzer ignores calls to bufio.NewScanner whose argument is an\ninfallible memory-backed io.Reader such as strings.Reader or bytes.Buffer.\n(In such cases, Scan may yet fail if a token or line is too long for the\nscanner's internal buffer, but this is rare.)\n\nIf you know that errors are impossible for a given scanner, you can\nsuppress the diagnostic thus:\n\n\t_ = sc.Err() // ignore error; neither reading nor scanning can fail\n\n",
           "type": "boolean"
         },
         "shadow": {
@@ -1082,12 +1102,12 @@
         },
         "stringsbuilder": {
           "default": true,
-          "markdownDescription": "replace += with strings.Builder\n\nThis analyzer replaces repeated string += string concatenation\noperations with calls to Go 1.10's strings.Builder.\n\nFor example:\n\n\tvar s = \"[\"\n\tfor x := range seq {\n\t\ts += x\n\t\ts += \".\"\n\t}\n\ts += \"]\"\n\tuse(s)\n\nis replaced by:\n\n\tvar s strings.Builder\n\ts.WriteString(\"[\")\n\tfor x := range seq {\n\t\ts.WriteString(x)\n\t\ts.WriteString(\".\")\n\t}\n\ts.WriteString(\"]\")\n\tuse(s.String())\n\nThis avoids quadratic memory allocation and improves performance.\n\nThe analyzer requires that all references to s except the final one\nare += operations. To avoid warning about trivial cases, at least one\nmust appear within a loop. The variable s must be a local\nvariable, not a global or parameter.\n\nThe sole use of the finished string must be the last reference to the\nvariable s. (It may appear within an intervening loop or function literal,\nsince even s.String() is called repeatedly, it does not allocate memory.)",
+          "markdownDescription": "replace += with strings.Builder\n\nThis analyzer replaces repeated string += string concatenation\noperations with calls to Go 1.10's strings.Builder.\n\nFor example:\n\n\tvar s = \"[\"\n\tfor x := range seq {\n\t\ts += x\n\t\ts += \".\"\n\t}\n\ts += \"]\"\n\tuse(s)\n\nis replaced by:\n\n\tvar s strings.Builder\n\ts.WriteString(\"[\")\n\tfor x := range seq {\n\t\ts.WriteString(x)\n\t\ts.WriteString(\".\")\n\t}\n\ts.WriteString(\"]\")\n\tuse(s.String())\n\nThis avoids quadratic memory allocation and improves performance.\n\nNo diagnostics are issued in tests, where data sizes are often\nsmall and asymptotic performance is not a security concern.\n\nThe analyzer requires that all references to s before the final uses\nare += operations. To avoid warning about trivial cases, at least one\nmust appear within a loop. The variable s must be a local\nvariable, not a global or parameter.\n\nAll uses of the finished string must come after the last += operation.\nEach such use will be replaced by a call to strings.Builder's String method.\n(These may appear within an intervening loop or function literal, since even\nif s.String() is called repeatedly, it does not allocate memory.)\n\nOften the addend is a call to fmt.Sprintf, as in this example:\n\n\tvar s string\n\tfor x := range seq {\n\t\ts += fmt.Sprintf(\"%v\", x)\n\t}\n\nwhich, once the suggested fix is applied, becomes:\n\n\tvar s strings.Builder\n\tfor x := range seq {\n\t\ts.WriteString(fmt.Sprintf(\"%v\", x))\n\t}\n\nThe WriteString call can be further simplified to the more efficient\nfmt.Fprintf(&s, \"%v\", x), avoiding the allocation of an intermediary.\nHowever, stringsbuilder does not perform this simplification;\nit requires staticcheck analyzer QF1012. (See https://go.dev/issue/76918.)",
           "type": "boolean"
         },
         "stringscut": {
           "default": true,
-          "markdownDescription": "replace strings.Index etc. with strings.Cut\n\nThis analyzer replaces certain patterns of use of [strings.Index] and string slicing by [strings.Cut], added in go1.18.\n\nFor example:\n\n\tidx := strings.Index(s, substr)\n\tif idx >= 0 {\n\t    return s[:idx]\n\t}\n\nis replaced by:\n\n\tbefore, _, ok := strings.Cut(s, substr)\n\tif ok {\n\t    return before\n\t}\n\nAnd:\n\n\tidx := strings.Index(s, substr)\n\tif idx >= 0 {\n\t    return\n\t}\n\nis replaced by:\n\n\tfound := strings.Contains(s, substr)\n\tif found {\n\t    return\n\t}\n\nIt also handles variants using [strings.IndexByte] instead of Index, or the bytes package instead of strings.\n\nFixes are offered only in cases in which there are no potential modifications of the idx, s, or substr expressions between their definition and use.",
+          "markdownDescription": "replace strings.Index etc. with strings.Cut\n\nThis analyzer replaces certain patterns of use of [strings.Index] and string slicing by [strings.Cut], added in go1.18.\n\nFor example:\n\n\tidx := strings.Index(s, substr)\n\tif idx >= 0 {\n\t    return s[:idx]\n\t}\n\nis replaced by:\n\n\tbefore, _, ok := strings.Cut(s, substr)\n\tif ok {\n\t    return before\n\t}\n\nAnd:\n\n\tidx := strings.Index(s, substr)\n\tif idx >= 0 {\n\t    return\n\t}\n\nis replaced by:\n\n\tfound := strings.Contains(s, substr)\n\tif found {\n\t    return\n\t}\n\nIt also handles variants using [strings.IndexByte] instead of Index, or the bytes package instead of strings.\n\nFixes are offered only in cases in which there are no potential modifications of the idx, s, or substr expressions between their definition and use.\n\nIt also replaces [strings.SplitN](s, sep, 2)[0] and [strings.Split](s, sep)[0] with the \"before\" result of strings.Cut, when sep is a non-empty string constant:\n\n\tx := strings.SplitN(s, sep, 2)[0]\n\nis replaced by:\n\n\tx, _, _ := strings.Cut(s, sep)\n\nThe fix is only offered when sep is a non-empty string literal. When sep is a variable or the empty string, the semantics differ (strings.Split(s, \"\")[0] returns the first character of s, but strings.Cut(s, \"\").before is \"\"), so no fix is suggested.",
           "type": "boolean"
         },
         "stringscutprefix": {
@@ -1172,7 +1192,17 @@
         },
         "waitgroup": {
           "default": true,
-          "markdownDescription": "replace wg.Add(1)/go/wg.Done() with wg.Go\n\nThe waitgroup analyzer simplifies goroutine management with `sync.WaitGroup`.\nIt replaces the common pattern\n\n\twg.Add(1)\n\tgo func() {\n\t\tdefer wg.Done()\n\t\t...\n\t}()\n\nwith a single call to\n\n\twg.Go(func(){ ... })\n\nwhich was added in Go 1.25.",
+          "markdownDescription": "check for misuses of sync.WaitGroup\n\nThis analyzer detects mistaken calls to the (*sync.WaitGroup).Add\nmethod from inside a new goroutine, causing Add to race with Wait:\n\n\t// WRONG\n\tvar wg sync.WaitGroup\n\tgo func() {\n\t        wg.Add(1) // \"WaitGroup.Add called from inside new goroutine\"\n\t        defer wg.Done()\n\t        ...\n\t}()\n\twg.Wait() // (may return prematurely before new goroutine starts)\n\nThe correct code calls Add before starting the goroutine:\n\n\t// RIGHT\n\tvar wg sync.WaitGroup\n\twg.Add(1)\n\tgo func() {\n\t\tdefer wg.Done()\n\t\t...\n\t}()\n\twg.Wait()",
+          "type": "boolean"
+        },
+        "waitgroupgo": {
+          "default": true,
+          "markdownDescription": "replace wg.Add(1)/go/wg.Done() with wg.Go\n\nThe waitgroupgo analyzer simplifies goroutine management with `sync.WaitGroup`.\nIt replaces the common pattern\n\n\twg.Add(1)\n\tgo func() {\n\t\tdefer wg.Done()\n\t\t...\n\t}()\n\nwith a single call to\n\n\twg.Go(func(){ ... })\n\nwhich was added in Go 1.25.",
+          "type": "boolean"
+        },
+        "writestring": {
+          "default": true,
+          "markdownDescription": "detect inefficient string concatenation in uses of WriteString\n\nThe writestring analyzer offers to replace a call to WriteString(x + y) by\ntwo calls WriteString(x); WriteString(y). This is more efficient because it\navoids the additional memory allocation produced by string concatenation;\ninstead we just write each string into the buffer directly.\n\nIt explicitly looks for calls to certain well-known writers such as\nbytes.Buffer, strings.Builder and bufio.Writer. The analyzer will not suggest\na fix for calls to, say, (*os.File).WriteString, because for certain kinds of\nfile such as a UDP socket, it could split a single message into two.\nSimilarly it does not offer fixes when the type of the writer is unknown (as\nin calls to io.WriteString).\n\nFor example:\n\n\tfunc f(a string, b string) string {\n\t\t var s strings.Builder\n\t\t s.WriteString(a+b)\n\t\t return s.String()\n\t}\n\nwould become:\n\n\tfunc f(a string, b string) string {\n\t\tvar s strings.Builder\n\t\ts.WriteString(a)\n\t\ts.WriteString(b)\n\t\treturn s.String()\n\t}",
           "type": "boolean"
         },
         "yield": {
@@ -1416,6 +1446,12 @@
       "scope": "resource",
       "type": "string"
     },
+    "gopls.maxFileCacheBytes": {
+      "default": 0,
+      "markdownDescription": "(Experimental) maxFileCacheBytes sets a soft limit on the file cache size in bytes.\nIf zero, the default budget is used.\n\nThe cache may temporarily use more than this amount.\nAlso, this parameter limits file contents; disk block usage\nas measured by du(1) may be significantly higher.\n",
+      "scope": "resource",
+      "type": "number"
+    },
     "gopls.memoryMode": {
       "default": "",
       "markdownDescription": "(Experimental) obsolete, no effect\n",
@@ -1460,7 +1496,7 @@
     },
     "gopls.semanticTokens": {
       "default": false,
-      "markdownDescription": "(Experimental) semanticTokens controls whether the LSP server will send\nsemantic tokens to the client.\n",
+      "markdownDescription": "(Experimental) semanticTokens determines whether gopls will return a\nSemanticTokensProvider at initialization, or respond\nto request for semantic tokens.\n",
       "scope": "resource",
       "type": "boolean"
     },
