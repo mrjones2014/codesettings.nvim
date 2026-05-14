@@ -17174,8 +17174,6 @@
 -- default = {}
 -- ```
 ---@class lsp.omnisharp.ComponentPaths
--- Overrides the folder path for the Razor extension component of the language server
----@field razorExtension string?
 -- Overrides the folder path for the .roslynCopilot component of the language server
 ---@field roslynCopilot string?
 -- Overrides the folder path for the .roslynDevKit component of the language server
