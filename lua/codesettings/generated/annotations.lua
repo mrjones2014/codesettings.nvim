@@ -9079,6 +9079,21 @@
 -- default = true
 -- ```
 ---@field experimentalPostfixCompletions boolean?
+-- (Experimental) fileWatcher specifies the server-side file watching strategy used by gopls.
+-- 
+-- By default, this is set to "off", meaning gopls relies exclusively on the
+-- language client (e.g., the editor) to send file change notifications.
+-- 
+-- Available options:
+--   - "off"      : Client-driven watching (default)
+--   - "fsnotify" : OS-level event notifications
+--   - "poll"     : Periodic directory scanning
+-- 
+-- 
+-- ```lua
+-- default = "off"
+-- ```
+---@field fileWatcher "fsnotify" | "off" | "poll"?
 -- gofumpt indicates if we should run gofumpt formatting.
 -- 
 ---@field gofumpt boolean?
@@ -18225,6 +18240,16 @@
 -- ```
 ---@field useLegacyCodeLens boolean?
 
+---@class lsp.powershell_es.Rename
+-- Auto-accepts the [disclaimer for the PowerShell Rename Symbol feature](https://aka.ms/powershell-rename-disclaimer) which has support limitations and risks.
+---@field acceptDisclaimer boolean?
+-- Creates an alias attribute for a parameter when renaming a parameter definition.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field createParameterAlias boolean?
+
 ---@class lsp.powershell_es.ScriptAnalysis
 -- Enables real-time script analysis using [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) that populates the [Problems view](command:workbench.panel.markers.view.focus).
 -- 
@@ -18327,6 +18352,7 @@
 -- default = true
 -- ```
 ---@field promptToUpdatePowerShell boolean?
+---@field rename lsp.powershell_es.Rename?
 ---@field scriptAnalysis lsp.powershell_es.ScriptAnalysis?
 ---@field sideBar lsp.powershell_es.SideBar?
 ---@field startAsLoginShell lsp.powershell_es.StartAsLoginShell?

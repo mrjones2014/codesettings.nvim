@@ -1357,6 +1357,22 @@
       "scope": "resource",
       "type": "boolean"
     },
+    "gopls.fileWatcher": {
+      "default": "off",
+      "enum": [
+        "fsnotify",
+        "off",
+        "poll"
+      ],
+      "markdownDescription": "(Experimental) fileWatcher specifies the server-side file watching strategy used by gopls.\n\nBy default, this is set to \"off\", meaning gopls relies exclusively on the\nlanguage client (e.g., the editor) to send file change notifications.\n\nAvailable options:\n  - \"off\"      : Client-driven watching (default)\n  - \"fsnotify\" : OS-level event notifications\n  - \"poll\"     : Periodic directory scanning\n",
+      "markdownEnumDescriptions": [
+        "",
+        "",
+        ""
+      ],
+      "scope": "resource",
+      "type": "string"
+    },
     "gopls.gofumpt": {
       "default": false,
       "markdownDescription": "gofumpt indicates if we should run gofumpt formatting.\n",
