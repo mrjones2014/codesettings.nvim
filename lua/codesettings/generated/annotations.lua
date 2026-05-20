@@ -11,6 +11,14 @@
 -- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `false`.
 ---@field indentOnly true | false?
 
+---@class lsp.als.ProjectView
+-- Show all projects as a flat list instead of a hierarchy in the Project View.
+---@field flatMode boolean?
+-- Show the object directory as a child of each project in the Project View.
+---@field showObjectDirectories boolean?
+-- Show the Ada runtime project and its source files in the Project View.
+---@field showRuntimeFiles boolean?
+
 ---@class lsp.als.Trace
 -- Traces the communication between VS Code and the Ada language server in the 'Ada Language Server' Output view.
 -- 
@@ -102,6 +110,7 @@
 -- 
 -- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
 ---@field projectFile string?
+---@field projectView lsp.als.ProjectView?
 -- Enable fallback indenter in case the file is not syntactically correct.
 -- 
 -- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
@@ -3465,6 +3474,18 @@
 ---@class lsp.emmylua_ls
 ---@field Lua lsp.emmylua_ls.Lua?
 
+---@class lsp.eslint.BulkSuppression
+-- Show bulk-suppressed violations (from eslint-suppressions.json) as diagnostics. Requires ESLint >= 10.1.
+---@field enable boolean?
+-- Path to the suppressions file relative to the workspace. Defaults to eslint-suppressions.json.
+---@field location string?
+-- Diagnostic severity for bulk-suppressed violations.
+-- 
+-- ```lua
+-- default = "info"
+-- ```
+---@field severity "error" | "warn" | "info" | "hint"?
+
 -- Show disable lint rule in the quick fix menu.
 -- 
 -- ```lua
@@ -3665,6 +3686,7 @@
 ---@class lsp.eslint.Eslint
 -- Turns auto fix on save on or off.
 ---@field autoFixOnSave boolean?
+---@field bulkSuppression lsp.eslint.BulkSuppression?
 ---@field codeAction lsp.eslint.CodeAction?
 ---@field codeActionsOnSave lsp.eslint.CodeActionsOnSave?
 -- Enables ESLint debug mode (same as `--debug` on the command line)
@@ -22711,6 +22733,12 @@
 ---@field backgroundIndexing "on" | "off" | "auto"?
 -- Disable SourceKit-LSP. This will turn off features like code completion, error diagnostics and jump-to-definition. Features like swift-testing test discovery will not work correctly.
 ---@field disable boolean?
+-- Controls whether the symbol declaration is included in the results of `Find All References`.
+-- 
+-- ```lua
+-- default = "default"
+-- ```
+---@field includeDeclarationInFindAllReferences "default" | "always" | "never"?
 -- Arguments to pass to SourceKit-LSP. Keys and values should be provided as individual entries in the list. e.g. `--experimental-feature=show-macro-expansions`
 -- 
 -- ```lua
