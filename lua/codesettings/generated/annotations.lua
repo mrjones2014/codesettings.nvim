@@ -24042,6 +24042,12 @@
 -- default = "enable"
 -- ```
 ---@field previewFeature "enable" | "disable"?
+-- Select the previewer for Typst. `myriad-dreamin.tinymist` uses Tinymist's built-in previewer. Values starting with `html:` are treated as absolute HTML file paths after VS Code variable substitution, and other non-empty values are treated as extension ids. Overrides are ignored in untrusted workspaces.
+-- 
+-- ```lua
+-- default = "myriad-dreamin.tinymist"
+-- ```
+---@field previewer string?
 -- This configuration specifies the way to resolved projects.
 -- 
 -- ```lua

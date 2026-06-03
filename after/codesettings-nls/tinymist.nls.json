@@ -151,6 +151,8 @@
   "extension.tinymist.config.tinymist.previewFeature.string.enum.disable": "Disable preview features.",
   "extension.tinymist.config.tinymist.previewFeature.string.enum.enable": "Enable preview features.",
   "extension.tinymist.config.tinymist.previewFeature.title": "Enable preview features",
+  "extension.tinymist.config.tinymist.previewer.desc": "Select the previewer for Typst. `myriad-dreamin.tinymist` uses Tinymist's built-in previewer. Values starting with `html:` are treated as absolute HTML file paths after VS Code variable substitution, and other non-empty values are treated as extension ids. Overrides are ignored in untrusted workspaces.",
+  "extension.tinymist.config.tinymist.previewer.title": "Previewer",
   "extension.tinymist.config.tinymist.projectResolution.desc": "This configuration specifies the way to resolved projects.",
   "extension.tinymist.config.tinymist.projectResolution.string.enum.lockDatabase": "Manage typst documents like what we did in Rust. For each workspace, tinymist tracks your preview and compilation history, and stores the information in a lock file. Tinymist will automatically selects the main file to use according to the lock file. This also allows other tools push preview and export tasks to language server by updating the lock file.",
   "extension.tinymist.config.tinymist.projectResolution.string.enum.singleFile": "Manage typst documents like what we did in Markdown. Each single file is an individual document and no project resolution is needed.",
