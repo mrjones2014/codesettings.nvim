@@ -2776,7 +2776,7 @@
 -- default = "dialyxir_long"
 -- ```
 ---@field dialyzerFormat "dialyzer" | "dialyxir_short" | "dialyxir_long"?
--- Dialyzer options to enable or disable warnings - See Dialyzer's documentation for options. Note that the "race_conditions" option is unsupported
+-- Dialyzer options to enable or disable warnings - See Dialyzer's documentation for options
 -- 
 -- ```lua
 -- default = {}
@@ -2790,12 +2790,6 @@
 ---@field envVariables table?
 -- Automatically fetch project dependencies when compiling.
 ---@field fetchDeps boolean?
--- Use OTP incremental dialyzer (available on OTP 26+)
--- 
--- ```lua
--- default = true
--- ```
----@field incrementalDialyzer boolean?
 -- Absolute path to alternative ElixirLS release that will override the packaged release
 ---@field languageServerOverridePath string?
 -- Enable or disable the MCP server
@@ -20709,6 +20703,9 @@
 -- For modules the type "sub_items" can be used to only exclude the all items in it but not the module
 -- itself. This does not include items defined in nested modules.
 -- 
+-- For enums the type "variants" can be used to only exclude the all variants in it but not the enum
+-- itself.
+-- 
 -- This setting also inherits `#rust-analyzer.completion.excludeTraits#`.
 -- 
 -- ```lua
@@ -23890,6 +23887,14 @@
 -- Whether to trigger completions on arguments (placeholders) of snippets. For example, `box` will be completed to `box(|)`, and server will request the editor (lsp client) to request completion after moving cursor to the placeholder in the snippet. Note: this has no effect if the editor doesn't support `editor.action.triggerSuggest` or `tinymist.triggerSuggestAndParameterHints` command. Hint: Restarting the editor is required to change this setting.
 ---@field triggerOnSnippetPlaceholders boolean?
 
+---@class lsp.tinymist.InlayHints
+-- Show inline decorations indicating package version status (latest, upgradable, or invalid)
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field packageVersionStatus boolean?
+
 ---@class lsp.tinymist.Lint
 -- Enable or disable lint checks. Note: restarting the editor is required to change this setting.
 ---@field enabled boolean?
@@ -24022,6 +24027,7 @@
 ---@field formatterPrintWidth number?
 -- Controls how the formatter handles prose line wrapping. If enabled, the formatter will insert hard line breaks at the specified print width. If disabled, the formatter keeps the original line breaks and spaces.
 ---@field formatterProseWrap boolean?
+---@field inlayHints lsp.tinymist.InlayHints?
 ---@field lint lsp.tinymist.Lint?
 -- Enable or disable [experimental/onEnter](https://github.com/rust-lang/rust-analyzer/blob/master/docs/dev/lsp-extensions.md#on-enter) (LSP onEnter feature) to allow automatic insertion of characters on enter, such as `///` for comments. Note: restarting the editor is required to change this setting.
 -- 

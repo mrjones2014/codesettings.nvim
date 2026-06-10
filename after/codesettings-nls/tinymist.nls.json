@@ -90,6 +90,8 @@
   "extension.tinymist.config.tinymist.formatterPrintWidth.title": "Formatter Print Width",
   "extension.tinymist.config.tinymist.formatterProseWrap.desc": "Controls how the formatter handles prose line wrapping. If enabled, the formatter will insert hard line breaks at the specified print width. If disabled, the formatter keeps the original line breaks and spaces.",
   "extension.tinymist.config.tinymist.formatterProseWrap.title": "Prose Wrapping Control",
+  "extension.tinymist.config.tinymist.inlayHints.packageVersionStatus.desc": "Show inline decorations indicating package version status (latest, upgradable, or invalid)",
+  "extension.tinymist.config.tinymist.inlayHints.packageVersionStatus.title": "Show Package Version Status",
   "extension.tinymist.config.tinymist.lint.enabled.desc": "Enable or disable lint checks. Note: restarting the editor is required to change this setting.",
   "extension.tinymist.config.tinymist.lint.enabled.title": "Enable Lint Checks",
   "extension.tinymist.config.tinymist.lint.when.desc": "Configure when to perform lint checks. Note: restarting the editor is required to change this setting.",
