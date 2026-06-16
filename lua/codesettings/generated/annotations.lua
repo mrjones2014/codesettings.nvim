@@ -21620,6 +21620,14 @@
 -- from source for it.
 ---@field memoryProfile string?
 
+---@class lsp.rust_analyzer.ProjectCreation
+-- Control what happens after `rust-analyzer: Create New Project...` finishes creating a Cargo project.
+-- 
+-- ```lua
+-- default = "ask"
+-- ```
+---@field openAfterCreate "ask" | "open" | "openNewWindow" | "addToWorkspace"?
+
 ---@class lsp.rust_analyzer.References
 -- Exclude imports from find-all-references.
 ---@field excludeImports boolean?
@@ -22166,6 +22174,7 @@
 ---@field numThreads any|number|"physical" | "logical"?
 ---@field procMacro lsp.rust_analyzer.ProcMacro?
 ---@field profiling lsp.rust_analyzer.Profiling?
+---@field projectCreation lsp.rust_analyzer.ProjectCreation?
 ---@field references lsp.rust_analyzer.References?
 ---@field rename lsp.rust_analyzer.Rename?
 -- Restart the server automatically when settings that require a restart are changed.
@@ -23995,12 +24004,12 @@
 -- default = "never"
 -- ```
 ---@field exportPdf "never" | "onSave" | "onType" | "onDocumentHasTitle"?
--- The target to export the document to. Defaults to `paged`. Note: you can still export PDF when it is set to `html`. This configuration only affects how the language server completes your code.
+-- The target to export the document to. Defaults to `paged`. Note: you can still export PDF when it is set to `html` or `bundle`. This configuration only affects how the language server completes your code.
 -- 
 -- ```lua
 -- default = "paged"
 -- ```
----@field exportTarget "paged" | "html"?
+---@field exportTarget "paged" | "html" | "bundle"?
 -- List of font files or directories to add to Tinymist's shared compiler environment. When `tinymist.systemFonts` is `false`, Tinymist uses its embedded Typst font bundle plus these paths, which is helpful for reproducible builds. Precedence is `tinymist.fontPaths` > `--font-path` entries from `tinymist.typstExtraArgs` > the LSP CLI `--font-path` argument > `TYPST_FONT_PATHS`. Relative paths resolve against the root directory, and VS Code variables such as `${workspaceFolder}` are supported. See [Compiler Settings](https://myriad-dreamin.github.io/tinymist/feature/compiler-settings.html).
 ---@field fontPaths any[]?
 -- Sets the indent size (using space) for the formatter.
