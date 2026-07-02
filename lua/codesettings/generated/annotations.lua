@@ -20536,6 +20536,10 @@
 -- default = { "debug_assertions", "miri" }
 -- ```
 ---@field cfgs string[]?
+-- Path to a `.cargo/config.toml` style file to pass to cargo via `--config`
+-- for every cargo invocation (metadata, build scripts, config discovery).
+-- Useful to give rust-analyzer a consistent view of the project configuration.
+---@field configPath string?
 -- Extra arguments that are passed to every cargo invocation.
 -- 
 -- ```lua
@@ -22717,14 +22721,6 @@
 ---@class lsp.sorbet
 ---@field sorbet lsp.sorbet.Sorbet?
 
----@class lsp.sourcekit.InlayHints
--- Display Inlay Hints. Inlay Hints are variable annotations indicating their inferred type. They are only available if you are using Swift 5.6 or later.
--- 
--- ```lua
--- default = true
--- ```
----@field enabled boolean?
-
 ---@class lsp.sourcekit.Trace
 -- Traces the communication between VS Code and the SourceKit-LSP language server.
 -- 
@@ -22736,7 +22732,6 @@
 ---@class lsp.sourcekit.Sourcekit-lsp
 -- Disable the running of SourceKit-LSP.
 ---@field disable boolean?
----@field inlayHints lsp.sourcekit.InlayHints?
 -- Arguments to pass to SourceKit-LSP. Keys and values should be provided as individual entries in the list. e.g. `--experimental-feature=show-macro-expansions`
 -- 
 -- ```lua
