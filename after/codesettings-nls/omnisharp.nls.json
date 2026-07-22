@@ -73,6 +73,7 @@
   "configuration.dotnet.server.componentPaths.razorExtension": "Overrides the folder path for the Razor extension component of the language server",
   "configuration.dotnet.server.componentPaths.roslynCopilot": "Overrides the folder path for the .roslynCopilot component of the language server",
   "configuration.dotnet.server.componentPaths.roslynDevKit": "Overrides the folder path for the .roslynDevKit component of the language server",
+  "configuration.dotnet.server.componentPaths.testDiscovery": "Overrides the folder path for the .testDiscovery component of the language server",
   "configuration.dotnet.server.componentPaths.xamlTools": "Overrides the folder path for the .xamlTools component of the language server",
   "configuration.dotnet.server.crashDumpPath": "Sets a folder path where crash dumps are written to if the language server crashes.  Must be writeable by the user. (Requires extension restart)",
   "configuration.dotnet.server.environmentVariables": "Custom environment variables to pass to the language server process. Specify as key-value pairs, for example: { \"DOTNET_GCName\": \"libclrgc.dylib\" }. (Requires extension restart)",
