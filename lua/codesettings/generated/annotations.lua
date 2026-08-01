@@ -17736,6 +17736,10 @@
 -- ```
 ---@field useModernNet boolean?
 
+---@class lsp.omnisharp.Advanced
+-- Show all C# code actions in Razor files. These actions are untested in Razor and may introduce syntax errors when applied. If this happens, please report a bug.
+---@field showAllCSharpCodeActions boolean?
+
 ---@class lsp.omnisharp.Completion
 -- Specifies whether to commit tag helper and component elements with a space.
 ---@field commitElementsWithSpace boolean?
@@ -17761,6 +17765,7 @@
 ---@field path string?
 
 ---@class lsp.omnisharp.Razor
+---@field advanced lsp.omnisharp.Advanced?
 ---@field completion lsp.omnisharp.Completion?
 -- Forces the extension to run in a mode that enables local Razor.VSCode development.
 ---@field devmode boolean?
@@ -20384,7 +20389,7 @@
 -- default = "fromEnvironment"
 -- ```
 ---@field importStrategy "fromEnvironment" | "useBundled"?
--- Path to a Python interpreter to use to find the `ruff` executable.
+-- Path to a Python interpreter to use to find the `ruff` executable. Requires either the Python Environments or Python extension to be installed.
 -- 
 -- ```lua
 -- default = {}

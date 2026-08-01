@@ -137,6 +137,7 @@
   "configuration.omnisharp.useEditorFormattingSettings": "Specifes whether OmniSharp should use VS Code editor settings for C# code formatting (use of tabs, indentation size).",
   "configuration.omnisharp.useModernNet.description": "Use OmniSharp build for .NET 6. This version _does not_ support non-SDK-style .NET Framework projects, including Unity. SDK-style Framework, .NET Core, and .NET 5+ projects should see significant performance improvements.",
   "configuration.omnisharp.useModernNet.title": "Use .NET 6 build of OmniSharp",
+  "configuration.razor.razor.advanced.showAllCSharpCodeActions": "Show all C# code actions in Razor files. These actions are untested in Razor and may introduce syntax errors when applied. If this happens, please report a bug.",
   "configuration.razor.razor.completion.commitElementsWithSpace": "Specifies whether to commit tag helper and component elements with a space.",
   "configuration.razor.razor.format.attributeIndentStyle": "Specifies the indentation style for Html and component tag attributes in Razor files.",
   "configuration.razor.razor.format.codeBlockBraceOnNextLine": "Forces the open brace after an @code or @functions directive to be on the following line.",
