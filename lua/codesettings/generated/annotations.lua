@@ -19,6 +19,10 @@
 -- Show the Ada runtime project and its source files in the Project View.
 ---@field showRuntimeFiles boolean?
 
+---@class lsp.als.RangeFormatting
+-- This setting controls whether formatting should only indents the selected lines without any formatting (`indentOnly`), format only the selected lines (`narrow`) or format the selected lines as well as any surrounding code required to produce a correct result (`full`).
+---@field formatChoice "indentOnly" | "narrow" | "full"?
+
 ---@class lsp.als.Trace
 -- Traces the communication between VS Code and the Ada language server in the 'Ada Language Server' Output view.
 -- 
@@ -111,6 +115,7 @@
 -- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
 ---@field projectFile string?
 ---@field projectView lsp.als.ProjectView?
+---@field rangeFormatting lsp.als.RangeFormatting?
 -- Enable fallback indenter in case the file is not syntactically correct.
 -- 
 -- If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
@@ -13356,6 +13361,32 @@
 ---@class lsp.jsonls
 ---@field json lsp.jsonls.Json?
 
+---@class lsp.julials.CellCodeLens
+-- Show the `Above` CodeLens action for cells delimited by `#julia.cellDelimiters#`.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field above boolean?
+-- Show the `Below` CodeLens action for cells delimited by `#julia.cellDelimiters#`.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field below boolean?
+-- Show the `Debug` CodeLens action for cells delimited by `#julia.cellDelimiters#`.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field debug boolean?
+-- Show the `Run` CodeLens action for cells delimited by `#julia.cellDelimiters#`.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field run boolean?
+
 ---@class lsp.julials.Execution
 -- Print executed code in REPL and append it to the REPL history.
 ---@field codeInREPL boolean?
@@ -13504,6 +13535,7 @@
 -- default = {}
 -- ```
 ---@field additionalArgs any[]?
+---@field cellCodeLens lsp.julials.CellCodeLens?
 -- Cell delimiter regular expressions for Julia files.
 -- 
 -- ```lua
@@ -20452,13 +20484,6 @@
 ---@field ruff lsp.ruff.Ruff?
 
 ---@class lsp.rust_analyzer.TermSearch
--- Enable borrow checking for term search code assists. If set to false, also there will be
--- more suggestions, but some of them may not borrow-check.
--- 
--- ```lua
--- default = true
--- ```
----@field borrowcheck boolean?
 -- Term search fuel in "units of work" for assists (Defaults to 1800).
 -- 
 -- ```lua
@@ -22607,10 +22632,6 @@
 -- ```
 ---@field servers any[]?
 
----@class lsp.sonarlint.EarlyAccess
--- Show region selection while creating SonarQube Cloud Connection
----@field showRegionSelection boolean?
-
 ---@class lsp.sonarlint.Ls
 -- Path to a Java Runtime Environment (21 or more recent) used to launch the SonarQube for VS Code Language Server.
 -- * On Windows, backslashes must be escaped, e.g. `C:\\Program Files\\Java\\jdk-21` 
@@ -22649,7 +22670,6 @@
 ---@field connectedMode lsp.sonarlint.ConnectedMode?
 -- By sharing anonymous SonarQube for IDE usage statistics and error data, you help us understand how SonarQube for IDE is used so we can improve the plugin to work even better for you. This data is aggregated and does not contain source code, IP addresses, or any personally identifying information. We utilize Sentry for crash tracking. Check this box to opt-out of this collection. See a [sample of the data](https://github.com/SonarSource/sonarlint-vscode/blob/master/telemetry-sample.md).
 ---@field disableTelemetry boolean?
----@field earlyAccess lsp.sonarlint.EarlyAccess?
 -- If enabled, by default, [focusing on new code](https://docs.sonarsource.com/sonarqube-for-vs-code/using/investigating-issues/#focusing-on-new-code) shows issues introduced in the last 30 days.
 -- 
 -- For the most accurate and customizable new code definition, use [Connected Mode](https://docs.sonarsource.com/sonarqube-for-vs-code/connect-your-ide/connected-mode) with SonarQube (Server, Cloud).
