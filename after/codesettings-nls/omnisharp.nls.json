@@ -134,7 +134,7 @@
   "configuration.omnisharp.sdkIncludePrereleases": "Specifies whether to include preview versions of the .NET SDK when determining which version to use for project loading. Applies when \"useModernNet\" is set to true.",
   "configuration.omnisharp.sdkPath": "Specifies the path to a .NET SDK installation to use for project loading instead of the highest version installed. Applies when \"useModernNet\" is set to true. Example: /home/username/dotnet/sdks/6.0.300.",
   "configuration.omnisharp.sdkVersion": "Specifies the version of the .NET SDK to use for project loading instead of the highest version installed. Applies when \"useModernNet\" is set to true. Example: 6.0.300.",
-  "configuration.omnisharp.useEditorFormattingSettings": "Specifes whether OmniSharp should use VS Code editor settings for C# code formatting (use of tabs, indentation size).",
+  "configuration.omnisharp.useEditorFormattingSettings": "Specifies whether OmniSharp should use VS Code editor settings for C# code formatting (use of tabs, indentation size).",
   "configuration.omnisharp.useModernNet.description": "Use OmniSharp build for .NET 6. This version _does not_ support non-SDK-style .NET Framework projects, including Unity. SDK-style Framework, .NET Core, and .NET 5+ projects should see significant performance improvements.",
   "configuration.omnisharp.useModernNet.title": "Use .NET 6 build of OmniSharp",
   "configuration.razor.razor.advanced.showAllCSharpCodeActions": "Show all C# code actions in Razor files. These actions are untested in Razor and may introduce syntax errors when applied. If this happens, please report a bug.",

@@ -17755,7 +17755,7 @@
 ---@field sdkPath string?
 -- Specifies the version of the .NET SDK to use for project loading instead of the highest version installed. Applies when "useModernNet" is set to true. Example: 6.0.300.
 ---@field sdkVersion string?
--- Specifes whether OmniSharp should use VS Code editor settings for C# code formatting (use of tabs, indentation size).
+-- Specifies whether OmniSharp should use VS Code editor settings for C# code formatting (use of tabs, indentation size).
 -- 
 -- ```lua
 -- default = true
