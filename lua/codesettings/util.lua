@@ -472,4 +472,3 @@ function M.ensure_lsp_settings(lsp_name, config)
 end
 
 return M
-
