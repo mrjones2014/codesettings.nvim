@@ -13191,6 +13191,8 @@
 -- ```
 ---@field methodBodySuper any[]?
 ---@field newFile lsp.jdtls.NewFile?
+-- Specifies whether newly created top-level types (class/interface/record) should be package-private instead of public.
+---@field preferPackagePrivateVisibility boolean?
 -- Specifies the type comment for new Java type. Supports configuring multi-line comments with an array of strings, and using ${variable} to reference the [predefined variables](command:_java.templateVariables).
 -- 
 -- ```lua
@@ -14920,7 +14922,7 @@
 -- default = "Opened"
 -- ```
 ---@field cast-type-mismatch "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- TODO: Needs documentation
+-- Circular `@class` inheritance
 -- 
 -- ```lua
 -- default = "Any"
@@ -15028,7 +15030,7 @@
 -- default = "None"
 -- ```
 ---@field incomplete-signature-doc "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- TODO: Needs documentation
+-- Injecting a field into an object
 -- 
 -- ```lua
 -- default = "Opened"
@@ -15046,7 +15048,7 @@
 -- default = "Any"
 -- ```
 ---@field lowercase-global "Any" | "Opened" | "None" | "Any!" | "Opened!" | "None!"?
--- TODO: Needs documentation
+-- Missing fields
 -- 
 -- ```lua
 -- default = "Any"
@@ -15298,7 +15300,7 @@
 -- default = "Warning"
 -- ```
 ---@field cast-type-mismatch "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- TODO: Needs documentation
+-- Circular `@class` inheritance
 -- 
 -- ```lua
 -- default = "Warning"
@@ -15406,7 +15408,7 @@
 -- default = "Warning"
 -- ```
 ---@field incomplete-signature-doc "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- TODO: Needs documentation
+-- Injecting a field into an object
 -- 
 -- ```lua
 -- default = "Warning"
@@ -15424,7 +15426,7 @@
 -- default = "Information"
 -- ```
 ---@field lowercase-global "Error" | "Warning" | "Information" | "Hint" | "Error!" | "Warning!" | "Information!" | "Hint!"?
--- TODO: Needs documentation
+-- Missing fields
 -- 
 -- ```lua
 -- default = "Warning"
@@ -16035,6 +16037,10 @@
 -- * `disable`: always disable
 -- 
 ---@field builtin lsp.lua_ls.Builtin?
+-- Enable LuaJIT extension syntax (requires `Lua.runtime.version` to be set to `LuaJIT`).
+-- Each extension can also be enabled individually via `Lua.runtime.nonstandardSymbol`.
+-- 
+---@field enableLuaJITExtensions boolean?
 -- File encoding. The `ansi` option is only available under the `Windows` platform.
 -- 
 -- ```lua
@@ -16217,6 +16223,12 @@
 -- * Jass
 -- 
 ---@field checkThirdParty string|boolean?
+-- In addition to the current workspace, which directories `dofile` will treat as a possible root. The files in these directories will be loaded immediately.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field dofileRoots string[]?
 -- Ignored files and directories (Use `.gitignore` grammar).
 -- 
 -- ```lua
