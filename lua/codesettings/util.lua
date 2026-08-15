@@ -76,6 +76,7 @@ function M.get_root(opts)
     :totable()
   table.insert(root_patterns, '.git')
   table.insert(root_patterns, '.jj')
+  table.insert(root_patterns, '.vscode')
   return vim.fs.root(0, root_patterns)
 end
 
