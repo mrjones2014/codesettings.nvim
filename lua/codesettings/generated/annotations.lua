@@ -25935,6 +25935,14 @@
 -- ```
 ---@field server "off" | "messages" | "verbose"?
 
+---@class lsp.volar.Welcome
+-- Show the Vue welcome page.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field show boolean?
+
 ---@class lsp.volar.Vue
 ---@field autoInsert lsp.volar.AutoInsert?
 ---@field codeActions lsp.volar.CodeActions?
@@ -25945,6 +25953,7 @@
 ---@field server lsp.volar.Server?
 ---@field suggest lsp.volar.Suggest?
 ---@field trace lsp.volar.Trace?
+---@field welcome lsp.volar.Welcome?
 
 ---@class lsp.volar
 ---@field vue lsp.volar.Vue?
