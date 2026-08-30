@@ -27388,6 +27388,8 @@
 --     }, {
 --       pattern = "**/wesl.toml"
 --     }, {
+--       pattern = "**/Cargo.toml"
+--     }, {
 --       pattern = "extension-output-wgsl-analyzer.wgsl-analyzer*",
 --       scheme = "output"
 --     } }

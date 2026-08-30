@@ -7,6 +7,7 @@
   "extension.tinymist.command.tinymist.exportCurrentFile": "Export the Opened File as Specified Format",
   "extension.tinymist.command.tinymist.exportCurrentFileAndShow": "Export the Opened File as Specified Format and Show the Result",
   "extension.tinymist.command.tinymist.exportCurrentPdf": "Export the Opened File as PDF",
+  "extension.tinymist.command.tinymist.exportCurrentPdfFromContext": "Typst: Export as PDF",
   "extension.tinymist.command.tinymist.initTemplate": "Initialize a New Typst Project based on a Template",
   "extension.tinymist.command.tinymist.initTemplateInPlace": "Insert the Content of Template Entry in Place",
   "extension.tinymist.command.tinymist.openLocalPackage": "Open Typst Local Package",
