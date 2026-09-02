@@ -11825,8 +11825,6 @@
 ---@field customData string[]?
 ---@field format lsp.html.Format?
 ---@field hover lsp.html.Hover?
--- Enable/disable mirroring cursor on matching HTML tag.
----@field mirrorCursorOnMatchingTag boolean?
 ---@field suggest lsp.html.Suggest?
 ---@field trace lsp.html.Trace?
 ---@field validate lsp.html.Validate?
@@ -12377,6 +12375,10 @@
 -- default = true
 -- ```
 ---@field enabled boolean?
+
+---@class lsp.jdtls.Classpath
+-- Set of classpath variable strings of the form: "name=path" that are used to resolve classpath entries.
+---@field variables string[]?
 
 ---@class lsp.jdtls.Cleanup
 -- The list of clean ups to be run on the current document when it's saved or when the cleanup command is issued. Clean ups can automatically fix code style or programming mistakes. Click [HERE](command:_java.learnMoreAboutCleanUps) to learn more about what each clean up does.
@@ -12951,6 +12953,12 @@
 ---@field javac lsp.jdtls.Javac?
 ---@field kotlinSupport lsp.jdtls.KotlinSupport?
 ---@field lombokSupport lsp.jdtls.LombokSupport?
+-- Specifies the size of the in-memory Maven project cache to use. Increasing the project cache size will help load multi-module projects and monorepos faster, but will result in a significant increase in memory usage.
+-- 
+-- ```lua
+-- default = 50
+-- ```
+---@field mavenProjectCacheSize integer?
 ---@field protobufSupport lsp.jdtls.ProtobufSupport?
 ---@field scalaSupport lsp.jdtls.ScalaSupport?
 -- Specifies extra VM arguments used to launch the Java Language Server. Eg. use `-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable` to optimize memory usage with the parallel garbage collector
@@ -13231,6 +13239,7 @@
 
 ---@class lsp.jdtls.Java
 ---@field autobuild lsp.jdtls.Autobuild?
+---@field classpath lsp.jdtls.Classpath?
 ---@field cleanup lsp.jdtls.Cleanup?
 ---@field codeAction lsp.jdtls.CodeAction?
 ---@field codeGeneration lsp.jdtls.CodeGeneration?
