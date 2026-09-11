@@ -15,7 +15,7 @@ jobs:
       - name: Build
         run: nix develop .#ci --command just build
       - name: Submit PR with changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore(build): auto-generate schemas"
           commit_user_name: "github-actions[bot]"
