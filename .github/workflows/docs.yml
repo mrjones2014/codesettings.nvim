@@ -23,10 +23,12 @@ jobs:
         run: nix develop .#ci --command nvim --headless -c 'helptags doc' -c 'qa'
       - name: Run benchmarks
         run: nix develop .#ci --command just bench
-      - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v6
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
         with:
-          commit_message: "chore(ci): auto-generate vimdoc"
-          commit_user_name: "github-actions[bot]"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit-message: "chore(ci): auto-generate vimdoc"
+          branch: auto-generate-vimdoc
+          title: "chore(ci): auto-generate vimdoc"
+          body: "Automated vimdoc and benchmark report regeneration."
+          labels: documentation
+          delete-branch: true
