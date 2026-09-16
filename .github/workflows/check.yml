@@ -8,14 +8,14 @@ jobs:
     name: Flake Checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v27
       - run: nix flake check --accept-flake-config
   tests-stable:
     name: Tests (neovim stable)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v27
       - run: nix develop .#ci --accept-flake-config --command just test
   tests-nightly:
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v27
       - run: nix develop .#ci-nightly --accept-flake-config --command just test
       - name: Open issue on failure
