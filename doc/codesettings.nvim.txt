@@ -1,5 +1,5 @@
 *codesettings.nvim.txt*
-                        For Neovim >= 0.11.0    Last change: 2026 September 11
+                        For Neovim >= 0.11.0    Last change: 2026 September 17
 
 ==============================================================================
 Table of Contents                        *codesettings.nvim-table-of-contents*
@@ -309,7 +309,7 @@ recommended `before_init` hook:
 - `jsonc` filetype for local config files
 - Live reload: automatically reload settings when config files change (opt-in via `live_reload = true`)
 - Configure the `codesettings.nvim` plugin itself in local config JSON files
-- Supports a subset of VS Code variable interpolation <https://code.visualstudio.com/docs/reference/variables-reference> (|codesettings.nvim-loader-extensions|)
+- Supports a subset of VS Code variable interpolation <https://code.visualstudio.com/docs/reference/variables-reference> (|codesettings.nvim-advanced-usage-loader-extensions|)
 - `jsonls` integration for schema-based completion of LSP settings in JSON(C) configuration files
 - Lua type annotations generated from schemas for autocomplete when writing LSP configs in Lua, with optional `lua_ls` integration
 - Supports custom config file names/locations
@@ -502,7 +502,7 @@ must be explicitly configured.**
         - `${pathSeparator}` - OS-specific path separator (`/` or `\`)
         - `${/}` - Shorthand for `${pathSeparator}`
     - **Note:** Variables requiring a currently open file (like `${file}`, `${relativeFile}`, etc.) or currently selected text are not supported.
-    - **Important:** If combining with `codesettings.extensions.env`, this extension must be listed **first** (see |codesettings.nvim-extension-ordering| below).
+    - **Important:** If combining with `codesettings.extensions.env`, this extension must be listed **first** (see Extension Ordering below).
 - `codesettings.extensions.env`
     - Expand environment variables in JSON config files.
     - Supports `$ENV_VAR`, `${ENV_VAR}`, and `${ENV_VAR:-/some/default/path}` syntax.
