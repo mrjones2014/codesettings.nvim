@@ -12,6 +12,8 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Nix
         uses: cachix/install-nix-action@v31
       - name: Build
