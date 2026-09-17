@@ -1059,6 +1059,12 @@
 ---@field python lsp.basedpyright.Python?
 
 ---@class lsp.bashls.Shfmt
+-- Additional Shfmt arguments. Note that common arguments can be configured via the other settings.
+-- 
+-- ```lua
+-- default = {}
+-- ```
+---@field additionalArguments string[]?
 -- Allow boolean operators (like && and ||) to start a line.
 ---@field binaryNextLine boolean?
 -- Indent patterns in case statements.
@@ -1087,6 +1093,12 @@
 ---@field spaceRedirects boolean?
 
 ---@class lsp.bashls.BashIde
+-- Glob patterns excluded from background file discovery. Open files and sourced files can still be analyzed on demand.
+-- 
+-- ```lua
+-- default = { "**/node_modules/**", "**/.git/**" }
+-- ```
+---@field backgroundAnalysisIgnore string[]?
 -- Maximum number of files to analyze in the background. Set to 0 to disable background analysis.
 -- 
 -- ```lua
@@ -13342,6 +13354,7 @@
 --   ["https://raw.githubusercontent.com/devcontainers/spec/"] = true,
 --   ["https://raw.githubusercontent.com/microsoft/vscode/"] = true,
 --   ["https://schemastore.azurewebsites.net/"] = true,
+--   ["https://spec.openapis.org/"] = true,
 --   ["https://www.schemastore.org/"] = true
 -- }
 -- ```
@@ -17437,6 +17450,10 @@
 -- ```
 ---@field searchReferenceAssemblies boolean?
 
+---@class lsp.omnisharp.Testing
+-- Use semantic information during test discovery to recognize test attributes derived from known test framework attributes. The test CodeLens may take longer to resolve.
+---@field useSemanticTestDiscovery boolean?
+
 ---@class lsp.omnisharp.TypeMembers
 -- The insertion location of properties, events, and methods When implement interface or abstract class.
 -- 
@@ -17705,6 +17722,7 @@
 ---@field quickInfo lsp.omnisharp.QuickInfo?
 ---@field server lsp.omnisharp.Server?
 ---@field symbolSearch lsp.omnisharp.SymbolSearch?
+---@field testing lsp.omnisharp.Testing?
 ---@field typeMembers lsp.omnisharp.TypeMembers?
 -- Options to use with the debugger when launching for unit test debugging. (Previously `csharp.unitTestDebuggingOptions`)
 -- 
@@ -24175,8 +24193,12 @@
 -- default = 120
 -- ```
 ---@field formatterPrintWidth number?
--- Controls how the formatter handles prose line wrapping. If enabled, the formatter will insert hard line breaks at the specified print width. If disabled, the formatter keeps the original line breaks and spaces.
----@field formatterProseWrap boolean?
+-- Controls how the formatter handles prose line wrapping. If disabled, the formatter keeps the original line breaks and spaces. If enabled, the formatter will insert hard line breaks at the specified print width, or at the end of each sentence with the `sentence` mode.
+-- 
+-- ```lua
+-- default = "none"
+-- ```
+---@field formatterProseWrap "none" | "fill" | "sentence"|boolean?
 ---@field inlayHints lsp.tinymist.InlayHints?
 ---@field lint lsp.tinymist.Lint?
 -- Enable or disable [experimental/onEnter](https://github.com/rust-lang/rust-analyzer/blob/master/docs/dev/lsp-extensions.md#on-enter) (LSP onEnter feature) to allow automatic insertion of characters on enter, such as `///` for comments. Note: restarting the editor is required to change this setting.
