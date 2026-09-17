@@ -25,9 +25,9 @@ jobs:
           # because it makes the section tags have duped project name
           shiftheadinglevelby: -1
       - name: Generate helptags
-        run: nix develop .#ci --command nvim --headless -c 'helptags doc' -c 'qa'
+        run: nix develop .#ci --accept-flake-config --command nvim --headless -c 'helptags doc' -c 'qa'
       - name: Run benchmarks
-        run: nix develop .#ci --command just bench
+        run: nix develop .#ci --accept-flake-config --command just bench
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         id: create-pr
