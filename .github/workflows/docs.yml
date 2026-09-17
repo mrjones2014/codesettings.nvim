@@ -25,10 +25,19 @@ jobs:
         run: nix develop .#ci --command just bench
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
+        id: create-pr
         with:
+          token: ${{ secrets.UPDATE_SCHEMAS_TOKEN }}
           commit-message: "chore(ci): auto-generate vimdoc"
           branch: auto-generate-vimdoc
           title: "chore(ci): auto-generate vimdoc"
           body: "Automated vimdoc and benchmark report regeneration."
           labels: documentation
           delete-branch: true
+      - name: Enable auto-merge
+        if: ${{ steps.create-pr.outputs.pull-request-number }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr review --approve "${{ steps.create-pr.outputs.pull-request-number }}"
+          gh pr merge --squash --auto "${{ steps.create-pr.outputs.pull-request-number }}"
