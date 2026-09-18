@@ -20,7 +20,7 @@ jobs:
         run: nix develop .#ci --accept-flake-config --command just build
       - name: Submit PR with changes
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.UPDATE_SCHEMAS_TOKEN }}
           commit-message: "chore(build): Update schemas"
