@@ -1,5 +1,5 @@
 *codesettings.nvim.txt*
-                        For Neovim >= 0.11.0    Last change: 2026 September 17
+                        For Neovim >= 0.11.0    Last change: 2026 September 18
 
 ==============================================================================
 Table of Contents                        *codesettings.nvim-table-of-contents*
@@ -229,7 +229,7 @@ can use it as a global hook to look for local config files for all LSPs:
         list_behavior = 'replace',
       })
     )
-    
+
     -- or from a config file under `/lsp/rust-analyzer.lua` in your config directory.
     -- if you use rustaceanvim to configure rust-analyzer, see the `rustaceanvim` section below
     return codesettings.with_local_settings('rust-analyzer', {
@@ -262,7 +262,7 @@ need to load them manually:
       init = function()
         vim.g.rustaceanvim = {
           -- the rest of your settings go here...
-    
+
           -- I want VS Code settings to override my settings,
           -- not the other way around, so use codesettings.nvim
           -- instead of rustaceanvim's built-in vscode settings loader
@@ -477,7 +477,7 @@ must be explicitly configured.**
         end,
       },
     })
-    
+
     -- Or for one-shot loaders:
     require('codesettings')
       .loader()
@@ -577,7 +577,7 @@ two API functions. The types that describe an extension are:
     ---@field path string[] Full path from the root to this node
     ---@field key string|integer The key/index of this node in the parent
     ---@field list_idx integer? Index if parent is a list
-    
+
     ---@class CodesettingsLoaderExtension
     ---Optional visitor for non-leaf nodes (tables or lists). Return a control code and optional replacement value.
     ---Note that the replacement value is only used if the control code is `REPLACE`.
@@ -585,7 +585,7 @@ two API functions. The types that describe an extension are:
     ---Optional visitor for leaf nodes. Return a control code and optional replacement value.
     ---Note that the replacement value is only used if the control code is `REPLACE`.
     ---@field leaf (fun(value:any, ctx:CodesettingsLoaderExtensionContext): CodesettingsLoaderExtensionControl, any?)?
-    
+
     ---@enum CodesettingsLoaderExtensionControl
     M.Control = {
       ---Continue recursion (for objects) or leave leaf unchanged
