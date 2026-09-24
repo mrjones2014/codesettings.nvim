@@ -20,11 +20,11 @@
 ---@field indentOnly true | false?
 
 ---@class lsp.als.ProjectView
--- Show all projects as a flat list instead of a hierarchy in the Project View.
+-- Show all projects as a flat list instead of a hierarchy in the Project view.
 ---@field flatMode boolean?
--- Show the object directory as a child of each project in the Project View.
+-- Show the object directory as a child of each project in the Project view.
 ---@field showObjectDirectories boolean?
--- Show the Ada runtime project and its source files in the Project View.
+-- Show the Ada runtime project and its source files in the Project view.
 ---@field showRuntimeFiles boolean?
 
 ---@class lsp.als.RangeFormatting
@@ -2033,6 +2033,12 @@
 ---@field debugExternalPackageLibraries boolean?
 -- Whether to mark Dart SDK libraries (`dart:*`) as debuggable, enabling stepping into them while debugging.
 ---@field debugSdkLibraries boolean?
+-- The default exception pause mode. VS Code may persist settings in existing workspaces, so this only controls the default setting advertised by the debug adapter.
+-- 
+-- ```lua
+-- default = "unhandled"
+-- ```
+---@field defaultExceptionPauseMode "none" | "unhandled" | "all"?
 -- Whether to launch external DevTools windows using Chrome or the system default browser. This setting is ignored for remote workspaces (including Docker, SSH, WSL).
 -- 
 -- ```lua
@@ -23049,6 +23055,12 @@
 ---@field ignoreSwiftVersionFile boolean?
 -- Set the branch to use when setting the `$schema` property of the SourceKit-LSP configuration. For example: "release/6.1" or "main". When this setting is unset, the extension will determine the branch based on the version of the toolchain that is in use.
 ---@field lspConfigurationBranch string?
+-- The maximum number of directories to watch for changes to a `.swift-version` file, starting at a `Package.swift` and walking upwards towards the root of the file system. A value of `1` watches the directory containing the `Package.swift` only.
+-- 
+-- ```lua
+-- default = 64
+-- ```
+---@field maxSwiftVersionFileWatchDepth integer?
 -- Controls whether to open a swift project automatically after creating it.
 -- 
 -- ```lua
