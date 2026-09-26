@@ -12914,10 +12914,10 @@
 ---@field enabled boolean?
 
 ---@class lsp.jdtls.Java
--- Specifies the folder path to the JDK (21 or more recent) used to launch the Java Language Server. This setting will replace the Java extension's embedded JRE to start the Java Language Server. 
+-- Specifies the folder path to the JDK (25 or more recent) used to launch the Java Language Server. This setting will replace the Java extension's embedded JRE to start the Java Language Server. 
 -- 
 -- On Windows, backslashes must be escaped, i.e.
--- "java.jdt.ls.java.home":"C:\\Program Files\\Java\\jdk-21.0_5"
+-- "java.jdt.ls.java.home":"C:\\Program Files\\Java\\jdk-25.0.2"
 ---@field home string?
 
 ---@class lsp.jdtls.Javac
@@ -13272,9 +13272,9 @@
 ---@field errors lsp.jdtls.Errors?
 ---@field foldingRange lsp.jdtls.FoldingRange?
 ---@field format lsp.jdtls.Format?
--- Specifies the folder path to the JDK (21 or more recent) used to launch the Java Language Server.
+-- Specifies the folder path to the JDK (25 or more recent) used to launch the Java Language Server.
 -- On Windows, backslashes must be escaped, i.e.
--- "java.home":"C:\\Program Files\\Java\\jdk-21.0_5"
+-- "java.home":"C:\\Program Files\\Java\\jdk-25.0.2"
 ---@field home string?
 ---@field hover lsp.jdtls.Hover?
 -- Enable/disable the implementations code lens for the provided categories.
@@ -17297,6 +17297,14 @@
 -- ```
 ---@field triggerCompletionInArgumentLists boolean?
 
+---@class lsp.omnisharp.CopilotDotnetPlugin
+-- Automatically install the official .NET plugin for GitHub Copilot when a compatible Copilot installation is available. (Requires extension restart)
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enableAutoInstall boolean?
+
 ---@class lsp.omnisharp.Diagnostics
 -- Enable this setting to reduce visual distractions in your editor. Information problems will be reported as hints and only be visible when the code actions popup is open. (Requires extension restart)
 -- 
@@ -17714,6 +17722,7 @@
 ---@field backgroundAnalysis lsp.omnisharp.BackgroundAnalysis?
 ---@field codeLens lsp.omnisharp.CodeLens?
 ---@field completion lsp.omnisharp.Completion?
+---@field copilotDotnetPlugin lsp.omnisharp.CopilotDotnetPlugin?
 -- The path of the default solution to be opened in the workspace when multiple solutions are available.
 ---@field defaultSolution string?
 ---@field diagnostics lsp.omnisharp.Diagnostics?
