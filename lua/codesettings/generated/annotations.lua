@@ -6914,6 +6914,12 @@
 -- For byte slices, it will prefer bytes.Clone if the "bytes" package is
 -- already imported.
 -- 
+-- Since the replacement (slices.Concat, or slices.Clone) allocates a new
+-- slice, any slices.Clone or bytes.Clone wrapping one of the operands is
+-- redundant and is removed, e.g. append(append([]T{}, slices.Clone(s)...),
+-- t...) becomes slices.Concat(s, t). The clone of os.Environ in
+-- append([]string(nil), os.Environ()...) is likewise elided.
+-- 
 -- This fix is only applied when the base of the append tower is a
 -- "clipped" slice, meaning its length and capacity are equal (e.g.
 -- x[:0:0] or []T{}). This is to avoid changing program behavior by
@@ -7386,6 +7392,21 @@
 -- default = true
 -- ```
 ---@field ifaceassert boolean?
+-- remove obsolete comments specifying canonical import path
+-- 
+-- The importcomment analyzer removes comments specifying the canonical
+-- import path, such as
+-- 
+-- 	package foo // import "example.com/foo"
+-- 
+-- The go command enforced these comments in GOPATH mode via "go get", but
+-- ignores them in module mode, so they are obsolete once the package
+-- belongs to a module. The fix removes the comment.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field importcomment boolean?
 -- check for unnecessary type arguments in call expressions
 -- 
 -- Explicit type arguments may be omitted from call expressions if they can be
@@ -7862,6 +7883,24 @@
 -- default = true
 -- ```
 ---@field printf boolean?
+-- detect inconsistent conversions of concrete types to error
+-- 
+-- The ptrtoerror analyzer detects when a concrete type E is converted
+-- to the error interface inconsistently, both as a value of type E
+-- and as a pointer of type *E. Such inconsistency defeats attempts by
+-- client code to test for specific error types using type assertions
+-- or library functions such as [errors.As] and [errors.Is].
+-- 
+-- The analyzer also detects when both E and *E implement error but
+-- neither of those types is converted to error within the defining
+-- package, leaving the intended error form (E or *E) ambiguous. This
+-- diagnostic offers two alternative fixes to add declarations that
+-- make the intent explicit.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field ptrtoerror boolean?
 -- replace 3-clause for loops with for-range over integers
 -- 
 -- The rangeint analyzer suggests replacing traditional for loops such
@@ -7976,6 +8015,23 @@
 -- default = true
 -- ```
 ---@field recursiveiter boolean?
+-- replace v.Interface().(T) with reflect.TypeAssert[T](v)
+-- 
+-- This analyzer suggests fixes to replace two-valued type assertions on
+-- the result of (reflect.Value).Interface with reflect.TypeAssert,
+-- introduced in go1.25, which avoids the intermediate allocation of an
+-- interface value, for example:
+-- 
+-- 	x, ok := v.Interface().(string)  ->  x, ok := reflect.TypeAssert[string](v)
+-- 
+-- No fix is offered for single-valued assertions, since they panic when
+-- the assertion fails whereas reflect.TypeAssert does not. Nor is a fix
+-- offered for a type switch.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field reflecttypeassert boolean?
 -- replace reflect.TypeOf(x) with TypeFor[T]()
 -- 
 -- This analyzer suggests fixes to replace uses of reflect.TypeOf(x) with
@@ -8178,6 +8234,24 @@
 -- default = true
 -- ```
 ---@field slicesbackward boolean?
+-- replace three-index slice expressions with slices.Clip
+-- 
+-- The slicesclip analyzer suggests replacing a full slice expression of
+-- the form
+-- 
+-- 	x[:len(x):len(x)]
+-- 
+-- which clips the capacity of a slice to its length, with the simpler
+-- and more readable
+-- 
+-- 	slices.Clip(x)
+-- 
+-- added in Go 1.21.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field slicesclip boolean?
 -- replace loops with slices.Contains or slices.ContainsFunc
 -- 
 -- The slicescontains analyzer simplifies loops that check for the existence of
@@ -8303,7 +8377,7 @@
 -- iterator offered by the same data type:
 -- 
 -- 	for elem := range x.All() {
--- 		use(x.At(i)
+-- 		use(elem)
 -- 	}
 -- 
 -- where x is one of various well-known types in the standard library.
@@ -8438,6 +8512,7 @@
 -- replace strings.Index etc. with strings.Cut
 -- 
 -- This analyzer replaces certain patterns of use of [strings.Index] and string slicing by [strings.Cut], added in go1.18.
+-- It also replaces analogous uses of [strings.LastIndex] by [strings.CutLast], added in go1.27.
 -- 
 -- For example:
 -- 
@@ -8449,6 +8524,20 @@
 -- is replaced by:
 -- 
 -- 	before, _, ok := strings.Cut(s, substr)
+-- 	if ok {
+-- 	    return before
+-- 	}
+-- 
+-- And:
+-- 
+-- 	idx := strings.LastIndex(s, substr)
+-- 	if idx >= 0 {
+-- 	    return s[:idx]
+-- 	}
+-- 
+-- is replaced by:
+-- 
+-- 	before, _, ok := strings.CutLast(s, substr)
 -- 	if ok {
 -- 	    return before
 -- 	}
@@ -8467,9 +8556,13 @@
 -- 	    return
 -- 	}
 -- 
--- It also handles variants using [strings.IndexByte] instead of Index, or the bytes package instead of strings.
+-- (LastIndex used only as a presence check is also rewritten to Contains.)
+-- 
+-- It also handles variants using [strings.IndexByte] or [strings.LastIndexByte]
+-- instead of Index/LastIndex, or the bytes package instead of strings.
 -- 
 -- Fixes are offered only in cases in which there are no potential modifications of the idx, s, or substr expressions between their definition and use.
+-- CutLast fixes are offered only when the file's Go version is at least 1.27.
 -- 
 -- It also replaces [strings.SplitN](s, sep, 2)[0] and [strings.Split](s, sep)[0] with the "before" result of strings.Cut, when sep is a non-empty string constant:
 -- 
@@ -9335,6 +9428,29 @@
 -- default = 0
 -- ```
 ---@field maxFileCacheBytes number?
+-- (Experimental) memoryLimit sets a soft memory limit (in bytes) for the gopls process, via
+-- runtime/debug.SetMemoryLimit. If non-positive (the default), no limit is set.
+-- 
+-- On large workspaces, a single edit that invalidates many
+-- packages (for example a syntax error in a widely-imported
+-- package) can make the heap briefly grow well above the
+-- steady-state working set before the garbage collector
+-- catches up, spiking memory and, on memory-constrained
+-- machines, causing swapping. A soft limit makes the GC work
+-- harder to stay near the limit, trading some CPU for a lower
+-- memory peak.
+-- 
+-- The limit is soft and may be exceeded. Set it comfortably above the
+-- steady-state working set, as too low a value causes excessive GC.
+-- 
+-- Unlike the GOMEMLIMIT environment variable, this setting is
+-- strictly numeric; SI suffixes are not permitted.
+-- 
+-- 
+-- ```lua
+-- default = 0
+-- ```
+---@field memoryLimit number?
 -- (Experimental) obsolete, no effect
 -- 
 -- 
@@ -9342,6 +9458,10 @@
 -- default = ""
 -- ```
 ---@field memoryMode string?
+-- (Experimental) moveDeclaration enables producing Move Declaration codeactions. The implementation
+-- is unfinished so we use this setting to gate its use.
+-- 
+---@field moveDeclaration boolean?
 -- (Experimental) moveType enables producing Move Type codeactions. The implementation
 -- is unfinished so we use this setting to gate its use.
 -- 
@@ -22936,8 +23056,6 @@
 -- When enabled, the extension will create "swift" build tasks for library products in the package manifest. Note that automatic library products will not be included.
 ---@field createTasksForLibraryProducts boolean?
 ---@field debugger lsp.sourcekit.Debugger?
--- Output additional diagnostics to the Swift output channel.
----@field diagnostics boolean?
 -- Controls how diagnostics from the various providers are merged into the collection of `swift` errors and warnings shown in the Problems pane.
 -- 
 -- ```lua
@@ -22988,6 +23106,12 @@
 ---@field ignoreSearchingForPackagesInSubfolders string[]?
 -- Ignore `.swift-version` files and disable automatic toolchain switching based on them. When enabled, the extension will always use the global default toolchain instead of switching based on per-project `.swift-version` files.
 ---@field ignoreSwiftVersionFile boolean?
+-- The log level of the extension's log file. This has no effect on the verbosity of messages written to the Swift output channel.
+-- 
+-- ```lua
+-- default = "debug"
+-- ```
+---@field logFileLogLevel "trace" | "debug" | "info" | "warn" | "error"?
 -- Set the branch to use when setting the `$schema` property of the SourceKit-LSP configuration. For example: "release/6.1" or "main". When this setting is unset, the extension will determine the branch based on the version of the toolchain that is in use.
 ---@field lspConfigurationBranch string?
 -- The maximum number of directories to watch for changes to a `.swift-version` file, starting at a `Package.swift` and walking upwards towards the root of the file system. A value of `1` watches the directory containing the `Package.swift` only.
@@ -23007,7 +23131,7 @@
 -- ```lua
 -- default = "info"
 -- ```
----@field outputChannelLogLevel "debug" | "info" | "warn" | "error"?
+---@field outputChannelLogLevel "trace" | "debug" | "info" | "warn" | "error"?
 -- Additional arguments to pass to swift commands that do package resolution, such as `swift package resolve`, `swift package update`, `swift build` and `swift test`. Keys and values should be provided as individual entries in the list.
 -- 
 -- ```lua
