@@ -94,6 +94,12 @@
       "scope": "resource",
       "type": "string"
     },
+    "Lua.completion.requireFunction": {
+      "default": "require",
+      "markdownDescription": "%config.completion.requireFunction%",
+      "scope": "resource",
+      "type": "string"
+    },
     "Lua.completion.requireSeparator": {
       "default": ".",
       "markdownDescription": "%config.completion.requireSeparator%",
