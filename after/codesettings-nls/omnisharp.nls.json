@@ -143,6 +143,7 @@
   "configuration.razor.razor.completion.commitElementsWithSpace": "Specifies whether to commit tag helper and component elements with a space.",
   "configuration.razor.razor.format.attributeIndentStyle": "Specifies the indentation style for Html and component tag attributes in Razor files.",
   "configuration.razor.razor.format.codeBlockBraceOnNextLine": "Forces the open brace after an @code or @functions directive to be on the following line.",
+  "configuration.razor.razor.format.ignoreIndentationInScriptOrStyleBlocksWithComplexRazor": "If true, preserves source indentation inside script and style blocks that contain Razor statements, blocks, directives, comments, templates, or standalone expressions.",
   "debuggers.coreclr.configurationSnippets.description.attach": {
     "comment": [
       "'coreclr' is the name of the debugger 'type', and should not be localized",

@@ -17574,6 +17574,12 @@
 -- default = true
 -- ```
 ---@field enable boolean?
+-- If true, preserves source indentation inside script and style blocks that contain Razor statements, blocks, directives, comments, templates, or standalone expressions.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field ignoreIndentationInScriptOrStyleBlocksWithComplexRazor boolean?
 
 ---@class lsp.omnisharp.Plugin
 -- Overrides the path to the Razor plugin dll.
