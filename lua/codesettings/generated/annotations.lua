@@ -3735,6 +3735,8 @@
 ---@field execArgv string[]|any?
 ---@field experimental lsp.eslint.Experimental?
 ---@field format lsp.eslint.Format?
+-- If true, local file documents outside all open workspace folders won't be validated by ESLint. Untitled, remote, and other virtual documents are unchanged. This has no effect when no workspace folder is open.
+---@field ignoreOutsideWorkspace boolean?
 -- If true, untitled files won't be validated by ESLint.
 ---@field ignoreUntitled boolean?
 ---@field lintTask lsp.eslint.LintTask?
@@ -27015,7 +27017,7 @@
 -- ```lua
 -- default = "0.29"
 -- ```
----@field version "0.28" | "0.29" | "0.30" | "main"?
+---@field version "0.28" | "0.29" | "0.30"?
 
 ---@class lsp.wgls_analyzer.External
 ---@field naga lsp.wgls_analyzer.Naga?
