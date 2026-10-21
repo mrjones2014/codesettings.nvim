@@ -12508,6 +12508,14 @@
 ---@field generatesMetadataFilesAtProjectRoot boolean?
 ---@field gradle lsp.jdtls.Gradle?
 ---@field maven lsp.jdtls.Maven?
+-- Controls how projects are imported into the workspace.
+-- - `full`: all projects are discovered and imported at startup (default). Safe and well-tested, but slow for large workspaces.
+-- - `ondemand`: projects are imported lazily when the user first opens a file belonging to that module. This drastically reduces startup time and memory usage for large multi-module workspaces (e.g. Quarkus with 1300+ modules).
+-- 
+-- ```lua
+-- default = "full"
+-- ```
+---@field mode "full" | "ondemand"?
 -- [Experimental] Specifies how to select build configuration files to import. 
 -- Note: Currently, `Gradle` projects cannot be partially imported.
 -- 
