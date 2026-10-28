@@ -17109,6 +17109,8 @@
 -- default = true
 -- ```
 ---@field enableFileBasedProgramsWhenAmbiguous boolean?
+-- Discovers and loads projects when you open C# files.
+---@field loadOnDemand boolean?
 
 ---@class lsp.omnisharp.QuickInfo
 -- Show remarks information when display symbol.
