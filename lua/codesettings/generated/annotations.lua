@@ -12954,10 +12954,6 @@
 -- ```
 ---@field server "off" | "messages" | "verbose"?
 
----@class lsp.jdtls.TypeHierarchy
--- Enable/disable lazy loading the content in type hierarchy. Lazy loading could save a lot of loading time but every type should be expanded manually to load its content.
----@field lazyLoad boolean?
-
 ---@class lsp.jdtls.UpdateImportsOnPaste
 -- Enable/disable auto organize imports when pasting code
 -- 
@@ -13022,7 +13018,6 @@
 ---@field symbols lsp.jdtls.Symbols?
 ---@field templates lsp.jdtls.Templates?
 ---@field trace lsp.jdtls.Trace?
----@field typeHierarchy lsp.jdtls.TypeHierarchy?
 ---@field updateImportsOnPaste lsp.jdtls.UpdateImportsOnPaste?
 
 ---@class lsp.jdtls.Telemetry
