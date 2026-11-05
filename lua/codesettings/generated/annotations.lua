@@ -12509,7 +12509,7 @@
 -- ```
 ---@field enabled boolean?
 ---@field offline lsp.jdtls.Offline?
--- Specifies the template used to name imported Maven projects, e.g. `[groupId]-[artifactId]-[version]`. This is helpful when importing projects with the same groupId and artifactId but a different version. Supported variables are `[groupId]`, `[artifactId]`, `[version]` and `[name]`. Already imported projects keep their name until the workspace is cleaned.
+-- Specifies the template used to name imported Maven projects, e.g. `[groupId]-[artifactId]-[version]`. This is helpful when importing projects with the same groupId and artifactId but a different version. Supported variables are `[groupId]`, `[artifactId]`, `[version]` and `[name]`. Already imported projects keep their name until the workspace is cleaned. In a multi-root workspace, it can be set per workspace folder.
 ---@field projectNameTemplate string?
 
 ---@class lsp.jdtls.Import
