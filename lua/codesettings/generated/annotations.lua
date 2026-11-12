@@ -16837,6 +16837,12 @@
 -- default = "internalConsole"
 -- ```
 ---@field console "internalConsole" | "integratedTerminal" | "externalTerminal"?
+-- When true (the default), automatically deoptimize debugged functions when possible. The debugger will deoptimize methods targeted by breakpoints or supported step-in operations. Requires .NET 8 or newer. Unlike `suppressJITOptimizations`, this applies to individual methods.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enableAutomaticDeoptimization boolean?
 -- Flag to enable stepping over Properties and Operators. This option defaults to `true`.
 -- 
 -- ```lua
@@ -17367,6 +17373,12 @@
 -- default = 4711
 -- ```
 ---@field debugServer number?
+-- When true (the default), automatically deoptimize debugged functions when possible. The debugger will deoptimize methods targeted by breakpoints or supported step-in operations. Requires .NET 8 or newer. Unlike `suppressJITOptimizations`, this applies to individual methods.
+-- 
+-- ```lua
+-- default = true
+-- ```
+---@field enableAutomaticDeoptimization boolean?
 -- Flag to enable stepping over Properties and Operators. This option defaults to `true`.
 -- 
 -- ```lua

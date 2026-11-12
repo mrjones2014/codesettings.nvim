@@ -211,8 +211,12 @@
     "message": "**Note:** _This option is only used for console projects launched with the `dotnet` debug configuration type_.\n\nIndicates which console the target program should be launched into. See https://aka.ms/VSCode-CS-LaunchJson-Console for more information."
   },
   "generateOptionsSchema.cwd.description": "Path to the working directory of the program being debugged. Default is the current workspace.",
-  "generateOptionsSchema.debugServer.description": {
-    "message": "For debug extension development only: if a port is specified VS Code tries to connect to a debug adapter running in server mode"
+  "generateOptionsSchema.debugServer.description": "For debug extension development only: if a port is specified VS Code tries to connect to a debug adapter running in server mode",
+  "generateOptionsSchema.enableAutomaticDeoptimization.markdownDescription": {
+    "comment": [
+      "Markdown text between `` should not be translated or localized (they represent literal text) and the capitalization, spacing, and punctuation (including the ``) should not be altered."
+    ],
+    "message": "When true (the default), automatically deoptimize debugged functions when possible. The debugger will deoptimize methods targeted by breakpoints or supported step-in operations. Requires .NET 8 or newer. Unlike `suppressJITOptimizations`, this applies to individual methods."
   },
   "generateOptionsSchema.enableStepFiltering.markdownDescription": {
     "comment": [
@@ -220,7 +224,7 @@
     ],
     "message": "Flag to enable stepping over Properties and Operators. This option defaults to `true`."
   },
-  "generateOptionsSchema.env.description": "Environment variables passed to the program.",
+  "generateOptionsSchema.env.description": "Environment variables passed to the program. Null or empty values remove variables from the inherited environment.",
   "generateOptionsSchema.envFile.markdownDescription": {
     "comment": [
       "Markdown text between `` should not be translated or localized (they represent literal text) and the capitalization, spacing, and punctuation (including the ``) should not be altered."
@@ -499,7 +503,7 @@
     "message": "[Only supported in local macOS debugging]\n\nThe architecture of the debuggee. This will automatically be detected unless this parameter is set. Allowed values are `x86_64` or `arm64`."
   },
   "generateOptionsSchema.targetOutputLogPath.description": "When set, text that the target application writes to stdout and stderr (ex: Console.WriteLine) will be saved to the specified file. This option is ignored if console is set to something other than internalConsole. E.g. '${workspaceFolder}/out.txt'",
-  "generateOptionsSchema.terminateChildProcesses.description": {
+  "generateOptionsSchema.terminateChildProcesses.markdownDescription": {
     "comment": [
       "Markdown text between `` should not be translated or localized (they represent literal text) and the capitalization, spacing, and punctuation (including the ``) should not be altered."
     ],
